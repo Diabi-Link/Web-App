@@ -44,5 +44,10 @@ module.exports = {
     'react/jsx-props-no-spreading': 0,
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    'import/prefer-default-export': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
+    '@typescript-eslint/ban-types': 0,
   },
 };
