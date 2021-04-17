@@ -35,8 +35,6 @@ const Left = styled.div`
   height: 100vh;
 `;
 
-const BackToSiteLink = styled.a``;
-
 const FormWrapper = styled.div`
   width: 70%;
 `;

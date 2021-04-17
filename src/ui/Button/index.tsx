@@ -1,23 +1,27 @@
 import React from 'react';
+import styled from 'styled-components';
+
+export type ButtonTheme = 'primary' | 'primaryLight';
 
 type Props = {
   label: string | JSX.Element;
   onClick: () => void;
-  type: 'primary' | 'primaryLight';
+  theme: ButtonTheme;
   outlined: boolean;
   lg: boolean;
 };
 
-const Button = ({ label, onClick, type, outlined, lg, ...buttonProps }: Props): JSX.Element => {
+const ButtonElement = styled.button<{
+  theme: 'primary' | 'primaryLight';
+  outlined: boolean;
+  lg: boolean;
+}>``;
 
+const Button = ({ label, onClick, ...buttonProps }: Props): JSX.Element => {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      {...buttonProps}
-    >
+    <ButtonElement type="button" onClick={onClick} {...buttonProps}>
       {label}
-    </button>
+    </ButtonElement>
   );
 };
 
