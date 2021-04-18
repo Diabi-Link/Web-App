@@ -1,8 +1,9 @@
-type Theme = {
+export type Theme = {
   main: {
     primary: string;
     primaryLight: string;
     primaryLighter: string;
+    white: string;
     whiteBroken: string;
     dark: string;
     darkLight: string;
@@ -17,6 +18,7 @@ const theme = (): Theme => ({
     primary: '#56B5CB',
     primaryLight: '#81C6D6',
     primaryLighter: '#B3D9E2',
+    white: '#fff',
     whiteBroken: '#F1F1F1',
     dark: '#111',
     darkLight: '#424242',
