@@ -7,36 +7,57 @@ export type ButtonTheme = 'primary' | 'primaryLight' | 'default';
 
 type Props = {
   label: string | JSX.Element;
-  onClick: () => void;
+  onClick?: () => any;
+  outlined?: boolean;
   btnStyle: ButtonTheme;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;
 
-const getBackgroundColor = (btnStyle: ButtonTheme, theme: Theme): string => {
+type GettersArguments = {
+  btnStyle: ButtonTheme;
+  theme: Theme;
+  outlined: boolean | undefined;
+};
+
+const getBackgroundColor = ({
+  btnStyle,
+  theme,
+  outlined,
+}: GettersArguments): string => {
   switch (btnStyle) {
     case 'primary':
-      return theme.main.primary;
+      return outlined ? theme.main.white : theme.main.primary;
     case 'primaryLight':
-      return theme.main.primaryLight;
+      return outlined ? theme.main.white : theme.main.primaryLight;
     default:
       return theme.main.whiteBroken;
   }
 };
 
-const getBorderColor = (btnStyle: ButtonTheme, theme: Theme): string => {
+const getBorderColor = ({
+  btnStyle,
+  theme,
+  outlined,
+}: GettersArguments): string => {
   switch (btnStyle) {
     case 'primary':
+      return outlined ? theme.main.primary : 'transparent';
     case 'primaryLight':
-      return 'transparent';
+      return outlined ? theme.main.primaryLight : 'transparent';
     default:
       return theme.main.grayLight;
   }
 };
 
-const getLabelColor = (btnStyle: ButtonTheme, theme: Theme): string => {
+const getLabelColor = ({
+  btnStyle,
+  theme,
+  outlined,
+}: GettersArguments): string => {
   switch (btnStyle) {
     case 'primary':
+      return outlined ? theme.main.primary : theme.main.white;
     case 'primaryLight':
-      return theme.main.white;
+      return outlined ? theme.main.primaryLight : theme.main.white;
     default:
       return theme.main.dark;
   }
@@ -44,21 +65,25 @@ const getLabelColor = (btnStyle: ButtonTheme, theme: Theme): string => {
 
 const ButtonElement = styled.button<{
   btnStyle: 'primary' | 'primaryLight' | 'default';
+  outlined?: boolean;
 }>`
   display: inline-flex;
   cursor: pointer;
-  padding: 0.5rem 1.4rem;
-  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  font-weight: 700;
   font-size: 1rem;
   white-space: nowrap;
   transition: ease;
+  justify-content: center;
   border: 0.0625rem solid
-    ${(props) => getBorderColor(props.btnStyle, props.theme)};
+    ${({ btnStyle, theme, outlined }) =>
+      getBorderColor({ btnStyle, theme, outlined })};
   border-radius: 0.35rem;
-  color: ${(props) => getLabelColor(props.btnStyle, props.theme)};
+  color: ${({ btnStyle, theme, outlined }) =>
+    getLabelColor({ btnStyle, theme, outlined })};
 
-  background-color: ${(props) =>
-    getBackgroundColor(props.btnStyle, props.theme)};
+  background-color: ${({ btnStyle, theme, outlined }) =>
+    getBackgroundColor({ btnStyle, theme, outlined })};
 
   &:disabled {
     cursor: not-allowed;
@@ -66,22 +91,37 @@ const ButtonElement = styled.button<{
   }
 
   &:hover:not(:disabled) {
-    background-color: ${(props) =>
-      darken(0.1, getBackgroundColor(props.btnStyle, props.theme))};
+    background-color: ${({ btnStyle, theme, outlined }) =>
+      outlined
+        ? 'none'
+        : darken(0.1, getBackgroundColor({ btnStyle, theme, outlined }))};
   }
 
   &:active:not(:disabled) {
-    background-color: ${(props) =>
-      darken(0.2, getBackgroundColor(props.btnStyle, props.theme))};
+    background-color: ${({ btnStyle, theme, outlined }) =>
+      outlined
+        ? 'none'
+        : darken(0.2, getBackgroundColor({ btnStyle, theme, outlined }))};
   }
 `;
 
 const Button = ({ label, onClick, ...buttonProps }: Props): JSX.Element => {
+  const handleClick = (): void => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <ButtonElement type="button" onClick={onClick} {...buttonProps}>
+    <ButtonElement type="button" onClick={handleClick} {...buttonProps}>
       {label}
     </ButtonElement>
   );
+};
+
+Button.defaultProps = {
+  onClick: undefined,
+  outlined: false,
 };
 
 export default Button;
