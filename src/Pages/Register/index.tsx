@@ -51,7 +51,7 @@ const Register = (): JSX.Element => {
         <FormWrapper>
           <RegisterProvider>
             <Switch>
-              <Route path="/register/user" render={() => <UserInfo />} />
+              <Route path="/register/user" exact render={() => <UserInfo />} />
               <Route path="/register/account" render={() => <AccountInfo />} />
               <Redirect to="/login" />
             </Switch>

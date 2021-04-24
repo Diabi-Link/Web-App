@@ -24,31 +24,40 @@ const StepCircle = styled.div`
   border-radius: 50%;
   background-color: ${(props) => props.theme.main.primaryLighter};
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 800;
   position: relative;
 `;
 
 const StepText = styled.p`
   font-size: 15px;
-  font-weight: Bold;
+  font-weight: 600;
   text-decoration: none;
 `;
 
 const Separator = styled.div`
   height: 1px;
   background-color: #424242;
-  width: 100px;
-  margin-top: 15px;
+  width: 140px;
+  margin: 15px;
 `;
 
 const StepProgress = (): JSX.Element => {
   return (
     <Progress>
       <Step to="">
-        <StepCircle />
+        <StepCircle>1</StepCircle>
         <StepText> Utilisateur</StepText>
       </Step>
       <Separator />
+      <Step to="">
+        <StepCircle>2</StepCircle>
+        <StepText> Type de compte</StepText>
+      </Step>
+      <Separator />
+      <Step to="">
+        <StepCircle>3</StepCircle>
+        <StepText> On y est presque !</StepText>
+      </Step>
     </Progress>
   );
 };
