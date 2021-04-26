@@ -7,6 +7,7 @@ import Button from '../../ui/Button';
 
 const Container = styled.nav`
   position: fixed;
+  top: 0;
   width: 100%;
   height: 3.8rem;
   background-color: ${(props) => props.theme.main.white};
@@ -51,7 +52,7 @@ const Title = styled.h1`
 
 const Divider = styled.div`
   width: 0.0625rem;
-  height: 2rem;
+  height: 1.5rem;
   background-color: ${(props) => props.theme.main.grayLight};
   margin-right: 1.25rem;
 `;
@@ -63,7 +64,7 @@ const Link = styled(LinkRouter)<{ to: string; pathname: string }>`
   color: ${(props) =>
     props.to === props.pathname
       ? props.theme.main.dark
-      : props.theme.main.gray};
+      : props.theme.main.grayDark};
 `;
 
 const ConnexionWrapper = styled.div`
