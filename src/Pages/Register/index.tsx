@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
 
 import UserInfo from './UserInfo';
 import AccountInfo from './AccountInfo';
 import { RegisterProvider } from './RegisterContext';
 import { StepProgress } from '../../ui';
+import { ReactComponent as ArrowBack } from '../../assets/images/arrowBack.svg';
 
 const Container = styled.div`
   display: flex;
@@ -35,8 +36,24 @@ const Left = styled.div`
   height: 100vh;
 `;
 
+const BackWrapper = styled(Link)`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 50px 100px;
+  text-decoration: none;
+`;
+
 const FormWrapper = styled.div`
   width: 70%;
+`;
+
+const Text = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0px 10px;
+  color: ${(props) => props.theme.main.primary};
 `;
 
 const StepNavWrapper = styled.div``;
@@ -45,6 +62,10 @@ const Register = (): JSX.Element => {
   return (
     <Container>
       <Left>
+        <BackWrapper to="/">
+          <ArrowBack />
+          <Text>Revenir au site</Text>
+        </BackWrapper>
         <StepWrapper>
           <StepProgress />
         </StepWrapper>

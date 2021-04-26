@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 const Progress = styled.div`
   display: flex;
-  margin: 20px;
 `;
 
 const Step = styled(Link)`

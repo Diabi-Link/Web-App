@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 import { Input } from '../../../ui';
 
 const Container = styled.div`
@@ -13,19 +15,32 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 70%;
+  align-items: center;
+  width: 90%;
+  @media (min-width: 1700px) {
+    width: 70%;
+  }
 `;
 
 const InfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 50px 0px;
+  width: 100%;
+  margin: 20px 0px;
+  @media (min-width: 1700px) {
+    margin: 30px 0px 20px;
+  }
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 40%;
+`;
+
+const ConnectionWrapper = styled.div`
+  display: flex;
+  margin: 20px;
 `;
 
 const InputLabel = styled.label`
@@ -36,8 +51,25 @@ const InputLabel = styled.label`
 
 const Title = styled.p`
   font-size: 30px;
+  @media (min-width: 1700px) {
+    font-size: 35px;
+  }
   font-weight: 700;
   color: ${(props) => props.theme.main.dark};
+`;
+
+const Text = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+const ConnectLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0px 10px;
+  color: ${(props) => props.theme.main.primary};
 `;
 
 const User = (): JSX.Element => {
@@ -89,6 +121,10 @@ const User = (): JSX.Element => {
             />
           </InputWrapper>
         </InfoWrapper>
+        <ConnectionWrapper>
+          <Text>Vous avez déjà un compte ?</Text>
+          <ConnectLink to="/">Connectez-vous.</ConnectLink>
+        </ConnectionWrapper>
       </InfoContainer>
     </Container>
   );

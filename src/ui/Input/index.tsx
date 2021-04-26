@@ -32,14 +32,13 @@ const InputWrapper = styled.div<{
     return props.theme.main.grayLighter;
   }};
   border-radius: 10px;
-  border: 1px solid
+  border-bottom: 3px solid
     ${(props) => {
       if (props.errorText) return props.theme.main.error;
-      if (props.focused) return props.theme.main.grayLight;
+      if (props.focused) return props.theme.main.primaryLight;
       return 'transparent';
     }};
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
-  cursor: not-allowed;
 `;
 
 const InputElement = styled.input`
