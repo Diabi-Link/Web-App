@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Icon } from 'react-icons-kit';
+import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
 import { ReactComponent as Logo404 } from '../../assets/images/404.svg';
 import Heading from '../../ui/Heading';
@@ -30,6 +32,10 @@ const StyledHeading = styled(Heading)`
   margin-bottom: 2.14rem;
 `;
 
+const StyledIcon = styled(Icon)`
+  margin-right: 0.3rem;
+`;
+
 const Page404 = (): JSX.Element => {
   return (
     <Container>
@@ -39,6 +45,7 @@ const Page404 = (): JSX.Element => {
           Il semblerait que vous vous soyez perdu !
         </StyledHeading>
         <Link to="/" linkStyle="primary" bold>
+          <StyledIcon icon={arrowLeft2} size={20} />
           Revenir à l&apos;écran d&apos;accueil
         </Link>
       </Wrapper>

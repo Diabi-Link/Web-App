@@ -29,11 +29,13 @@ const getLabelColor = ({ linkStyle, theme }: GettersArguments): string => {
 };
 
 const StyledLink = styled(LinkRouter)<Props>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: ${({ underline }) => (underline ? 'underline' : 'none')};
   font-weight: ${({ bold }) => (bold ? 600 : 400)};
   color: ${({ theme, linkStyle }) =>
     getLabelColor({ theme, linkStyle: linkStyle as LinkTheme })};
-
   &:hover {
     color: ${({ theme, linkStyle }) =>
       darken(0.1, getLabelColor({ theme, linkStyle: linkStyle as LinkTheme }))};
