@@ -9,6 +9,7 @@ type Props = {
   label: string | JSX.Element;
   onClick?: () => any;
   outlined?: boolean;
+  shadow?: boolean;
   btnStyle: ButtonTheme;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;
 
@@ -63,13 +64,29 @@ const getLabelColor = ({
   }
 };
 
+const getShadowColor = ({
+  btnStyle,
+  theme,
+  outlined,
+}: GettersArguments): string => {
+  switch (btnStyle) {
+    case 'primary':
+      return outlined ? 'transparent' : theme.main.primaryLight;
+    case 'primaryLight':
+      return outlined ? 'transparent' : theme.main.primaryLighter;
+    default:
+      return theme.main.dark;
+  }
+};
+
 const ButtonElement = styled.button<{
   btnStyle: 'primary' | 'primaryLight' | 'default';
   outlined?: boolean;
+  shadow?: boolean;
 }>`
   display: inline-flex;
   cursor: pointer;
-  padding: 0.6rem 1.2rem;
+  padding: 0.7rem 1.2rem;
   font-weight: 700;
   font-size: 1rem;
   white-space: nowrap;
@@ -78,12 +95,21 @@ const ButtonElement = styled.button<{
   border: 0.0625rem solid
     ${({ btnStyle, theme, outlined }) =>
       getBorderColor({ btnStyle, theme, outlined })};
-  border-radius: 0.35rem;
+  border-radius: 10px;
   color: ${({ btnStyle, theme, outlined }) =>
     getLabelColor({ btnStyle, theme, outlined })};
 
   background-color: ${({ btnStyle, theme, outlined }) =>
     getBackgroundColor({ btnStyle, theme, outlined })};
+
+  box-shadow: ${({ btnStyle, theme, outlined, shadow }) =>
+    shadow
+      ? `2px 5px 4px ${getShadowColor({
+          btnStyle,
+          theme,
+          outlined,
+        })}`
+      : 'none'};
 
   &:disabled {
     cursor: not-allowed;
@@ -123,6 +149,7 @@ const Button = ({ label, onClick, ...buttonProps }: Props): JSX.Element => {
 Button.defaultProps = {
   onClick: undefined,
   outlined: false,
+  shadow: false,
 };
 
 export default Button;

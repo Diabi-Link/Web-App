@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { Input } from '../../../ui';
+import { Input, Button } from '../../../ui';
 
 const Container = styled.div`
   display: flex;
@@ -40,7 +40,13 @@ const InputWrapper = styled.div`
 
 const ConnectionWrapper = styled.div`
   display: flex;
-  margin: 20px;
+  margin: 40px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
 `;
 
 const InputLabel = styled.label`
@@ -70,6 +76,11 @@ const ConnectLink = styled(Link)`
   font-weight: 500;
   padding: 0px 10px;
   color: ${(props) => props.theme.main.primary};
+`;
+
+const NextButton = styled(Button)`
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const User = (): JSX.Element => {
@@ -125,6 +136,9 @@ const User = (): JSX.Element => {
           <Text>Vous avez déjà un compte ?</Text>
           <ConnectLink to="/">Connectez-vous.</ConnectLink>
         </ConnectionWrapper>
+        <ButtonWrapper>
+          <NextButton label="Se connecter" btnStyle="primary" shadow />
+        </ButtonWrapper>
       </InfoContainer>
     </Container>
   );

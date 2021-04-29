@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link as LinkRouter, withRouter } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/images/logo.svg';
-import Button from '../../ui/Button';
+import { Button } from '../../ui';
 
 const Container = styled.nav`
   position: fixed;
