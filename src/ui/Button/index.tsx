@@ -73,7 +73,7 @@ const ButtonElement = styled.button<{
   font-weight: 700;
   font-size: 1rem;
   white-space: nowrap;
-  transition: ease;
+  transition: 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   justify-content: center;
   border: 0.0625rem solid
     ${({ btnStyle, theme, outlined }) =>
@@ -95,13 +95,14 @@ const ButtonElement = styled.button<{
       outlined
         ? 'none'
         : darken(0.1, getBackgroundColor({ btnStyle, theme, outlined }))};
-  }
-
-  &:active:not(:disabled) {
-    background-color: ${({ btnStyle, theme, outlined }) =>
+    box-shadow: ${({ btnStyle, theme, outlined }) =>
       outlined
-        ? 'none'
-        : darken(0.2, getBackgroundColor({ btnStyle, theme, outlined }))};
+        ? `0px 0px 7px 1px ${getLabelColor({
+            btnStyle,
+            theme,
+            outlined,
+          })}`
+        : 'none'};
   }
 `;
 
