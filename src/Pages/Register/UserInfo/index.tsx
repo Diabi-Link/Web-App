@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 
 import { Input, Button } from '../../../ui';
 
@@ -65,22 +66,22 @@ const Title = styled.p`
 `;
 
 const Text = styled.p`
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
 `;
 
 const ConnectLink = styled(Link)`
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
   padding: 0px 10px;
   color: ${(props) => props.theme.main.primary};
 `;
 
 const NextButton = styled(Button)`
-  display: flex;
-  justify-content: flex-end;
+  width: 150px;
+  height: 40px;
 `;
 
 const User = (): JSX.Element => {
@@ -137,7 +138,12 @@ const User = (): JSX.Element => {
           <ConnectLink to="/">Connectez-vous.</ConnectLink>
         </ConnectionWrapper>
         <ButtonWrapper>
-          <NextButton label="Se connecter" btnStyle="primary" shadow />
+          <NextButton
+            label="Suivant"
+            btnStyle="primary"
+            shadow
+            icon={arrowRight2}
+          />
         </ButtonWrapper>
       </InfoContainer>
     </Container>

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { darken } from 'polished';
+import { Icon } from 'react-icons-kit';
 import { Theme } from '../../theme';
 
 export type ButtonTheme = 'primary' | 'primaryLight' | 'default';
@@ -10,6 +11,7 @@ type Props = {
   onClick?: () => any;
   outlined?: boolean;
   shadow?: boolean;
+  icon?: JSX.Element;
   btnStyle: ButtonTheme;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;
 
@@ -85,9 +87,10 @@ const ButtonElement = styled.button<{
   shadow?: boolean;
 }>`
   display: inline-flex;
+  align-items: center;
   cursor: pointer;
   padding: 0.7rem 1.2rem;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1rem;
   white-space: nowrap;
   transition: 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -132,7 +135,16 @@ const ButtonElement = styled.button<{
   }
 `;
 
-const Button = ({ label, onClick, ...buttonProps }: Props): JSX.Element => {
+const StyledIcon = styled(Icon)`
+  margin-left: 0.7rem;
+`;
+
+const Button = ({
+  label,
+  onClick,
+  icon,
+  ...buttonProps
+}: Props): JSX.Element => {
   const handleClick = (): void => {
     if (onClick) {
       onClick();
@@ -142,6 +154,7 @@ const Button = ({ label, onClick, ...buttonProps }: Props): JSX.Element => {
   return (
     <ButtonElement type="button" onClick={handleClick} {...buttonProps}>
       {label}
+      {icon && <StyledIcon icon={icon} size={20} />}
     </ButtonElement>
   );
 };
@@ -150,6 +163,7 @@ Button.defaultProps = {
   onClick: undefined,
   outlined: false,
   shadow: false,
+  icon: null,
 };
 
 export default Button;
