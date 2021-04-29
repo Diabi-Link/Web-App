@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import Page404 from '../404';
 
 import Navbar from '../Navbar';
@@ -19,9 +19,7 @@ const Nav = (): JSX.Element => {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/register" component={Register} />
-        <Route path="/404" component={Page404} />
-
-        <Redirect to="/404" />
+        <Route component={Page404} />
       </Switch>
     </Suspense>
   );
