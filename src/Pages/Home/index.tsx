@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Navbar from '../Navbar';
-
-const Container = styled.div`
+const Container = styled.main`
   width: 100vw;
   height: 100vh;
 `;
@@ -19,7 +17,6 @@ const Wrapper = styled.div`
 const Home = (): JSX.Element => {
   return (
     <Container>
-      <Navbar />
       <Wrapper>HOME</Wrapper>
     </Container>
   );
