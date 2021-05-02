@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import styled from 'styled-components';
+import { Icon } from 'react-icons-kit';
 
 type Props = {
-  placeholder: string;
   value: string;
   type: string;
-  icon?: string;
+  placeholder?: string;
+  icon?: JSX.Element;
   errorText?: string;
   helperText?: string;
   disabled?: boolean;
-  onClick?: () => any;
+  onChange?: ({ value }: { value: string }) => void;
   onBlur?: () => any;
   onFocus?: () => any;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'>;
 
 const Container = styled.div`
   display: flex;
@@ -39,6 +40,7 @@ const InputWrapper = styled.div<{
       return 'transparent';
     }};
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  color: ${(props) => props.theme.main.gray};
 `;
 
 const InputElement = styled.input`
@@ -58,10 +60,8 @@ const InputElement = styled.input`
   }
 `;
 
-const IconElement = styled.div`
-  position: relative;
-  padding-right: 10px;
-  cursor: pointer;
+const IconElement = styled(Icon)`
+  margin-right: 0.7rem;
 `;
 
 const HelperElement = styled.span`
@@ -80,55 +80,77 @@ const ErrorElement = styled.span`
   margin-top: 3px;
 `;
 
-const Input = ({
-  onBlur,
-  onFocus,
-  value,
-  type,
-  errorText,
-  helperText,
-  disabled,
-  icon,
-  onClick,
-  ...props
-}: Props): JSX.Element => {
-  const [focused, setFocused] = useState(false);
-  const [delayedValue, setDelayedValue] = useState(value || '');
+const Input = forwardRef(
+  (
+    {
+      onBlur,
+      onFocus,
+      onChange,
+      value,
+      type,
+      errorText,
+      helperText,
+      disabled,
+      icon,
+      ...props
+    }: Props,
+    ref,
+  ): JSX.Element => {
+    const [focused, setFocused] = useState(false);
+    const [delayedValue, setDelayedValue] = useState(value || '');
 
-  return (
-    <Container>
-      <InputWrapper focused={focused} errorText={errorText} disabled={disabled}>
-        <InputElement
-          {...props}
-          value={delayedValue}
-          autoComplete="off"
-          type={type}
-          onFocus={(e) => {
-            if (onFocus) onFocus(e);
-            setFocused(true);
-          }}
-          onBlur={(e) => {
-            if (onBlur) onBlur(e);
-            setFocused(false);
-          }}
-          onChange={(e) => {
-            setDelayedValue(e.target.value);
-          }}
+    useEffect(() => {
+      setDelayedValue(value);
+    }, [value]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+      if (onChange) {
+        onChange({ value: e.target.value });
+      }
+    };
+
+    return (
+      <Container>
+        <InputWrapper
+          focused={focused}
+          errorText={errorText}
           disabled={disabled}
-        />
-        {icon && <IconElement onClick={onClick} />}
-      </InputWrapper>
-      {helperText && <HelperElement>{helperText}</HelperElement>}
-      {errorText && <ErrorElement>{errorText}</ErrorElement>}
-    </Container>
-  );
-};
+        >
+          <InputElement
+            {...props}
+            ref={ref as React.RefObject<HTMLInputElement>}
+            value={delayedValue}
+            autoComplete="off"
+            type={type}
+            onFocus={(e) => {
+              if (onFocus) onFocus(e);
+              setFocused(true);
+            }}
+            onBlur={(e) => {
+              if (onBlur) onBlur(e);
+              setFocused(false);
+            }}
+            onChange={(e) => {
+              setDelayedValue(e.target.value);
+              handleChange(e);
+            }}
+            disabled={disabled}
+          />
+          {icon && <IconElement icon={icon} size={20} />}
+        </InputWrapper>
+        {helperText && <HelperElement>{helperText}</HelperElement>}
+        {errorText && <ErrorElement>{errorText}</ErrorElement>}
+      </Container>
+    );
+  },
+);
 
 Input.defaultProps = {
-  onClick: undefined,
   onBlur: undefined,
   onFocus: undefined,
+  onChange: undefined,
   icon: undefined,
+  placeholder: undefined,
   errorText: undefined,
   helperText: undefined,
   disabled: false,

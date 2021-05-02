@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
+import { Link, useHistory } from 'react-router-dom';
+import { arrowRight2 } from 'react-icons-kit/icomoon';
+import { calendar } from 'react-icons-kit/icomoon/calendar';
+import { user } from 'react-icons-kit/fa/user';
+import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
+import { RegisterContext, RegisterActionTypes } from '../RegisterContext';
 
-import { Input, Button } from '../../../ui';
+import { Input, Button, DateInput } from '../../../ui';
 
 const Container = styled.div`
   display: flex;
@@ -85,6 +89,9 @@ const NextButton = styled(Button)`
 `;
 
 const User = (): JSX.Element => {
+  const [dateOfBirth, setdateOfBirth] = useState(new Date());
+  const { push } = useHistory();
+  const { state, dispatch } = useContext(RegisterContext);
   return (
     <Container>
       <Title>Vous souhaitez nous rejoindre ? </Title>
@@ -97,7 +104,17 @@ const User = (): JSX.Element => {
               type="text"
               placeholder="Nicolas"
               value="Test"
+              onChange={({ value }) =>
+                dispatch({
+                  type: RegisterActionTypes.UpdateUser,
+                  payload: {
+                    ...state.user,
+                    firstName: value,
+                  },
+                })
+              }
               required
+              icon={user}
             />
           </InputWrapper>
           <InputWrapper>
@@ -107,7 +124,9 @@ const User = (): JSX.Element => {
               type="text"
               placeholder="Carrasco"
               value="Test"
+              // onChange={({ name }) => console.log(e)}
               required
+              icon={user}
             />
           </InputWrapper>
         </InfoWrapper>
@@ -119,17 +138,17 @@ const User = (): JSX.Element => {
               type="text"
               placeholder="Nicolas.Carrasco@gmail.com"
               value="Test"
+              // onChange={({ name }) => console.log(e)}
               required
+              icon={mail}
             />
           </InputWrapper>
           <InputWrapper>
             <InputLabel>Date de naissance</InputLabel>
-            <Input
-              name="lastName"
-              type="text"
-              placeholder="06/09/2000"
-              value="Test"
-              required
+            <DateInput
+              value={dateOfBirth}
+              onChange={(date) => setdateOfBirth(date as Date)}
+              icon={calendar}
             />
           </InputWrapper>
         </InfoWrapper>
@@ -143,6 +162,7 @@ const User = (): JSX.Element => {
             btnStyle="primary"
             shadow
             icon={arrowRight2}
+            onClick={() => push('/register/account')}
           />
         </ButtonWrapper>
       </InfoContainer>

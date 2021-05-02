@@ -36,13 +36,13 @@ type RegisterActions = ActionMap<RegisterPayload>[keyof ActionMap<RegisterPayloa
 
 type InitialStateType = {
   type: RegisterActionTypes | null;
-  user: UserType | null;
+  user: UserType;
   account: AccountType | null;
 };
 
 const initialState: InitialStateType = {
   type: null,
-  user: null,
+  user: { firstName: '', lastName: '', email: '', birthDate: new Date() },
   account: null,
 };
 
@@ -55,7 +55,7 @@ const reducer = (
       return {
         ...state,
         type: action.type,
-        user: action.payload,
+        user: { ...state.user, ...action.payload },
       };
 
     case RegisterActionTypes.UpdateAccount:
