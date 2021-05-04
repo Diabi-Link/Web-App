@@ -8,6 +8,7 @@ export type ButtonTheme = 'primary' | 'primaryLight' | 'default';
 
 type Props = {
   label: string | JSX.Element;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   onClick?: () => any;
   outlined?: boolean;
   shadow?: boolean;
@@ -143,6 +144,7 @@ const Button = ({
   label,
   onClick,
   icon,
+  type,
   ...buttonProps
 }: Props): JSX.Element => {
   const handleClick = (): void => {
@@ -152,7 +154,7 @@ const Button = ({
   };
 
   return (
-    <ButtonElement type="button" onClick={handleClick} {...buttonProps}>
+    <ButtonElement type={type} onClick={handleClick} {...buttonProps}>
       {label}
       {icon && <StyledIcon icon={icon} size={20} />}
     </ButtonElement>
@@ -160,6 +162,7 @@ const Button = ({
 };
 
 Button.defaultProps = {
+  type: 'button',
   onClick: undefined,
   outlined: false,
   shadow: false,

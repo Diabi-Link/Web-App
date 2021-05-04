@@ -10,7 +10,7 @@ type Props = {
   errorText?: string;
   helperText?: string;
   disabled?: boolean;
-  onChange?: ({ value }: { value: string }) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => any;
   onFocus?: () => any;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'>;
@@ -105,7 +105,7 @@ const Input = forwardRef(
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
       if (onChange) {
-        onChange({ value: e.target.value });
+        onChange(e);
       }
     };
 

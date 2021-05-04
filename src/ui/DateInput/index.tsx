@@ -1,6 +1,7 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import fr from 'date-fns/locale/fr';
 import Input from '../Input';
 
 type Props = {
@@ -8,6 +9,8 @@ type Props = {
   icon?: JSX.Element;
   onChange: (date: Date | [Date, Date] | null) => any;
 };
+
+registerLocale('fr', fr);
 
 const DateInput = ({ value, icon, onChange, ...props }: Props): JSX.Element => {
   return (

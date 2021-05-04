@@ -16,7 +16,7 @@ export enum RegisterActionTypes {
   UpdateAccount = 'REGISTER_UPDATE_ACCOUNT_TYPE',
 }
 
-type UserType = {
+export type UserType = {
   firstName: string;
   lastName: string;
   email: string;
