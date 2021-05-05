@@ -43,7 +43,7 @@ const Separator = styled.div`
 const StepProgress = (): JSX.Element => {
   return (
     <Progress>
-      <Step to="">
+      <Step to="/register/user">
         <StepCircle>1</StepCircle>
         <StepText> Utilisateur</StepText>
       </Step>

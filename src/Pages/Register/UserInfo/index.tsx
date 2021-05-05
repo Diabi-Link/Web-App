@@ -108,6 +108,7 @@ const User = (): JSX.Element => {
         ...values,
       },
     });
+    push('/register/account');
   };
 
   return (
@@ -131,7 +132,11 @@ const User = (): JSX.Element => {
                   onChange={(e) => {
                     props.handleChange(e);
                   }}
-                  errorText={props.errors.firstName}
+                  errorText={
+                    props.errors.firstName && props.touched.firstName
+                      ? props.errors.firstName
+                      : undefined
+                  }
                   icon={iconUser}
                 />
               </InputWrapper>
@@ -145,7 +150,11 @@ const User = (): JSX.Element => {
                   onChange={(e) => {
                     props.handleChange(e);
                   }}
-                  errorText={props.errors.lastName}
+                  errorText={
+                    props.errors.lastName && props.touched.lastName
+                      ? props.errors.lastName
+                      : undefined
+                  }
                   icon={iconUser}
                 />
               </InputWrapper>
@@ -161,7 +170,11 @@ const User = (): JSX.Element => {
                   onChange={(e) => {
                     props.handleChange(e);
                   }}
-                  errorText={props.errors.email}
+                  errorText={
+                    props.errors.email && props.touched.email
+                      ? props.errors.email
+                      : undefined
+                  }
                   icon={mail}
                 />
               </InputWrapper>
@@ -169,6 +182,11 @@ const User = (): JSX.Element => {
                 <InputLabel>Date de naissance</InputLabel>
                 <DateInput
                   value={props.values.birthDate}
+                  errorText={
+                    props.errors.birthDate && props.touched.birthDate
+                      ? props.errors.birthDate
+                      : undefined
+                  }
                   onChange={(date) => {
                     props.setFieldValue('birthDate', date);
                   }}
@@ -187,7 +205,6 @@ const User = (): JSX.Element => {
                 btnStyle="primary"
                 shadow
                 icon={arrowRight2}
-                // onClick={() => push('/register/account')}
               />
             </ButtonWrapper>
           </InfoContainer>

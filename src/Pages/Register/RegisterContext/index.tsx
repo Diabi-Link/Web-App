@@ -20,7 +20,7 @@ export type UserType = {
   firstName: string;
   lastName: string;
   email: string;
-  birthDate: Date;
+  birthDate: Date | null;
 };
 
 type AccountType = {
@@ -42,7 +42,7 @@ type InitialStateType = {
 
 const initialState: InitialStateType = {
   type: null,
-  user: { firstName: '', lastName: '', email: '', birthDate: new Date() },
+  user: { firstName: '', lastName: '', email: '', birthDate: null },
   account: null,
 };
 

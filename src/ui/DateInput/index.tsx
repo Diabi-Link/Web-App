@@ -7,16 +7,26 @@ import Input from '../Input';
 type Props = {
   value: Date | null | undefined;
   icon?: JSX.Element;
+  errorText?: string | undefined;
   onChange: (date: Date | [Date, Date] | null) => any;
 };
 
 registerLocale('fr', fr);
 
-const DateInput = ({ value, icon, onChange, ...props }: Props): JSX.Element => {
+const DateInput = ({
+  value,
+  icon,
+  errorText,
+  onChange,
+  ...props
+}: Props): JSX.Element => {
   return (
     <DatePicker
       {...props}
-      customInput={<Input icon={icon} value="test" type="text" />}
+      customInput={
+        <Input errorText={errorText} icon={icon} value="test" type="text" />
+      }
+      placeholderText="15/04/1980"
       selected={value}
       onChange={(date) => onChange(date)}
       locale="fr"
@@ -27,6 +37,7 @@ const DateInput = ({ value, icon, onChange, ...props }: Props): JSX.Element => {
 
 DateInput.defaultProps = {
   icon: undefined,
+  errorText: undefined,
 };
 
 export default DateInput;
