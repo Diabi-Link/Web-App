@@ -7,7 +7,47 @@ type Props = {
   className?: string;
 };
 
-const StyledHeading = styled.div<{ as: string } & Props>``;
+// TODO: define default font size and margin for differents levels
+
+const getFontSize = (level: Props['level']): string => {
+  switch (level) {
+    case 1:
+      return '1.875rem';
+    case 2:
+      return 'auto';
+    case 3:
+      return '0.9rem';
+    case 4:
+      return 'auto';
+    case 5:
+      return 'auto';
+    default:
+      return 'auto';
+  }
+};
+
+const getMargin = (level: Props['level']): string => {
+  switch (level) {
+    case 1:
+      return '1.875rem';
+    case 2:
+      return 'auto';
+    case 3:
+      return '0.625rem 0';
+    case 4:
+      return 'auto';
+    case 5:
+      return 'auto';
+    default:
+      return 'auto';
+  }
+};
+
+const StyledHeading = styled.div<{ as: string } & Props>`
+  font-size: ${({ level }) => getFontSize(level)};
+  margin: ${({ level }) => getMargin(level)};
+  font-weight: bolder;
+`;
 
 const Heading = ({ level, children, className }: Props): JSX.Element => {
   return (
