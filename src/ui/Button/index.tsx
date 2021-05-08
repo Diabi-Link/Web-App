@@ -108,7 +108,7 @@ const ButtonElement = styled.button<{
 
   box-shadow: ${({ btnStyle, theme, outlined, shadow }) =>
     shadow
-      ? `2px 5px 4px ${getShadowColor({
+      ? `2px 3px 4px ${getShadowColor({
           btnStyle,
           theme,
           outlined,
@@ -132,7 +132,11 @@ const ButtonElement = styled.button<{
             theme,
             outlined,
           })}`
-        : 'none'};
+        : `2px 3px 4px ${getShadowColor({
+            btnStyle,
+            theme,
+            outlined,
+          })}`};
   }
 `;
 
@@ -147,14 +151,8 @@ const Button = ({
   type,
   ...buttonProps
 }: Props): JSX.Element => {
-  const handleClick = (): void => {
-    if (onClick) {
-      onClick();
-    }
-  };
-
   return (
-    <ButtonElement type={type} onClick={handleClick} {...buttonProps}>
+    <ButtonElement type={type} onClick={onClick} {...buttonProps}>
       {label}
       {icon && <StyledIcon icon={icon} size={20} />}
     </ButtonElement>

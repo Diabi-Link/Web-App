@@ -108,6 +108,13 @@ const User = (): JSX.Element => {
         ...values,
       },
     });
+    dispatch({
+      type: RegisterActionTypes.UpdateInfo,
+      payload: {
+        ...state.info,
+        step: 2,
+      },
+    });
     push('/register/account');
   };
 

@@ -14,6 +14,7 @@ type ActionMap<M extends { [index: string]: any }> = {
 export enum RegisterActionTypes {
   UpdateUser = 'REGISTER_UPDATE_USER',
   UpdateAccount = 'REGISTER_UPDATE_ACCOUNT_TYPE',
+  UpdateInfo = 'REGISTER_UPDATE_INFO_TYPE',
 }
 
 export type UserType = {
@@ -27,9 +28,14 @@ type AccountType = {
   type: 'Patient' | 'Relative' | 'Medical';
 };
 
+type InfoType = {
+  step: number;
+};
+
 type RegisterPayload = {
   [RegisterActionTypes.UpdateUser]: UserType;
   [RegisterActionTypes.UpdateAccount]: AccountType;
+  [RegisterActionTypes.UpdateInfo]: InfoType;
 };
 
 type RegisterActions = ActionMap<RegisterPayload>[keyof ActionMap<RegisterPayload>];
@@ -38,12 +44,14 @@ type InitialStateType = {
   type: RegisterActionTypes | null;
   user: UserType;
   account: AccountType | null;
+  info: InfoType;
 };
 
 const initialState: InitialStateType = {
   type: null,
   user: { firstName: '', lastName: '', email: '', birthDate: null },
   account: null,
+  info: { step: 1 },
 };
 
 const reducer = (
@@ -63,6 +71,13 @@ const reducer = (
         ...state,
         type: action.type,
         account: action.payload,
+      };
+
+    case RegisterActionTypes.UpdateInfo:
+      return {
+        ...state,
+        type: action.type,
+        info: action.payload,
       };
 
     default:

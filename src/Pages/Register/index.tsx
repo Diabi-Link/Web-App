@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 
 import UserInfo from './UserInfo';
 import AccountInfo from './AccountInfo';
-import { RegisterProvider } from './RegisterContext';
+import SecretInfo from './SecretInfo';
+import { RegisterContext } from './RegisterContext';
 import { StepProgress } from '../../ui';
 import { ReactComponent as ArrowBack } from '../../assets/images/arrowBack.svg';
 
@@ -59,6 +60,19 @@ const Text = styled.p`
 const StepNavWrapper = styled.div``;
 
 const Register = (): JSX.Element => {
+  const { state } = useContext(RegisterContext);
+
+  const { info } = state;
+
+  const locations: {
+    path: string;
+    description: string;
+  }[] = [
+    { path: '/register/user', description: 'Utilisateur' },
+    { path: '/register/account', description: 'Type de compte' },
+    { path: '/register/password', description: 'On y est presque !' },
+  ];
+
   return (
     <Container>
       <Left>
@@ -67,16 +81,15 @@ const Register = (): JSX.Element => {
           <Text>Revenir au site</Text>
         </BackWrapper>
         <StepWrapper>
-          <StepProgress />
+          <StepProgress step={info.step} locations={locations} />
         </StepWrapper>
         <FormWrapper>
-          <RegisterProvider>
-            <Switch>
-              <Route path="/register/user" exact render={() => <UserInfo />} />
-              <Route path="/register/account" render={() => <AccountInfo />} />
-              <Redirect to="/login" />
-            </Switch>
-          </RegisterProvider>
+          <Switch>
+            <Route path="/register/user" exact render={() => <UserInfo />} />
+            <Route path="/register/account" render={() => <AccountInfo />} />
+            <Route path="/register/password" render={() => <SecretInfo />} />
+            <Redirect to="/login" />
+          </Switch>
         </FormWrapper>
         <StepNavWrapper />
       </Left>
