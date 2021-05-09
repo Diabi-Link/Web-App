@@ -65,7 +65,7 @@ const StepProgress = ({ step, locations }: Props): JSX.Element => {
     <Progress>
       {locations.map((location, key) => (
         <>
-          <Step to={location.path}>
+          <Step to={location.path} key={location.path}>
             <StepCircle checked={step >= key + 2} actual={step === key + 1}>
               {step >= key + 2 ? <Icon icon={check} size={13} /> : key + 1}
             </StepCircle>
