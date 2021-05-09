@@ -42,17 +42,16 @@ const getBackgroundColor = ({
 const getBorderColor = ({
   btnStyle,
   theme,
-  outlined,
-}: GettersArguments): string => {
+}: Omit<GettersArguments, 'outlined'>): string => {
   switch (btnStyle) {
     case 'primary':
-      return outlined ? theme.main.primary : 'transparent';
+      return theme.main.primary;
     case 'primaryLight':
-      return outlined ? theme.main.primaryLight : 'transparent';
+      return theme.main.primaryLight;
     case 'white':
-      return outlined ? theme.main.white : 'transparent';
+      return theme.main.white;
     default:
-      return outlined ? theme.main.grayLight : 'transparent';
+      return theme.main.grayLight;
   }
 };
 
@@ -104,8 +103,7 @@ const ButtonElement = styled.button<{
   transition: 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   justify-content: center;
   border: 0.0625rem solid
-    ${({ btnStyle, theme, outlined }) =>
-      getBorderColor({ btnStyle, theme, outlined })};
+    ${({ btnStyle, theme }) => getBorderColor({ btnStyle, theme })};
   border-radius: 10px;
   color: ${({ btnStyle, theme, outlined }) =>
     getLabelColor({ btnStyle, theme, outlined })};
@@ -115,7 +113,7 @@ const ButtonElement = styled.button<{
 
   box-shadow: ${({ btnStyle, theme, shadow }) =>
     shadow
-      ? `2px 5px 4px ${getShadowColor({
+      ? `2px 3px 4px ${getShadowColor({
           btnStyle,
           theme,
         })}`
@@ -131,21 +129,25 @@ const ButtonElement = styled.button<{
       outlined
         ? 'none'
         : darken(0.1, getBackgroundColor({ btnStyle, theme, outlined }))};
-    box-shadow: ${({ btnStyle, theme, outlined, shadow }) =>
-      shadow || outlined
-        ? `0px 0px 7px 1px ${darken(
-            0.1,
-            getShadowColor({
-              btnStyle,
-              theme,
-            }),
-          )}`
-        : 'none'};
+    box-shadow: ${({ btnStyle, theme, outlined, shadow }) => {
+      if (outlined)
+        return `0px 0px 7px 1px ${darken(
+          0.1,
+          getShadowColor({
+            btnStyle,
+            theme,
+          }),
+        )}`;
+      if (shadow)
+        return `2px 3px 4px ${getShadowColor({
+          btnStyle,
+          theme,
+        })}`;
+      return 'none';
+    }};
     border: 0.0625rem solid
       ${({ btnStyle, theme, outlined }) =>
-        outlined
-          ? 'transparent'
-          : getBorderColor({ btnStyle, theme, outlined })};
+        outlined ? 'transparent' : getBorderColor({ btnStyle, theme })};
   }
 `;
 
@@ -160,14 +162,8 @@ const Button = ({
   type,
   ...buttonProps
 }: Props): JSX.Element => {
-  const handleClick = (): void => {
-    if (onClick) {
-      onClick();
-    }
-  };
-
   return (
-    <ButtonElement type={type} onClick={handleClick} {...buttonProps}>
+    <ButtonElement type={type} onClick={onClick} {...buttonProps}>
       {label}
       {icon && <StyledIcon icon={icon} size={20} />}
     </ButtonElement>

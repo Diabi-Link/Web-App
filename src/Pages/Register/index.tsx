@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import { Icon } from 'react-icons-kit';
 
+import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import UserInfo from './UserInfo';
 import AccountInfo from './AccountInfo';
-import { RegisterProvider } from './RegisterContext';
+import SecretInfo from './SecretInfo';
+import { RegisterContext } from './RegisterContext';
 import { StepProgress } from '../../ui';
-import { ReactComponent as ArrowBack } from '../../assets/images/arrowBack.svg';
 
 const Container = styled.div`
   display: flex;
@@ -36,13 +38,22 @@ const Left = styled.div`
   height: 100vh;
 `;
 
-const BackWrapper = styled(Link)`
+const BackWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
   padding: 50px 100px;
+`;
+
+const BackLink = styled(Link)`
+  display: flex;
+  align-items: center;
   text-decoration: none;
+`;
+
+const ArrowBack = styled(Icon)`
+  color: ${({ theme }) => theme.main.primary};
 `;
 
 const FormWrapper = styled.div`
@@ -59,24 +70,38 @@ const Text = styled.p`
 const StepNavWrapper = styled.div``;
 
 const Register = (): JSX.Element => {
+  const { state } = useContext(RegisterContext);
+
+  const { info } = state;
+
+  const locations: {
+    path: string;
+    description: string;
+  }[] = [
+    { path: '/register/user', description: 'Utilisateur' },
+    { path: '/register/account', description: 'Type de compte' },
+    { path: '/register/password', description: 'On y est presque !' },
+  ];
+
   return (
     <Container>
       <Left>
-        <BackWrapper to="/">
-          <ArrowBack />
-          <Text>Revenir au site</Text>
+        <BackWrapper>
+          <BackLink to="/">
+            <ArrowBack icon={arrowLeft2} size={20} />
+            <Text>Revenir au site</Text>
+          </BackLink>
         </BackWrapper>
         <StepWrapper>
-          <StepProgress />
+          <StepProgress step={info.step} locations={locations} />
         </StepWrapper>
         <FormWrapper>
-          <RegisterProvider>
-            <Switch>
-              <Route path="/register/user" exact render={() => <UserInfo />} />
-              <Route path="/register/account" render={() => <AccountInfo />} />
-              <Redirect to="/login" />
-            </Switch>
-          </RegisterProvider>
+          <Switch>
+            <Route path="/register/user" exact render={() => <UserInfo />} />
+            <Route path="/register/account" render={() => <AccountInfo />} />
+            <Route path="/register/password" render={() => <SecretInfo />} />
+            <Redirect to="/login" />
+          </Switch>
         </FormWrapper>
         <StepNavWrapper />
       </Left>
