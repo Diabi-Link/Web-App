@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, Form, FormikProps } from 'formik';
-import { arrowRight2 } from 'react-icons-kit/icomoon';
+import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { calendar } from 'react-icons-kit/icomoon/calendar';
 import { user as iconUser } from 'react-icons-kit/fa/user';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
