@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
+import { RegisterProvider } from '../Register/RegisterContext';
 import Page404 from '../404';
 
 import Navbar from '../Navbar';
@@ -18,7 +19,9 @@ const Nav = (): JSX.Element => {
       {needNavbar && <Navbar />}
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/register" component={Register} />
+        <RegisterProvider>
+          <Route path="/register" component={Register} />
+        </RegisterProvider>
         <Route component={Page404} />
       </Switch>
     </Suspense>

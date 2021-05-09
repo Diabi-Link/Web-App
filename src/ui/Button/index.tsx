@@ -1,14 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { darken } from 'polished';
+import { Icon } from 'react-icons-kit';
 import { Theme } from '../../theme';
 
 export type ButtonTheme = 'primary' | 'primaryLight' | 'default';
 
 type Props = {
   label: string | JSX.Element;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   onClick?: () => any;
   outlined?: boolean;
+  shadow?: boolean;
+  icon?: JSX.Element;
   btnStyle: ButtonTheme;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;
 
@@ -63,14 +67,31 @@ const getLabelColor = ({
   }
 };
 
+const getShadowColor = ({
+  btnStyle,
+  theme,
+  outlined,
+}: GettersArguments): string => {
+  switch (btnStyle) {
+    case 'primary':
+      return outlined ? 'transparent' : theme.main.primaryLight;
+    case 'primaryLight':
+      return outlined ? 'transparent' : theme.main.primaryLighter;
+    default:
+      return theme.main.dark;
+  }
+};
+
 const ButtonElement = styled.button<{
   btnStyle: 'primary' | 'primaryLight' | 'default';
   outlined?: boolean;
+  shadow?: boolean;
 }>`
   display: inline-flex;
+  align-items: center;
   cursor: pointer;
-  padding: 0.6rem 1.2rem;
-  font-weight: 700;
+  padding: 0.7rem 1.2rem;
+  font-weight: 600;
   font-size: 1rem;
   white-space: nowrap;
   transition: 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -78,12 +99,21 @@ const ButtonElement = styled.button<{
   border: 0.0625rem solid
     ${({ btnStyle, theme, outlined }) =>
       getBorderColor({ btnStyle, theme, outlined })};
-  border-radius: 0.35rem;
+  border-radius: 10px;
   color: ${({ btnStyle, theme, outlined }) =>
     getLabelColor({ btnStyle, theme, outlined })};
 
   background-color: ${({ btnStyle, theme, outlined }) =>
     getBackgroundColor({ btnStyle, theme, outlined })};
+
+  box-shadow: ${({ btnStyle, theme, outlined, shadow }) =>
+    shadow
+      ? `2px 3px 4px ${getShadowColor({
+          btnStyle,
+          theme,
+          outlined,
+        })}`
+      : 'none'};
 
   &:disabled {
     cursor: not-allowed;
@@ -102,27 +132,39 @@ const ButtonElement = styled.button<{
             theme,
             outlined,
           })}`
-        : 'none'};
+        : `2px 3px 4px ${getShadowColor({
+            btnStyle,
+            theme,
+            outlined,
+          })}`};
   }
 `;
 
-const Button = ({ label, onClick, ...buttonProps }: Props): JSX.Element => {
-  const handleClick = (): void => {
-    if (onClick) {
-      onClick();
-    }
-  };
+const StyledIcon = styled(Icon)`
+  margin-left: 0.7rem;
+`;
 
+const Button = ({
+  label,
+  onClick,
+  icon,
+  type,
+  ...buttonProps
+}: Props): JSX.Element => {
   return (
-    <ButtonElement type="button" onClick={handleClick} {...buttonProps}>
+    <ButtonElement type={type} onClick={onClick} {...buttonProps}>
       {label}
+      {icon && <StyledIcon icon={icon} size={20} />}
     </ButtonElement>
   );
 };
 
 Button.defaultProps = {
+  type: 'button',
   onClick: undefined,
   outlined: false,
+  shadow: false,
+  icon: null,
 };
 
 export default Button;

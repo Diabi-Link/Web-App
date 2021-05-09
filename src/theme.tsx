@@ -11,6 +11,7 @@ export type Theme = {
     gray: string;
     grayLight: string;
     grayLighter: string;
+    error: string;
   };
 };
 
@@ -27,6 +28,7 @@ const theme = (): Theme => ({
     gray: '#A9A9A9',
     grayLight: '#CACACA',
     grayLighter: '#E9E8E8',
+    error: '#E40000',
   },
 });
 
