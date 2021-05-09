@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
-import { Link } from 'react-router-dom';
 import { Icon } from 'react-icons-kit';
 import { checkmark as check } from 'react-icons-kit/icomoon/checkmark';
 import { Theme } from '../../theme';
@@ -12,13 +11,14 @@ type Props = {
     path: string;
     description: string;
   }>;
+  onClick: (step: number) => void;
 };
 
 const Progress = styled.div`
   display: flex;
 `;
 
-const Step = styled(Link)`
+const Step = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,6 +45,10 @@ const StepCircle = styled.div<{
   font-size: 14px;
   font-weight: 800;
   position: relative;
+  cursor: ${({ actual, checked }) => {
+    if (!actual && !checked) return 'default';
+    return 'pointer';
+  }};
 `;
 
 const StepText = styled.p`
@@ -60,19 +64,23 @@ const Separator = styled.div`
   margin: 15px;
 `;
 
-const StepProgress = ({ step, locations }: Props): JSX.Element => {
+const StepProgress = ({ step, locations, onClick }: Props): JSX.Element => {
   return (
     <Progress>
       {locations.map((location, key) => (
-        <>
-          <Step to={location.path} key={location.path}>
-            <StepCircle checked={step >= key + 2} actual={step === key + 1}>
+        <Fragment key={location.path}>
+          <Step>
+            <StepCircle
+              checked={step >= key + 2}
+              actual={step === key + 1}
+              onClick={() => step > key + 1 && onClick(key + 1)}
+            >
               {step >= key + 2 ? <Icon icon={check} size={13} /> : key + 1}
             </StepCircle>
             <StepText>{location.description}</StepText>
           </Step>
           {key + 1 !== locations.length && <Separator />}
-        </>
+        </Fragment>
       ))}
     </Progress>
   );

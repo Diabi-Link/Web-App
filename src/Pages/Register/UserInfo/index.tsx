@@ -1,44 +1,61 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Formik, Form, FormikProps } from 'formik';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { calendar } from 'react-icons-kit/icomoon/calendar';
 import { user as iconUser } from 'react-icons-kit/fa/user';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
+
 import {
   RegisterContext,
   RegisterActionTypes,
   UserType,
 } from '../RegisterContext';
-import ValidationSchema from '../Validation';
+import { ValidateUserSchema } from '../Validation';
 
-import { Input, Button, DateInput } from '../../../ui';
+import Heading from '../../../ui/Heading';
+import Input from '../../../ui/Input';
+import Button from '../../../ui/Button';
+import DateInput from '../../../ui/DateInput';
+
+type Props = {
+  onClick: (step: number) => void;
+};
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const InfoContainer = styled(Form)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-  @media (min-width: 1700px) {
-    width: 70%;
+  width: 100%;
+  @media (min-width: 1500px) {
+    width: 80%;
   }
 `;
 
-const InfoWrapper = styled.div`
+const Wrapper = styled(Form)`
+  width: 100%;
+  flex: 1;
+`;
+
+const ContentWrapper = styled.div`
+  height: 60%;
+  margin: 20px 0px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+`;
+
+const InfoBox = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin: 20px 0px;
-  @media (min-width: 1700px) {
+  @media (min-width: 1500px) {
     margin: 30px 0px 20px;
   }
 `;
@@ -51,28 +68,14 @@ const InputWrapper = styled.div`
 
 const ConnectionWrapper = styled.div`
   display: flex;
-  margin: 40px;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
+  justify-content: center;
+  margin: 40px 0px 20px;
 `;
 
 const InputLabel = styled.label`
   font-size: 16px;
   font-weight: 500;
   margin: 15px 5px;
-`;
-
-const Title = styled.p`
-  font-size: 30px;
-  @media (min-width: 1700px) {
-    font-size: 35px;
-  }
-  font-weight: 700;
-  color: ${(props) => props.theme.main.dark};
 `;
 
 const Text = styled.p`
@@ -94,8 +97,7 @@ const NextButton = styled(Button)`
   height: 40px;
 `;
 
-const User = (): JSX.Element => {
-  const { push } = useHistory();
+const User = ({ onClick }: Props): JSX.Element => {
   const { state, dispatch } = useContext(RegisterContext);
 
   const { user } = state;
@@ -108,103 +110,98 @@ const User = (): JSX.Element => {
         ...values,
       },
     });
-    dispatch({
-      type: RegisterActionTypes.UpdateInfo,
-      payload: {
-        ...state.info,
-        step: 2,
-      },
-    });
-    push('/register/account');
+    onClick(2);
   };
 
   return (
     <Container>
-      <Title>Vous souhaitez nous rejoindre ? </Title>
+      <Heading level={1}>Vous souhaitez nous rejoindre ?</Heading>
       <Formik
         initialValues={user}
-        validationSchema={ValidationSchema}
+        validationSchema={ValidateUserSchema}
         onSubmit={handleSubmit}
       >
         {(props: FormikProps<UserType>) => (
-          <InfoContainer>
-            <InfoWrapper>
-              <InputWrapper>
-                <InputLabel>Prénom</InputLabel>
-                <Input
-                  name="firstName"
-                  type="text"
-                  placeholder="Nicolas"
-                  value={props.values.firstName}
-                  onChange={(e) => {
-                    props.handleChange(e);
-                  }}
-                  errorText={
-                    props.errors.firstName && props.touched.firstName
-                      ? props.errors.firstName
-                      : undefined
-                  }
-                  icon={iconUser}
-                />
-              </InputWrapper>
-              <InputWrapper>
-                <InputLabel>Nom de famille</InputLabel>
-                <Input
-                  name="lastName"
-                  type="text"
-                  placeholder="Carrasco"
-                  value={props.values.lastName}
-                  onChange={(e) => {
-                    props.handleChange(e);
-                  }}
-                  errorText={
-                    props.errors.lastName && props.touched.lastName
-                      ? props.errors.lastName
-                      : undefined
-                  }
-                  icon={iconUser}
-                />
-              </InputWrapper>
-            </InfoWrapper>
-            <InfoWrapper>
-              <InputWrapper>
-                <InputLabel>Adresse email</InputLabel>
-                <Input
-                  name="email"
-                  type="text"
-                  placeholder="Nicolas.Carrasco@gmail.com"
-                  value={props.values.email}
-                  onChange={(e) => {
-                    props.handleChange(e);
-                  }}
-                  errorText={
-                    props.errors.email && props.touched.email
-                      ? props.errors.email
-                      : undefined
-                  }
-                  icon={mail}
-                />
-              </InputWrapper>
-              <InputWrapper>
-                <InputLabel>Date de naissance</InputLabel>
-                <DateInput
-                  value={props.values.birthDate}
-                  errorText={
-                    props.errors.birthDate && props.touched.birthDate
-                      ? props.errors.birthDate
-                      : undefined
-                  }
-                  onChange={(date) => {
-                    props.setFieldValue('birthDate', date);
-                  }}
-                  icon={calendar}
-                />
-              </InputWrapper>
-            </InfoWrapper>
-            <ConnectionWrapper>
-              <Text>Vous avez déjà un compte ?</Text>
-              <ConnectLink to="/">Connectez-vous.</ConnectLink>
-            </ConnectionWrapper>
+          <Wrapper>
+            <ContentWrapper>
+              <InfoBox>
+                <InputWrapper>
+                  <InputLabel>Prénom</InputLabel>
+                  <Input
+                    name="firstName"
+                    type="text"
+                    placeholder="Nicolas"
+                    value={props.values.firstName}
+                    onChange={(e) => {
+                      props.handleChange(e);
+                    }}
+                    errorText={
+                      props.errors.firstName && props.touched.firstName
+                        ? props.errors.firstName
+                        : undefined
+                    }
+                    icon={iconUser}
+                  />
+                </InputWrapper>
+                <InputWrapper>
+                  <InputLabel>Nom de famille</InputLabel>
+                  <Input
+                    name="lastName"
+                    type="text"
+                    placeholder="Carrasco"
+                    value={props.values.lastName}
+                    onChange={(e) => {
+                      props.handleChange(e);
+                    }}
+                    errorText={
+                      props.errors.lastName && props.touched.lastName
+                        ? props.errors.lastName
+                        : undefined
+                    }
+                    icon={iconUser}
+                  />
+                </InputWrapper>
+              </InfoBox>
+              <InfoBox>
+                <InputWrapper>
+                  <InputLabel>Adresse email</InputLabel>
+                  <Input
+                    name="email"
+                    type="text"
+                    placeholder="Nicolas.Carrasco@gmail.com"
+                    value={props.values.email}
+                    onChange={(e) => {
+                      props.handleChange(e);
+                    }}
+                    errorText={
+                      props.errors.email && props.touched.email
+                        ? props.errors.email
+                        : undefined
+                    }
+                    icon={mail}
+                  />
+                </InputWrapper>
+                <InputWrapper>
+                  <InputLabel>Date de naissance</InputLabel>
+                  <DateInput
+                    value={props.values.birthDate}
+                    errorText={
+                      props.errors.birthDate && props.touched.birthDate
+                        ? props.errors.birthDate
+                        : undefined
+                    }
+                    onChange={(date) => {
+                      props.setFieldValue('birthDate', date);
+                    }}
+                    icon={calendar}
+                  />
+                </InputWrapper>
+              </InfoBox>
+              <ConnectionWrapper>
+                <Text>Vous avez déjà un compte ?</Text>
+                <ConnectLink to="/">Connectez-vous.</ConnectLink>
+              </ConnectionWrapper>
+            </ContentWrapper>
             <ButtonWrapper>
               <NextButton
                 type="submit"
@@ -214,7 +211,7 @@ const User = (): JSX.Element => {
                 icon={arrowRight2}
               />
             </ButtonWrapper>
-          </InfoContainer>
+          </Wrapper>
         )}
       </Formik>
     </Container>
