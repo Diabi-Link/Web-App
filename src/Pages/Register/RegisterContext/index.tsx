@@ -24,9 +24,7 @@ export type UserType = {
   birthDate: Date | null;
 };
 
-type AccountType = {
-  type: 'Patient' | 'Relative' | 'Medical';
-};
+export type AccountType = 'diabetic' | 'referent' | 'medicalProfessional';
 
 type InfoType = {
   step: number;

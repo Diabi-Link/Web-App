@@ -4,7 +4,7 @@ import { darken } from 'polished';
 import { Icon } from 'react-icons-kit';
 import { Theme } from '../../theme';
 
-export type ButtonTheme = 'primary' | 'primaryLight' | 'default';
+export type ButtonTheme = 'primary' | 'primaryLight' | 'white' | 'default';
 
 type Props = {
   label: string | JSX.Element;
@@ -32,6 +32,8 @@ const getBackgroundColor = ({
       return outlined ? theme.main.white : theme.main.primary;
     case 'primaryLight':
       return outlined ? theme.main.white : theme.main.primaryLight;
+    case 'white':
+      return outlined ? theme.main.primary : theme.main.white;
     default:
       return theme.main.whiteBroken;
   }
@@ -40,13 +42,14 @@ const getBackgroundColor = ({
 const getBorderColor = ({
   btnStyle,
   theme,
-  outlined,
-}: GettersArguments): string => {
+}: Omit<GettersArguments, 'outlined'>): string => {
   switch (btnStyle) {
     case 'primary':
-      return outlined ? theme.main.primary : 'transparent';
+      return theme.main.primary;
     case 'primaryLight':
-      return outlined ? theme.main.primaryLight : 'transparent';
+      return theme.main.primaryLight;
+    case 'white':
+      return theme.main.white;
     default:
       return theme.main.grayLight;
   }
@@ -62,6 +65,8 @@ const getLabelColor = ({
       return outlined ? theme.main.primary : theme.main.white;
     case 'primaryLight':
       return outlined ? theme.main.primaryLight : theme.main.white;
+    case 'white':
+      return outlined ? theme.main.white : theme.main.grayDarker;
     default:
       return theme.main.dark;
   }
@@ -70,20 +75,21 @@ const getLabelColor = ({
 const getShadowColor = ({
   btnStyle,
   theme,
-  outlined,
-}: GettersArguments): string => {
+}: Omit<GettersArguments, 'outlined'>): string => {
   switch (btnStyle) {
     case 'primary':
-      return outlined ? 'transparent' : theme.main.primaryLight;
+      return theme.main.primaryLight;
     case 'primaryLight':
-      return outlined ? 'transparent' : theme.main.primaryLighter;
+      return theme.main.primaryLighter;
+    case 'white':
+      return theme.main.white;
     default:
-      return theme.main.dark;
+      return theme.main.primaryLight;
   }
 };
 
 const ButtonElement = styled.button<{
-  btnStyle: 'primary' | 'primaryLight' | 'default';
+  btnStyle: ButtonTheme;
   outlined?: boolean;
   shadow?: boolean;
 }>`
@@ -97,8 +103,7 @@ const ButtonElement = styled.button<{
   transition: 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   justify-content: center;
   border: 0.0625rem solid
-    ${({ btnStyle, theme, outlined }) =>
-      getBorderColor({ btnStyle, theme, outlined })};
+    ${({ btnStyle, theme }) => getBorderColor({ btnStyle, theme })};
   border-radius: 10px;
   color: ${({ btnStyle, theme, outlined }) =>
     getLabelColor({ btnStyle, theme, outlined })};
@@ -106,12 +111,11 @@ const ButtonElement = styled.button<{
   background-color: ${({ btnStyle, theme, outlined }) =>
     getBackgroundColor({ btnStyle, theme, outlined })};
 
-  box-shadow: ${({ btnStyle, theme, outlined, shadow }) =>
+  box-shadow: ${({ btnStyle, theme, shadow }) =>
     shadow
       ? `2px 3px 4px ${getShadowColor({
           btnStyle,
           theme,
-          outlined,
         })}`
       : 'none'};
 
@@ -125,18 +129,25 @@ const ButtonElement = styled.button<{
       outlined
         ? 'none'
         : darken(0.1, getBackgroundColor({ btnStyle, theme, outlined }))};
-    box-shadow: ${({ btnStyle, theme, outlined }) =>
-      outlined
-        ? `0px 0px 7px 1px ${getLabelColor({
+    box-shadow: ${({ btnStyle, theme, outlined, shadow }) => {
+      if (outlined)
+        return `0px 0px 7px 1px ${darken(
+          0.1,
+          getShadowColor({
             btnStyle,
             theme,
-            outlined,
-          })}`
-        : `2px 3px 4px ${getShadowColor({
-            btnStyle,
-            theme,
-            outlined,
-          })}`};
+          }),
+        )}`;
+      if (shadow)
+        return `2px 3px 4px ${getShadowColor({
+          btnStyle,
+          theme,
+        })}`;
+      return 'none';
+    }};
+    border: 0.0625rem solid
+      ${({ btnStyle, theme, outlined }) =>
+        outlined ? 'transparent' : getBorderColor({ btnStyle, theme })};
   }
 `;
 
