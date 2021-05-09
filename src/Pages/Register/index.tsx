@@ -4,11 +4,15 @@ import { Switch, Route, Redirect, Link, useHistory } from 'react-router-dom';
 import { Icon } from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
+import { ReactComponent as LogoSvg } from '../../assets/images/Logo.svg';
+import { ReactComponent as WelcomeSvg } from '../../assets/images/Welcome.svg';
+
 import { RegisterContext, RegisterActionTypes } from './RegisterContext';
 import UserInfo from './UserInfo';
 import AccountInfo from './AccountInfo';
 import SecretInfo from './SecretInfo';
 import StepProgress from '../../ui/StepProgress';
+import Heading from '../../ui/Heading';
 
 const Container = styled.div`
   display: flex;
@@ -27,10 +31,15 @@ const StepWrapper = styled.div`
 const Right = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 30vw;
   height: 100vh;
   background-color: ${(props) => props.theme.main.primaryLighter};
+
+  & > svg {
+    margin: 30px 0px;
+  }
 `;
 
 const Left = styled.div`
@@ -137,7 +146,11 @@ const Register = (): JSX.Element => {
         </FormWrapper>
         <StepNavWrapper />
       </Left>
-      <Right />
+      <Right>
+        <LogoSvg height="15vh" />
+        <WelcomeSvg />
+        <Heading level={2}>Rejoignez nous.</Heading>
+      </Right>
     </Container>
   );
 };
