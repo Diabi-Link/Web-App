@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { darken } from 'polished';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
+import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
 import { ReactComponent as ReferentSvg } from '../../../assets/images/Referent.svg';
 import { ReactComponent as DiabeticSvg } from '../../../assets/images/Diabetic.svg';
@@ -137,6 +138,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
             label="Retour"
             btnStyle="primary"
             shadow
+            iconStart={arrowLeft2}
             onClick={() => onClick(1)}
           />
           <StyledButton
@@ -144,7 +146,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
             label="Suivant"
             btnStyle="primary"
             shadow
-            icon={arrowRight2}
+            iconEnd={arrowRight2}
             onClick={() => onClick(3)}
           />
         </ButtonWrapper>

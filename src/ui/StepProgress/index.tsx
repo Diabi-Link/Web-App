@@ -23,7 +23,7 @@ const Step = styled.div`
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  color: ${(props) => props.theme.main.dark};
+  color: ${(props) => props.theme.main.grayDarker};
 `;
 
 const StepCircle = styled.div<{
@@ -59,7 +59,7 @@ const StepText = styled.p`
 
 const Separator = styled.div`
   height: 1px;
-  background-color: #424242;
+  background-color: ${({ theme }) => theme.main.grayDarker};
   width: 140px;
   margin: 15px;
 `;

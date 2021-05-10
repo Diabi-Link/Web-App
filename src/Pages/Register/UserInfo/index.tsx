@@ -208,7 +208,7 @@ const User = ({ onClick }: Props): JSX.Element => {
                 label="Suivant"
                 btnStyle="primary"
                 shadow
-                icon={arrowRight2}
+                iconEnd={arrowRight2}
               />
             </ButtonWrapper>
           </Wrapper>

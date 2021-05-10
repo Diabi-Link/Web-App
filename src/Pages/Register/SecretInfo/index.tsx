@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
+import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { Formik, Form, FormikProps } from 'formik';
@@ -149,6 +150,7 @@ const SecretInfo = ({ onClick }: Props): JSX.Element => {
                 label="Retour"
                 btnStyle="primary"
                 shadow
+                iconStart={arrowLeft2}
                 onClick={() => onClick(2)}
               />
               <StyledButton
@@ -156,7 +158,7 @@ const SecretInfo = ({ onClick }: Props): JSX.Element => {
                 label="Suivant"
                 btnStyle="primary"
                 shadow
-                icon={arrowRight2}
+                iconEnd={arrowRight2}
               />
             </ButtonWrapper>
           </Wrapper>
