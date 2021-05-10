@@ -13,6 +13,7 @@ type Props = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => any;
   onFocus?: () => any;
+  onClick?: () => any;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'>;
 
 const Container = styled.div`
@@ -60,8 +61,14 @@ const InputElement = styled.input`
   }
 `;
 
-const IconElement = styled(Icon)`
+const IconElement = styled(Icon)<{
+  selected: boolean;
+}>`
   margin-right: 0.7rem;
+  cursor: ${({ selected }) => {
+    if (selected) return 'pointer';
+    return 'default';
+  }};
 `;
 
 const HelperElement = styled.span`
@@ -86,6 +93,7 @@ const Input = forwardRef(
       onBlur,
       onFocus,
       onChange,
+      onClick,
       value,
       type,
       errorText,
@@ -136,7 +144,14 @@ const Input = forwardRef(
             }}
             disabled={disabled}
           />
-          {icon && <IconElement icon={icon} size={20} />}
+          {icon && (
+            <IconElement
+              icon={icon}
+              size={20}
+              onClick={onClick}
+              selected={!!onClick}
+            />
+          )}
         </InputWrapper>
         {helperText && <HelperElement>{helperText}</HelperElement>}
         {errorText && <ErrorElement>{errorText}</ErrorElement>}
@@ -149,6 +164,7 @@ Input.defaultProps = {
   onBlur: undefined,
   onFocus: undefined,
   onChange: undefined,
+  onClick: undefined,
   icon: undefined,
   placeholder: undefined,
   errorText: undefined,

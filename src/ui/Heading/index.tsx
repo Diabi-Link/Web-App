@@ -31,7 +31,7 @@ const getMargin = (level: Props['level']): string => {
     case 1:
       return '1.875rem';
     case 2:
-      return 'auto';
+      return '0.625rem 0';
     case 3:
       return '0.625rem 0';
     case 4:

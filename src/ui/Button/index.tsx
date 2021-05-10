@@ -12,7 +12,8 @@ type Props = {
   onClick?: () => any;
   outlined?: boolean;
   shadow?: boolean;
-  icon?: JSX.Element;
+  iconStart?: typeof Icon;
+  iconEnd?: typeof Icon;
   btnStyle: ButtonTheme;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;
 
@@ -151,21 +152,27 @@ const ButtonElement = styled.button<{
   }
 `;
 
-const StyledIcon = styled(Icon)`
+const StyledIconStart = styled(Icon)`
+  margin-right: 0.7rem;
+`;
+
+const StyledIconEnd = styled(Icon)`
   margin-left: 0.7rem;
 `;
 
 const Button = ({
   label,
   onClick,
-  icon,
+  iconStart,
+  iconEnd,
   type,
   ...buttonProps
 }: Props): JSX.Element => {
   return (
     <ButtonElement type={type} onClick={onClick} {...buttonProps}>
+      {iconStart && <StyledIconStart icon={iconStart} size={20} />}
       {label}
-      {icon && <StyledIcon icon={icon} size={20} />}
+      {iconEnd && <StyledIconEnd icon={iconEnd} size={20} />}
     </ButtonElement>
   );
 };
@@ -175,7 +182,8 @@ Button.defaultProps = {
   onClick: undefined,
   outlined: false,
   shadow: false,
-  icon: null,
+  iconStart: null,
+  iconEnd: null,
 };
 
 export default Button;

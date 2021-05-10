@@ -35,7 +35,7 @@ const ImportantWord = styled.span`
 
 const AccountInfoText = ({ type }: Props): JSX.Element => {
   return (
-    <Container className="childContainer">
+    <Container>
       {type === 'diabetic' && (
         <>
           <Text>
