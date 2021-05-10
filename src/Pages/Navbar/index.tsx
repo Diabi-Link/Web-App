@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link as LinkRouter, withRouter } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../assets/images/Logo.svg';
+import { ReactComponent as Logo } from '../../assets/images/AppLogo.svg';
 import Button from '../../ui/Button';
 
 const Container = styled.nav`

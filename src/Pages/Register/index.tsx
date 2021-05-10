@@ -4,7 +4,7 @@ import { Switch, Route, Redirect, Link, useHistory } from 'react-router-dom';
 import { Icon } from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
-import { ReactComponent as LogoSvg } from '../../assets/images/Logo.svg';
+import { ReactComponent as LogoSvg } from '../../assets/images/AppLogo.svg';
 import { ReactComponent as WelcomeSvg } from '../../assets/images/Welcome.svg';
 
 import { RegisterContext, RegisterActionTypes } from './RegisterContext';
