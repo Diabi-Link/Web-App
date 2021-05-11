@@ -34,8 +34,10 @@ const Wrapper = styled.div`
 `;
 
 const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   height: 60%;
-  margin: 20px 0px;
+  margin-bottom: 50px;
 `;
 
 const ButtonWrapper = styled.div`

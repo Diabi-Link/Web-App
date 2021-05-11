@@ -34,8 +34,10 @@ const Wrapper = styled(Form)`
 `;
 
 const ContentWrapper = styled.div`
-  min-height: 60%;
-  margin: 20px 0px;
+  display: flex;
+  flex-direction: column;
+  height: 60%;
+  margin-bottom: 50px;
 `;
 
 const PasswordBox = styled.div`

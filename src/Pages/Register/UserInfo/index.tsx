@@ -40,8 +40,10 @@ const Wrapper = styled(Form)`
 `;
 
 const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   height: 60%;
-  margin: 20px 0px;
+  margin-bottom: 50px;
 `;
 
 const ButtonWrapper = styled.div`
@@ -130,7 +132,7 @@ const User = ({ onClick }: Props): JSX.Element => {
                   <Input
                     name="firstName"
                     type="text"
-                    placeholder="Nicolas"
+                    placeholder="John"
                     value={props.values.firstName}
                     onChange={(e) => {
                       props.handleChange(e);
@@ -148,7 +150,7 @@ const User = ({ onClick }: Props): JSX.Element => {
                   <Input
                     name="lastName"
                     type="text"
-                    placeholder="Carrasco"
+                    placeholder="Cena"
                     value={props.values.lastName}
                     onChange={(e) => {
                       props.handleChange(e);
@@ -168,7 +170,7 @@ const User = ({ onClick }: Props): JSX.Element => {
                   <Input
                     name="email"
                     type="text"
-                    placeholder="Nicolas.Carrasco@gmail.com"
+                    placeholder="John.cena@gmail.com"
                     value={props.values.email}
                     onChange={(e) => {
                       props.handleChange(e);
