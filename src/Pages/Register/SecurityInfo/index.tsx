@@ -72,7 +72,7 @@ const StyledButton = styled(Button)`
   height: 40px;
 `;
 
-const SecretInfo = ({ onClick }: Props): JSX.Element => {
+const SecurityInfo = ({ onClick }: Props): JSX.Element => {
   const { state, dispatch } = useContext(RegisterContext);
   const { user } = state;
   const [showPassword, setShowPassword] = useState(true);
@@ -170,4 +170,4 @@ const SecretInfo = ({ onClick }: Props): JSX.Element => {
   );
 };
 
-export default SecretInfo;
+export default SecurityInfo;

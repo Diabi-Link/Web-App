@@ -81,14 +81,14 @@ const InputLabel = styled.label`
 `;
 
 const Text = styled.p`
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
 `;
 
 const ConnectLink = styled(Link)`
   display: flex;
   align-items: center;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
   padding: 0px 10px;
   color: ${(props) => props.theme.main.primary};
@@ -201,7 +201,7 @@ const User = ({ onClick }: Props): JSX.Element => {
               </InfoBox>
               <ConnectionWrapper>
                 <Text>Vous avez déjà un compte ?</Text>
-                <ConnectLink to="/">Connectez-vous.</ConnectLink>
+                <ConnectLink to="/login">Connectez-vous.</ConnectLink>
               </ConnectionWrapper>
             </ContentWrapper>
             <ButtonWrapper>
