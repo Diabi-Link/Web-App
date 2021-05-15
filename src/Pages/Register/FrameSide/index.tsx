@@ -51,9 +51,12 @@ const FrameSide = ({ step }: Props): JSX.Element => {
     },
     {
       svg: <AccountSvg />,
-      description: 'Une interface adaptée a vos besoins.',
+      description: 'Une interface adaptée à vos besoins.',
     },
-    { svg: <SecuritySvg />, description: 'Venez vivre une expérience unique' },
+    {
+      svg: <SecuritySvg />,
+      description: "Plus qu'une étape pour rejoindre notre grande famille.",
+    },
   ];
 
   return (

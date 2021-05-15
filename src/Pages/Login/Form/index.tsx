@@ -2,21 +2,34 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
+import { Icon } from 'react-icons-kit';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
+import { facebook } from 'react-icons-kit/fa/facebook';
+import { googlePlus } from 'react-icons-kit/fa/googlePlus';
 
 import { ValidateLoginSchema } from '../Validation';
 
 import Input from '../../../ui/Input';
 import Button from '../../../ui/Button';
 
-const Wrapper = styled(FormikForm)`
+const Container = styled.div`
   width: 80%;
   @media (min-width: 1500px) {
     width: 70%;
   }
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  flex: 1;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const ContentWrapper = styled.div`
@@ -84,77 +97,115 @@ const StyledButton = styled(Button)`
   height: 40px;
 `;
 
+const Text = styled.p`
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  margin: 1.5rem 0 0.3rem;
+  color: ${(props) => props.theme.main.dark};
+`;
+
+const IconBox = styled.a`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 20px;
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  color: ${(props) => props.theme.main.dark};
+  transition: transform ease 0.4s;
+
+  &:hover {
+    transform: scale(1.05, 1.05);
+  }
+`;
+
 const Form = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(true);
   const handleSubmit = (values: any) => {
     console.log(values);
   };
   return (
-    <Formik
-      initialValues={{ email: '', password: '' }}
-      validationSchema={ValidateLoginSchema}
-      onSubmit={handleSubmit}
-    >
-      {(props: FormikProps<{ email: string; password: string }>) => (
-        <Wrapper>
-          <ContentWrapper>
-            <InputWrapper>
-              <InputLabel>Adresse email</InputLabel>
-              <Input
-                name="email"
-                type="text"
-                placeholder="John.cena@gmail.com"
-                value={props.values.email}
-                onChange={(e) => {
-                  props.handleChange(e);
-                }}
-                errorText={
-                  props.errors.email && props.touched.email
-                    ? props.errors.email
-                    : undefined
-                }
-                icon={mail}
-              />
-            </InputWrapper>
-            <InputWrapper>
-              <InputLabel>Mot de passe</InputLabel>
-              <Input
-                name="password"
-                type={showPassword ? 'text' : 'password'}
-                placeholder="*******"
-                value={props.values.password}
-                onChange={(e) => {
-                  props.handleChange(e);
-                }}
-                errorText={
-                  props.errors.password && props.touched.password
-                    ? props.errors.password
-                    : undefined
-                }
-                icon={showPassword ? eye : eyeBlocked}
-                onClick={() => setShowPassword(!showPassword)}
-              />
-              <ForgotWrapper>
-                <ForgotLink to="/">Mot de passe oublié ?</ForgotLink>
-              </ForgotWrapper>
-            </InputWrapper>
-          </ContentWrapper>
-          <ButtonWrapper>
-            <StyledButton
-              type="submit"
-              label="Me connecter"
-              btnStyle="primary"
-              shadow
-              iconEnd={arrowRight2}
-            />
-          </ButtonWrapper>
-          <ConnectionWrapper>
-            <p>Vous n&apos;avez pas de compte ?</p>
-            <ConnectLink to="/register/user">Rejoignez-nous.</ConnectLink>
-          </ConnectionWrapper>
-        </Wrapper>
-      )}
-    </Formik>
+    <Container>
+      <Wrapper>
+        <IconWrapper>
+          <IconBox href="/register/account">
+            <Icon icon={facebook} size={20} />
+          </IconBox>
+          <IconBox href="/register/account">
+            <Icon icon={googlePlus} size={20} />
+          </IconBox>
+        </IconWrapper>
+        <Text>Ou utiliser votre email </Text>
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          validationSchema={ValidateLoginSchema}
+          onSubmit={handleSubmit}
+        >
+          {(props: FormikProps<{ email: string; password: string }>) => (
+            <FormikForm>
+              <ContentWrapper>
+                <InputWrapper>
+                  <InputLabel>Adresse email</InputLabel>
+                  <Input
+                    name="email"
+                    type="text"
+                    placeholder="John.cena@gmail.com"
+                    value={props.values.email}
+                    onChange={(e) => {
+                      props.handleChange(e);
+                    }}
+                    errorText={
+                      props.errors.email && props.touched.email
+                        ? props.errors.email
+                        : undefined
+                    }
+                    icon={mail}
+                  />
+                </InputWrapper>
+                <InputWrapper>
+                  <InputLabel>Mot de passe</InputLabel>
+                  <Input
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="*******"
+                    value={props.values.password}
+                    onChange={(e) => {
+                      props.handleChange(e);
+                    }}
+                    errorText={
+                      props.errors.password && props.touched.password
+                        ? props.errors.password
+                        : undefined
+                    }
+                    icon={showPassword ? eye : eyeBlocked}
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                  <ForgotWrapper>
+                    <ForgotLink to="/">Mot de passe oublié ?</ForgotLink>
+                  </ForgotWrapper>
+                </InputWrapper>
+              </ContentWrapper>
+              <ButtonWrapper>
+                <StyledButton
+                  type="submit"
+                  label="Me connecter"
+                  btnStyle="primary"
+                  shadow
+                  iconEnd={arrowRight2}
+                />
+              </ButtonWrapper>
+              <ConnectionWrapper>
+                <p>Vous n&apos;avez pas de compte ?</p>
+                <ConnectLink to="/register/user">Rejoignez-nous.</ConnectLink>
+              </ConnectionWrapper>
+            </FormikForm>
+          )}
+        </Formik>
+      </Wrapper>
+    </Container>
   );
 };
 
