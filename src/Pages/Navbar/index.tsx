@@ -97,7 +97,9 @@ const Navbar = ({ location }: Props): JSX.Element => {
           </Link>
         </SiteNavWrapper>
         <ConnexionWrapper>
-          <LoginButton label="Se connecter" btnStyle="primary" outlined />
+          <LinkRouter to="/register/login">
+            <LoginButton label="Se connecter" btnStyle="primary" outlined />
+          </LinkRouter>
           <LinkRouter to="/register/user">
             <Button label="S'inscrire" btnStyle="primary" />
           </LinkRouter>

@@ -34,8 +34,10 @@ const Wrapper = styled(Form)`
 `;
 
 const ContentWrapper = styled.div`
-  min-height: 60%;
-  margin: 20px 0px;
+  display: flex;
+  flex-direction: column;
+  height: 60%;
+  margin-bottom: 50px;
 `;
 
 const PasswordBox = styled.div`
@@ -70,7 +72,7 @@ const StyledButton = styled(Button)`
   height: 40px;
 `;
 
-const SecretInfo = ({ onClick }: Props): JSX.Element => {
+const SecurityInfo = ({ onClick }: Props): JSX.Element => {
   const { state, dispatch } = useContext(RegisterContext);
   const { user } = state;
   const [showPassword, setShowPassword] = useState(true);
@@ -168,4 +170,4 @@ const SecretInfo = ({ onClick }: Props): JSX.Element => {
   );
 };
 
-export default SecretInfo;
+export default SecurityInfo;

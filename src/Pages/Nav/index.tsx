@@ -7,6 +7,7 @@ import Navbar from '../Navbar';
 
 const Home = lazy(() => import('../Home'));
 const Register = lazy(() => import('../Register'));
+const Login = lazy(() => import('../Login'));
 
 const Nav = (): JSX.Element => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const Nav = (): JSX.Element => {
       {needNavbar && <Navbar />}
       <Switch>
         <Route path="/" exact component={Home} />
+        <Route path="/login" component={Login} />
         <Route path="/register">
           <RegisterProvider>
             <Register />
