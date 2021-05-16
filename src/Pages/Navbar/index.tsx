@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link as LinkRouter, withRouter } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/images/AppLogo.svg';
+import { ReactComponent as LogoText } from '../../assets/images/DiabiLink.svg';
 import Button from '../../ui/Button';
 
 const Container = styled.nav`
@@ -32,7 +33,7 @@ const SiteNavWrapper = styled.div`
   align-items: center;
 `;
 
-const LogoWrapper = styled.div`
+const LogoWrapper = styled(LinkRouter)<{ to: string; pathname: string }>`
   display: flex;
   align-items: center;
   margin-right: 1.25rem;
@@ -44,10 +45,9 @@ const StyledLogo = styled(Logo)`
   margin-right: 0.625rem;
 `;
 
-const Title = styled.h1`
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: ${(props) => props.theme.main.primary};
+const StyledLogoText = styled(LogoText)`
+  height: 1.35rem;
+  width: auto;
 `;
 
 const Divider = styled.div`
@@ -87,9 +87,9 @@ const Navbar = ({ location }: Props): JSX.Element => {
     <Container>
       <Wrapper>
         <SiteNavWrapper>
-          <LogoWrapper>
+          <LogoWrapper to="/" pathname={location.pathname}>
             <StyledLogo />
-            <Title>Diabilink</Title>
+            <StyledLogoText />
           </LogoWrapper>
           <Divider />
           <Link to="/" pathname={location.pathname}>
