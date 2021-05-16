@@ -17,15 +17,15 @@ export enum RegisterActionTypes {
   UpdateInfo = 'REGISTER_UPDATE_INFO_TYPE',
 }
 
+export type AccountType = 'diabetic' | 'referent' | 'medicalProfessional';
+
 export type UserType = {
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
   birthDate: Date | null;
+  account: AccountType | null;
 };
-
-export type AccountType = 'diabetic' | 'referent' | 'medicalProfessional';
 
 type InfoType = {
   step: number;
@@ -42,7 +42,6 @@ type RegisterActions = ActionMap<RegisterPayload>[keyof ActionMap<RegisterPayloa
 type InitialStateType = {
   type: RegisterActionTypes | null;
   user: UserType;
-  account: AccountType | null;
   info: InfoType;
 };
 
@@ -52,10 +51,9 @@ const initialState: InitialStateType = {
     firstName: '',
     lastName: '',
     email: '',
-    password: '',
     birthDate: null,
+    account: null,
   },
-  account: null,
   info: { step: 1 },
 };
 
@@ -69,13 +67,6 @@ const reducer = (
         ...state,
         type: action.type,
         user: { ...state.user, ...action.payload },
-      };
-
-    case RegisterActionTypes.UpdateAccount:
-      return {
-        ...state,
-        type: action.type,
-        account: action.payload,
       };
 
     case RegisterActionTypes.UpdateInfo:

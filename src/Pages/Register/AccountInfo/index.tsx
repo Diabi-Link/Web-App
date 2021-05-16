@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { darken } from 'polished';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
@@ -8,7 +8,11 @@ import { ReactComponent as ReferentSvg } from '../../../assets/images/Referent.s
 import { ReactComponent as DiabeticSvg } from '../../../assets/images/Diabetic.svg';
 import { ReactComponent as MedicalProfessionalSvg } from '../../../assets/images/MedicalProfessional.svg';
 
-import { AccountType } from '../RegisterContext';
+import {
+  RegisterContext,
+  RegisterActionTypes,
+  AccountType,
+} from '../RegisterContext';
 import Button from '../../../ui/Button';
 import Heading from '../../../ui/Heading';
 import AccountInfoText from '../AccountInfoText';
@@ -84,10 +88,27 @@ const StyledButton = styled(Button)`
 `;
 
 const Account = ({ onClick }: Props): JSX.Element => {
-  const [selectedBtn, setSelectedBtn] = useState<AccountType>('diabetic');
-  const [hoveredBtn, setHoveredBtn] = useState<AccountType | undefined>(
+  const {
+    state: { user },
+    dispatch,
+  } = useContext(RegisterContext);
+  const [selectedAccount, setSelectedAccount] = useState<AccountType>(
+    'diabetic',
+  );
+  const [hoveredAccount, setHoveredAccount] = useState<AccountType | undefined>(
     undefined,
   );
+
+  const handleSubmit = () => {
+    dispatch({
+      type: RegisterActionTypes.UpdateUser,
+      payload: {
+        ...user,
+        account: selectedAccount,
+      },
+    });
+    onClick(3);
+  };
 
   const accountSelector = (type: AccountType): JSX.Element => (
     <AccountSelectorWrapper>
@@ -110,30 +131,30 @@ const Account = ({ onClick }: Props): JSX.Element => {
           <AccountSelectorContainer>
             <StyledBox
               label={accountSelector('diabetic')}
-              onMouseEnter={() => setHoveredBtn('diabetic')}
-              onMouseLeave={() => setHoveredBtn(undefined)}
-              onClick={() => setSelectedBtn('diabetic')}
+              onMouseEnter={() => setHoveredAccount('diabetic')}
+              onMouseLeave={() => setHoveredAccount(undefined)}
+              onClick={() => setSelectedAccount('diabetic')}
               btnStyle="white"
-              isSelected={selectedBtn === 'diabetic'}
+              isSelected={selectedAccount === 'diabetic'}
             />
             <StyledBox
               label={accountSelector('referent')}
-              onMouseEnter={() => setHoveredBtn('referent')}
-              onMouseLeave={() => setHoveredBtn(undefined)}
-              onClick={() => setSelectedBtn('referent')}
+              onMouseEnter={() => setHoveredAccount('referent')}
+              onMouseLeave={() => setHoveredAccount(undefined)}
+              onClick={() => setSelectedAccount('referent')}
               btnStyle="white"
-              isSelected={selectedBtn === 'referent'}
+              isSelected={selectedAccount === 'referent'}
             />
             <StyledBox
               label={accountSelector('medicalProfessional')}
-              onMouseEnter={() => setHoveredBtn('medicalProfessional')}
-              onMouseLeave={() => setHoveredBtn(undefined)}
-              onClick={() => setSelectedBtn('medicalProfessional')}
+              onMouseEnter={() => setHoveredAccount('medicalProfessional')}
+              onMouseLeave={() => setHoveredAccount(undefined)}
+              onClick={() => setSelectedAccount('medicalProfessional')}
               btnStyle="white"
-              isSelected={selectedBtn === 'medicalProfessional'}
+              isSelected={selectedAccount === 'medicalProfessional'}
             />
           </AccountSelectorContainer>
-          <AccountInfoText type={hoveredBtn || selectedBtn} />
+          <AccountInfoText type={hoveredAccount || selectedAccount} />
         </ContentWrapper>
         <ButtonWrapper>
           <StyledButton
@@ -150,7 +171,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
             btnStyle="primary"
             shadow
             iconEnd={arrowRight2}
-            onClick={() => onClick(3)}
+            onClick={handleSubmit}
           />
         </ButtonWrapper>
       </Wrapper>
