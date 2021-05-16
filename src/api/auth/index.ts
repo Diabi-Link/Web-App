@@ -1,37 +1,22 @@
 import { gql } from '@apollo/client';
+import { DeepNonNullable } from '../../types/utilities';
+
+import { UserType } from '../../Pages/Register/RegisterContext';
 
 export type UserData = {
-  id: string;
-  email: string;
-  firstname: string;
-  lastname: string;
   password: string;
-  role: string;
-};
+} & DeepNonNullable<UserType>;
 
 export const SIGN_UP = gql`
-  mutation SignUp(
-    $email: String!
-    $firstname: String!
-    $lastname: String!
-    $password: String!
-    $role: String!
-  ) {
-    SignUp(
-      UserData: {
-        email: $email
-        firstname: $firstname
-        lastname: $lastname
-        password: $password
-        role: $role
-      }
-    ) {
+  mutation SignUp($userData: UserData!) {
+    SignUp(userData: $userData) {
       id
       email
-      firstname
-      lastname
+      firstName
+      lastName
       password
-      role
+      birthDate
+      account
     }
   }
 `;

@@ -6,12 +6,15 @@ import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { Formik, Form, FormikProps } from 'formik';
 
-import { RegisterContext, RegisterActionTypes } from '../RegisterContext';
+import { useMutation } from '@apollo/client';
+import { SIGN_UP, UserData } from '../../../api';
+import { RegisterContext, UserType } from '../RegisterContext';
 import { ValidatePasswordSchema } from '../Validation';
 
 import Heading from '../../../ui/Heading';
 import Button from '../../../ui/Button';
 import Input from '../../../ui/Input';
+import { DeepNonNullable } from '../../../types/utilities';
 
 type Props = {
   onClick: (step: number) => void;
@@ -74,21 +77,31 @@ const StyledButton = styled(Button)`
 `;
 
 const SecurityInfo = ({ onClick }: Props): JSX.Element => {
-  const { state, dispatch } = useContext(RegisterContext);
-  const { user } = state;
-  const [showPassword, setShowPassword] = useState(true);
-  const [showConfirm, setShowConfirm] = useState(true);
+  const {
+    state: { user },
+  } = useContext(RegisterContext);
+  const [signUp] = useMutation<
+    UserData & { id: string },
+    { userData: UserData }
+  >(SIGN_UP);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
-  const handleSubmit = (values: {
+  const handleSubmit = ({
+    password,
+  }: {
     password: string;
     confirmPassword: string;
   }) => {
-    dispatch({
-      type: RegisterActionTypes.UpdateUser,
-      payload: {
-        ...state.user,
-        password: values.password,
-      },
+    import('bcryptjs').then((bcrypt) => {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(password, salt);
+
+      signUp({
+        variables: {
+          userData: { ...(user as DeepNonNullable<UserType>), password: hash },
+        },
+      });
     });
   };
 
@@ -96,7 +109,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
     <Container>
       <Heading level={1}>Finalisons votre compte !</Heading>
       <Formik
-        initialValues={{ password: user.password, confirmPassword: '' }}
+        initialValues={{ password: '', confirmPassword: '' }}
         validationSchema={ValidatePasswordSchema}
         onSubmit={handleSubmit}
       >
