@@ -124,8 +124,11 @@ const IconBox = styled.a`
 
 const Form = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(true);
+
+  // TODO: Linking to API
   const handleSubmit = (values: any) => {
-    console.log(values);
+    return values;
+    // console.log(values);
   };
   return (
     <Container>

@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { Switch, Route, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
 import { RegisterProvider } from '../Register/RegisterContext';
 import Page404 from '../404';
 
@@ -21,10 +21,13 @@ const Nav = (): JSX.Element => {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/login" component={Login} />
-        <RegisterProvider>
-          <Route path="/register" component={Register} />
-        </RegisterProvider>
-        <Route component={Page404} />
+        <Route path="/register">
+          <RegisterProvider>
+            <Register />
+          </RegisterProvider>
+        </Route>
+        <Route path="/404" component={Page404} />
+        <Redirect to="/404" />
       </Switch>
     </Suspense>
   );
