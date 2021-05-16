@@ -5,7 +5,7 @@ import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
 import { ReactComponent as ReferentSvg } from '../../../assets/images/Referent.svg';
-import { ReactComponent as DiabeticSvg } from '../../../assets/images/Diabetic.svg';
+import { ReactComponent as PatientSvg } from '../../../assets/images/Patient.svg';
 import { ReactComponent as MedicalProfessionalSvg } from '../../../assets/images/MedicalProfessional.svg';
 
 import {
@@ -93,7 +93,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
     dispatch,
   } = useContext(RegisterContext);
   const [selectedAccount, setSelectedAccount] = useState<AccountType>(
-    'diabetic',
+    'patient',
   );
   const [hoveredAccount, setHoveredAccount] = useState<AccountType | undefined>(
     undefined,
@@ -112,11 +112,11 @@ const Account = ({ onClick }: Props): JSX.Element => {
 
   const accountSelector = (type: AccountType): JSX.Element => (
     <AccountSelectorWrapper>
-      {type === 'diabetic' && <DiabeticSvg width={115} />}
+      {type === 'patient' && <PatientSvg width={115} />}
       {type === 'referent' && <ReferentSvg width={115} />}
       {type === 'medicalProfessional' && <MedicalProfessionalSvg width={115} />}
       <Heading level={3}>
-        {type === 'diabetic' && 'Diabétique'}
+        {type === 'patient' && 'Patient'}
         {type === 'referent' && 'Référent'}
         {type === 'medicalProfessional' && 'Corps médical'}
       </Heading>
@@ -130,12 +130,12 @@ const Account = ({ onClick }: Props): JSX.Element => {
         <ContentWrapper>
           <AccountSelectorContainer>
             <StyledBox
-              label={accountSelector('diabetic')}
-              onMouseEnter={() => setHoveredAccount('diabetic')}
+              label={accountSelector('patient')}
+              onMouseEnter={() => setHoveredAccount('patient')}
               onMouseLeave={() => setHoveredAccount(undefined)}
-              onClick={() => setSelectedAccount('diabetic')}
+              onClick={() => setSelectedAccount('patient')}
               btnStyle="white"
-              isSelected={selectedAccount === 'diabetic'}
+              isSelected={selectedAccount === 'patient'}
             />
             <StyledBox
               label={accountSelector('referent')}

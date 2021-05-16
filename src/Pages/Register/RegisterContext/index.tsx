@@ -17,14 +17,14 @@ export enum RegisterActionTypes {
   UpdateInfo = 'REGISTER_UPDATE_INFO_TYPE',
 }
 
-export type AccountType = 'diabetic' | 'referent' | 'medicalProfessional';
+export type AccountType = 'patient' | 'referent' | 'medicalProfessional';
 
 export type UserType = {
   firstName: string;
   lastName: string;
   email: string;
   birthDate: Date | null;
-  account: AccountType | null;
+  account: AccountType;
 };
 
 type InfoType = {
@@ -52,7 +52,7 @@ const initialState: InitialStateType = {
     lastName: '',
     email: '',
     birthDate: null,
-    account: null,
+    account: 'patient',
   },
   info: { step: 1 },
 };

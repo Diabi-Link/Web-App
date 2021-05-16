@@ -36,10 +36,10 @@ const ImportantWord = styled.span`
 const AccountInfoText = ({ type }: Props): JSX.Element => {
   return (
     <Container>
-      {type === 'diabetic' && (
+      {type === 'patient' && (
         <>
           <Text>
-            Un compte <ImportantWord>Diabétique</ImportantWord> vous permet de
+            Un compte <ImportantWord>Patient</ImportantWord> vous permet de
             sauvegarder et de consulter toutes les données relatives à votre
             diabète. Vous pouvez partager ces données avec vos proches ou
             médecins possédant un compte Proche ou Corps médical.
