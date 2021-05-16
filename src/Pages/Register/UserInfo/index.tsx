@@ -106,7 +106,7 @@ const User = ({ onClick }: Props): JSX.Element => {
 
   const { user } = state;
 
-  const handleSubmit = (values: UserType) => {
+  const handleSubmit = (values: Omit<UserType, 'account'>) => {
     dispatch({
       type: RegisterActionTypes.UpdateUser,
       payload: {
