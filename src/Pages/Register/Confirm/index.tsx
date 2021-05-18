@@ -19,10 +19,10 @@ const Container = styled.div`
 `;
 
 const Description = styled.div`
-  text-align: center;
+  text-align: left;
   font-size: 17px;
   font-weight: 400;
-  margin: 3rem 0 5rem;
+  margin: 3rem 3.5rem 5rem;
 
   @media (min-width: 1500px) {
     font-size: 18px;
