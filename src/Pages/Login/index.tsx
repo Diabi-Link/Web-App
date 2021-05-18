@@ -5,7 +5,7 @@ import { Icon } from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
 import { ReactComponent as LoginSvg } from '../../assets/images/Login.svg';
-import DiabiLink from '../../assets/images/DiabiLink.png';
+import { ReactComponent as LogoText } from '../../assets/images/DiabiLink.svg';
 
 import Form from './Form';
 
@@ -71,17 +71,18 @@ const Text = styled.p`
 
 const SvgWrapper = styled.div`
   margin: 2.5rem 0;
+
   @media (min-width: 1500px) {
     margin: 3.5rem;
   }
 `;
 
-const Logo = styled.img`
+const LogoWrapper = styled.div`
   margin-top: 7rem;
+
   @media (min-width: 1500px) {
     margin-top: 10rem;
   }
-  height: 55px;
 `;
 
 const Description = styled.p`
@@ -108,7 +109,9 @@ const Login = (): JSX.Element => {
         </ConnexionWrapper>
       </Left>
       <Right>
-        <Logo src={DiabiLink} alt="diabilink" />
+        <LogoWrapper>
+          <LogoText />
+        </LogoWrapper>
         <SvgWrapper>
           <LoginSvg />
         </SvgWrapper>

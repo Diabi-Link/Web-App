@@ -8,6 +8,7 @@ import { RegisterContext, RegisterActionTypes } from './RegisterContext';
 import UserInfo from './UserInfo';
 import AccountInfo from './AccountInfo';
 import SecurityInfo from './SecurityInfo';
+import Confirm from './Confirm';
 import StepProgress from '../../ui/StepProgress';
 import FrameSide from './FrameSide';
 
@@ -20,6 +21,7 @@ const Container = styled.div`
 const StepWrapper = styled.div`
   display: flex;
   align-items: center;
+
   @media (min-width: 1500px) {
     margin: 3rem;
   }
@@ -93,6 +95,7 @@ const Register = (): JSX.Element => {
     { path: '/register/user', description: 'Utilisateur' },
     { path: '/register/account', description: 'Type de compte' },
     { path: '/register/password', description: 'On y est presque !' },
+    { path: '/register/confirm', description: '' },
   ];
 
   const handleNav = (step: number) => {
@@ -139,6 +142,7 @@ const Register = (): JSX.Element => {
                 <SecurityInfo onClick={(step) => handleNav(step)} />
               )}
             />
+            <Route path="/register/confirm" render={() => <Confirm />} />
             <Redirect to="/login" />
           </Switch>
         </FormWrapper>
