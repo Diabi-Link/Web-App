@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
@@ -124,7 +123,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
                   <Input
                     name="password"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="*******"
+                    placeholder="•••••••••"
                     value={props.values.password}
                     onChange={(e) => {
                       props.handleChange(e);
@@ -143,7 +142,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
                   <Input
                     name="confirmPassword"
                     type={showConfirm ? 'text' : 'password'}
-                    placeholder="*******"
+                    placeholder="•••••••••"
                     value={props.values.confirmPassword}
                     onChange={(e) => {
                       props.handleChange(e);
@@ -171,10 +170,9 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
               />
               <StyledButton
                 type="submit"
-                label="Suivant"
+                label="S'inscrire"
                 btnStyle="primary"
                 shadow
-                iconEnd={arrowRight2}
                 onClick={() => onClick(4)}
               />
             </ButtonWrapper>
