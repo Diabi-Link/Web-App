@@ -8,6 +8,7 @@ import Navbar from '../Navbar';
 const Home = lazy(() => import('../Home'));
 const Register = lazy(() => import('../Register'));
 const Login = lazy(() => import('../Login'));
+const ForgotPassword = lazy(() => import('../ForgotPassword'));
 
 const Nav = (): JSX.Element => {
   const location = useLocation();
@@ -26,6 +27,7 @@ const Nav = (): JSX.Element => {
             <Register />
           </RegisterProvider>
         </Route>
+        <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/404" component={Page404} />
         <Redirect to="/404" />
       </Switch>
