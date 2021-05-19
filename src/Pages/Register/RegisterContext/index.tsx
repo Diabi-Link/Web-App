@@ -1,4 +1,11 @@
-import React, { createContext, useReducer, useMemo, Dispatch } from 'react';
+import React, {
+  createContext,
+  useReducer,
+  useMemo,
+  Dispatch,
+  useEffect,
+} from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 
 type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -97,10 +104,19 @@ const RegisterProvider: React.FC<RegisterProviderType> = ({
   children,
 }: RegisterProviderType) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const location = useLocation();
+  const history = useHistory();
 
   const value = useMemo(() => {
     return { state, dispatch };
   }, [state]);
+
+  useEffect(() => {
+    if (!location.pathname.endsWith('/register/user')) {
+      history.push('/register/user');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <RegisterContext.Provider value={value}>
