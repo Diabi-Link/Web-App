@@ -4,11 +4,11 @@ import { ActionMap } from '../../types/utilities';
 import { UserType } from '../../types/user';
 
 export enum UserActionTypes {
-  signUp = 'USER_SIGN_UP',
+  SignUp = 'USER_SIGN_UP',
 }
 
 type UserPayload = {
-  [UserActionTypes.signUp]: UserType;
+  [UserActionTypes.SignUp]: UserType;
 };
 
 type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
@@ -28,7 +28,7 @@ const reducer = (
   action: UserActions,
 ): InitialStateType => {
   switch (action.type) {
-    case UserActionTypes.signUp:
+    case UserActionTypes.SignUp:
       return { type: action.type, user: action.payload };
     default:
       return state;

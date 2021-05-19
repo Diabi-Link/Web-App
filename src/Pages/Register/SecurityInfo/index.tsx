@@ -4,12 +4,13 @@ import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { Formik, Form, FormikProps } from 'formik';
-
 import { useMutation } from '@apollo/client';
-import { SIGN_UP, UserData } from '../../../api';
-import { RegisterContext } from '../../../contexts/RegisterContext';
-import { ValidatePasswordSchema } from '../Validation';
 
+import { SIGN_UP, UserData, SignUpResponse } from '../../../api';
+
+import { RegisterContext } from '../../../contexts/RegisterContext';
+import { UserContext, UserActionTypes } from '../../../contexts/UserContext';
+import { ValidatePasswordSchema } from '../Validation';
 import Heading from '../../../ui/Heading';
 import Button from '../../../ui/Button';
 import Input from '../../../ui/Input';
@@ -81,10 +82,18 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
   const {
     state: { user },
   } = useContext(RegisterContext);
-  const [signUp] = useMutation<
-    UserData & { id: string },
-    { userData: UserData }
-  >(SIGN_UP);
+  const { dispatch } = useContext(UserContext);
+
+  const [signUp] = useMutation<SignUpResponse, { userData: UserData }>(
+    SIGN_UP,
+    {
+      onCompleted: (payload) =>
+        dispatch({
+          type: UserActionTypes.SignUp,
+          payload: payload.SignUp,
+        }),
+    },
+  );
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
