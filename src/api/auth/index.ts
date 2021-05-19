@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { DeepNonNullable } from '../../types/utilities';
 
-import { UserType } from '../../Pages/Register/RegisterContext';
+import { UserType } from '../../contexts/RegisterContext';
 
 export type UserData = {
   password: string;

@@ -4,7 +4,10 @@ import { Switch, Route, Redirect, Link, useHistory } from 'react-router-dom';
 import { Icon } from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
-import { RegisterContext, RegisterActionTypes } from './RegisterContext';
+import {
+  RegisterContext,
+  RegisterActionTypes,
+} from '../../contexts/RegisterContext';
 import UserInfo from './UserInfo';
 import AccountInfo from './AccountInfo';
 import SecurityInfo from './SecurityInfo';

@@ -11,7 +11,7 @@ import {
   RegisterContext,
   RegisterActionTypes,
   UserType,
-} from '../RegisterContext';
+} from '../../../contexts/RegisterContext';
 import { ValidateUserSchema } from '../Validation';
 
 import Heading from '../../../ui/Heading';

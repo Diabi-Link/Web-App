@@ -12,7 +12,7 @@ import {
   RegisterContext,
   RegisterActionTypes,
   AccountType,
-} from '../RegisterContext';
+} from '../../../contexts/RegisterContext';
 import Button from '../../../ui/Button';
 import Heading from '../../../ui/Heading';
 import AccountInfoText from '../AccountInfoText';

@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
-import { RegisterProvider } from '../Register/RegisterContext';
+import { RegisterProvider } from '../../contexts/RegisterContext';
 import Page404 from '../404';
 
 import Navbar from '../Navbar';

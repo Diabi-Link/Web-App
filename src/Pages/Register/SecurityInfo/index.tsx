@@ -7,7 +7,7 @@ import { Formik, Form, FormikProps } from 'formik';
 
 import { useMutation } from '@apollo/client';
 import { SIGN_UP, UserData } from '../../../api';
-import { RegisterContext, UserType } from '../RegisterContext';
+import { RegisterContext, UserType } from '../../../contexts/RegisterContext';
 import { ValidatePasswordSchema } from '../Validation';
 
 import Heading from '../../../ui/Heading';
@@ -83,6 +83,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
     UserData & { id: string },
     { userData: UserData }
   >(SIGN_UP);
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AccountType } from '../RegisterContext';
+import { AccountType } from '../../../contexts/RegisterContext';
 
 type Props = {
   type: AccountType;
