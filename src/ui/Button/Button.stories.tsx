@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { ThemeProvider } from 'styled-components';
 import Button, { ButtonTheme } from '.';
 import theme from '../../theme';
+import Loader from '../Loader';
 
 const primaryArgs = {
   label: 'Suivant',
@@ -16,6 +17,13 @@ const defaultArgs = {
   // eslint-disable-next-line no-console
   onClick: () => console.log('Click'),
   btnStyle: 'default' as ButtonTheme,
+};
+
+const loadingArgs = {
+  label: <Loader loaderStyle="white" />,
+  // eslint-disable-next-line no-console
+  onClick: () => console.log('Click'),
+  btnStyle: 'primary' as ButtonTheme,
 };
 
 storiesOf('Button', module)
@@ -32,5 +40,10 @@ storiesOf('Button', module)
   .add('Disabled primary', () => (
     <ThemeProvider theme={theme}>
       <Button {...primaryArgs} disabled />
+    </ThemeProvider>
+  ))
+  .add('Loading btn', () => (
+    <ThemeProvider theme={theme}>
+      <Button {...loadingArgs} disabled />
     </ThemeProvider>
   ));
