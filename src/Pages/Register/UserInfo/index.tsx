@@ -10,7 +10,6 @@ import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
 import {
   RegisterContext,
   RegisterActionTypes,
-  UserType,
 } from '../../../contexts/RegisterContext';
 import { ValidateUserSchema } from '../Validation';
 
@@ -18,6 +17,8 @@ import Heading from '../../../ui/Heading';
 import Input from '../../../ui/Input';
 import Button from '../../../ui/Button';
 import DateInput from '../../../ui/DateInput';
+
+import { RegisterType } from '../../../types/register';
 
 type Props = {
   onClick: (step: number) => void;
@@ -106,7 +107,7 @@ const User = ({ onClick }: Props): JSX.Element => {
 
   const { user } = state;
 
-  const handleSubmit = (values: Omit<UserType, 'account'>) => {
+  const handleSubmit = (values: Omit<RegisterType, 'account'>) => {
     dispatch({
       type: RegisterActionTypes.UpdateUser,
       payload: {
@@ -125,7 +126,7 @@ const User = ({ onClick }: Props): JSX.Element => {
         validationSchema={ValidateUserSchema}
         onSubmit={handleSubmit}
       >
-        {(props: FormikProps<UserType>) => (
+        {(props: FormikProps<RegisterType>) => (
           <Wrapper>
             <ContentWrapper>
               <InfoBox>

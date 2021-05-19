@@ -1,11 +1,13 @@
 import { gql } from '@apollo/client';
 import { DeepNonNullable } from '../../types/utilities';
 
-import { UserType } from '../../contexts/RegisterContext';
+import { RegisterType } from '../../types/register';
+
+// TODO/ find a way to link Typescript to Apollo Client
 
 export type UserData = {
   password: string;
-} & DeepNonNullable<UserType>;
+} & DeepNonNullable<RegisterType>;
 
 export const SIGN_UP = gql`
   mutation SignUp($userData: UserData!) {

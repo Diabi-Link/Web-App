@@ -7,13 +7,15 @@ import { Formik, Form, FormikProps } from 'formik';
 
 import { useMutation } from '@apollo/client';
 import { SIGN_UP, UserData } from '../../../api';
-import { RegisterContext, UserType } from '../../../contexts/RegisterContext';
+import { RegisterContext } from '../../../contexts/RegisterContext';
 import { ValidatePasswordSchema } from '../Validation';
 
 import Heading from '../../../ui/Heading';
 import Button from '../../../ui/Button';
 import Input from '../../../ui/Input';
+
 import { DeepNonNullable } from '../../../types/utilities';
+import { RegisterType } from '../../../types/register';
 
 type Props = {
   onClick: (step: number) => void;
@@ -99,7 +101,10 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
 
       signUp({
         variables: {
-          userData: { ...(user as DeepNonNullable<UserType>), password: hash },
+          userData: {
+            ...(user as DeepNonNullable<RegisterType>),
+            password: hash,
+          },
         },
       });
     });

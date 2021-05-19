@@ -7,16 +7,9 @@ import React, {
 } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
-type ActionMap<M extends { [index: string]: any }> = {
-  [Key in keyof M]: M[Key] extends undefined
-    ? {
-        type: Key;
-      }
-    : {
-        type: Key;
-        payload: M[Key];
-      };
-};
+import { ActionMap } from '../../types/utilities';
+import { AccountType } from '../../types/user';
+import { RegisterType } from '../../types/register';
 
 export enum RegisterActionTypes {
   UpdateUser = 'REGISTER_UPDATE_USER',
@@ -24,22 +17,12 @@ export enum RegisterActionTypes {
   UpdateInfo = 'REGISTER_UPDATE_INFO_TYPE',
 }
 
-export type AccountType = 'patient' | 'referent' | 'medicalProfessional';
-
-export type UserType = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  birthDate: Date | null;
-  account: AccountType;
-};
-
 type InfoType = {
   step: number;
 };
 
 type RegisterPayload = {
-  [RegisterActionTypes.UpdateUser]: UserType;
+  [RegisterActionTypes.UpdateUser]: RegisterType;
   [RegisterActionTypes.UpdateAccount]: AccountType;
   [RegisterActionTypes.UpdateInfo]: InfoType;
 };
@@ -48,7 +31,7 @@ type RegisterActions = ActionMap<RegisterPayload>[keyof ActionMap<RegisterPayloa
 
 type InitialStateType = {
   type: RegisterActionTypes | null;
-  user: UserType;
+  user: RegisterType;
   info: InfoType;
 };
 

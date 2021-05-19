@@ -11,11 +11,12 @@ import { ReactComponent as MedicalProfessionalSvg } from '../../../assets/images
 import {
   RegisterContext,
   RegisterActionTypes,
-  AccountType,
 } from '../../../contexts/RegisterContext';
 import Button from '../../../ui/Button';
 import Heading from '../../../ui/Heading';
 import AccountInfoText from '../AccountInfoText';
+
+import { AccountType } from '../../../types/user';
 
 type Props = {
   onClick: (step: number) => void;
