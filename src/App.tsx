@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import { useApolloClient } from './api';
 import Nav from './Pages/Nav';
 import theme from './theme';
+import { UserProvider } from './contexts/UserContext';
 
 const App = (): JSX.Element => {
   const client = useApolloClient();
@@ -13,9 +14,11 @@ const App = (): JSX.Element => {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <Router>
-          <Nav />
-        </Router>
+        <UserProvider>
+          <Router>
+            <Nav />
+          </Router>
+        </UserProvider>
       </ThemeProvider>
     </ApolloProvider>
   );

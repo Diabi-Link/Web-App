@@ -15,10 +15,12 @@ type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
 
 type InitialStateType = {
   type: UserActionTypes | null;
+  user: UserType | null;
 };
 
 const initialState: InitialStateType = {
   type: null,
+  user: null,
 };
 
 const reducer = (
@@ -26,6 +28,8 @@ const reducer = (
   action: UserActions,
 ): InitialStateType => {
   switch (action.type) {
+    case UserActionTypes.signUp:
+      return { type: action.type, user: action.payload };
     default:
       return state;
   }
