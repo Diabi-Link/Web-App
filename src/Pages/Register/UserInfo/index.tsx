@@ -29,6 +29,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+
   @media (min-width: 1500px) {
     width: 80%;
   }
@@ -57,6 +58,7 @@ const InfoBox = styled.div`
   justify-content: space-between;
   width: 100%;
   margin: 20px 0px;
+
   @media (min-width: 1500px) {
     margin: 30px 0px 20px;
   }

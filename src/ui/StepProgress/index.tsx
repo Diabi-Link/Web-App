@@ -70,16 +70,18 @@ const StepProgress = ({ step, locations, onClick }: Props): JSX.Element => {
       {locations.map((location, key) => (
         <Fragment key={location.path}>
           <Step>
-            <StepCircle
-              checked={step >= key + 2}
-              actual={step === key + 1}
-              onClick={() => step > key + 1 && onClick(key + 1)}
-            >
-              {step >= key + 2 ? <Icon icon={check} size={13} /> : key + 1}
-            </StepCircle>
+            {key + 1 < locations.length && (
+              <StepCircle
+                checked={step >= key + 2}
+                actual={step === key + 1}
+                onClick={() => step > key + 1 && onClick(key + 1)}
+              >
+                {step >= key + 2 ? <Icon icon={check} size={13} /> : key + 1}
+              </StepCircle>
+            )}
             <StepText>{location.description}</StepText>
           </Step>
-          {key + 1 !== locations.length && <Separator />}
+          {key + 2 < locations.length && <Separator />}
         </Fragment>
       ))}
     </Progress>

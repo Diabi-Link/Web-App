@@ -23,6 +23,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+
   @media (min-width: 1500px) {
     width: 80%;
   }
@@ -161,6 +162,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
                 btnStyle="primary"
                 shadow
                 iconEnd={arrowRight2}
+                onClick={() => onClick(4)}
               />
             </ButtonWrapper>
           </Wrapper>

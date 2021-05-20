@@ -17,6 +17,7 @@ import Button from '../../../ui/Button';
 
 const Container = styled.div`
   width: 80%;
+
   @media (min-width: 1500px) {
     width: 70%;
   }
