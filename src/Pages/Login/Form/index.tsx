@@ -3,17 +3,21 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { Icon } from 'react-icons-kit';
-import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
 import { facebook } from 'react-icons-kit/fa/facebook';
 import { googlePlus } from 'react-icons-kit/fa/googlePlus';
+import { useMutation } from '@apollo/client';
 
 import { ValidateLoginSchema } from '../Validation';
 
 import Input from '../../../ui/Input';
 import Button from '../../../ui/Button';
+
+import { LOGIN, LoginData, LoginResponse } from '../../../api';
+import { useAuthToken } from '../../../helpers/localstorage/auth';
+import Loader from '../../../ui/Loader';
 
 const Container = styled.div`
   width: 80%;
@@ -81,7 +85,7 @@ const ForgotLink = styled(Link)`
   font-weight: 500;
   padding: 10px 10px;
   text-decoration: none;
-  color: ${(props) => props.theme.main.dark};
+  color: ${(props) => props.theme.main.primary};
 `;
 
 const ConnectLink = styled(Link)`
@@ -124,13 +128,27 @@ const IconBox = styled.a`
 `;
 
 const Form = (): JSX.Element => {
-  const [showPassword, setShowPassword] = useState(true);
+  const { setAuthToken } = useAuthToken();
 
-  // TODO: Linking to API
-  const handleSubmit = (values: any) => {
-    return values;
-    // console.log(values);
+  const [login, { loading }] = useMutation<
+    LoginResponse,
+    { loginData: LoginData }
+  >(LOGIN, {
+    onCompleted: (payload) => setAuthToken(payload.Login.accessToken),
+    onError: () => null,
+  });
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
+    login({ variables: { loginData: { email, password } } });
   };
+
   return (
     <Container>
       <Wrapper>
@@ -174,7 +192,7 @@ const Form = (): JSX.Element => {
                   <Input
                     name="password"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="*******"
+                    placeholder="•••••••••"
                     value={props.values.password}
                     onChange={(e) => {
                       props.handleChange(e);
@@ -195,10 +213,12 @@ const Form = (): JSX.Element => {
               <ButtonWrapper>
                 <StyledButton
                   type="submit"
-                  label="Me connecter"
+                  label={
+                    loading ? <Loader loaderStyle="white" /> : 'Se connecter'
+                  }
                   btnStyle="primary"
                   shadow
-                  iconEnd={arrowRight2}
+                  disabled={loading}
                 />
               </ButtonWrapper>
               <ConnectionWrapper>
