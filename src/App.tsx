@@ -4,9 +4,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { useApolloClient } from './api';
-import Nav from './Pages/UnauthApp/Nav';
+
 import theme from './theme';
+import { AuthProvider } from './contexts/AuthContext';
 import { UserProvider } from './contexts/UserContext';
+
+import AppSelector from './Pages/AppSelector';
 
 const App = (): JSX.Element => {
   const client = useApolloClient();
@@ -14,11 +17,13 @@ const App = (): JSX.Element => {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <UserProvider>
-          <Router>
-            <Nav />
-          </Router>
-        </UserProvider>
+        <AuthProvider>
+          <UserProvider>
+            <Router>
+              <AppSelector />
+            </Router>
+          </UserProvider>
+        </AuthProvider>
       </ThemeProvider>
     </ApolloProvider>
   );

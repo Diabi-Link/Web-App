@@ -1,14 +1,22 @@
-import React, { createContext, useReducer, useMemo, Dispatch } from 'react';
+import React, {
+  createContext,
+  useReducer,
+  useMemo,
+  Dispatch,
+  useContext,
+  useEffect,
+} from 'react';
 
 import { ActionMap } from '../../types/utilities';
 import { UserType } from '../../types/user';
+import { AuthContext } from '../AuthContext';
 
 export enum UserActionTypes {
-  SignUp = 'USER_SIGN_UP',
+  FetchUser = 'FETCH_USER',
 }
 
 type UserPayload = {
-  [UserActionTypes.SignUp]: UserType;
+  [UserActionTypes.FetchUser]: UserType;
 };
 
 type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
@@ -28,7 +36,7 @@ const reducer = (
   action: UserActions,
 ): InitialStateType => {
   switch (action.type) {
-    case UserActionTypes.SignUp:
+    case UserActionTypes.FetchUser:
       return { type: action.type, user: action.payload };
     default:
       return state;
@@ -51,10 +59,17 @@ const UserProvider: React.FC<UserProviderType> = ({
   children,
 }: UserProviderType) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { user } = useContext(AuthContext);
 
   const value = useMemo(() => {
     return { state, dispatch };
   }, [state]);
+
+  useEffect(() => {
+    if (user) {
+      dispatch({ type: UserActionTypes.FetchUser, payload: user });
+    }
+  }, [user]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
