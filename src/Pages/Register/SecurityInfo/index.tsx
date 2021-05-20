@@ -17,6 +17,7 @@ import Input from '../../../ui/Input';
 
 import { DeepNonNullable } from '../../../types/utilities';
 import { RegisterType } from '../../../types/register';
+import Loader from '../../../ui/Loader';
 
 type Props = {
   onClick: (step: number) => void;
@@ -84,16 +85,17 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
   } = useContext(RegisterContext);
   const { dispatch } = useContext(UserContext);
 
-  const [signUp] = useMutation<SignUpResponse, { userData: UserData }>(
-    SIGN_UP,
-    {
-      onCompleted: (payload) =>
-        dispatch({
-          type: UserActionTypes.SignUp,
-          payload: payload.SignUp,
-        }),
-    },
-  );
+  const [signUp, { loading }] = useMutation<
+    SignUpResponse,
+    { userData: UserData }
+  >(SIGN_UP, {
+    onCompleted: (payload) =>
+      dispatch({
+        type: UserActionTypes.SignUp,
+        payload: payload.SignUp,
+      }),
+    onError: () => null, // TODO: Create a middleware to catch and handle API error
+  });
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -182,13 +184,15 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
                 shadow
                 iconStart={arrowLeft2}
                 onClick={() => onClick(2)}
+                disabled={loading}
               />
               <StyledButton
                 type="submit"
-                label="S'inscrire"
+                label={loading ? <Loader loaderStyle="white" /> : "S'inscrire"}
                 btnStyle="primary"
                 shadow
                 onClick={() => onClick(4)}
+                disabled={loading}
               />
             </ButtonWrapper>
           </Wrapper>

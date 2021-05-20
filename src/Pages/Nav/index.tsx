@@ -1,5 +1,7 @@
 import React, { lazy, Suspense } from 'react';
+import styled from 'styled-components';
 import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
+import Loader from '../../ui/Loader';
 import { RegisterProvider } from '../../contexts/RegisterContext';
 import Page404 from '../404';
 
@@ -9,6 +11,13 @@ const Home = lazy(() => import('../Home'));
 const Register = lazy(() => import('../Register'));
 const Login = lazy(() => import('../Login'));
 
+const Wrapper = styled.div`
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Nav = (): JSX.Element => {
   const location = useLocation();
 
@@ -16,7 +25,13 @@ const Nav = (): JSX.Element => {
   const needNavbar = locationsWithNavbar.includes(location.pathname);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <Wrapper>
+          <Loader size={14} />
+        </Wrapper>
+      }
+    >
       {needNavbar && <Navbar />}
       <Switch>
         <Route path="/" exact component={Home} />
