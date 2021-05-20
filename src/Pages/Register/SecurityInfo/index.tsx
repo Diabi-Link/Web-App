@@ -6,7 +6,15 @@ import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { Formik, Form, FormikProps } from 'formik';
 import { useMutation } from '@apollo/client';
 
-import { SIGN_UP, UserData, SignUpResponse } from '../../../api';
+import {
+  SIGN_UP,
+  UserData,
+  SignUpResponse,
+  LoginResponse,
+  LoginData,
+  LOGIN,
+} from '../../../api';
+import { useAuthToken } from '../../../helpers/localstorage/auth';
 
 import { RegisterContext } from '../../../contexts/RegisterContext';
 import { UserContext, UserActionTypes } from '../../../contexts/UserContext';
@@ -85,17 +93,36 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
   } = useContext(RegisterContext);
   const { dispatch } = useContext(UserContext);
 
+  const { setAuthToken } = useAuthToken();
+
+  // WILL DISEAPPER when confirm email became mandatory for login
+  const [login] = useMutation<LoginResponse, { loginData: LoginData }>(LOGIN, {
+    onCompleted: (payload) => setAuthToken(payload.Login.accessToken),
+    onError: () => null,
+  });
+
   const [signUp, { loading }] = useMutation<
     SignUpResponse,
     { userData: UserData }
   >(SIGN_UP, {
-    onCompleted: (payload) =>
+    onCompleted: (payload) => {
       dispatch({
         type: UserActionTypes.SignUp,
         payload: payload.SignUp,
-      }),
+      });
+      login({
+        variables: {
+          loginData: {
+            password: passwordForm,
+            email: payload.SignUp.email,
+          },
+        },
+      });
+    },
     onError: () => null, // TODO: Create a middleware to catch and handle API error
   });
+
+  const [passwordForm, setPasswordForm] = useState(''); // WILL DISEAPPER when confirm email became mandatory for login
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -125,7 +152,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
     <Container>
       <Heading level={1}>Finalisons votre compte !</Heading>
       <Formik
-        initialValues={{ password: '', confirmPassword: '' }}
+        initialValues={{ password: passwordForm, confirmPassword: '' }}
         validationSchema={ValidatePasswordSchema}
         onSubmit={handleSubmit}
       >
@@ -144,6 +171,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
                     value={props.values.password}
                     onChange={(e) => {
                       props.handleChange(e);
+                      setPasswordForm(e.target.value);
                     }}
                     errorText={
                       props.errors.password && props.touched.password

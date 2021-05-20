@@ -11,7 +11,7 @@ export type UserData = {
 } & DeepNonNullable<RegisterType>;
 
 export type SignUpResponse = {
-  SignUp: UserType;
+  SignUp: UserType & { password: string };
 };
 
 export const SIGN_UP = gql`
@@ -24,6 +24,27 @@ export const SIGN_UP = gql`
       password
       birthDate
       account
+    }
+  }
+`;
+
+export type LoginData = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  Login: {
+    accessToken: string;
+    refreshToken: string;
+  };
+};
+
+export const LOGIN = gql`
+  mutation Login($loginData: LoginData!) {
+    Login(loginData: $loginData) {
+      accessToken
+      refreshToken
     }
   }
 `;
