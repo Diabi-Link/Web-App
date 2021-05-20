@@ -7,7 +7,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import { useAuthToken } from '../helpers/localstorage/auth';
+import { useAuthToken } from '../hooks/useAuthToken';
 
 const httpLink = createHttpLink({
   uri: 'https://diabilink.herokuapp.com/graphql/',

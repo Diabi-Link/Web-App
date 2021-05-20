@@ -14,7 +14,7 @@ import {
   LoginData,
   LOGIN,
 } from '../../../api';
-import { useAuthToken } from '../../../helpers/localstorage/auth';
+import { useAuthToken } from '../../../hooks/useAuthToken';
 
 import { RegisterContext } from '../../../contexts/RegisterContext';
 import { UserContext, UserActionTypes } from '../../../contexts/UserContext';

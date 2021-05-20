@@ -16,7 +16,7 @@ import Input from '../../../ui/Input';
 import Button from '../../../ui/Button';
 
 import { LOGIN, LoginData, LoginResponse } from '../../../api';
-import { useAuthToken } from '../../../helpers/localstorage/auth';
+import { useAuthToken } from '../../../hooks/useAuthToken';
 import Loader from '../../../ui/Loader';
 
 const Container = styled.div`
