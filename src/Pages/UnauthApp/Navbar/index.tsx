@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link as LinkRouter, withRouter } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../assets/images/AppLogo.svg';
-import { ReactComponent as LogoText } from '../../assets/images/DiabiLink.svg';
-import Button from '../../ui/Button';
+import { ReactComponent as Logo } from '../../../assets/images/AppLogo.svg';
+import { ReactComponent as LogoText } from '../../../assets/images/DiabiLink.svg';
+import Button from '../../../ui/Button';
 
 const Container = styled.nav`
   position: fixed;

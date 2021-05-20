@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as AccountSvg } from '../../../assets/images/AccountForm.svg';
-import { ReactComponent as UserSvg } from '../../../assets/images/UserForm.svg';
-import { ReactComponent as SecuritySvg } from '../../../assets/images/SecurityForm.svg';
-import { ReactComponent as MailSvg } from '../../../assets/images/Mail.svg';
-import { ReactComponent as LogoText } from '../../../assets/images/DiabiLink.svg';
+import { ReactComponent as AccountSvg } from '../../../../assets/images/AccountForm.svg';
+import { ReactComponent as UserSvg } from '../../../../assets/images/UserForm.svg';
+import { ReactComponent as SecuritySvg } from '../../../../assets/images/SecurityForm.svg';
+import { ReactComponent as MailSvg } from '../../../../assets/images/Mail.svg';
+import { ReactComponent as LogoText } from '../../../../assets/images/DiabiLink.svg';
 
 type Props = {
   step: number;

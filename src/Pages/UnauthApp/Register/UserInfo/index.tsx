@@ -10,15 +10,15 @@ import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
 import {
   RegisterContext,
   RegisterActionTypes,
-} from '../../../contexts/RegisterContext';
+} from '../../../../contexts/RegisterContext';
 import { ValidateUserSchema } from '../Validation';
 
-import Heading from '../../../ui/Heading';
-import Input from '../../../ui/Input';
-import Button from '../../../ui/Button';
-import DateInput from '../../../ui/DateInput';
+import Heading from '../../../../ui/Heading';
+import Input from '../../../../ui/Input';
+import Button from '../../../../ui/Button';
+import DateInput from '../../../../ui/DateInput';
 
-import { RegisterType } from '../../../types/register';
+import { RegisterType } from '../../../../types/register';
 
 type Props = {
   onClick: (step: number) => void;

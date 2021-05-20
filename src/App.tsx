@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { useApolloClient } from './api';
-import Nav from './Pages/Nav';
+import Nav from './Pages/UnauthApp/Nav';
 import theme from './theme';
 import { UserProvider } from './contexts/UserContext';
 

@@ -12,12 +12,12 @@ import { useMutation } from '@apollo/client';
 
 import { ValidateLoginSchema } from '../Validation';
 
-import Input from '../../../ui/Input';
-import Button from '../../../ui/Button';
+import Input from '../../../../ui/Input';
+import Button from '../../../../ui/Button';
 
-import { LOGIN, LoginData, LoginResponse } from '../../../api';
-import { useAuthToken } from '../../../hooks/useAuthToken';
-import Loader from '../../../ui/Loader';
+import { LOGIN, LoginData, LoginResponse } from '../../../../api';
+import { useAuthToken } from '../../../../hooks/useAuthToken';
+import Loader from '../../../../ui/Loader';
 
 const Container = styled.div`
   width: 80%;

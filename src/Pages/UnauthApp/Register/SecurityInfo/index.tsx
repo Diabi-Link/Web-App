@@ -6,17 +6,17 @@ import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { Formik, Form, FormikProps } from 'formik';
 import { useMutation } from '@apollo/client';
 
-import { SIGN_UP, UserData, SignUpResponse } from '../../../api';
+import { SIGN_UP, UserData, SignUpResponse } from '../../../../api';
 
-import { RegisterContext } from '../../../contexts/RegisterContext';
+import { RegisterContext } from '../../../../contexts/RegisterContext';
 import { ValidatePasswordSchema } from '../Validation';
-import Heading from '../../../ui/Heading';
-import Button from '../../../ui/Button';
-import Input from '../../../ui/Input';
+import Heading from '../../../../ui/Heading';
+import Button from '../../../../ui/Button';
+import Input from '../../../../ui/Input';
 
-import { DeepNonNullable } from '../../../types/utilities';
-import { RegisterType } from '../../../types/register';
-import Loader from '../../../ui/Loader';
+import { DeepNonNullable } from '../../../../types/utilities';
+import { RegisterType } from '../../../../types/register';
+import Loader from '../../../../ui/Loader';
 
 type Props = {
   onClick: (step: number) => void;

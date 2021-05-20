@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AccountType } from '../../../types/user';
+import { AccountType } from '../../../../types/user';
 
 type Props = {
   type: AccountType;

@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { mailForward } from 'react-icons-kit/fa/mailForward';
 
-import Heading from '../../../ui/Heading';
-import Button from '../../../ui/Button';
+import Heading from '../../../../ui/Heading';
+import Button from '../../../../ui/Button';
 
 const Container = styled.div`
   display: flex;

@@ -4,19 +4,19 @@ import { darken } from 'polished';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
-import { ReactComponent as ReferentSvg } from '../../../assets/images/Referent.svg';
-import { ReactComponent as PatientSvg } from '../../../assets/images/Patient.svg';
-import { ReactComponent as MedicalProfessionalSvg } from '../../../assets/images/MedicalProfessional.svg';
+import { ReactComponent as ReferentSvg } from '../../../../assets/images/Referent.svg';
+import { ReactComponent as PatientSvg } from '../../../../assets/images/Patient.svg';
+import { ReactComponent as MedicalProfessionalSvg } from '../../../../assets/images/MedicalProfessional.svg';
 
 import {
   RegisterContext,
   RegisterActionTypes,
-} from '../../../contexts/RegisterContext';
-import Button from '../../../ui/Button';
-import Heading from '../../../ui/Heading';
+} from '../../../../contexts/RegisterContext';
+import Button from '../../../../ui/Button';
+import Heading from '../../../../ui/Heading';
 import AccountInfoText from '../AccountInfoText';
 
-import { AccountType } from '../../../types/user';
+import { AccountType } from '../../../../types/user';
 
 type Props = {
   onClick: (step: number) => void;

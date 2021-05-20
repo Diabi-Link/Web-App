@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { Icon } from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
-import { ReactComponent as LoginSvg } from '../../assets/images/Login.svg';
-import { ReactComponent as LogoText } from '../../assets/images/DiabiLink.svg';
+import { ReactComponent as LoginSvg } from '../../../assets/images/Login.svg';
+import { ReactComponent as LogoText } from '../../../assets/images/DiabiLink.svg';
 
 import Form from './Form';
 
