@@ -137,7 +137,7 @@ const IconBox = styled.a`
 
 const Form = (): JSX.Element => {
   const { dispatch } = useContext(UserContext);
-  const { authToken, setAuthToken } = useAuthToken();
+  const { authToken, setAuthToken, removeAuthToken } = useAuthToken();
 
   const [fetchUser, { loading: awaitingFetch }] = useLazyQuery<
     FetchUserResponse,
@@ -149,7 +149,7 @@ const Form = (): JSX.Element => {
         payload: { ...payload.User },
       });
     },
-    onError: () => null,
+    onError: () => removeAuthToken(),
   });
 
   const [login, { loading: awaitingLogin }] = useMutation<

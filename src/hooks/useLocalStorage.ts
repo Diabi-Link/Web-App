@@ -1,3 +1,5 @@
+/* Custom hooks from "https://usehooks-typescript.com/react-hook/use-local-storage" */
+
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
@@ -7,7 +9,7 @@ export function useLocalStorage<T>({
 }: {
   key: string;
   initialValue?: T | null;
-}): [T, (value: T) => void, (keyToRemove: string) => void] {
+}): [T | null, (value: T) => void, (keyToRemove: string) => void] {
   // Get from local storage then
   // parse stored json or return initialValue
   const readValue = () => {
@@ -27,11 +29,11 @@ export function useLocalStorage<T>({
 
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
-  const [storedValue, setStoredValue] = useState<T>(readValue);
+  const [storedValue, setStoredValue] = useState<T | null>(readValue);
 
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
-  const setValue = (value: T | null) => {
+  const setValue = (value: T) => {
     // Prevent build error "window is undefined" but keeps working
     if (typeof window === 'undefined') {
       console.warn(
@@ -57,19 +59,14 @@ export function useLocalStorage<T>({
   };
 
   useEffect(() => {
-    const item = readValue();
-    if (item) {
-      setStoredValue(readValue());
-    }
+    setStoredValue(readValue());
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     const handleStorageChange = () => {
-      const item = readValue();
-      if (item) {
-        setStoredValue(readValue());
-      }
+      setStoredValue(readValue());
     };
 
     // this only works for other documents, not the current one
@@ -87,7 +84,7 @@ export function useLocalStorage<T>({
 
   const removeValue = (keyToRemove: string) => {
     window.localStorage.removeItem(keyToRemove);
-    setValue(null);
+    setStoredValue(null);
   };
 
   return [storedValue, setValue, removeValue];

@@ -13,10 +13,12 @@ import { AuthContext } from '../AuthContext';
 
 export enum UserActionTypes {
   FetchUser = 'FETCH_USER',
+  EmptyUser = 'EMPTY_USER',
 }
 
 type UserPayload = {
   [UserActionTypes.FetchUser]: UserType;
+  [UserActionTypes.EmptyUser]: undefined;
 };
 
 type UserActions = ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
@@ -37,7 +39,17 @@ const reducer = (
 ): InitialStateType => {
   switch (action.type) {
     case UserActionTypes.FetchUser:
-      return { type: action.type, user: action.payload };
+      return {
+        type: action.type,
+        user: {
+          ...action.payload,
+          birthDate: new Date(action.payload.birthDate),
+        },
+      };
+
+    case UserActionTypes.EmptyUser:
+      return { type: action.type, user: initialState.user };
+
     default:
       return state;
   }

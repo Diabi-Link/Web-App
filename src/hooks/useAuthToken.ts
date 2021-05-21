@@ -5,7 +5,7 @@ const key = 'authToken';
 export const useAuthToken = (): {
   authToken: string | null;
   setAuthToken: (authToken: string) => void;
-  removeAuthToken: (key: string) => void;
+  removeAuthToken: () => void;
 } => {
   const [authToken, setValue, removeValue] = useLocalStorage<string>({ key });
 
