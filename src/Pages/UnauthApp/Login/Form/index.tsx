@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
@@ -8,16 +8,24 @@ import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
 import { facebook } from 'react-icons-kit/fa/facebook';
 import { googlePlus } from 'react-icons-kit/fa/googlePlus';
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 
+import jwtDecode from 'jwt-decode';
 import { ValidateLoginSchema } from '../Validation';
 
 import Input from '../../../../ui/Input';
 import Button from '../../../../ui/Button';
 
-import { LOGIN, LoginData, LoginResponse } from '../../../../api';
+import {
+  FetchUserResponse,
+  FETCH_USER,
+  LOGIN,
+  LoginData,
+  LoginResponse,
+} from '../../../../api';
 import { useAuthToken } from '../../../../hooks/useAuthToken';
 import Loader from '../../../../ui/Loader';
+import { UserActionTypes, UserContext } from '../../../../contexts/UserContext';
 
 const Container = styled.div`
   width: 80%;
@@ -128,15 +136,38 @@ const IconBox = styled.a`
 `;
 
 const Form = (): JSX.Element => {
-  const { setAuthToken } = useAuthToken();
+  const { dispatch } = useContext(UserContext);
+  const { authToken, setAuthToken } = useAuthToken();
 
-  const [login, { loading }] = useMutation<
+  const [fetchUser, { loading: awaitingFetch }] = useLazyQuery<
+    FetchUserResponse,
+    { id: number }
+  >(FETCH_USER, {
+    onCompleted: (payload) => {
+      dispatch({
+        type: UserActionTypes.FetchUser,
+        payload: { ...payload.User },
+      });
+    },
+    onError: () => null,
+  });
+
+  const [login, { loading: awaitingLogin }] = useMutation<
     LoginResponse,
     { loginData: LoginData }
   >(LOGIN, {
     onCompleted: (payload) => setAuthToken(payload.Login.accessToken),
     onError: () => null,
   });
+
+  useEffect(() => {
+    if (authToken) {
+      const decrypted: { userId: number } = jwtDecode(authToken);
+      fetchUser({ variables: { id: decrypted.userId } });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken]);
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = ({
@@ -214,11 +245,15 @@ const Form = (): JSX.Element => {
                 <StyledButton
                   type="submit"
                   label={
-                    loading ? <Loader loaderStyle="white" /> : 'Se connecter'
+                    awaitingLogin || awaitingFetch ? (
+                      <Loader loaderStyle="white" />
+                    ) : (
+                      'Se connecter'
+                    )
                   }
                   btnStyle="primary"
                   shadow
-                  disabled={loading}
+                  disabled={awaitingLogin || awaitingFetch}
                 />
               </ButtonWrapper>
               <ConnectionWrapper>
