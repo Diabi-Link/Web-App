@@ -23,7 +23,7 @@ const authLink = (authToken: string | null): ApolloLink =>
     };
   });
 
-export const useApolloClient = (): ApolloClient<NormalizedCacheObject> => {
+export const useAppApolloClient = (): ApolloClient<NormalizedCacheObject> => {
   const { authToken } = useAuthToken();
   return new ApolloClient({
     link: authLink(authToken).concat(httpLink),
