@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link as LinkRouter, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../../assets/images/AppLogo.svg';
 import { ReactComponent as LogoText } from '../../../assets/images/DiabiLink.svg';
@@ -33,7 +33,7 @@ const SiteNavWrapper = styled.div`
   align-items: center;
 `;
 
-const LogoWrapper = styled(LinkRouter)<{ to: string; pathname: string }>`
+const LogoWrapper = styled(Link)<{ to: string; pathname: string }>`
   display: flex;
   align-items: center;
   margin-right: 1.25rem;
@@ -57,7 +57,7 @@ const Divider = styled.div`
   margin-right: 1.25rem;
 `;
 
-const Link = styled(LinkRouter)<{ to: string; pathname: string }>`
+const NavLink = styled(Link)<{ to: string; pathname: string }>`
   text-decoration: none;
   font-weight: 500;
   margin-right: 1.25rem;
@@ -65,6 +65,10 @@ const Link = styled(LinkRouter)<{ to: string; pathname: string }>`
     props.to === props.pathname
       ? props.theme.main.dark
       : props.theme.main.grayDark};
+`;
+
+const AuthLink = styled(Link)<{ to: string }>`
+  text-decoration: none;
 `;
 
 const ConnexionWrapper = styled.div`
@@ -92,17 +96,17 @@ const Navbar = ({ location }: Props): JSX.Element => {
             <StyledLogoText />
           </LogoWrapper>
           <Divider />
-          <Link to="/" pathname={location.pathname}>
+          <NavLink to="/" pathname={location.pathname}>
             Accueil
-          </Link>
+          </NavLink>
         </SiteNavWrapper>
         <ConnexionWrapper>
-          <LinkRouter to="/login">
+          <AuthLink to="/login">
             <LoginButton label="Se connecter" btnStyle="primary" outlined />
-          </LinkRouter>
-          <LinkRouter to="/register/user">
+          </AuthLink>
+          <AuthLink to="/register/user">
             <Button label="S'inscrire" btnStyle="primary" />
-          </LinkRouter>
+          </AuthLink>
         </ConnexionWrapper>
       </Wrapper>
     </Container>
