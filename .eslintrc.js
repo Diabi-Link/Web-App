@@ -54,5 +54,7 @@ module.exports = {
       'error',
       { ignoreFunctionalComponents: true },
     ],
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
   },
 };
