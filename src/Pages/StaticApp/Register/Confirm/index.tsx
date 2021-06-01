@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { mailForward } from 'react-icons-kit/fa/mailForward';
+import { send } from 'react-icons-kit/fa/send';
 
 import Heading from '../../../../ui/Heading';
 import Button from '../../../../ui/Button';
@@ -39,17 +39,17 @@ const Confirm = (): JSX.Element => {
     <Container>
       <Heading level={1}>Vérifiez votre email 📬</Heading>
       <Description>
-        Votre inscription à bien été prise en compte. Un email va vous être
+        Votre inscription a bien été prise en compte. Un email va vous être
         envoyé prochainement avec un lien pour vérifier votre compte. Si vous
-        n’avez pas recu ce mail après quelques minutes, pensez à vérifiez votre
+        n’avez pas reçu ce mail après quelques minutes, pensez à vérifier votre
         dossier spam.
       </Description>
       <StyledButton
-        type="submit"
+        type="button"
         label="Renvoyez le mail"
         btnStyle="primary"
         shadow
-        iconEnd={mailForward}
+        iconEnd={send}
         // onClick={() => onClick(4)}
       />
     </Container>
