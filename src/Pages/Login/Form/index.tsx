@@ -188,7 +188,9 @@ const Form = (): JSX.Element => {
                     onClick={() => setShowPassword(!showPassword)}
                   />
                   <ForgotWrapper>
-                    <ForgotLink to="/">Mot de passe oublié ?</ForgotLink>
+                    <ForgotLink to="/forgot-password/send-code">
+                      Mot de passe oublié ?
+                    </ForgotLink>
                   </ForgotWrapper>
                 </InputWrapper>
               </ContentWrapper>

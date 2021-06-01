@@ -71,7 +71,7 @@ const InputLabel = styled.label`
 `;
 
 const StyledButton = styled(Button)`
-  width: 300px;
+  width: 170px;
   height: 40px;
 `;
 
@@ -119,7 +119,7 @@ const SendCode = ({ onClick }: Props): JSX.Element => {
             <ButtonWrapper>
               <StyledButton
                 type="submit"
-                label="Réinitialiser mon mot de passe"
+                label="Réinitialiser"
                 btnStyle="primary"
                 shadow
                 iconEnd={arrowRight2}
