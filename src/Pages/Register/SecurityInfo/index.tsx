@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { Formik, Form, FormikProps } from 'formik';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
-import { Formik, Form, FormikProps } from 'formik';
 
 import { RegisterContext, RegisterActionTypes } from '../RegisterContext';
 import { ValidatePasswordSchema } from '../Validation';
