@@ -50,5 +50,9 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     '@typescript-eslint/ban-types': 0,
+    'react/require-default-props': [
+      'error',
+      { ignoreFunctionalComponents: true },
+    ],
   },
 };

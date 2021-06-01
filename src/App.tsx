@@ -1,16 +1,31 @@
 import React from 'react';
+import { ApolloProvider } from '@apollo/client/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import Nav from './Pages/Nav';
+
+import { useAppApolloClient } from './api';
+
 import theme from './theme';
+import { AuthProvider } from './contexts/AuthContext';
+import { UserProvider } from './contexts/UserContext';
+
+import AppSelector from './Pages/AppSelector';
 
 const App = (): JSX.Element => {
+  const client = useAppApolloClient();
+
   return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <Nav />
-      </Router>
-    </ThemeProvider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <AuthProvider>
+          <UserProvider>
+            <Router>
+              <AppSelector />
+            </Router>
+          </UserProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </ApolloProvider>
   );
 };
 
