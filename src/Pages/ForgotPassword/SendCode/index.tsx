@@ -138,6 +138,7 @@ const SendCode = ({ onClick }: Props): JSX.Element => {
                 shadow
                 iconEnd={arrowRight2}
                 disabled={loading}
+                data-testid="reset-button"
               />
             </ButtonWrapper>
           </FormWrapper>

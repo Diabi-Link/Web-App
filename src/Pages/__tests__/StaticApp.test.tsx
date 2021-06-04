@@ -29,9 +29,24 @@ test('Static App rendering/navigating', async () => {
     expect(screen.getByText(/Content de vous revoir/i)).toBeInTheDocument(),
   );
 
-  userEvent.click(screen.getByText(/Revenir au site/i));
+  userEvent.click(screen.getByText(/Mot de passe oublié/i));
 
-  await waitFor(() => expect(screen.getByText(/HOME/i)).toBeInTheDocument());
+  await waitFor(() =>
+    expect(screen.getByText(/Mot de passe oublié/i)).toBeInTheDocument(),
+  );
+
+  userEvent.type(
+    screen.getByPlaceholderText(/John.cena@gmail.com/i),
+    'test@test.com',
+  );
+
+  userEvent.click(screen.getByTestId('reset-button'));
+
+  await waitFor(() =>
+    expect(
+      screen.getByText(/Réinitialisez votre mot de passe/i),
+    ).toBeInTheDocument(),
+  );
 });
 
 test('landing on a bad page', () => {
