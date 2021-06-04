@@ -100,7 +100,8 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "!src/**/*.stories.{js,ts,jsx,tsx}"
+      "!src/**/*.stories.{js,ts,jsx,tsx}",
+      "!src/hooks/**"
     ]
   }
 }

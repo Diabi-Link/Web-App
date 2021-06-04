@@ -196,6 +196,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
               onClick={() => setSelectedAccount('patient')}
               btnStyle="white"
               isSelected={selectedAccount === 'patient'}
+              data-testid="patient-box"
             />
             <StyledBox
               label={accountSelector('referent')}
@@ -204,6 +205,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
               onClick={() => setSelectedAccount('referent')}
               btnStyle="white"
               isSelected={selectedAccount === 'referent'}
+              data-testid="referent-box"
             />
             <StyledBox
               label={accountSelector('medicalProfessional')}
@@ -212,6 +214,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
               onClick={() => setSelectedAccount('medicalProfessional')}
               btnStyle="white"
               isSelected={selectedAccount === 'medicalProfessional'}
+              data-testid="medicalProfessional-box"
             />
           </AccountSelectorContainer>
           <AccountInfoText type={hoveredAccount || selectedAccount} />
@@ -233,6 +236,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
             iconEnd={arrowRight2}
             onClick={handleSubmit}
             disabled={loading}
+            data-testid="next-button"
           />
         </ButtonWrapper>
       </Wrapper>

@@ -135,6 +135,7 @@ const User = ({ onClick }: Props): JSX.Element => {
                   <Input
                     name="firstName"
                     type="text"
+                    data-testid="firstName-input"
                     placeholder="John"
                     value={props.values.firstName}
                     onChange={(e) => {
@@ -153,6 +154,7 @@ const User = ({ onClick }: Props): JSX.Element => {
                   <Input
                     name="lastName"
                     type="text"
+                    data-testid="lastName-input"
                     placeholder="Cena"
                     value={props.values.lastName}
                     onChange={(e) => {
@@ -173,6 +175,7 @@ const User = ({ onClick }: Props): JSX.Element => {
                   <Input
                     name="email"
                     type="text"
+                    data-testid="email-input"
                     placeholder="John.cena@gmail.com"
                     value={props.values.email}
                     onChange={(e) => {
@@ -211,6 +214,7 @@ const User = ({ onClick }: Props): JSX.Element => {
               <NextButton
                 type="submit"
                 label="Suivant"
+                data-testid="next-button"
                 btnStyle="primary"
                 shadow
                 iconEnd={arrowRight2}
