@@ -184,10 +184,10 @@ const Form = (): JSX.Element => {
     <Container>
       <Wrapper>
         <IconWrapper>
-          <IconBox href="/register/account">
+          <IconBox href="https://diabilink.herokuapp.com/auth/facebook">
             <Icon icon={facebook} size={20} />
           </IconBox>
-          <IconBox href="/register/account">
+          <IconBox href="https://diabilink.herokuapp.com/auth/google">
             <Icon icon={googlePlus} size={20} />
           </IconBox>
         </IconWrapper>

@@ -50,7 +50,6 @@ const Confirm = (): JSX.Element => {
         btnStyle="primary"
         shadow
         iconEnd={send}
-        // onClick={() => onClick(4)}
       />
     </Container>
   );

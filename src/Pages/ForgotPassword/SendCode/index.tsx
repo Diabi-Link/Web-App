@@ -4,12 +4,15 @@ import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
+import { useLazyQuery } from '@apollo/client';
 
 import { ValidateMailSchema } from '../Validation';
+import { PASSWORD_RECOVERY, PasswordRecoveryResponse } from '../../../api';
 
 import Heading from '../../../ui/Heading';
 import Input from '../../../ui/Input';
 import Button from '../../../ui/Button';
+import Loader from '../../../ui/Loader';
 
 type Props = {
   onClick: (step: number) => void;
@@ -77,13 +80,22 @@ const StyledButton = styled(Button)`
 
 const SendCode = ({ onClick }: Props): JSX.Element => {
   const { push } = useHistory();
-  // TODO: Linking to API
-  const handleSubmit = (values: any) => {
-    push('/forgot-password/reset');
-    onClick(2);
-    return values;
-    // console.log(values);
+
+  const [passwordRecovery, { loading }] = useLazyQuery<
+    PasswordRecoveryResponse,
+    { email: string }
+  >(PASSWORD_RECOVERY, {
+    onCompleted: () => {
+      push('/forgot-password/reset');
+      onClick(2);
+    },
+    onError: () => null,
+  });
+
+  const handleSubmit = ({ email }: { email: string }) => {
+    passwordRecovery({ variables: { email } });
   };
+
   return (
     <Container>
       <Heading level={1}>Mot de passe oublié ?</Heading>
@@ -119,10 +131,13 @@ const SendCode = ({ onClick }: Props): JSX.Element => {
             <ButtonWrapper>
               <StyledButton
                 type="submit"
-                label="Réinitialiser"
+                label={
+                  loading ? <Loader loaderStyle="white" /> : 'Réinitialiser'
+                }
                 btnStyle="primary"
                 shadow
                 iconEnd={arrowRight2}
+                disabled={loading}
               />
             </ButtonWrapper>
           </FormWrapper>

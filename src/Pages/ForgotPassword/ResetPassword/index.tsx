@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
-import { loop2 } from 'react-icons-kit/icomoon/loop2';
+import { useHistory } from 'react-router-dom';
+// import { loop2 } from 'react-icons-kit/icomoon/loop2';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { lock } from 'react-icons-kit/fa/lock';
+import { useMutation } from '@apollo/client';
 
 import { ValidateResetSchema } from '../Validation';
+import {
+  PASSWORD_RECOVERY_LINK,
+  PasswordRecoveryLinkResponse,
+} from '../../../api';
 
 import Heading from '../../../ui/Heading';
 import Input from '../../../ui/Input';
 import Button from '../../../ui/Button';
+import Loader from '../../../ui/Loader';
 
 const Container = styled.div`
   display: flex;
@@ -90,13 +97,34 @@ const StyledButton = styled(Button)`
 `;
 
 const ResetPassword = (): JSX.Element => {
+  const { push } = useHistory();
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirm, setShowConfirm] = useState(true);
-  // TODO: Linking to API
-  const handleSubmit = (values: any) => {
-    return values;
-    // console.log(values);
+
+  const [passwordRecoveryLink, { loading }] = useMutation<
+    PasswordRecoveryLinkResponse,
+    { newPassword: string; secretId: string }
+  >(PASSWORD_RECOVERY_LINK, {
+    onCompleted: () => {
+      push('/login');
+    },
+    onError: () => null,
+  });
+  const handleSubmit = ({
+    password: newPassword,
+    code: secretId,
+  }: {
+    password: string;
+    code: string;
+  }) => {
+    import('bcryptjs').then((bcrypt) => {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(newPassword, salt);
+
+      passwordRecoveryLink({ variables: { newPassword: hash, secretId } });
+    });
   };
+
   return (
     <Container>
       <Heading level={1}>Réinitialisez votre mot de passe</Heading>
@@ -177,17 +205,19 @@ const ResetPassword = (): JSX.Element => {
               </InputWrapper>
             </PasswordBox>
             <ButtonWrapper>
-              <StyledButton
+              {/* <StyledButton
                 type="button"
                 label="Renvoyer le code"
                 btnStyle="primary"
                 shadow
                 outlined
                 iconEnd={loop2}
-              />
+              /> */}
               <StyledButton
                 type="submit"
-                label="Réinitialisez"
+                label={
+                  loading ? <Loader loaderStyle="white" /> : 'Réinitialiser'
+                }
                 btnStyle="primary"
                 shadow
                 iconEnd={arrowRight2}
