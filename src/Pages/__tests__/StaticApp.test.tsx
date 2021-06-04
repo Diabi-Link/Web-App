@@ -1,20 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import App from '../App';
-
-const renderWithRouter = (ui: React.ReactElement, { route = '/' } = {}) => {
-  window.history.pushState({}, 'Test page', route);
-
-  return render(ui, { wrapper: BrowserRouter });
-};
+import App from '../../App';
 
 test('Static App rendering/navigating', async () => {
-  renderWithRouter(<App />);
+  render(<App />);
 
   await waitFor(() => expect(screen.getByText(/HOME/i)).toBeInTheDocument());
 
@@ -42,7 +35,8 @@ test('Static App rendering/navigating', async () => {
 });
 
 test('landing on a bad page', () => {
-  renderWithRouter(<App />, { route: '/something-that-does-not-match' });
+  window.history.pushState({}, 'Test page', '/bad-route');
+  render(<App />);
 
   expect(screen.getByText(/perdu/i)).toBeInTheDocument();
 });
