@@ -5,6 +5,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+import userEvent from '@testing-library/user-event';
 import AppSelector from '../AppSelector';
 import { UserProvider } from '../../contexts/UserContext';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -36,4 +37,8 @@ test('Auth App rendering/navigating', async () => {
   await waitFor(() =>
     expect(screen.getByText(/authentifié/i)).toBeInTheDocument(),
   );
+
+  userEvent.click(screen.getByTestId('logout-button'));
+
+  await waitFor(() => expect(screen.getByText(/HOME/i)).toBeInTheDocument());
 });
