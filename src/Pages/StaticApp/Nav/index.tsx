@@ -10,7 +10,7 @@ import Navbar from '../Navbar';
 const Home = lazy(() => import('../Home'));
 const Register = lazy(() => import('../Register'));
 const Login = lazy(() => import('../Login'));
-const ForgotPassword = lazy(() => import('../../ForgotPassword'));
+const ForgotPassword = lazy(() => import('../ForgotPassword'));
 
 const Wrapper = styled.div`
   display: flex;

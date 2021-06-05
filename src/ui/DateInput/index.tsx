@@ -24,7 +24,13 @@ const DateInput = ({
     <DatePicker
       {...props}
       customInput={
-        <Input errorText={errorText} icon={icon} value="test" type="text" />
+        <Input
+          errorText={errorText}
+          icon={icon}
+          value="test"
+          type="text"
+          data-testid="birthDate-input"
+        />
       }
       placeholderText="15/04/1980"
       selected={value}

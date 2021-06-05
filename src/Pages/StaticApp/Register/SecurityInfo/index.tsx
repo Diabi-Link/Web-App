@@ -148,6 +148,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
                     }
                     icon={showPassword ? eye : eyeBlocked}
                     onClick={() => setShowPassword(!showPassword)}
+                    data-testid="password-input"
                   />
                 </InputWrapper>
                 <InputWrapper>
@@ -168,6 +169,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
                     }
                     icon={showConfirm ? eye : eyeBlocked}
                     onClick={() => setShowConfirm(!showConfirm)}
+                    data-testid="confirmPassword-input"
                   />
                 </InputWrapper>
               </PasswordBox>
@@ -188,6 +190,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
                 btnStyle="primary"
                 shadow
                 disabled={loading}
+                data-testid="next-button"
               />
             </ButtonWrapper>
           </Wrapper>

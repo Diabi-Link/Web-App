@@ -7,12 +7,12 @@ import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
 import { useLazyQuery } from '@apollo/client';
 
 import { ValidateMailSchema } from '../Validation';
-import { PASSWORD_RECOVERY, PasswordRecoveryResponse } from '../../../api';
+import { PASSWORD_RECOVERY, PasswordRecoveryResponse } from '../../../../api';
 
-import Heading from '../../../ui/Heading';
-import Input from '../../../ui/Input';
-import Button from '../../../ui/Button';
-import Loader from '../../../ui/Loader';
+import Heading from '../../../../ui/Heading';
+import Input from '../../../../ui/Input';
+import Button from '../../../../ui/Button';
+import Loader from '../../../../ui/Loader';
 
 type Props = {
   onClick: (step: number) => void;
@@ -138,6 +138,7 @@ const SendCode = ({ onClick }: Props): JSX.Element => {
                 shadow
                 iconEnd={arrowRight2}
                 disabled={loading}
+                data-testid="reset-button"
               />
             </ButtonWrapper>
           </FormWrapper>

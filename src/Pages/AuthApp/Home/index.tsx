@@ -56,6 +56,7 @@ const Home = (): React.ReactElement => {
           label="Se déconnecter"
           btnStyle="primary"
           onClick={logout}
+          data-testid="logout-button"
         />
       </Wrapper>
     </Container>
