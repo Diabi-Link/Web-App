@@ -162,6 +162,7 @@ const ResetPassword = (): JSX.Element => {
                       : undefined
                   }
                   icon={lock}
+                  data-testid="code-input"
                 />
               </InputWrapper>
               <InputWrapper>
@@ -181,6 +182,7 @@ const ResetPassword = (): JSX.Element => {
                   }
                   icon={showPassword ? eye : eyeBlocked}
                   onClick={() => setShowPassword(!showPassword)}
+                  data-testid="password-input"
                 />
               </InputWrapper>
               <InputWrapper>
@@ -201,6 +203,7 @@ const ResetPassword = (): JSX.Element => {
                   }
                   icon={showConfirm ? eye : eyeBlocked}
                   onClick={() => setShowConfirm(!showConfirm)}
+                  data-testid="confirmPassword-input"
                 />
               </InputWrapper>
             </PasswordBox>
@@ -221,6 +224,7 @@ const ResetPassword = (): JSX.Element => {
                 btnStyle="primary"
                 shadow
                 iconEnd={arrowRight2}
+                data-testid="reset-button"
               />
             </ButtonWrapper>
           </FormWrapper>
