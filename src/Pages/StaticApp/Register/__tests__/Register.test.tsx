@@ -25,7 +25,7 @@ const mockUser: UserType = {
 };
 
 test('Test register worflow', async () => {
-  window.history.pushState({}, 'Test page', '/register');
+  window.history.pushState({}, 'Test page', '/register/user');
   render(
     <MockedProvider>
       <BrowserRouter>
@@ -59,12 +59,9 @@ test('Test register worflow', async () => {
     ).toBeInTheDocument(),
   );
 
-  userEvent.type(
-    screen.getByTestId('medicalProfessional-box'),
-    mockUser.firstName,
-  );
-  userEvent.type(screen.getByTestId('patient-box'), mockUser.firstName);
-  userEvent.type(screen.getByTestId('referent-box'), mockUser.firstName);
+  userEvent.click(screen.getByTestId('medicalProfessional-box'));
+  userEvent.click(screen.getByTestId('patient-box'));
+  userEvent.click(screen.getByTestId('referent-box'));
   userEvent.click(screen.getByTestId('next-button'));
 
   await waitFor(() =>
