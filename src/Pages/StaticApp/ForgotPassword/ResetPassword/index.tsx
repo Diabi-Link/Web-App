@@ -13,12 +13,12 @@ import { ValidateResetSchema } from '../Validation';
 import {
   PASSWORD_RECOVERY_LINK,
   PasswordRecoveryLinkResponse,
-} from '../../../api';
+} from '../../../../api';
 
-import Heading from '../../../ui/Heading';
-import Input from '../../../ui/Input';
-import Button from '../../../ui/Button';
-import Loader from '../../../ui/Loader';
+import Heading from '../../../../ui/Heading';
+import Input from '../../../../ui/Input';
+import Button from '../../../../ui/Button';
+import Loader from '../../../../ui/Loader';
 
 const Container = styled.div`
   display: flex;
