@@ -7,9 +7,7 @@ const ValidateMailSchema = Yup.object().shape({
 });
 
 const ValidateResetSchema = Yup.object().shape({
-  code: Yup.number()
-    .typeError('Amount must be a number')
-    .required('Code requis'),
+  code: Yup.string().required('Code requis'),
   password: Yup.string()
     .min(8, 'Mot de passe trop court')
     .max(20, 'Doit être inférieure à 20 caractères')
