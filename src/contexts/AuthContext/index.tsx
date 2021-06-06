@@ -45,10 +45,14 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
   );
 
   useEffect(() => {
-    if (authToken) {
-      const decrypted: { userId: number } = jwt(authToken);
-      fetchUser({ variables: { id: decrypted.userId } });
-    } else {
+    try {
+      if (authToken) {
+        const decrypted: { userId: number } = jwt(authToken);
+        fetchUser({ variables: { id: decrypted.userId } });
+      } else {
+        setWaitingToGetUserData(false);
+      }
+    } catch {
       setWaitingToGetUserData(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
