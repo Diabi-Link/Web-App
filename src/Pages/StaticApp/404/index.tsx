@@ -44,7 +44,7 @@ const Page404 = (): JSX.Element => {
         <StyledHeading level={1}>
           Il semblerait que vous vous soyez perdu !
         </StyledHeading>
-        <Link to="/" linkStyle="primary" bold>
+        <Link to="/" $linkStyle="primary" $bold>
           <StyledIcon icon={arrowLeft2} size={20} />
           Revenir à l&apos;écran d&apos;accueil
         </Link>

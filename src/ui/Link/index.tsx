@@ -1,3 +1,4 @@
+// https://stackoverflow.com/questions/58094415/styling-react-router-dom-link-using-styled-components-getting-warning-when-passi
 import React from 'react';
 import styled from 'styled-components';
 import { Link as LinkRouter, LinkProps } from 'react-router-dom';
@@ -9,18 +10,18 @@ type LinkTheme = 'primary' | 'default';
 
 type Props = {
   children: string | React.ReactNode;
-  linkStyle?: LinkTheme;
-  bold?: boolean;
-  underline?: boolean;
+  $linkStyle?: LinkTheme;
+  $bold?: boolean;
+  $underline?: boolean;
 } & LinkProps;
 
 type GettersArguments = {
-  linkStyle: LinkTheme;
+  $linkStyle: LinkTheme;
   theme: Theme;
 };
 
-const getLabelColor = ({ linkStyle, theme }: GettersArguments): string => {
-  switch (linkStyle) {
+const getLabelColor = ({ $linkStyle, theme }: GettersArguments): string => {
+  switch ($linkStyle) {
     case 'primary':
       return theme.main.primary;
     default:
@@ -32,13 +33,16 @@ const StyledLink = styled(LinkRouter)<Props>`
   display: flex;
   justify-content: center;
   align-items: center;
-  text-decoration: ${({ underline }) => (underline ? 'underline' : 'none')};
-  font-weight: ${({ bold }) => (bold ? 600 : 400)};
-  color: ${({ theme, linkStyle }) =>
-    getLabelColor({ theme, linkStyle: linkStyle as LinkTheme })};
+  text-decoration: ${({ $underline }) => ($underline ? 'underline' : 'none')};
+  font-weight: ${({ $bold }) => ($bold ? 600 : 400)};
+  color: ${({ theme, $linkStyle }) =>
+    getLabelColor({ theme, $linkStyle: $linkStyle as LinkTheme })};
   &:hover {
-    color: ${({ theme, linkStyle }) =>
-      darken(0.1, getLabelColor({ theme, linkStyle: linkStyle as LinkTheme }))};
+    color: ${({ theme, $linkStyle }) =>
+      darken(
+        0.1,
+        getLabelColor({ theme, $linkStyle: $linkStyle as LinkTheme }),
+      )};
   }
 `;
 
@@ -47,9 +51,9 @@ const Link = ({ children, ...linkProps }: Props): JSX.Element => {
 };
 
 Link.defaultProps = {
-  linkStyle: 'default',
-  bold: false,
-  underline: false,
+  $linkStyle: 'default',
+  $bold: false,
+  $underline: false,
 };
 
 export default Link;

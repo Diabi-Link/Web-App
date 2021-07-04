@@ -2,12 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
-import { Icon } from 'react-icons-kit';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
-import { facebook } from 'react-icons-kit/fa/facebook';
-import { googlePlus } from 'react-icons-kit/fa/googlePlus';
 import { useLazyQuery, useMutation } from '@apollo/client';
 
 import jwtDecode from 'jwt-decode';
@@ -38,11 +35,6 @@ const Container = styled.div`
 const Wrapper = styled.div`
   width: 100%;
   flex: 1;
-`;
-
-const IconWrapper = styled.div`
-  display: flex;
-  justify-content: center;
 `;
 
 const ContentWrapper = styled.div`
@@ -110,31 +102,6 @@ const StyledButton = styled(Button)`
   height: 40px;
 `;
 
-const Text = styled.p`
-  text-align: center;
-  font-size: 15px;
-  font-weight: 500;
-  margin: 1.5rem 0 0.3rem;
-  color: ${(props) => props.theme.main.dark};
-`;
-
-const IconBox = styled.a`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 20px;
-  border: 1px solid #dddddd;
-  border-radius: 50%;
-  height: 45px;
-  width: 45px;
-  color: ${(props) => props.theme.main.dark};
-  transition: transform ease 0.4s;
-
-  &:hover {
-    transform: scale(1.05, 1.05);
-  }
-`;
-
 const Form = (): JSX.Element => {
   const { dispatch } = useContext(UserContext);
   const { authToken, setAuthToken, removeAuthToken } = useAuthToken();
@@ -183,15 +150,6 @@ const Form = (): JSX.Element => {
   return (
     <Container>
       <Wrapper>
-        <IconWrapper>
-          <IconBox href="https://diabilink.herokuapp.com/auth/facebook">
-            <Icon icon={facebook} size={20} />
-          </IconBox>
-          <IconBox href="https://diabilink.herokuapp.com/auth/google">
-            <Icon icon={googlePlus} size={20} />
-          </IconBox>
-        </IconWrapper>
-        <Text>Ou utiliser votre email </Text>
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={ValidateLoginSchema}

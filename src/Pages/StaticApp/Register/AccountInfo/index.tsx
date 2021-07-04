@@ -1,20 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
-import { parse } from 'query-string';
 import { darken } from 'polished';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
-import { useMutation } from '@apollo/client';
 import { ReactComponent as ReferentSvg } from '../../../../assets/images/Referent.svg';
 import { ReactComponent as PatientSvg } from '../../../../assets/images/Patient.svg';
 import { ReactComponent as MedicalProfessionalSvg } from '../../../../assets/images/MedicalProfessional.svg';
-
-import { SIGN_UP, UserData, SignUpResponse } from '../../../../api';
-import { DeepNonNullable } from '../../../../types/utilities';
-import { RegisterType } from '../../../../types/register';
-import Loader from '../../../../ui/Loader';
 
 import {
   RegisterContext,
@@ -97,12 +89,8 @@ const StyledButton = styled(Button)`
 `;
 
 const Account = ({ onClick }: Props): JSX.Element => {
-  const { search } = useLocation();
-  const { firstname, lastname, email, birthDate } = parse(search, {
-    arrayFormat: 'bracket',
-  });
   const {
-    state: { user, info },
+    state: { user },
     dispatch,
   } = useContext(RegisterContext);
   const [selectedAccount, setSelectedAccount] = useState<AccountType>(
@@ -112,28 +100,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
     undefined,
   );
 
-  const [signUp, { loading }] = useMutation<
-    SignUpResponse,
-    { userData: UserData }
-  >(SIGN_UP, {
-    onCompleted: () => {
-      onClick(4);
-    },
-    onError: () => null, // TODO: Create a middleware to catch and handle API error
-  });
-
   const handleSubmit = () => {
-    if (firstname) {
-      signUp({
-        variables: {
-          userData: {
-            ...(user as DeepNonNullable<RegisterType>),
-            password: '123456',
-          },
-        },
-      });
-      return;
-    }
     dispatch({
       type: RegisterActionTypes.UpdateUser,
       payload: {
@@ -143,32 +110,6 @@ const Account = ({ onClick }: Props): JSX.Element => {
     });
     onClick(3);
   };
-
-  useEffect(() => {
-    if (firstname && lastname && email) {
-      dispatch({
-        type: RegisterActionTypes.UpdateInfo,
-        payload: {
-          ...info,
-          step: 2,
-        },
-      });
-      dispatch({
-        type: RegisterActionTypes.UpdateUser,
-        payload: {
-          ...user,
-          firstName: firstname.toString(),
-          lastName: lastname.toString(),
-          email: email.toString(),
-          birthDate:
-            !birthDate || birthDate === 'null'
-              ? new Date('06/09/2000')
-              : new Date(birthDate.toString()),
-        },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const accountSelector = (type: AccountType): JSX.Element => (
     <AccountSelectorWrapper>
@@ -230,12 +171,11 @@ const Account = ({ onClick }: Props): JSX.Element => {
           />
           <StyledButton
             type="submit"
-            label={loading ? <Loader loaderStyle="white" /> : 'Suivant'}
+            label="Suivant"
             btnStyle="primary"
             shadow
             iconEnd={arrowRight2}
             onClick={handleSubmit}
-            disabled={loading}
             data-testid="next-button"
           />
         </ButtonWrapper>
