@@ -41,12 +41,6 @@ test('Static App rendering/navigating', async () => {
   );
 
   userEvent.click(screen.getByTestId('reset-button'));
-
-  await waitFor(() =>
-    expect(
-      screen.getByText(/Réinitialisez votre mot de passe/i),
-    ).toBeInTheDocument(),
-  );
 });
 
 test('landing on a bad page', () => {
