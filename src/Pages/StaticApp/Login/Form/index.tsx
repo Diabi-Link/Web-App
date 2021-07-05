@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
@@ -103,6 +104,7 @@ const StyledButton = styled(Button)`
 `;
 
 const Form = (): JSX.Element => {
+  const { t } = useTranslation();
   const { dispatch } = useContext(UserContext);
   const { authToken, setAuthToken, removeAuthToken } = useAuthToken();
 
@@ -159,7 +161,7 @@ const Form = (): JSX.Element => {
             <FormikForm>
               <ContentWrapper>
                 <InputWrapper>
-                  <InputLabel>Adresse email</InputLabel>
+                  <InputLabel>{t('Login.MailAddress')}</InputLabel>
                   <Input
                     name="email"
                     type="text"
@@ -177,7 +179,7 @@ const Form = (): JSX.Element => {
                   />
                 </InputWrapper>
                 <InputWrapper>
-                  <InputLabel>Mot de passe</InputLabel>
+                  <InputLabel>{t('Login.Password')}</InputLabel>
                   <Input
                     name="password"
                     type={showPassword ? 'text' : 'password'}
@@ -196,7 +198,7 @@ const Form = (): JSX.Element => {
                   />
                   <ForgotWrapper>
                     <ForgotLink to="/forgot-password/send-code">
-                      Mot de passe oublié ?
+                      {t('Login.ForgotPassword')}
                     </ForgotLink>
                   </ForgotWrapper>
                 </InputWrapper>
@@ -208,7 +210,7 @@ const Form = (): JSX.Element => {
                     awaitingLogin || awaitingFetch ? (
                       <Loader loaderStyle="white" />
                     ) : (
-                      'Se connecter'
+                      t('Login.Button')
                     )
                   }
                   btnStyle="primary"
@@ -217,8 +219,10 @@ const Form = (): JSX.Element => {
                 />
               </ButtonWrapper>
               <ConnectionWrapper>
-                <p>Vous n&apos;avez pas de compte ?</p>
-                <ConnectLink to="/register/user">Rejoignez-nous.</ConnectLink>
+                <p>{t('Login.AccountNone')}</p>
+                <ConnectLink to="/register/user">
+                  {t('Login.RegisterLink')}
+                </ConnectLink>
               </ConnectionWrapper>
             </FormikForm>
           )}

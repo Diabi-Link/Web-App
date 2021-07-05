@@ -1,0 +1,89 @@
+{
+  "StaticNav": {
+    "Home": "Accueil",
+    "Login": "Se connecter",
+    "Register": "S'inscrire"
+  },
+  "Link": {
+    "BackSite": "Revenir au site"
+  },
+  "404": {
+    "Title": "Il semblerait que vous vous soyez perdu !",
+    "Back": "Revenir à l'écran d'accueil"
+  },
+  "SendCode": {
+    "Title": "Mot de passe oublié ?",
+    "Description": "Entrez l’adresse mail associée à votre compte et nous vous enverrons un email avec les instructions pour réinitialiser votre mot de passe",
+    "MailAddress": "Adresse email",
+    "Button": "Réinitialiser"
+  },
+  "ResetPassword": {
+    "Title": "Réinitialisez votre mot de passe",
+    "Description": "Entrez le code reçu sur votre boîte mail afin de modifier votre mot de passe actuel",
+    "Code": "Code",
+    "Password": "Mot de passe",
+    "ConfirmPassword": "Confirmez votre mot de passe",
+    "ConfirmButton": "Réinitialiser"
+  },
+  "Login": {
+    "MailAddress": "Adresse email",
+    "Password": "Mot de passe",
+    "ForgotPassword": "Mot de passe oublié ?",
+    "Button": "Se connecter",
+    "AccountNone": "Vous n'avez pas de compte ?",
+    "RegisterLink": "Rejoignez-nous.",
+    "FrameDesc": "Content de vous revoir 👋"
+  },
+  "Register": {
+    "Step": {
+      "User": "Utilisateur",
+      "Account": "Type de compte",
+      "Confirm": "On y est presque !"
+    },
+    "Frames": {
+      "User": "Nous avons besoin d'en apprendre un peu plus sur vous...",
+      "Account": "Une interface adaptée à vos besoins.",
+      "Security": "Plus qu'une étape pour rejoindre notre grande famille.",
+      "Mail": "C’est le début d’une grande aventure entre nous 🎉."
+    },
+    "User": {
+      "Title": "Vous souhaitez nous rejoindre ?",
+      "FirstName": "Prénom",
+      "LastName": "Nom de famille",
+      "MailAddress": "Adresse email",
+      "BirthDate": "Date de naissance",
+      "AccountExist": "Vous avez déjà un compte ?",
+      "LoginLink": "Connectez-vous.",
+      "Button": "Suivant"
+    },
+    "Account": {
+      "Title": "Choisissez votre type de compte...",
+      "Patient": "Patient",
+      "Referent": "Référent",
+      "MedicalPro": "Corps médical",
+      "Intro": "Un compte ",
+      "PatientDesc": " vous permet de sauvegarder et de consulter toutes les données relatives à votre diabète. Vous pouvez partager ces données avec vos proches ou médecins possédant un compte Proche ou Corps médical.",
+      "ReferentDesc": " vous permet de suivre un proche possédant un compte Diabétique. Vous aurez accès aux données relatives à son diabète et serez alerté en cas de mesures anormales.",
+      "MedicalProDesc": " vous permet de suivre tous vos patients possédant un compte Diabétique. Vous aurez accès aux données relatives à leur diabète et serez alerté en cas de mesures anormales.",
+      "AccountFree": "Toutes les fonctionnalités de ce compte sont ",
+      "AccountPremium": "Ce compte est disponible à hauteur de ",
+      "PatientPrice": "gratuites",
+      "ReferentPrice": "4,99€ par mois",
+      "MedicalProPrice": "19,99€ par mois",
+      "BackButton": "Retour",
+      "NextButton": "Suivant"
+    },
+    "Security": {
+      "Title": "Finalisons votre compte !",
+      "Password": "Mot de passe",
+      "ConfirmPassword": "Confirmez votre mot de passe",
+      "BackButton": "Retour",
+      "NextButton": "S'inscrire"
+    },
+    "Confirm": {
+      "Title": "Vérifiez votre email 📬",
+      "Desc": "Votre inscription a bien été prise en compte. Un email va vous être envoyé prochainement avec un lien pour vérifier votre compte. Si vous n’avez pas reçu ce mail après quelques minutes, pensez à vérifier votre dossier spam.",
+      "ResendButton": "Renvoyez le mail"
+    }
+  }
+}

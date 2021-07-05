@@ -3,9 +3,9 @@ import React, {
   useReducer,
   useMemo,
   Dispatch,
-  // useEffect,
+  useEffect,
 } from 'react';
-// import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import { ActionMap } from '../../types/utilities';
 import { AccountType } from '../../types/user';
@@ -87,19 +87,19 @@ const RegisterProvider: React.FC<RegisterProviderType> = ({
   children,
 }: RegisterProviderType) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  // const location = useLocation();
-  // const history = useHistory();
+  const location = useLocation();
+  const history = useHistory();
 
   const value = useMemo(() => {
     return { state, dispatch };
   }, [state]);
 
-  // useEffect(() => {
-  //   if (!location.pathname.endsWith('/register/user')) {
-  //     history.push('/register/user');
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    if (!location.pathname.endsWith('/register/user')) {
+      history.push('/register/user');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <RegisterContext.Provider value={value}>

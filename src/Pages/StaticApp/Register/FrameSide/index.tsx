@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import { ReactComponent as AccountSvg } from '../../../../assets/images/AccountForm.svg';
 import { ReactComponent as UserSvg } from '../../../../assets/images/UserForm.svg';
@@ -50,22 +51,23 @@ const LogoWrapper = styled(LogoText)`
 `;
 
 const FrameSide = ({ step }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const frames = [
     {
       svg: <UserSvg />,
-      description: "Nous avons besoin d'en apprendre un peu plus sur vous...",
+      description: t('Register.Frames.User'),
     },
     {
       svg: <AccountSvg />,
-      description: 'Une interface adaptée à vos besoins.',
+      description: t('Register.Frames.Account'),
     },
     {
       svg: <SecuritySvg />,
-      description: "Plus qu'une étape pour rejoindre notre grande famille.",
+      description: t('Register.Frames.Security'),
     },
     {
       svg: <MailSvg />,
-      description: 'C’est le début d’une grande aventure entre nous 🎉.',
+      description: t('Register.Frames.Mail'),
     },
   ];
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Icon } from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
@@ -68,6 +69,7 @@ const Text = styled.p`
 `;
 
 const ForgotPassword = (): JSX.Element => {
+  const { t } = useTranslation();
   const [step, setStep] = useState(1);
   return (
     <Container>
@@ -75,7 +77,7 @@ const ForgotPassword = (): JSX.Element => {
         <BackWrapper>
           <BackLink to="/">
             <ArrowBack icon={arrowLeft2} size={20} />
-            <Text>Revenir au site</Text>
+            <Text>{t('Link.BackSite')}</Text>
           </BackLink>
         </BackWrapper>
         <FormWrapper>

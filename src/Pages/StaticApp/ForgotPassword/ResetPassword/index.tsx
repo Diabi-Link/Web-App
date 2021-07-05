@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 // import { loop2 } from 'react-icons-kit/icomoon/loop2';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { eye } from 'react-icons-kit/icomoon/eye';
@@ -98,6 +99,7 @@ const StyledButton = styled(Button)`
 
 const ResetPassword = (): JSX.Element => {
   const { push } = useHistory();
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirm, setShowConfirm] = useState(true);
 
@@ -127,11 +129,8 @@ const ResetPassword = (): JSX.Element => {
 
   return (
     <Container>
-      <Heading level={1}>Réinitialisez votre mot de passe</Heading>
-      <Description>
-        Entrez le code reçu sur votre boîte mail afin de modifier votre mot de
-        passe actuel
-      </Description>
+      <Heading level={1}>{t('ResetPassword.Title')}</Heading>
+      <Description>{t('ResetPassword.Description')}</Description>
       <Formik
         initialValues={{ code: '', password: '', confirmPassword: '' }}
         validationSchema={ValidateResetSchema}
@@ -147,7 +146,7 @@ const ResetPassword = (): JSX.Element => {
           <FormWrapper>
             <PasswordBox>
               <InputWrapper>
-                <InputLabel>Code</InputLabel>
+                <InputLabel>{t('ResetPassword.Code')}</InputLabel>
                 <Input
                   name="code"
                   type="text"
@@ -166,7 +165,7 @@ const ResetPassword = (): JSX.Element => {
                 />
               </InputWrapper>
               <InputWrapper>
-                <InputLabel>Mot de passe</InputLabel>
+                <InputLabel>{t('ResetPassword.Password')}</InputLabel>
                 <Input
                   name="password"
                   type={showPassword ? 'text' : 'password'}
@@ -186,7 +185,7 @@ const ResetPassword = (): JSX.Element => {
                 />
               </InputWrapper>
               <InputWrapper>
-                <InputLabel>Confirmez votre mot de passe</InputLabel>
+                <InputLabel>{t('ResetPassword.ConfirmPassword')}</InputLabel>
                 <Input
                   name="confirmPassword"
                   type={showConfirm ? 'text' : 'password'}
@@ -219,7 +218,11 @@ const ResetPassword = (): JSX.Element => {
               <StyledButton
                 type="submit"
                 label={
-                  loading ? <Loader loaderStyle="white" /> : 'Réinitialiser'
+                  loading ? (
+                    <Loader loaderStyle="white" />
+                  ) : (
+                    t('ResetPassword.ConfirmButton')
+                  )
                 }
                 btnStyle="primary"
                 shadow

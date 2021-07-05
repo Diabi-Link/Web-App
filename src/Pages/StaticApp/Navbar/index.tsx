@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { ReactComponent as Logo } from '../../../assets/images/AppLogo.svg';
 import { ReactComponent as LogoText } from '../../../assets/images/DiabiLink.svg';
@@ -87,6 +88,7 @@ type Props = {
 };
 
 const Navbar = ({ location }: Props): JSX.Element => {
+  const { t } = useTranslation();
   return (
     <Container>
       <Wrapper>
@@ -97,15 +99,19 @@ const Navbar = ({ location }: Props): JSX.Element => {
           </LogoWrapper>
           <Divider />
           <NavLink to="/" pathname={location.pathname}>
-            Accueil
+            {t('StaticNav.Home')}
           </NavLink>
         </SiteNavWrapper>
         <ConnexionWrapper>
           <AuthLink to="/login">
-            <LoginButton label="Se connecter" btnStyle="primary" outlined />
+            <LoginButton
+              label={t('StaticNav.Login')}
+              btnStyle="primary"
+              outlined
+            />
           </AuthLink>
           <AuthLink to="/register/user">
-            <Button label="S'inscrire" btnStyle="primary" />
+            <Button label={t('StaticNav.Register')} btnStyle="primary" />
           </AuthLink>
         </ConnexionWrapper>
       </Wrapper>

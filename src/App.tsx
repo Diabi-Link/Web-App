@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { useAppApolloClient } from './api';
 
+import './i18n';
 import theme from './theme';
 import { AuthProvider } from './contexts/AuthContext';
 import { UserProvider } from './contexts/UserContext';

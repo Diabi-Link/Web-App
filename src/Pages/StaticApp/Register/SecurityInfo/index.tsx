@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
@@ -79,6 +80,7 @@ const StyledButton = styled(Button)`
 `;
 
 const SecurityInfo = ({ onClick }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const {
     state: { user },
   } = useContext(RegisterContext);
@@ -119,7 +121,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
 
   return (
     <Container>
-      <Heading level={1}>Finalisons votre compte !</Heading>
+      <Heading level={1}>{t('Register.Security.Title')}</Heading>
       <Formik
         initialValues={{ password: '', confirmPassword: '' }}
         validationSchema={ValidatePasswordSchema}
@@ -132,7 +134,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
             <ContentWrapper>
               <PasswordBox>
                 <InputWrapper>
-                  <InputLabel>Mot de passe</InputLabel>
+                  <InputLabel>{t('Register.Security.Password')}</InputLabel>
                   <Input
                     name="password"
                     type={showPassword ? 'text' : 'password'}
@@ -152,7 +154,9 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
                   />
                 </InputWrapper>
                 <InputWrapper>
-                  <InputLabel>Confirmez votre mot de passe</InputLabel>
+                  <InputLabel>
+                    {t('Register.Security.ConfirmPassword')}
+                  </InputLabel>
                   <Input
                     name="confirmPassword"
                     type={showConfirm ? 'text' : 'password'}
@@ -177,7 +181,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
             <ButtonWrapper>
               <StyledButton
                 type="button"
-                label="Retour"
+                label={t('Register.Security.BackButton')}
                 btnStyle="primary"
                 shadow
                 iconStart={arrowLeft2}
@@ -186,7 +190,13 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
               />
               <StyledButton
                 type="submit"
-                label={loading ? <Loader loaderStyle="white" /> : "S'inscrire"}
+                label={
+                  loading ? (
+                    <Loader loaderStyle="white" />
+                  ) : (
+                    t('Register.Security.NextButton')
+                  )
+                }
                 btnStyle="primary"
                 shadow
                 disabled={loading}
