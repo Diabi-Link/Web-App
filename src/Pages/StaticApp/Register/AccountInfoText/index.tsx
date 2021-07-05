@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { AccountType } from '../../../../types/user';
 
 type Props = {
@@ -34,47 +35,49 @@ const ImportantWord = styled.span`
 `;
 
 const AccountInfoText = ({ type }: Props): JSX.Element => {
+  const { t } = useTranslation();
   return (
     <Container>
       {type === 'patient' && (
         <>
           <Text>
-            Un compte <ImportantWord>Patient</ImportantWord> vous permet de
-            sauvegarder et de consulter toutes les données relatives à votre
-            diabète. Vous pouvez partager ces données avec vos proches ou
-            médecins possédant un compte Proche ou Corps médical.
+            {t('Register.Account.Intro')}
+            <ImportantWord>{t('Register.Account.Patient')}</ImportantWord>
+            {t('Register.Account.PatientDesc')}
           </Text>
           <Text>
-            Toutes les fonctionnalités de ce compte sont{' '}
-            <ImportantWord>gratuites</ImportantWord>.
+            {t('Register.Account.AccountFree')}
+            <ImportantWord>{t('Register.Account.PatientPrice')}</ImportantWord>.
           </Text>
         </>
       )}
       {type === 'referent' && (
         <>
           <Text>
-            Un compte <ImportantWord>Référent</ImportantWord> vous permet de
-            suivre un proche possédant un compte Diabétique. Vous aurez accès
-            aux donnéees relatives à son diabète et serez alerté en cas de
-            mesures anormales.
+            {t('Register.Account.Intro')}
+            <ImportantWord>{t('Register.Account.Referent')}</ImportantWord>
+            {t('Register.Account.ReferentDesc')}
           </Text>
           <Text>
-            Ce compte est disponible à hauteur de{' '}
-            <ImportantWord>4,99€ par mois</ImportantWord>.
+            {t('Register.Account.AccountPremium')}
+            <ImportantWord>{t('Register.Account.ReferentPrice')}</ImportantWord>
+            .
           </Text>
         </>
       )}
       {type === 'medicalProfessional' && (
         <>
           <Text>
-            Un compte <ImportantWord>Corps médical</ImportantWord> vous permet
-            de suivre tous vos patients possédant un compte Diabétique. Vous
-            aurez accès aux donnéees relatives à leur diabète et serez alerté en
-            cas de mesures anormales.
+            {t('Register.Account.Intro')}
+            <ImportantWord>{t('Register.Account.MedicalPro')}</ImportantWord>
+            {t('Register.Account.MedicalProDesc')}
           </Text>
           <Text>
-            Ce compte est disponible à hauteur de{' '}
-            <ImportantWord>19,99€ par mois</ImportantWord>.
+            {t('Register.Account.AccountPremium')}
+            <ImportantWord>
+              {t('Register.Account.MedicalProPrice')}
+            </ImportantWord>
+            .
           </Text>
         </>
       )}

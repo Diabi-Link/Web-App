@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Icon } from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
@@ -95,13 +96,14 @@ const Description = styled.p`
 `;
 
 const Login = (): JSX.Element => {
+  const { t } = useTranslation();
   return (
     <Container>
       <Left>
         <BackWrapper>
           <BackLink to="/">
             <ArrowBack icon={arrowLeft2} size={20} />
-            <Text>Revenir au site</Text>
+            <Text>{t('Link.BackSite')}</Text>
           </BackLink>
         </BackWrapper>
         <ConnexionWrapper>
@@ -115,7 +117,7 @@ const Login = (): JSX.Element => {
         <SvgWrapper>
           <LoginSvg />
         </SvgWrapper>
-        <Description>Content de vous revoir 👋</Description>
+        <Description>{t('Login.FrameDesc')}</Description>
       </Right>
     </Container>
   );

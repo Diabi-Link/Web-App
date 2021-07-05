@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { darken } from 'polished';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
@@ -89,6 +90,7 @@ const StyledButton = styled(Button)`
 `;
 
 const Account = ({ onClick }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const {
     state: { user },
     dispatch,
@@ -117,16 +119,16 @@ const Account = ({ onClick }: Props): JSX.Element => {
       {type === 'referent' && <ReferentSvg width={115} />}
       {type === 'medicalProfessional' && <MedicalProfessionalSvg width={115} />}
       <Heading level={3}>
-        {type === 'patient' && 'Patient'}
-        {type === 'referent' && 'Référent'}
-        {type === 'medicalProfessional' && 'Corps médical'}
+        {type === 'patient' && t('Register.Account.Patient')}
+        {type === 'referent' && t('Register.Account.Referent')}
+        {type === 'medicalProfessional' && t('Register.Account.MedicalPro')}
       </Heading>
     </AccountSelectorWrapper>
   );
 
   return (
     <Container>
-      <Heading level={1}>Choisissez votre type de compte...</Heading>
+      <Heading level={1}>{t('Register.Account.Title')}</Heading>
       <Wrapper>
         <ContentWrapper>
           <AccountSelectorContainer>
@@ -163,7 +165,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
         <ButtonWrapper>
           <StyledButton
             type="button"
-            label="Retour"
+            label={t('Register.Account.BackButton')}
             btnStyle="primary"
             shadow
             iconStart={arrowLeft2}
@@ -171,7 +173,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
           />
           <StyledButton
             type="submit"
-            label="Suivant"
+            label={t('Register.Account.NextButton')}
             btnStyle="primary"
             shadow
             iconEnd={arrowRight2}

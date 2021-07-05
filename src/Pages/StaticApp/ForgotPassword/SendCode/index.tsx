@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
 import { useLazyQuery } from '@apollo/client';
@@ -80,6 +81,7 @@ const StyledButton = styled(Button)`
 
 const SendCode = ({ onClick }: Props): JSX.Element => {
   const { push } = useHistory();
+  const { t } = useTranslation();
 
   const [passwordRecovery, { loading }] = useLazyQuery<
     PasswordRecoveryResponse,
@@ -98,11 +100,8 @@ const SendCode = ({ onClick }: Props): JSX.Element => {
 
   return (
     <Container>
-      <Heading level={1}>Mot de passe oublié ?</Heading>
-      <Description>
-        Entrez l’adresse mail associée à votre compte et nous vous enverrons un
-        email avec les instructions pour réinitialiser votre mot de passe
-      </Description>
+      <Heading level={1}>{t('SendCode.Title')}</Heading>
+      <Description>{t('SendCode.Description')}</Description>
       <Formik
         initialValues={{ email: '' }}
         validationSchema={ValidateMailSchema}
@@ -111,7 +110,7 @@ const SendCode = ({ onClick }: Props): JSX.Element => {
         {(props: FormikProps<{ email: string }>) => (
           <FormWrapper>
             <InputWrapper>
-              <InputLabel>Adresse email</InputLabel>
+              <InputLabel>{t('SendCode.MailAddress')}</InputLabel>
               <Input
                 name="email"
                 type="text"
@@ -132,7 +131,11 @@ const SendCode = ({ onClick }: Props): JSX.Element => {
               <StyledButton
                 type="submit"
                 label={
-                  loading ? <Loader loaderStyle="white" /> : 'Réinitialiser'
+                  loading ? (
+                    <Loader loaderStyle="white" />
+                  ) : (
+                    t('SendCode.Button')
+                  )
                 }
                 btnStyle="primary"
                 shadow

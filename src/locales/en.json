@@ -1,0 +1,89 @@
+{
+  "StaticNav": {
+    "Home": "Home",
+    "Login": "Sign In",
+    "Register": "Sign Up"
+  },
+  "Link": {
+    "BackSite": "Back to the site"
+  },
+  "404": {
+    "Title": "It seems that you got lost!",
+    "Back": "Return home"
+  },
+  "SendCode": {
+    "Title": "Forgot your password ?",
+    "Description": "Enter the email address associated with your account and we will send you an email with instructions to reset your password",
+    "MailAddress": "Email address",
+    "Button": "Reset"
+  },
+  "ResetPassword": {
+    "Title": "Reset your password",
+    "Description": "Enter the code received on your mailbox to change your current password",
+    "Code": "Code",
+    "Password": "Password",
+    "ConfirmPassword": "Confirm your password",
+    "ConfirmButton": "Reset"
+  },
+  "Login": {
+    "MailAddress": "Email address",
+    "Password": "Password",
+    "ForgotPassword": "Forgot your password ?",
+    "Button": "Sign In",
+    "AccountNone": "Don't have an account ?",
+    "RegisterLink": "Join us.",
+    "FrameDesc": "Nice to see you again 👋"
+  },
+  "Register": {
+    "Step": {
+      "User": "User",
+      "Account": "Account Type",
+      "Confirm": "We're almost there!"
+    },
+    "Frames": {
+      "User": "We need to learn a little more about you...",
+      "Account": "An interface adapted to your needs.",
+      "Security": "Only one more step to join our big family.",
+      "Mail": "This is the beginning of a great adventure between us 🎉."
+    },
+    "User": {
+      "Title": "You want to join us ?",
+      "FirstName": "Firstname",
+      "LastName": "Lastname",
+      "MailAddress": "Email address",
+      "BirthDate": "Date of birth",
+      "AccountExist": "Already have an account ?",
+      "LoginLink": "Sign In.",
+      "Button": "Next"
+    },
+    "Account": {
+      "Title": "Choose your account type...",
+      "Patient": "Patient",
+      "Referent": "Referent",
+      "MedicalPro": "Medical Professional",
+      "Intro": "An account ",
+      "PatientDesc": " allows you to save and view all your diabetes data. You can share this data with your family members or doctors who have a Patient or Medical Professional account.",
+      "ReferentDesc": " allows you to follow a relative who has a Patient account. You will have access to their diabetes data and will be alerted in case of abnormal measurements.",
+      "MedicalProDesc": " allows you to track all your patients with a Patient account. You will have access to their diabetes data and be alerted in case of abnormal measurements.",
+      "AccountFree": "All the features of this account are ",
+      "AccountPremium": "This account is available for ",
+      "PatientPrice": "free",
+      "ReferentPrice": "4,99€ per month",
+      "MedicalProPrice": "19,99€ per month",
+      "BackButton": "Back",
+      "NextButton": "Next"
+    },
+    "Security": {
+      "Title": "Let's finalize your account !",
+      "Password": "Password",
+      "ConfirmPassword": "Confirm your password",
+      "BackButton": "Back",
+      "NextButton": "Sign Up"
+    },
+    "Confirm": {
+      "Title": "Check your email 📬",
+      "Desc": "Your registration has been successfully completed. An email will be sent to you shortly with a link to verify your account. If you have not received this email after a few minutes, please check your spam folder.",
+      "ResendButton": "Send the mail again"
+    }
+  }
+}

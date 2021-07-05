@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { send } from 'react-icons-kit/fa/send';
 
 import Heading from '../../../../ui/Heading';
@@ -35,18 +36,14 @@ const StyledButton = styled(Button)`
 `;
 
 const Confirm = (): JSX.Element => {
+  const { t } = useTranslation();
   return (
     <Container>
-      <Heading level={1}>Vérifiez votre email 📬</Heading>
-      <Description>
-        Votre inscription a bien été prise en compte. Un email va vous être
-        envoyé prochainement avec un lien pour vérifier votre compte. Si vous
-        n’avez pas reçu ce mail après quelques minutes, pensez à vérifier votre
-        dossier spam.
-      </Description>
+      <Heading level={1}>{t('Register.Confirm.Title')}</Heading>
+      <Description>{t('Register.Confirm.Desc')}</Description>
       <StyledButton
         type="button"
-        label="Renvoyez le mail"
+        label={t('Register.Confirm.ResendButton')}
         btnStyle="primary"
         shadow
         iconEnd={send}

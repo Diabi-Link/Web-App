@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Formik, Form, FormikProps } from 'formik';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { calendar } from 'react-icons-kit/icomoon/calendar';
@@ -103,6 +104,7 @@ const NextButton = styled(Button)`
 `;
 
 const User = ({ onClick }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const { state, dispatch } = useContext(RegisterContext);
 
   const { user } = state;
@@ -120,7 +122,7 @@ const User = ({ onClick }: Props): JSX.Element => {
 
   return (
     <Container>
-      <Heading level={1}>Vous souhaitez nous rejoindre ?</Heading>
+      <Heading level={1}>{t('Register.User.Title')}</Heading>
       <Formik
         initialValues={user}
         validationSchema={ValidateUserSchema}
@@ -131,7 +133,7 @@ const User = ({ onClick }: Props): JSX.Element => {
             <ContentWrapper>
               <InfoBox>
                 <InputWrapper>
-                  <InputLabel>Prénom</InputLabel>
+                  <InputLabel>{t('Register.User.FirstName')}</InputLabel>
                   <Input
                     name="firstName"
                     type="text"
@@ -150,7 +152,7 @@ const User = ({ onClick }: Props): JSX.Element => {
                   />
                 </InputWrapper>
                 <InputWrapper>
-                  <InputLabel>Nom de famille</InputLabel>
+                  <InputLabel>{t('Register.User.LastName')}</InputLabel>
                   <Input
                     name="lastName"
                     type="text"
@@ -171,7 +173,7 @@ const User = ({ onClick }: Props): JSX.Element => {
               </InfoBox>
               <InfoBox>
                 <InputWrapper>
-                  <InputLabel>Adresse email</InputLabel>
+                  <InputLabel>{t('Register.User.MailAddress')}</InputLabel>
                   <Input
                     name="email"
                     type="text"
@@ -190,7 +192,7 @@ const User = ({ onClick }: Props): JSX.Element => {
                   />
                 </InputWrapper>
                 <InputWrapper>
-                  <InputLabel>Date de naissance</InputLabel>
+                  <InputLabel>{t('Register.User.BirthDate')}</InputLabel>
                   <DateInput
                     value={props.values.birthDate}
                     errorText={
@@ -206,14 +208,16 @@ const User = ({ onClick }: Props): JSX.Element => {
                 </InputWrapper>
               </InfoBox>
               <ConnectionWrapper>
-                <Text>Vous avez déjà un compte ?</Text>
-                <ConnectLink to="/login">Connectez-vous.</ConnectLink>
+                <Text>{t('Register.User.AccountExist')}</Text>
+                <ConnectLink to="/login">
+                  {t('Register.User.LoginLink')}
+                </ConnectLink>
               </ConnectionWrapper>
             </ContentWrapper>
             <ButtonWrapper>
               <NextButton
                 type="submit"
-                label="Suivant"
+                label={t('Register.User.Button')}
                 data-testid="next-button"
                 btnStyle="primary"
                 shadow

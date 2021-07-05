@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { Icon } from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
@@ -37,16 +38,16 @@ const StyledIcon = styled(Icon)`
 `;
 
 const Page404 = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <Container>
       <Wrapper>
         <StyledLogo404 />
-        <StyledHeading level={1}>
-          Il semblerait que vous vous soyez perdu !
-        </StyledHeading>
+        <StyledHeading level={1}>{t('404.Title')}</StyledHeading>
         <Link to="/" $linkStyle="primary" $bold>
           <StyledIcon icon={arrowLeft2} size={20} />
-          Revenir à l&apos;écran d&apos;accueil
+          {t('404.Back')}
         </Link>
       </Wrapper>
     </Container>
