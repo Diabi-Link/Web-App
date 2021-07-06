@@ -14,7 +14,7 @@ const getFontSize = (level: Props['level']): string => {
     case 1:
       return '1.875rem';
     case 2:
-      return 'auto';
+      return '1.3rem';
     case 3:
       return '0.9rem';
     case 4:

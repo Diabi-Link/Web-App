@@ -3,4 +3,3 @@
 
 yarn lint --fix
 yarn tsc
-yarn test:update
