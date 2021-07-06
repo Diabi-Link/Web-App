@@ -1,4 +1,5 @@
 {
+  "Deploy": "deploy",
   "StaticNav": {
     "Home": "Accueil",
     "Login": "Se connecter",
