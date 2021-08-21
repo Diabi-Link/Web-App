@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { ReactComponent as Logo } from '../../../assets/images/AppLogo.svg';
-import { ReactComponent as LogoText } from '../../../assets/images/DiabiLink.svg';
+import { ReactComponent as Logo } from '../../../assets/svgs/AppLogo.svg';
+import { ReactComponent as LogoText } from '../../../assets/svgs/DiabiLink.svg';
 import Button from '../../../ui/Button';
 
 const Container = styled.nav`

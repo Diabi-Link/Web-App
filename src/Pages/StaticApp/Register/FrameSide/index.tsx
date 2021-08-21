@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { ReactComponent as AccountSvg } from '../../../../assets/images/AccountForm.svg';
-import { ReactComponent as UserSvg } from '../../../../assets/images/UserForm.svg';
-import { ReactComponent as SecuritySvg } from '../../../../assets/images/SecurityForm.svg';
-import { ReactComponent as MailSvg } from '../../../../assets/images/Mail.svg';
-import { ReactComponent as LogoText } from '../../../../assets/images/DiabiLink.svg';
+import { ReactComponent as AccountSvg } from '../../../../assets/svgs/AccountForm.svg';
+import { ReactComponent as UserSvg } from '../../../../assets/svgs/UserForm.svg';
+import { ReactComponent as SecuritySvg } from '../../../../assets/svgs/SecurityForm.svg';
+import { ReactComponent as MailSvg } from '../../../../assets/svgs/Mail.svg';
+import { ReactComponent as LogoText } from '../../../../assets/svgs/DiabiLink.svg';
 
 type Props = {
   step: number;
