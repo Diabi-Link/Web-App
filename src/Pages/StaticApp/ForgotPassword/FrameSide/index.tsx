@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as ForgotPasswordSvg } from '../../../../assets/images/ForgotPassword.svg';
-import { ReactComponent as ResetPasswordSvg } from '../../../../assets/images/ResetPassword.svg';
-import { ReactComponent as LogoText } from '../../../../assets/images/DiabiLink.svg';
+import { ReactComponent as ForgotPasswordSvg } from '../../../../assets/svgs/ForgotPassword.svg';
+import { ReactComponent as ResetPasswordSvg } from '../../../../assets/svgs/ResetPassword.svg';
+import { ReactComponent as LogoText } from '../../../../assets/svgs/DiabiLink.svg';
 
 type Props = {
   step: number;

@@ -11,6 +11,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { UserProvider } from './contexts/UserContext';
 
 import AppSelector from './Pages/AppSelector';
+import LanguageSwitcher from './ui/LanguageSwitcher';
 
 const App = (): JSX.Element => {
   const client = useAppApolloClient();
@@ -22,6 +23,7 @@ const App = (): JSX.Element => {
           <UserProvider>
             <Router>
               <AppSelector />
+              <LanguageSwitcher />
             </Router>
           </UserProvider>
         </AuthProvider>

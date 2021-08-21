@@ -6,7 +6,7 @@ import { home } from 'react-icons-kit/fa/home';
 import { user } from 'react-icons-kit/fa/user';
 
 import { useLocation } from 'react-router-dom';
-import { ReactComponent as LogoText } from '../../../assets/images/DiabiLink.svg';
+import { ReactComponent as LogoText } from '../../../assets/svgs/DiabiLink.svg';
 import Link from '../../../ui/Link';
 import Heading from '../../../ui/Heading';
 

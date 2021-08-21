@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
-import { ReactComponent as Logo404 } from '../../../assets/images/404.svg';
+import { ReactComponent as Logo404 } from '../../../assets/svgs/404.svg';
 import Heading from '../../../ui/Heading';
 import Link from '../../../ui/Link';
 
