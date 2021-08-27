@@ -66,6 +66,15 @@ const ItemIcon = styled.button<{ isActive: boolean }>`
   transition: 0.15s ease-in-out;
 `;
 
+const LogoWrapper = styled.div`
+  margin-left: 0.625rem;
+`;
+
+const StyledLogoText = styled(LogoText)`
+  height: 1.35rem;
+  width: auto;
+`;
+
 const ItemHeading = styled(Heading)<{ isActive: boolean }>`
   margin-left: 0.625rem;
   font-weight: bold;
@@ -102,7 +111,9 @@ const NavigationWrapper = ({ children }: Props) => {
             <ItemIcon onClick={handleLock} isActive={isLocked}>
               <Icon icon={lock} size={34} />
             </ItemIcon>
-            {(isOpen || isLocked) && <LogoText />}
+            <LogoWrapper>
+              <StyledLogoText />
+            </LogoWrapper>
           </ItemWrapper>
 
           <ItemContainer to="/" isActive={location.pathname === '/'}>
