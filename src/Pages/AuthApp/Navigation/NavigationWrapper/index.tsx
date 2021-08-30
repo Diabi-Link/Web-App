@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { isMobileOrTablet } from '../../../utils/isMobileOrTablet';
+import { isMobileOrTablet } from '../../../../utils/isMobileOrTablet';
 import DrawerMenu from '../DrawerMenu';
 import HamburgerMenu from '../HamburgerMenu';
 
