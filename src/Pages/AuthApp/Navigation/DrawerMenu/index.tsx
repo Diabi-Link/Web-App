@@ -6,26 +6,35 @@ import { home } from 'react-icons-kit/fa/home';
 import { user } from 'react-icons-kit/fa/user';
 
 import { useLocation } from 'react-router-dom';
-import { ReactComponent as LogoText } from '../../../assets/svgs/DiabiLink.svg';
-import Link from '../../../ui/Link';
-import Heading from '../../../ui/Heading';
+import { ReactComponent as LogoText } from '../../../../assets/svgs/DiabiLink.svg';
+import Link from '../../../../ui/Link';
+import Heading from '../../../../ui/Heading';
 
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  onMobile?: {
+    isOpen: boolean;
+    setMobileIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
 };
 
 type Arguments = {
   isOpen: boolean;
+  isOnMobile?: boolean;
 };
 
-const getDrawerSize = ({ isOpen }: Arguments) =>
-  isOpen ? '14.5rem' : '3.75rem';
+const getDrawerSize = ({ isOpen, isOnMobile }: Arguments) => {
+  if (!isOnMobile) {
+    return isOpen ? '14.5rem' : '3.75rem';
+  }
+  return isOpen ? '14.5rem' : '0rem';
+};
 
 const DrawerContainer = styled.nav<Arguments>`
   position: absolute;
   top: 0;
   left: 0;
-  width: ${({ isOpen }) => getDrawerSize({ isOpen })};
+  width: ${({ isOpen, isOnMobile }) => getDrawerSize({ isOpen, isOnMobile })};
   min-height: 100%;
   background: ${({ theme }) => theme.main.primary};
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
@@ -66,6 +75,16 @@ const ItemIcon = styled.button<{ isActive: boolean }>`
   transition: 0.15s ease-in-out;
 `;
 
+const LogoWrapper = styled.div<Pick<Arguments, 'isOnMobile'>>`
+  margin-left: 0.625rem;
+  padding-top: ${({ isOnMobile }) => (isOnMobile ? '1rem' : '0')};
+`;
+
+const StyledLogoText = styled(LogoText)`
+  height: 1.35rem;
+  width: auto;
+`;
+
 const ItemHeading = styled(Heading)<{ isActive: boolean }>`
   margin-left: 0.625rem;
   font-weight: bold;
@@ -79,7 +98,7 @@ const PageWrapper = styled.div<Arguments>`
   transition: padding-left 0.4s cubic-bezier(0.38, 0.01, 0.09, 0.98);
 `;
 
-const NavigationWrapper = ({ children }: Props) => {
+const DrawerMenu = ({ children, onMobile }: Props) => {
   const location = useLocation();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -90,22 +109,39 @@ const NavigationWrapper = ({ children }: Props) => {
   const openDrawer = () => setIsOpen(true);
   const closeDrawer = () => setIsOpen(false);
 
+  const closeDrawerOnMobile = () => {
+    if (onMobile !== undefined) {
+      onMobile.setMobileIsOpen(false);
+    }
+  };
+
   return (
     <>
       <DrawerContainer
-        isOpen={isOpen || isLocked}
+        isOpen={
+          isOpen || isLocked || (onMobile !== undefined && onMobile.isOpen)
+        }
+        isOnMobile={onMobile !== undefined}
         onMouseEnter={openDrawer}
         onMouseLeave={closeDrawer}
       >
         <DrawerWrapper>
           <ItemWrapper>
-            <ItemIcon onClick={handleLock} isActive={isLocked}>
-              <Icon icon={lock} size={34} />
-            </ItemIcon>
-            {(isOpen || isLocked) && <LogoText />}
+            {!onMobile && (
+              <ItemIcon onClick={handleLock} isActive={isLocked}>
+                <Icon icon={lock} size={34} />
+              </ItemIcon>
+            )}
+            <LogoWrapper isOnMobile={onMobile !== undefined}>
+              <StyledLogoText />
+            </LogoWrapper>
           </ItemWrapper>
 
-          <ItemContainer to="/" isActive={location.pathname === '/'}>
+          <ItemContainer
+            to="/"
+            isActive={location.pathname === '/'}
+            onClick={closeDrawerOnMobile}
+          >
             <ItemWrapper>
               <ItemIcon isActive={location.pathname === '/'}>
                 <Icon icon={home} size={34} />
@@ -116,7 +152,11 @@ const NavigationWrapper = ({ children }: Props) => {
             </ItemWrapper>
           </ItemContainer>
 
-          <ItemContainer to="/user" isActive={location.pathname === '/user'}>
+          <ItemContainer
+            to="/user"
+            isActive={location.pathname === '/user'}
+            onClick={closeDrawerOnMobile}
+          >
             <ItemWrapper>
               <ItemIcon isActive={location.pathname === '/user'}>
                 <Icon icon={user} size={34} />
@@ -128,9 +168,10 @@ const NavigationWrapper = ({ children }: Props) => {
           </ItemContainer>
         </DrawerWrapper>
       </DrawerContainer>
+
       <PageWrapper isOpen={isOpen || isLocked}>{children}</PageWrapper>
     </>
   );
 };
 
-export default NavigationWrapper;
+export default DrawerMenu;
