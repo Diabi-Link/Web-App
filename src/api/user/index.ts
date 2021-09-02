@@ -1,14 +1,16 @@
-import { gql } from '@apollo/client';
+import { gql, QueryHookOptions, useLazyQuery } from '@apollo/client';
 
 import { UserType } from '../../types/user';
 
-// TODO/ find a way to link Typescript to Apollo Client
-
-export type FetchUserResponse = {
+type FetchUserResponse = {
   User: UserType;
 };
 
-export const FETCH_USER = gql`
+type FetchUserData = {
+  id: number;
+};
+
+const FETCH_USER = gql`
   query User($id: Float!) {
     User(ID: $id) {
       id
@@ -21,3 +23,9 @@ export const FETCH_USER = gql`
     }
   }
 `;
+
+export function useFetchUserLazyQuery(
+  options?: QueryHookOptions<FetchUserResponse, FetchUserData>,
+) {
+  return useLazyQuery<FetchUserResponse, FetchUserData>(FETCH_USER, options);
+}

@@ -1,24 +1,48 @@
-import { gql } from '@apollo/client';
+import {
+  gql,
+  MutationHookOptions,
+  QueryHookOptions,
+  useLazyQuery,
+  useMutation,
+} from '@apollo/client';
 
 import { UserType } from '../../types/user';
 
-export type PasswordRecoveryResponse = {
+type PasswordRecoveryResponse = {
   PasswordRecovery: {
     scalar: boolean;
   };
 };
 
-export const PASSWORD_RECOVERY = gql`
+type PasswordRecoveryData = {
+  email: string;
+};
+
+const PASSWORD_RECOVERY = gql`
   query PasswordRecovery($email: String!) {
     PasswordRecovery(email: $email)
   }
 `;
 
-export type PasswordRecoveryLinkResponse = {
+export function usePasswordRecoveryLazyQuery(
+  options?: QueryHookOptions<PasswordRecoveryResponse, PasswordRecoveryData>,
+) {
+  return useLazyQuery<PasswordRecoveryResponse, PasswordRecoveryData>(
+    PASSWORD_RECOVERY,
+    options,
+  );
+}
+
+type PasswordRecoveryLinkResponse = {
   PasswordRecoveryLink: UserType;
 };
 
-export const PASSWORD_RECOVERY_LINK = gql`
+type PasswordRecoveryLinkData = {
+  newPassword: string;
+  secretId: string;
+};
+
+const PASSWORD_RECOVERY_LINK = gql`
   mutation PasswordRecoveryLink($newPassword: String!, $secretId: String!) {
     PasswordRecoveryLink(newPassword: $newPassword, secretId: $secretId) {
       id
@@ -31,3 +55,15 @@ export const PASSWORD_RECOVERY_LINK = gql`
     }
   }
 `;
+
+export function usePasswordRecoveryLinkMutation(
+  options?: MutationHookOptions<
+    PasswordRecoveryLinkResponse,
+    PasswordRecoveryLinkData
+  >,
+) {
+  return useMutation<PasswordRecoveryLinkResponse, PasswordRecoveryLinkData>(
+    PASSWORD_RECOVERY_LINK,
+    options,
+  );
+}

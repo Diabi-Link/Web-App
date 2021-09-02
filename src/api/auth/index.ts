@@ -1,20 +1,20 @@
-import { gql } from '@apollo/client';
+import { gql, MutationHookOptions, useMutation } from '@apollo/client';
 import { DeepNonNullable } from '../../types/utilities';
 
 import { RegisterType } from '../../types/register';
 import { UserType } from '../../types/user';
 
-// TODO/ find a way to link Typescript to Apollo Client
+type SignUpData = {
+  userData: {
+    password: string;
+  } & DeepNonNullable<RegisterType>;
+};
 
-export type UserData = {
-  password: string;
-} & DeepNonNullable<RegisterType>;
-
-export type SignUpResponse = {
+type SignUpResponse = {
   SignUp: UserType & { password: string };
 };
 
-export const SIGN_UP = gql`
+const SIGN_UP = gql`
   mutation SignUp($userData: UserData!) {
     SignUp(userData: $userData) {
       id
@@ -28,19 +28,24 @@ export const SIGN_UP = gql`
   }
 `;
 
-export type LoginData = {
-  email: string;
-  password: string;
+export function useSignUpMutation(
+  options?: MutationHookOptions<SignUpResponse, SignUpData>,
+) {
+  return useMutation<SignUpResponse, SignUpData>(SIGN_UP, options);
+}
+
+type LoginData = {
+  loginData: { email: string; password: string };
 };
 
-export type LoginResponse = {
+type LoginResponse = {
   Login: {
     accessToken: string;
     refreshToken: string;
   };
 };
 
-export const LOGIN = gql`
+const LOGIN = gql`
   mutation Login($loginData: LoginData!) {
     Login(loginData: $loginData) {
       accessToken
@@ -48,3 +53,9 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export function useLoginMutation(
+  options?: MutationHookOptions<LoginResponse, LoginData>,
+) {
+  return useMutation<LoginResponse, LoginData>(LOGIN, options);
+}

@@ -5,9 +5,8 @@ import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { Formik, Form, FormikProps } from 'formik';
-import { useMutation } from '@apollo/client';
 
-import { SIGN_UP, UserData, SignUpResponse } from '../../../../api';
+import { useSignUpMutation } from '../../../../api';
 
 import { RegisterContext } from '../../../../contexts/RegisterContext';
 import { ValidatePasswordSchema } from '../Validation';
@@ -85,10 +84,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
     state: { user },
   } = useContext(RegisterContext);
 
-  const [signUp, { loading }] = useMutation<
-    SignUpResponse,
-    { userData: UserData }
-  >(SIGN_UP, {
+  const [signUp, { loading }] = useSignUpMutation({
     onCompleted: () => {
       onClick(4);
     },

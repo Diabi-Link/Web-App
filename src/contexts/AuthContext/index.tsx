@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import jwt from 'jwt-decode';
-import { useLazyQuery } from '@apollo/client';
 import styled from 'styled-components';
 
 import { useAuthToken } from '../../hooks/useAuthToken';
 import { UserType } from '../../types/user';
 
 import Loader from '../../ui/Loader';
-import { FetchUserResponse, FETCH_USER } from '../../api';
+import { useFetchUserLazyQuery } from '../../api';
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,19 +29,16 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
 
   const { authToken, removeAuthToken } = useAuthToken();
 
-  const [fetchUser] = useLazyQuery<FetchUserResponse, { id: number }>(
-    FETCH_USER,
-    {
-      onCompleted: (payload) => {
-        setUser(payload.User);
-        setWaitingToGetUserData(false);
-      },
-      onError: () => {
-        removeAuthToken();
-        setWaitingToGetUserData(false);
-      },
+  const [fetchUser] = useFetchUserLazyQuery({
+    onCompleted: (payload) => {
+      setUser(payload.User);
+      setWaitingToGetUserData(false);
     },
-  );
+    onError: () => {
+      removeAuthToken();
+      setWaitingToGetUserData(false);
+    },
+  });
 
   useEffect(() => {
     try {

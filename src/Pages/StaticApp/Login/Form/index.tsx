@@ -6,7 +6,6 @@ import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
-import { useLazyQuery, useMutation } from '@apollo/client';
 
 import jwtDecode from 'jwt-decode';
 import { ValidateLoginSchema } from '../Validation';
@@ -14,13 +13,7 @@ import { ValidateLoginSchema } from '../Validation';
 import Input from '../../../../ui/Input';
 import Button from '../../../../ui/Button';
 
-import {
-  FetchUserResponse,
-  FETCH_USER,
-  LOGIN,
-  LoginData,
-  LoginResponse,
-} from '../../../../api';
+import { useFetchUserLazyQuery, useLoginMutation } from '../../../../api';
 import { useAuthToken } from '../../../../hooks/useAuthToken';
 import Loader from '../../../../ui/Loader';
 import { UserActionTypes, UserContext } from '../../../../contexts/UserContext';
@@ -108,10 +101,7 @@ const Form = (): JSX.Element => {
   const { dispatch } = useContext(UserContext);
   const { authToken, setAuthToken, removeAuthToken } = useAuthToken();
 
-  const [fetchUser, { loading: awaitingFetch }] = useLazyQuery<
-    FetchUserResponse,
-    { id: number }
-  >(FETCH_USER, {
+  const [fetchUser, { loading: awaitingFetch }] = useFetchUserLazyQuery({
     onCompleted: (payload) => {
       dispatch({
         type: UserActionTypes.FetchUser,
@@ -121,10 +111,7 @@ const Form = (): JSX.Element => {
     onError: () => removeAuthToken(),
   });
 
-  const [login, { loading: awaitingLogin }] = useMutation<
-    LoginResponse,
-    { loginData: LoginData }
-  >(LOGIN, {
+  const [login, { loading: awaitingLogin }] = useLoginMutation({
     onCompleted: (payload) => setAuthToken(payload.Login.accessToken),
     onError: () => null,
   });
