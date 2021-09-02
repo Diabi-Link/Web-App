@@ -3,18 +3,13 @@ import styled from 'styled-components';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-// import { loop2 } from 'react-icons-kit/icomoon/loop2';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { lock } from 'react-icons-kit/fa/lock';
-import { useMutation } from '@apollo/client';
 
 import { ValidateResetSchema } from '../Validation';
-import {
-  PASSWORD_RECOVERY_LINK,
-  PasswordRecoveryLinkResponse,
-} from '../../../../api';
+import { usePasswordRecoveryLinkMutation } from '../../../../api';
 
 import Heading from '../../../../ui/Heading';
 import Input from '../../../../ui/Input';
@@ -103,10 +98,7 @@ const ResetPassword = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirm, setShowConfirm] = useState(true);
 
-  const [passwordRecoveryLink, { loading }] = useMutation<
-    PasswordRecoveryLinkResponse,
-    { newPassword: string; secretId: string }
-  >(PASSWORD_RECOVERY_LINK, {
+  const [passwordRecoveryLink, { loading }] = usePasswordRecoveryLinkMutation({
     onCompleted: () => {
       push('/login');
     },
