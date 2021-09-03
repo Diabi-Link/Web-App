@@ -27,7 +27,7 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
   const [user, setUser] = useState<UserType | null>(null);
   const [waitingToGetUserData, setWaitingToGetUserData] = useState(true);
 
-  const { authToken, removeAuthToken } = useAuthToken();
+  const { authToken } = useAuthToken();
 
   const [fetchUser] = useFetchUserLazyQuery({
     onCompleted: (payload) => {
@@ -35,7 +35,6 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
       setWaitingToGetUserData(false);
     },
     onError: () => {
-      removeAuthToken();
       setWaitingToGetUserData(false);
     },
   });
