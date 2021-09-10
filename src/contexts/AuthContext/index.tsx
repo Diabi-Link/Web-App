@@ -35,7 +35,6 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
       setWaitingToGetUserData(false);
     },
     onError: () => {
-      removeAuthToken();
       setWaitingToGetUserData(false);
     },
   });
@@ -49,6 +48,7 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
         setWaitingToGetUserData(false);
       }
     } catch {
+      removeAuthToken();
       setWaitingToGetUserData(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

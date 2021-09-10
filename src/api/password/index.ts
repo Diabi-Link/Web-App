@@ -1,12 +1,7 @@
-import {
-  gql,
-  MutationHookOptions,
-  QueryHookOptions,
-  useLazyQuery,
-  useMutation,
-} from '@apollo/client';
+import { gql, MutationHookOptions, QueryHookOptions } from '@apollo/client';
 
 import { UserType } from '../../types/user';
+import { useAPILazyQuery, useAPIMutation } from '../handlers';
 
 type PasswordRecoveryResponse = {
   PasswordRecovery: {
@@ -27,10 +22,7 @@ const PASSWORD_RECOVERY = gql`
 export function usePasswordRecoveryLazyQuery(
   options?: QueryHookOptions<PasswordRecoveryResponse, PasswordRecoveryData>,
 ) {
-  return useLazyQuery<PasswordRecoveryResponse, PasswordRecoveryData>(
-    PASSWORD_RECOVERY,
-    options,
-  );
+  return useAPILazyQuery(PASSWORD_RECOVERY, options);
 }
 
 type PasswordRecoveryLinkResponse = {
@@ -62,8 +54,5 @@ export function usePasswordRecoveryLinkMutation(
     PasswordRecoveryLinkData
   >,
 ) {
-  return useMutation<PasswordRecoveryLinkResponse, PasswordRecoveryLinkData>(
-    PASSWORD_RECOVERY_LINK,
-    options,
-  );
+  return useAPIMutation(PASSWORD_RECOVERY_LINK, options);
 }

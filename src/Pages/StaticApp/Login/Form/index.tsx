@@ -99,7 +99,7 @@ const StyledButton = styled(Button)`
 const Form = (): JSX.Element => {
   const { t } = useTranslation();
   const { dispatch } = useContext(UserContext);
-  const { authToken, setAuthToken, removeAuthToken } = useAuthToken();
+  const { authToken, setAuthToken } = useAuthToken();
 
   const [fetchUser, { loading: awaitingFetch }] = useFetchUserLazyQuery({
     onCompleted: (payload) => {
@@ -108,12 +108,10 @@ const Form = (): JSX.Element => {
         payload: { ...payload.User },
       });
     },
-    onError: () => removeAuthToken(),
   });
 
   const [login, { loading: awaitingLogin }] = useLoginMutation({
     onCompleted: (payload) => setAuthToken(payload.Login.accessToken),
-    onError: () => null,
   });
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Button from '../../../ui/Button';
 
-import { UserActionTypes, UserContext } from '../../../contexts/UserContext';
+import { UserContext } from '../../../contexts/UserContext';
 import { useAuthToken } from '../../../hooks/useAuthToken';
 
 const Container = styled.div`
@@ -29,13 +29,11 @@ const LogoutButton = styled(Button)`
 const Home = (): React.ReactElement => {
   const {
     state: { user },
-    dispatch,
   } = useContext(UserContext);
   const { removeAuthToken } = useAuthToken();
 
   const logout = (): void => {
     removeAuthToken();
-    dispatch({ type: UserActionTypes.EmptyUser });
   };
 
   const birthDate = user?.birthDate as Date;
