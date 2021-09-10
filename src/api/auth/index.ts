@@ -1,8 +1,9 @@
-import { gql, MutationHookOptions, useMutation } from '@apollo/client';
+import { gql, MutationHookOptions } from '@apollo/client';
 import { DeepNonNullable } from '../../types/utilities';
 
 import { RegisterType } from '../../types/register';
 import { UserType } from '../../types/user';
+import { useAPIMutation } from '../handlers';
 
 type SignUpData = {
   userData: {
@@ -31,7 +32,7 @@ const SIGN_UP = gql`
 export function useSignUpMutation(
   options?: MutationHookOptions<SignUpResponse, SignUpData>,
 ) {
-  return useMutation<SignUpResponse, SignUpData>(SIGN_UP, options);
+  return useAPIMutation(SIGN_UP, options);
 }
 
 type LoginData = {
@@ -57,5 +58,5 @@ const LOGIN = gql`
 export function useLoginMutation(
   options?: MutationHookOptions<LoginResponse, LoginData>,
 ) {
-  return useMutation<LoginResponse, LoginData>(LOGIN, options);
+  return useAPIMutation(LOGIN, options);
 }

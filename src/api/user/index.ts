@@ -1,6 +1,7 @@
-import { gql, QueryHookOptions, useLazyQuery } from '@apollo/client';
+import { gql, QueryHookOptions } from '@apollo/client';
 
 import { UserType } from '../../types/user';
+import { useAPILazyQuery } from '../handlers';
 
 type FetchUserResponse = {
   User: UserType;
@@ -27,5 +28,5 @@ const FETCH_USER = gql`
 export function useFetchUserLazyQuery(
   options?: QueryHookOptions<FetchUserResponse, FetchUserData>,
 ) {
-  return useLazyQuery<FetchUserResponse, FetchUserData>(FETCH_USER, options);
+  return useAPILazyQuery(FETCH_USER, options);
 }
