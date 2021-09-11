@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import styled from 'styled-components';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Loader from '../../../ui/Loader';
+import Loader from '../../../../ui/Loader';
 import NavigationWrapper from '../NavigationWrapper';
 
-const Home = lazy(() => import('../Home'));
-const Profile = lazy(() => import('../Profile'));
+const Home = lazy(() => import('../../Home'));
+const Profile = lazy(() => import('../../Profile'));
 
 const Wrapper = styled.div`
   display: flex;

@@ -5,10 +5,9 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
-import { useLazyQuery } from '@apollo/client';
 
 import { ValidateMailSchema } from '../Validation';
-import { PASSWORD_RECOVERY, PasswordRecoveryResponse } from '../../../../api';
+import { usePasswordRecoveryLazyQuery } from '../../../../api';
 
 import Heading from '../../../../ui/Heading';
 import Input from '../../../../ui/Input';
@@ -83,15 +82,11 @@ const SendCode = ({ onClick }: Props): JSX.Element => {
   const { push } = useHistory();
   const { t } = useTranslation();
 
-  const [passwordRecovery, { loading }] = useLazyQuery<
-    PasswordRecoveryResponse,
-    { email: string }
-  >(PASSWORD_RECOVERY, {
+  const [passwordRecovery, { loading }] = usePasswordRecoveryLazyQuery({
     onCompleted: () => {
       push('/forgot-password/reset');
       onClick(2);
     },
-    onError: () => null,
   });
 
   const handleSubmit = ({ email }: { email: string }) => {

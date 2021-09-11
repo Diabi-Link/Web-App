@@ -3,7 +3,7 @@ import { ApolloProvider } from '@apollo/client/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { useAppApolloClient } from './api';
+import { useAppApolloClient } from './api/initializer';
 
 import './i18n';
 import theme from './theme';

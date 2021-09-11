@@ -1,19 +1,19 @@
 import {
   ApolloClient,
-  ApolloLink,
-  createHttpLink,
+  HttpLink,
   InMemoryCache,
   NormalizedCacheObject,
+  from,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
 import { useAuthToken } from '../hooks/useAuthToken';
 
-const httpLink = createHttpLink({
+const httpLink = new HttpLink({
   uri: 'https://diabilink.herokuapp.com/graphql/',
 });
 
-const authLink = (authToken: string | null): ApolloLink =>
+const authLink = (authToken: string | null) =>
   setContext((_, { headers }) => {
     return {
       headers: {
@@ -26,7 +26,7 @@ const authLink = (authToken: string | null): ApolloLink =>
 export const useAppApolloClient = (): ApolloClient<NormalizedCacheObject> => {
   const { authToken } = useAuthToken();
   return new ApolloClient({
-    link: authLink(authToken).concat(httpLink),
+    link: from([authLink(authToken), httpLink]),
     cache: new InMemoryCache(),
   });
 };
