@@ -162,7 +162,6 @@ const Profile = (): React.ReactElement => {
     password: string;
     confirmPassword: string;
   }) => {
-    alert('hello');
     // login({ variables: { loginData: { email, password } } });
   };
 

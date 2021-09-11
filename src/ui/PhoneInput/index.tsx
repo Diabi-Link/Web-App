@@ -1,6 +1,6 @@
-import React, { createRef, useMemo } from 'react';
+import React /* , { createRef, useMemo } */ from 'react';
 import styled from 'styled-components';
-import PhoneNumber from 'awesome-phonenumber';
+// import PhoneNumber from 'awesome-phonenumber';
 
 import { arrowDown2 } from 'react-icons-kit/icomoon/arrowDown2';
 import { phone as PhoneIcon } from 'react-icons-kit/icomoon/phone';
@@ -19,10 +19,8 @@ const PhoneWrapper = styled.div`
   display: flex;
 `;
 
-const Test = styled.img``;
-
 const PhoneInput = ({ value, errorText, onChange }: Props) => {
-  const phoneNumberInput = createRef();
+  // const phoneNumberInput = createRef();
   // const phoneCode = value ? getPhoneCode(value) || '+33' : '+33';
   // const number = value ? value.slice(phoneCode.length) : '';
 
