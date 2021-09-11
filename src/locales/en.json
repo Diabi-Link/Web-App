@@ -85,5 +85,15 @@
       "Desc": "Your registration has been successfully completed. An email will be sent to you shortly with a link to verify your account. If you have not received this email after a few minutes, please check your spam folder.",
       "ResendButton": "Send the mail again"
     }
+  },
+  "Profile": {
+    "Title": "My Profile",
+    "User": "User",
+    "Security": "Account & Security",
+    "PhoneNumber": "Phone Number",
+    "ActualPassword": "Actual Password",
+    "NewPassword": "New Password",
+    "ConfirmNewPassword": "Confirm your new password",
+    "Save": "Save"
   }
 }
