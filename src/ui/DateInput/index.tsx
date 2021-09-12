@@ -8,6 +8,7 @@ type Props = {
   value: Date | null | undefined;
   icon?: JSX.Element;
   errorText?: string | undefined;
+  placeholderText?: string;
   onChange: (date: Date | [Date, Date] | null) => any;
 };
 
@@ -18,6 +19,7 @@ const DateInput = ({
   icon,
   errorText,
   onChange,
+  placeholderText,
   ...props
 }: Props): JSX.Element => {
   return (
@@ -32,7 +34,7 @@ const DateInput = ({
           data-testid="birthDate-input"
         />
       }
-      placeholderText="15/04/1980"
+      placeholderText={placeholderText || '15/04/1980'}
       selected={value}
       onChange={(date) => onChange(date)}
       locale="fr"
