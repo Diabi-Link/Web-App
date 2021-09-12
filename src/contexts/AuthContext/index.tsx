@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import jwt from 'jwt-decode';
 import styled from 'styled-components';
 
+import { useLazyQuery, gql } from '@apollo/client';
 import { useAuthToken } from '../../hooks/useAuthToken';
 import { UserType } from '../../types/user';
 
 import Loader from '../../ui/Loader';
-import { useFetchUserLazyQuery } from '../../api';
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,13 +23,27 @@ type Props = {
   children: React.ReactElement;
 };
 
+const FETCH_USER = gql`
+  query User($id: Float!) {
+    User(ID: $id) {
+      id
+      email
+      firstName
+      lastName
+      password
+      birthDate
+      account
+    }
+  }
+`;
+
 const AuthProvider = ({ children }: Props): React.ReactElement => {
   const [user, setUser] = useState<UserType | null>(null);
   const [waitingToGetUserData, setWaitingToGetUserData] = useState(true);
 
   const { authToken, removeAuthToken } = useAuthToken();
 
-  const [fetchUser] = useFetchUserLazyQuery({
+  const [fetchUser] = useLazyQuery(FETCH_USER, {
     onCompleted: (payload) => {
       setUser(payload.User);
       setWaitingToGetUserData(false);

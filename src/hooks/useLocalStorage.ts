@@ -85,6 +85,7 @@ export function useLocalStorage<T>({
   const removeValue = (keyToRemove: string) => {
     window.localStorage.removeItem(keyToRemove);
     setStoredValue(null);
+    window.dispatchEvent(new Event('local-storage'));
   };
 
   return [storedValue, setValue, removeValue];
