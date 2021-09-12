@@ -31,13 +31,17 @@ export function useFetchUserLazyQuery(
   return useAPILazyQuery(FETCH_USER, options);
 }
 
+type UpdateEmailResponse = {
+  updateEmail: UserType;
+};
+
 type UpdateEmailData = {
   email: string;
 };
 
 const UPDATE_EMAIL = gql`
-  mutation User($email: String!) {
-    User(Email: $email) {
+  mutation updateEmail($email: String!) {
+    updateEmail(Email: $email) {
       id
       email
       firstName
@@ -50,18 +54,22 @@ const UPDATE_EMAIL = gql`
 `;
 
 export function useUpdateEmail(
-  options?: MutationHookOptions<UserResponse, UpdateEmailData>,
+  options?: MutationHookOptions<UpdateEmailResponse, UpdateEmailData>,
 ) {
   return useAPIMutation(UPDATE_EMAIL, options);
 }
 
+type UpdateFirstnameResponse = {
+  updateFirstname: UserType;
+};
+
 type UpdateFirstnameData = {
-  firstname: string;
+  firstName: string;
 };
 
 const UPDATE_FIRSTNAME = gql`
-  mutation User($firstname: String!) {
-    User(Firstname: $firstname) {
+  mutation updateFirstname($firstName: String!) {
+    updateFirstname(Firstname: $firstName) {
       id
       email
       firstName
@@ -74,18 +82,22 @@ const UPDATE_FIRSTNAME = gql`
 `;
 
 export function useUpdateFirstname(
-  options?: MutationHookOptions<UserResponse, UpdateFirstnameData>,
+  options?: MutationHookOptions<UpdateFirstnameResponse, UpdateFirstnameData>,
 ) {
   return useAPIMutation(UPDATE_FIRSTNAME, options);
 }
 
+type UpdateLastnameResponse = {
+  updateLastname: UserType;
+};
+
 type UpdateLastnameData = {
-  lastname: string;
+  lastName: string;
 };
 
 const UPDATE_LASTNAME = gql`
-  mutation User($lastname: String!) {
-    User(Lastname: $lastname) {
+  mutation updateLastname($lastName: String!) {
+    updateLastname(Lastname: $lastName) {
       id
       email
       firstName
@@ -98,18 +110,22 @@ const UPDATE_LASTNAME = gql`
 `;
 
 export function useUpdateLastname(
-  options?: MutationHookOptions<UserResponse, UpdateLastnameData>,
+  options?: MutationHookOptions<UpdateLastnameResponse, UpdateLastnameData>,
 ) {
   return useAPIMutation(UPDATE_LASTNAME, options);
 }
 
+type UpdateBirthdayResponse = {
+  updateBirthday: UserType;
+};
+
 type UpdateBirthdayData = {
-  lastname: string;
+  birthDate: Date;
 };
 
 const UPDATE_BIRTHDAY = gql`
-  mutation User($birthdate: DateTime!) {
-    User(Birthdate: $birthdate) {
+  mutation updateBirthday($birthDate: DateTime!) {
+    updateBirthday(Birthdate: $birthDate) {
       id
       email
       firstName
@@ -122,7 +138,7 @@ const UPDATE_BIRTHDAY = gql`
 `;
 
 export function useUpdateBirthday(
-  options?: MutationHookOptions<UserResponse, UpdateBirthdayData>,
+  options?: MutationHookOptions<UpdateBirthdayResponse, UpdateBirthdayData>,
 ) {
   return useAPIMutation(UPDATE_BIRTHDAY, options);
 }

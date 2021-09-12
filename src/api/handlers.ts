@@ -17,9 +17,10 @@ type OperationVariables = Record<string, any>;
 
 const onErrorShared = (error: ApolloError, removeAuthToken: () => void) => {
   const { graphQLErrors, networkError } = error;
-  console.log('yo');
 
-  graphQLErrors.forEach((err) => console.log(err.message));
+  if (graphQLErrors) {
+    graphQLErrors.forEach((err) => console.log(err.message));
+  }
   if (networkError) {
     console.log(networkError);
     removeAuthToken();

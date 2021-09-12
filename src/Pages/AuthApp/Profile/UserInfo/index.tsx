@@ -142,7 +142,7 @@ const UserInfo = ({ props }: Props) => {
         <InputWrapper>
           <InputLabel>{t('Profile.PhoneNumber')}</InputLabel>
           <PhoneInput
-            value={props.values.firstName}
+            value=""
             errorText={
               props.errors.firstName && props.touched.firstName
                 ? props.errors.firstName
@@ -157,6 +157,7 @@ const UserInfo = ({ props }: Props) => {
           <InputLabel>{t('Register.User.BirthDate')}</InputLabel>
           <DateInput
             value={props.values.birthDate}
+            placeholderText={user?.birthDate.toLocaleDateString()}
             errorText={
               props.errors.birthDate && props.touched.birthDate
                 ? props.errors.birthDate

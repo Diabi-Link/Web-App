@@ -9,11 +9,17 @@ import { ReactComponent as ProfilePatient } from '../../../assets/svgs/ProfilePa
 import { ReactComponent as ProfileMP } from '../../../assets/svgs/ProfileMP.svg';
 import { ReactComponent as ProfileReferent } from '../../../assets/svgs/ProfileReferent.svg';
 
-import { UserContext } from '../../../contexts/UserContext';
+import { UserActionTypes, UserContext } from '../../../contexts/UserContext';
 
 import UserInfo from './UserInfo';
 import SecurityInfo from './SecurityInfo';
 import Button from '../../../ui/Button';
+import {
+  useUpdateEmail,
+  useUpdateFirstname,
+  useUpdateLastname,
+  useUpdateBirthday,
+} from '../../../api';
 
 const Container = styled.div`
   height: 100vh;
@@ -130,7 +136,40 @@ const Profile = (): React.ReactElement => {
   const { t } = useTranslation();
   const {
     state: { user },
+    dispatch,
   } = useContext(UserContext);
+
+  const [updateEmail] = useUpdateEmail({
+    onCompleted: (payload) =>
+      dispatch({
+        type: UserActionTypes.FetchUser,
+        payload: payload.updateEmail,
+      }),
+  });
+
+  const [updateFirstname] = useUpdateFirstname({
+    onCompleted: (payload) =>
+      dispatch({
+        type: UserActionTypes.FetchUser,
+        payload: payload.updateFirstname,
+      }),
+  });
+
+  const [updateLastname] = useUpdateLastname({
+    onCompleted: (payload) =>
+      dispatch({
+        type: UserActionTypes.FetchUser,
+        payload: payload.updateLastname,
+      }),
+  });
+
+  const [updateBirthday] = useUpdateBirthday({
+    onCompleted: (payload) =>
+      dispatch({
+        type: UserActionTypes.FetchUser,
+        payload: payload.updateBirthday,
+      }),
+  });
 
   const avatars = {
     patient: {
@@ -147,22 +186,35 @@ const Profile = (): React.ReactElement => {
     },
   };
 
-  const handleSubmit = ({
-    email,
-    firstName,
-    lastName,
-    birthDate,
-    password,
-    confirmPassword,
-  }: {
-    email: string;
-    firstName: string;
-    lastName: string;
-    birthDate: null;
-    password: string;
-    confirmPassword: string;
-  }) => {
-    // login({ variables: { loginData: { email, password } } });
+  const handleSubmit = async (
+    {
+      email,
+      firstName,
+      lastName,
+      birthDate,
+    }: {
+      email: string;
+      firstName: string;
+      lastName: string;
+      birthDate: Date | null | undefined;
+      password: string;
+      confirmPassword: string;
+    },
+    { resetForm }: { resetForm: () => void },
+  ) => {
+    if (email) {
+      await updateEmail({ variables: { email } });
+    }
+    if (firstName) {
+      await updateFirstname({ variables: { firstName } });
+    }
+    if (lastName) {
+      await updateLastname({ variables: { lastName } });
+    }
+    if (birthDate) {
+      await updateBirthday({ variables: { birthDate } });
+    }
+    resetForm();
   };
 
   return (
