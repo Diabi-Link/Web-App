@@ -11,23 +11,24 @@ import {
   useQuery,
 } from '@apollo/client';
 import { DocumentNode } from 'graphql';
+import { useContext } from 'react';
+import { UserActionTypes, UserContext } from '../contexts/UserContext';
 import { useAuthToken } from '../hooks/useAuthToken';
 
 type OperationVariables = Record<string, any>;
 
-const onErrorShared = (error: ApolloError, removeAuthToken: () => void) => {
+const onErrorShared = (error: ApolloError, logout: () => void) => {
   const { graphQLErrors, networkError } = error;
 
   if (graphQLErrors) {
     graphQLErrors.forEach((err) => console.log(err.message));
   }
   if (networkError) {
-    console.log(networkError);
-    removeAuthToken();
+    logout();
 
-    if ('statusCode' in networkError && networkError.statusCode === 401) {
-      removeAuthToken();
-    }
+    // if ('statusCode' in networkError && networkError.statusCode === 401) {
+    //   removeAuthToken();
+    // }
   }
 };
 
@@ -36,9 +37,15 @@ export function useAPIQuery<TData = any, TVariables = OperationVariables>(
   options?: QueryHookOptions<TData, TVariables>,
 ): QueryResult<TData, TVariables> {
   const { removeAuthToken } = useAuthToken();
+  const { dispatch } = useContext(UserContext);
+
+  const logout = () => {
+    removeAuthToken();
+    dispatch({ type: UserActionTypes.EmptyUser });
+  };
 
   const onError = (error: ApolloError) => {
-    onErrorShared(error, removeAuthToken);
+    onErrorShared(error, logout);
     if (options?.onError) {
       options.onError(error);
     }
@@ -52,9 +59,15 @@ export function useAPILazyQuery<TData = any, TVariables = OperationVariables>(
   options?: QueryHookOptions<TData, TVariables>,
 ): QueryTuple<TData, TVariables> {
   const { removeAuthToken } = useAuthToken();
+  const { dispatch } = useContext(UserContext);
+
+  const logout = () => {
+    removeAuthToken();
+    dispatch({ type: UserActionTypes.EmptyUser });
+  };
 
   const onError = (error: ApolloError) => {
-    onErrorShared(error, removeAuthToken);
+    onErrorShared(error, logout);
     if (options?.onError) {
       options.onError(error);
     }
@@ -68,8 +81,15 @@ export function useAPIMutation<TData = any, TVariables = OperationVariables>(
   options?: MutationHookOptions<TData, TVariables>,
 ): MutationTuple<TData, TVariables> {
   const { removeAuthToken } = useAuthToken();
+  const { dispatch } = useContext(UserContext);
+
+  const logout = () => {
+    removeAuthToken();
+    dispatch({ type: UserActionTypes.EmptyUser });
+  };
+
   const onError = (error: ApolloError) => {
-    onErrorShared(error, removeAuthToken);
+    onErrorShared(error, logout);
     if (options?.onError) {
       options.onError(error);
     }
