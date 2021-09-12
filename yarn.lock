@@ -3829,6 +3829,11 @@ autoprefixer@^9.6.1, autoprefixer@^9.8.6:
     postcss "^7.0.32"
     postcss-value-parser "^4.1.0"
 
+awesome-phonenumber@^2.58.0:
+  version "2.58.0"
+  resolved "https://registry.yarnpkg.com/awesome-phonenumber/-/awesome-phonenumber-2.58.0.tgz#eaa788910b567abd6c1283025bcf491ac5b55d85"
+  integrity sha512-rsbIn7Htq/QqUfJ7E53oGiGnLca5SUJEshg8zG5h9WK+fTxoGA12/NDKC5eCvkK2eaP8gR/RVA1yuf0Arib7vg==
+
 aws-sign2@~0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.7.0.tgz"

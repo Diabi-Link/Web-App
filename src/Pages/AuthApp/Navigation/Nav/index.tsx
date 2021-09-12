@@ -5,6 +5,7 @@ import Loader from '../../../../ui/Loader';
 import NavigationWrapper from '../NavigationWrapper';
 
 const Home = lazy(() => import('../../Home'));
+const Profile = lazy(() => import('../../Profile'));
 
 const Wrapper = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ const Nav = (): JSX.Element => {
       >
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/user" exact render={() => <>User Page</>} />
+          <Route path="/profile" exact component={Profile} />
           <Redirect to="/" />
         </Switch>
       </Suspense>

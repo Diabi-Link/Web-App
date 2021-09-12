@@ -85,5 +85,15 @@
       "Desc": "Votre inscription a bien été prise en compte. Un email va vous être envoyé prochainement avec un lien pour vérifier votre compte. Si vous n’avez pas reçu ce mail après quelques minutes, pensez à vérifier votre dossier spam.",
       "ResendButton": "Renvoyez le mail"
     }
+  },
+  "Profile": {
+    "Title": "Mon profil",
+    "User": "Utilisateur",
+    "Security": "Compte & Sécurité",
+    "PhoneNumber": "Numéro de téléphone",
+    "ActualPassword": "Mot de passe actuel",
+    "NewPassword": "Nouveau mot de passe",
+    "ConfirmNewPassword": "Confirmez votre nouveau mot de passe",
+    "Save": "Sauvegarder"
   }
 }

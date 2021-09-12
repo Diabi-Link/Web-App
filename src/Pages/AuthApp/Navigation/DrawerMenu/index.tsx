@@ -153,15 +153,18 @@ const DrawerMenu = ({ children, onMobile }: Props) => {
           </ItemContainer>
 
           <ItemContainer
-            to="/user"
-            isActive={location.pathname === '/user'}
+            to="/profile"
+            isActive={location.pathname === '/profile'}
             onClick={closeDrawerOnMobile}
           >
             <ItemWrapper>
-              <ItemIcon isActive={location.pathname === '/user'}>
+              <ItemIcon isActive={location.pathname === '/profile'}>
                 <Icon icon={user} size={34} />
               </ItemIcon>
-              <ItemHeading isActive={location.pathname === '/user'} level={2}>
+              <ItemHeading
+                isActive={location.pathname === '/profile'}
+                level={2}
+              >
                 Profil
               </ItemHeading>
             </ItemWrapper>
