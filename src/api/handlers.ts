@@ -26,6 +26,8 @@ const onErrorShared = (error: ApolloError, logout: () => void) => {
   if (networkError) {
     logout();
 
+    console.log(networkError.message);
+
     // if ('statusCode' in networkError && networkError.statusCode === 401) {
     //   removeAuthToken();
     // }
