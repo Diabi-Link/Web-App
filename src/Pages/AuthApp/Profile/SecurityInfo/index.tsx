@@ -18,6 +18,7 @@ type Props = {
     newPassword: string;
     confirmNewPassword: string;
     acutalPassword: string;
+    phone: string;
   }>;
 };
 

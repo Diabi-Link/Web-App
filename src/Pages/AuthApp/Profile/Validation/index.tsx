@@ -29,6 +29,7 @@ const ValidateProfileSchema = Yup.object().shape({
     [Yup.ref('newPassword'), null],
     'Les deux mots de passe doivent être identiques',
   ),
+  phone: Yup.string().matches(/^((\+)33|0)[1-9](\d{2}){4}$/, 'Numéro invalide'),
 });
 
 export { ValidateProfileSchema };

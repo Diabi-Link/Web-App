@@ -167,6 +167,7 @@ const Profile = (): React.ReactElement => {
       lastName,
       birthDate,
       newPassword,
+      phone,
     }: {
       email: string;
       firstName: string;
@@ -175,6 +176,7 @@ const Profile = (): React.ReactElement => {
       newPassword: string;
       confirmNewPassword: string;
       acutalPassword: string;
+      phone: string;
     },
     { resetForm }: { resetForm: () => void },
   ) => {
@@ -184,7 +186,7 @@ const Profile = (): React.ReactElement => {
 
       await updateUser({
         variables: {
-          userInfo: { email, firstName, lastName, birthDate, password },
+          userInfo: { email, firstName, lastName, birthDate, password, phone },
         },
       });
       resetForm();
@@ -213,6 +215,7 @@ const Profile = (): React.ReactElement => {
               acutalPassword: '',
               newPassword: '',
               confirmNewPassword: '',
+              phone: '',
             }}
             validationSchema={ValidateProfileSchema}
             onSubmit={handleSubmit}
@@ -226,6 +229,7 @@ const Profile = (): React.ReactElement => {
                 acutalPassword: string;
                 newPassword: string;
                 confirmNewPassword: string;
+                phone: string;
               }>,
             ) => (
               <FormikForm>

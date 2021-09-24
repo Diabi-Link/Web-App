@@ -24,6 +24,7 @@ type Props = {
     newPassword: string;
     confirmNewPassword: string;
     acutalPassword: string;
+    phone: string;
   }>;
 };
 
@@ -144,7 +145,13 @@ const UserInfo = ({ props }: Props) => {
         <InputWrapper>
           <InputLabel>{t('Profile.PhoneNumber')}</InputLabel>
           <PhoneInput
-            value=""
+            value={props.values.phone}
+            placeholder={user?.phone || t('Profile.ToFill')}
+            errorText={
+              props.errors.phone && props.touched.phone
+                ? props.errors.phone
+                : undefined
+            }
             onChange={(e) => {
               props.handleChange(e);
             }}

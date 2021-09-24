@@ -21,6 +21,7 @@ const FETCH_USER = gql`
       password
       birthDate
       account
+      phone
     }
   }
 `;
@@ -41,6 +42,7 @@ type UpdateUserData = {
     firstName?: UserType['firstName'];
     lastName?: UserType['lastName'];
     birthDate?: UserType['birthDate'] | null;
+    phone?: string;
     password?: string;
   };
 };
@@ -55,6 +57,7 @@ const UPDATE_USER = gql`
       password
       birthDate
       account
+      phone
     }
   }
 `;

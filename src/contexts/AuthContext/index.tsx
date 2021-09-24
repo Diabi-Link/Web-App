@@ -33,6 +33,7 @@ const FETCH_USER = gql`
       password
       birthDate
       account
+      phone
     }
   }
 `;

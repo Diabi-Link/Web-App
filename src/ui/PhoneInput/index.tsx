@@ -11,6 +11,7 @@ import Select from '../Select';
 
 type Props = {
   value: string;
+  placeholder?: string;
   errorText?: string | undefined;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => any;
 };
@@ -19,7 +20,7 @@ const PhoneWrapper = styled.div`
   display: flex;
 `;
 
-const PhoneInput = ({ value, errorText, onChange }: Props) => {
+const PhoneInput = ({ value, errorText, onChange, placeholder }: Props) => {
   // const phoneNumberInput = createRef();
   // const phoneCode = value ? getPhoneCode(value) || '+33' : '+33';
   // const number = value ? value.slice(phoneCode.length) : '';
@@ -59,15 +60,14 @@ const PhoneInput = ({ value, errorText, onChange }: Props) => {
         data-testid="phoneNumber-input"
         value={countries[72].code}
         onChange={(e) => onChange(e)}
-        errorText={errorText}
         svg={countries[72].svg}
         icon={arrowDown2}
       />
       <Input
-        name="phoneNumber"
+        name="phone"
         type="tel"
-        data-testid="phoneNumber-input"
-        placeholder="602030405"
+        data-testid="phone-input"
+        placeholder={placeholder || '602030405'}
         value={value}
         onChange={(e) => onChange(e)}
         // onChange={({ target }) => {
