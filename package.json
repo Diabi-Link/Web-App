@@ -110,7 +110,8 @@
     "collectCoverageFrom": [
       "!src/**/*.stories.{js,ts,jsx,tsx}",
       "!src/hooks/**",
-      "!src/ui/**"
+      "!src/ui/**",
+      "!src/assets/**"
     ]
   }
 }

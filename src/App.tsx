@@ -14,6 +14,7 @@ import { MainProvider } from './contexts/MainContext';
 import AppSelector from './Pages/AppSelector';
 import LanguageSwitcher from './ui/LanguageSwitcher';
 import Notice from './ui/Notice';
+import { DeviceProvider } from './contexts/DeviceContext';
 
 const App = (): JSX.Element => {
   const client = useAppApolloClient();
@@ -24,11 +25,13 @@ const App = (): JSX.Element => {
         <MainProvider>
           <AuthProvider>
             <UserProvider>
-              <Router>
-                <AppSelector />
-                <LanguageSwitcher />
-                <Notice />
-              </Router>
+              <DeviceProvider>
+                <Router>
+                  <AppSelector />
+                  <LanguageSwitcher />
+                  <Notice />
+                </Router>
+              </DeviceProvider>
             </UserProvider>
           </AuthProvider>
         </MainProvider>

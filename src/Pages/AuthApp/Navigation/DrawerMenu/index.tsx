@@ -141,6 +141,7 @@ const DrawerMenu = ({ children, onMobile }: Props) => {
             to="/"
             isActive={location.pathname === '/'}
             onClick={closeDrawerOnMobile}
+            data-testid="home-navigation-button"
           >
             <ItemWrapper>
               <ItemIcon isActive={location.pathname === '/'}>
@@ -156,6 +157,7 @@ const DrawerMenu = ({ children, onMobile }: Props) => {
             to="/profile"
             isActive={location.pathname === '/profile'}
             onClick={closeDrawerOnMobile}
+            data-testid="profile-navigation-button"
           >
             <ItemWrapper>
               <ItemIcon isActive={location.pathname === '/profile'}>
