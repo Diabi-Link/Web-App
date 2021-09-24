@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 const Home = (): JSX.Element => {
   return (
     <Container>
-      <Wrapper>HOME</Wrapper>
+      <Wrapper data-testid="HOME">HOME</Wrapper>
     </Container>
   );
 };

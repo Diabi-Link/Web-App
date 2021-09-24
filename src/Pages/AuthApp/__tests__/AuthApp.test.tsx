@@ -6,11 +6,11 @@ import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import userEvent from '@testing-library/user-event';
-import AppSelector from '../AppSelector';
-import { UserProvider } from '../../contexts/UserContext';
-import { AuthContext } from '../../contexts/AuthContext';
-import { UserType } from '../../types/user';
-import theme from '../../theme';
+import AppSelector from '../../AppSelector';
+import { UserProvider } from '../../../contexts/UserContext';
+import { AuthContext } from '../../../contexts/AuthContext';
+import { UserType } from '../../../types/user';
+import theme from '../../../theme';
 
 const mockUser: UserType = {
   id: 1,
