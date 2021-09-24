@@ -146,6 +146,7 @@ const UserInfo = ({ props }: Props) => {
           <InputLabel>{t('Profile.PhoneNumber')}</InputLabel>
           <PhoneInput
             value={props.values.phone}
+            data-testid="phone-input"
             placeholder={user?.phone || t('Profile.ToFill')}
             errorText={
               props.errors.phone && props.touched.phone
@@ -180,6 +181,7 @@ const UserInfo = ({ props }: Props) => {
         <Input
           name="email"
           type="text"
+          data-testid="email-input"
           placeholder={user?.email}
           value={props?.values.email}
           onChange={(e) => {
