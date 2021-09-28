@@ -9,9 +9,11 @@ import './i18n';
 import theme from './theme';
 import { AuthProvider } from './contexts/AuthContext';
 import { UserProvider } from './contexts/UserContext';
+import { MainProvider } from './contexts/MainContext';
 
 import AppSelector from './Pages/AppSelector';
 import LanguageSwitcher from './ui/LanguageSwitcher';
+import Notice from './ui/Notice';
 
 const App = (): JSX.Element => {
   const client = useAppApolloClient();
@@ -19,14 +21,17 @@ const App = (): JSX.Element => {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <UserProvider>
-            <Router>
-              <AppSelector />
-              <LanguageSwitcher />
-            </Router>
-          </UserProvider>
-        </AuthProvider>
+        <MainProvider>
+          <AuthProvider>
+            <UserProvider>
+              <Router>
+                <AppSelector />
+                <LanguageSwitcher />
+                <Notice />
+              </Router>
+            </UserProvider>
+          </AuthProvider>
+        </MainProvider>
       </ThemeProvider>
     </ApolloProvider>
   );

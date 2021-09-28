@@ -12,6 +12,12 @@ export type Theme = {
     grayLight: string;
     grayLighter: string;
     error: string;
+    errorLight: string;
+    errorLighter: string;
+    success: string;
+    successLighter: string;
+    info: string;
+    infoLighter: string;
   };
 };
 
@@ -29,6 +35,12 @@ const theme = (): Theme => ({
     grayLight: '#CACACA',
     grayLighter: '#E9E8E8',
     error: '#E40000',
+    errorLight: '#FD7676',
+    errorLighter: '#FFA4A4',
+    success: '#18DBA0',
+    successLighter: '#88E4C9',
+    info: '#E8D52D',
+    infoLighter: '#F3E991',
   },
 });
 

@@ -10,10 +10,13 @@ import { ReactComponent as ProfileMP } from '../../../assets/svgs/ProfileMP.svg'
 import { ReactComponent as ProfileReferent } from '../../../assets/svgs/ProfileReferent.svg';
 
 import { UserActionTypes, UserContext } from '../../../contexts/UserContext';
+import { ContextActionTypes, MainContext } from '../../../contexts/MainContext';
+
+import Button from '../../../ui/Button';
 
 import UserInfo from './UserInfo';
 import SecurityInfo from './SecurityInfo';
-import Button from '../../../ui/Button';
+
 import {
   useUpdateEmail,
   useUpdateFirstname,
@@ -138,6 +141,7 @@ const Profile = (): React.ReactElement => {
     state: { user },
     dispatch,
   } = useContext(UserContext);
+  const { dispatch: altDispatch } = useContext(MainContext);
 
   const [updateEmail] = useUpdateEmail({
     onCompleted: (payload) =>
@@ -202,19 +206,42 @@ const Profile = (): React.ReactElement => {
     },
     { resetForm }: { resetForm: () => void },
   ) => {
-    if (email) {
-      await updateEmail({ variables: { email } });
+    try {
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: 'Sauvegarde réussie',
+          noticeStyle: 'success',
+          persistent: false,
+          closeable: false,
+          duration: 5000,
+        },
+      });
+      if (email) {
+        await updateEmail({ variables: { email } });
+      }
+      if (firstName) {
+        await updateFirstname({ variables: { firstName } });
+      }
+      if (lastName) {
+        await updateLastname({ variables: { lastName } });
+      }
+      if (birthDate) {
+        await updateBirthday({ variables: { birthDate } });
+      }
+      resetForm();
+    } catch (e) {
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: 'Sauvegarde échouée',
+          noticeStyle: 'error',
+          persistent: false,
+          closeable: true,
+          duration: 5000,
+        },
+      });
     }
-    if (firstName) {
-      await updateFirstname({ variables: { firstName } });
-    }
-    if (lastName) {
-      await updateLastname({ variables: { lastName } });
-    }
-    if (birthDate) {
-      await updateBirthday({ variables: { birthDate } });
-    }
-    resetForm();
   };
 
   return (
