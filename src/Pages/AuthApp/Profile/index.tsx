@@ -10,7 +10,7 @@ import { ReactComponent as ProfileMP } from '../../../assets/svgs/ProfileMP.svg'
 import { ReactComponent as ProfileReferent } from '../../../assets/svgs/ProfileReferent.svg';
 
 import { UserActionTypes, UserContext } from '../../../contexts/UserContext';
-import { MainContext } from '../../../contexts/MainContext';
+import { MainContext, ContextActionTypes } from '../../../contexts/MainContext';
 
 import UserInfo from './UserInfo';
 import SecurityInfo from './SecurityInfo';
@@ -138,11 +138,22 @@ const Profile = (): React.ReactElement => {
   const { dispatch: altDispatch } = useContext(MainContext);
 
   const [updateUser, { loading }] = useUpdateUser({
-    onCompleted: (payload) =>
+    onCompleted: (payload) => {
       dispatch({
         type: UserActionTypes.FetchUser,
         payload: payload.UpdateUser,
-      }),
+      });
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: 'Sauvegarde réussie',
+          noticeStyle: 'success',
+          persistent: false,
+          closeable: false,
+          duration: 5000,
+        },
+      });
+    },
   });
 
   const avatars = {
