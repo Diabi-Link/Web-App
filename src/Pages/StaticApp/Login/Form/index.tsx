@@ -161,6 +161,7 @@ const Form = (): JSX.Element => {
                         : undefined
                     }
                     icon={mail}
+                    data-testid="email-login"
                   />
                 </InputWrapper>
                 <InputWrapper>
@@ -180,6 +181,7 @@ const Form = (): JSX.Element => {
                     }
                     icon={showPassword ? eye : eyeBlocked}
                     onClick={() => setShowPassword(!showPassword)}
+                    data-testid="password-login"
                   />
                   <ForgotWrapper>
                     <ForgotLink to="/forgot-password/send-code">
@@ -201,6 +203,7 @@ const Form = (): JSX.Element => {
                   btnStyle="primary"
                   shadow
                   disabled={awaitingLogin || awaitingFetch}
+                  data-testid="button-login"
                 />
               </ButtonWrapper>
               <ConnectionWrapper>

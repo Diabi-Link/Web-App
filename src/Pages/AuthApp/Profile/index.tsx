@@ -205,7 +205,7 @@ const Profile = (): React.ReactElement => {
   };
 
   return (
-    <Container>
+    <Container data-testid="profile-page">
       <Wrapper>
         <TitleWrapper>
           <Line />

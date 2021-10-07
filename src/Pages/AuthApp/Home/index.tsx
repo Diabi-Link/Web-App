@@ -59,7 +59,7 @@ const Home = (): React.ReactElement => {
   const birthDate = user?.birthDate as Date;
 
   return (
-    <Container>
+    <Container data-testid="auth-home-page">
       <Wrapper>
         <Text>
           {user?.firstName} {user?.lastName.toUpperCase()} est bien authentifié
@@ -80,7 +80,6 @@ const Home = (): React.ReactElement => {
           label="Mettre un token invalide"
           btnStyle="primary"
           onClick={() => setAuthToken('test')}
-          data-testid="logout-button"
         />
       </Wrapper>
     </Container>

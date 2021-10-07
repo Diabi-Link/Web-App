@@ -1,5 +1,7 @@
 /* eslint-disable no-useless-escape */
-export const isMobileOrTablet = () => {
+import React, { useState } from 'react';
+
+const checkIsMobileOrTablet = () => {
   let check = false;
   ((a) => {
     if (
@@ -16,3 +18,25 @@ export const isMobileOrTablet = () => {
   })(navigator.userAgent || navigator.vendor || window.opera);
   return check;
 };
+
+const DeviceContext = React.createContext<{ isMobileOrTablet: boolean | null }>(
+  {
+    isMobileOrTablet: null,
+  },
+);
+
+type Props = {
+  children: React.ReactElement;
+};
+
+const DeviceProvider = ({ children }: Props): React.ReactElement => {
+  const [isMobileOrTablet] = useState<boolean | null>(checkIsMobileOrTablet());
+
+  return (
+    <DeviceContext.Provider value={{ isMobileOrTablet }}>
+      {children}
+    </DeviceContext.Provider>
+  );
+};
+
+export { DeviceProvider, DeviceContext };
