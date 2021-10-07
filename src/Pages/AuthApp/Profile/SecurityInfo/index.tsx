@@ -15,8 +15,10 @@ type Props = {
     firstName: string;
     lastName: string;
     birthDate: null;
-    password: string;
-    confirmPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+    acutalPassword: string;
+    phone: string;
   }>;
 };
 
@@ -90,15 +92,10 @@ const SecurityInfo = ({ props }: Props) => {
           name="actualPassword"
           type={showActualPassword ? 'text' : 'password'}
           placeholder="•••••••••"
-          value={props.values.password}
+          value={props.values.acutalPassword}
           onChange={(e) => {
             props.handleChange(e);
           }}
-          errorText={
-            props.errors.password && props.touched.password
-              ? props.errors.password
-              : undefined
-          }
           icon={showActualPassword ? eye : eyeBlocked}
           onClick={() => setShowActualPassword(!showActualPassword)}
           data-testid="actualPassword-input"
@@ -110,13 +107,13 @@ const SecurityInfo = ({ props }: Props) => {
           name="newPassword"
           type={showNewPassword ? 'text' : 'password'}
           placeholder="•••••••••"
-          value={props.values.password}
+          value={props.values.newPassword}
           onChange={(e) => {
             props.handleChange(e);
           }}
           errorText={
-            props.errors.password && props.touched.password
-              ? props.errors.password
+            props.errors.newPassword && props.touched.newPassword
+              ? props.errors.newPassword
               : undefined
           }
           icon={showNewPassword ? eye : eyeBlocked}
@@ -130,13 +127,13 @@ const SecurityInfo = ({ props }: Props) => {
           name="confirmNewPassword"
           type={showConfirm ? 'text' : 'password'}
           placeholder="•••••••••"
-          value={props.values.confirmPassword}
+          value={props.values.confirmNewPassword}
           onChange={(e) => {
             props.handleChange(e);
           }}
           errorText={
-            props.errors.confirmPassword && props.touched.confirmPassword
-              ? props.errors.confirmPassword
+            props.errors.confirmNewPassword && props.touched.confirmNewPassword
+              ? props.errors.confirmNewPassword
               : undefined
           }
           icon={showConfirm ? eye : eyeBlocked}

@@ -22,7 +22,7 @@ type ContextPayload = {
   [ContextActionTypes.SetNotice]: NoticeType;
 };
 
-type ContextActions = ActionMap<ContextPayload>[keyof ActionMap<ContextPayload>];
+export type ContextActions = ActionMap<ContextPayload>[keyof ActionMap<ContextPayload>];
 
 type InitialStateType = {
   type: ContextActionTypes | null;

@@ -141,6 +141,10 @@ const Notice = (): JSX.Element => {
     }
   }, [label]);
 
+  useEffect(() => {
+    setDisplay(true);
+  }, [duration, persistent, type, noticeStyle, icon, label, closeable]);
+
   return (
     <ButtonElement type={type} display={display} noticeStyle={noticeStyle}>
       {icon && <IconStart icon={icon} size={18} />}

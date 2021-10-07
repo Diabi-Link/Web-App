@@ -7,4 +7,5 @@ export type UserType = {
   email: string;
   birthDate: Date;
   account: AccountType;
+  phone?: string;
 };

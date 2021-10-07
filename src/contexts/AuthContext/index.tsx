@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import jwt from 'jwt-decode';
 import styled from 'styled-components';
 
-import { useLazyQuery, gql } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client';
 import { useAuthToken } from '../../hooks/useAuthToken';
 import { UserType } from '../../types/user';
 
@@ -33,6 +33,7 @@ const FETCH_USER = gql`
       password
       birthDate
       account
+      phone
     }
   }
 `;
@@ -40,10 +41,17 @@ const FETCH_USER = gql`
 const AuthProvider = ({ children }: Props): React.ReactElement => {
   const [user, setUser] = useState<UserType | null>(null);
   const [waitingToGetUserData, setWaitingToGetUserData] = useState(true);
+  const [skip, setSkip] = React.useState(false);
 
   const { authToken, removeAuthToken } = useAuthToken();
 
-  const [fetchUser] = useLazyQuery(FETCH_USER, {
+  const [decrypted, setDecrypted] = useState<{ userId: number }>({
+    userId: -1,
+  });
+
+  const { loading, data } = useQuery(FETCH_USER, {
+    skip: skip || decrypted.userId === -1,
+    variables: { id: decrypted.userId },
     onCompleted: (payload) => {
       setUser(payload.User);
       setWaitingToGetUserData(false);
@@ -56,8 +64,7 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
   useEffect(() => {
     try {
       if (authToken) {
-        const decrypted: { userId: number } = jwt(authToken);
-        fetchUser({ variables: { id: decrypted.userId } });
+        setDecrypted(jwt(authToken));
       } else {
         setWaitingToGetUserData(false);
       }
@@ -67,6 +74,13 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    // check whether data exists
+    if (!loading && !!data) {
+      setSkip(true);
+    }
+  }, [data, loading]);
 
   if (waitingToGetUserData) {
     return (

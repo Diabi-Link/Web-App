@@ -91,6 +91,7 @@
     "User": "Utilisateur",
     "Security": "Compte & Sécurité",
     "PhoneNumber": "Numéro de téléphone",
+    "ToFill": "Ajoutez votre numéro",
     "ActualPassword": "Mot de passe actuel",
     "NewPassword": "Nouveau mot de passe",
     "ConfirmNewPassword": "Confirmez votre nouveau mot de passe",

@@ -91,6 +91,7 @@
     "User": "User",
     "Security": "Account & Security",
     "PhoneNumber": "Phone Number",
+    "ToFill": "Add your number",
     "ActualPassword": "Actual Password",
     "NewPassword": "New Password",
     "ConfirmNewPassword": "Confirm your new password",

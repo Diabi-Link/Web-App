@@ -10,6 +10,7 @@ type Props = {
   errorText?: string | undefined;
   placeholderText?: string;
   onChange: (date: Date | [Date, Date] | null) => any;
+  showYearDropdown?: boolean;
 };
 
 registerLocale('fr', fr);

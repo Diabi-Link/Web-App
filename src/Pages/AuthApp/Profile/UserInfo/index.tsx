@@ -13,6 +13,7 @@ import { UserContext } from '../../../../contexts/UserContext';
 import Input from '../../../../ui/Input';
 import PhoneInput from '../../../../ui/PhoneInput';
 import DateInput from '../../../../ui/DateInput';
+import { capitalize } from '../../../../utils/capitalize';
 
 type Props = {
   props: FormikProps<{
@@ -20,8 +21,10 @@ type Props = {
     firstName: string;
     lastName: string;
     birthDate: null;
-    password: string;
-    confirmPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+    acutalPassword: string;
+    phone: string;
   }>;
 };
 
@@ -106,7 +109,7 @@ const UserInfo = ({ props }: Props) => {
             type="text"
             data-testid="firstName-input"
             placeholder={user?.firstName}
-            value={props.values.firstName}
+            value={capitalize(props.values.firstName)}
             onChange={(e) => {
               props.handleChange(e);
             }}
@@ -125,7 +128,7 @@ const UserInfo = ({ props }: Props) => {
             type="text"
             data-testid="lastName-input"
             placeholder={user?.lastName}
-            value={props.values.lastName}
+            value={capitalize(props.values.lastName)}
             onChange={(e) => {
               props.handleChange(e);
             }}
@@ -142,10 +145,11 @@ const UserInfo = ({ props }: Props) => {
         <InputWrapper>
           <InputLabel>{t('Profile.PhoneNumber')}</InputLabel>
           <PhoneInput
-            value=""
+            value={props.values.phone}
+            placeholder={user?.phone || t('Profile.ToFill')}
             errorText={
-              props.errors.firstName && props.touched.firstName
-                ? props.errors.firstName
+              props.errors.phone && props.touched.phone
+                ? props.errors.phone
                 : undefined
             }
             onChange={(e) => {
@@ -167,6 +171,7 @@ const UserInfo = ({ props }: Props) => {
               props.setFieldValue('birthDate', date);
             }}
             icon={calendar}
+            showYearDropdown
           />
         </InputWrapper>
       </InfoBox>

@@ -10,19 +10,13 @@ import { ReactComponent as ProfileMP } from '../../../assets/svgs/ProfileMP.svg'
 import { ReactComponent as ProfileReferent } from '../../../assets/svgs/ProfileReferent.svg';
 
 import { UserActionTypes, UserContext } from '../../../contexts/UserContext';
-import { ContextActionTypes, MainContext } from '../../../contexts/MainContext';
-
-import Button from '../../../ui/Button';
+import { MainContext, ContextActionTypes } from '../../../contexts/MainContext';
 
 import UserInfo from './UserInfo';
 import SecurityInfo from './SecurityInfo';
-
-import {
-  useUpdateEmail,
-  useUpdateFirstname,
-  useUpdateLastname,
-  useUpdateBirthday,
-} from '../../../api';
+import Button from '../../../ui/Button';
+import { useUpdateUser } from '../../../api';
+import Loader from '../../../ui/Loader';
 
 const Container = styled.div`
   height: 100vh;
@@ -143,36 +137,23 @@ const Profile = (): React.ReactElement => {
   } = useContext(UserContext);
   const { dispatch: altDispatch } = useContext(MainContext);
 
-  const [updateEmail] = useUpdateEmail({
-    onCompleted: (payload) =>
+  const [updateUser, { loading }] = useUpdateUser({
+    onCompleted: (payload) => {
       dispatch({
         type: UserActionTypes.FetchUser,
-        payload: payload.updateEmail,
-      }),
-  });
-
-  const [updateFirstname] = useUpdateFirstname({
-    onCompleted: (payload) =>
-      dispatch({
-        type: UserActionTypes.FetchUser,
-        payload: payload.updateFirstname,
-      }),
-  });
-
-  const [updateLastname] = useUpdateLastname({
-    onCompleted: (payload) =>
-      dispatch({
-        type: UserActionTypes.FetchUser,
-        payload: payload.updateLastname,
-      }),
-  });
-
-  const [updateBirthday] = useUpdateBirthday({
-    onCompleted: (payload) =>
-      dispatch({
-        type: UserActionTypes.FetchUser,
-        payload: payload.updateBirthday,
-      }),
+        payload: payload.UpdateUser,
+      });
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: 'Sauvegarde réussie',
+          noticeStyle: 'success',
+          persistent: false,
+          closeable: false,
+          duration: 5000,
+        },
+      });
+    },
   });
 
   const avatars = {
@@ -196,52 +177,31 @@ const Profile = (): React.ReactElement => {
       firstName,
       lastName,
       birthDate,
+      newPassword,
+      phone,
     }: {
       email: string;
       firstName: string;
       lastName: string;
       birthDate: Date | null | undefined;
-      password: string;
-      confirmPassword: string;
+      newPassword: string;
+      confirmNewPassword: string;
+      acutalPassword: string;
+      phone: string;
     },
     { resetForm }: { resetForm: () => void },
   ) => {
-    try {
-      altDispatch({
-        type: ContextActionTypes.SetNotice,
-        payload: {
-          label: 'Sauvegarde réussie',
-          noticeStyle: 'success',
-          persistent: false,
-          closeable: false,
-          duration: 5000,
+    import('bcryptjs').then(async (bcrypt) => {
+      const salt = bcrypt.genSaltSync(10);
+      const password = newPassword ? bcrypt.hashSync(newPassword, salt) : '';
+
+      await updateUser({
+        variables: {
+          userInfo: { email, firstName, lastName, birthDate, password, phone },
         },
       });
-      if (email) {
-        await updateEmail({ variables: { email } });
-      }
-      if (firstName) {
-        await updateFirstname({ variables: { firstName } });
-      }
-      if (lastName) {
-        await updateLastname({ variables: { lastName } });
-      }
-      if (birthDate) {
-        await updateBirthday({ variables: { birthDate } });
-      }
       resetForm();
-    } catch (e) {
-      altDispatch({
-        type: ContextActionTypes.SetNotice,
-        payload: {
-          label: 'Sauvegarde échouée',
-          noticeStyle: 'error',
-          persistent: false,
-          closeable: true,
-          duration: 5000,
-        },
-      });
-    }
+    });
   };
 
   return (
@@ -263,8 +223,10 @@ const Profile = (): React.ReactElement => {
               firstName: '',
               lastName: '',
               birthDate: null,
-              password: '',
-              confirmPassword: '',
+              acutalPassword: '',
+              newPassword: '',
+              confirmNewPassword: '',
+              phone: '',
             }}
             validationSchema={ValidateProfileSchema}
             onSubmit={handleSubmit}
@@ -275,8 +237,10 @@ const Profile = (): React.ReactElement => {
                 firstName: string;
                 lastName: string;
                 birthDate: null;
-                password: string;
-                confirmPassword: string;
+                acutalPassword: string;
+                newPassword: string;
+                confirmNewPassword: string;
+                phone: string;
               }>,
             ) => (
               <FormikForm>
@@ -291,11 +255,18 @@ const Profile = (): React.ReactElement => {
                 <ButtonWrapper>
                   <SaveButton
                     type="submit"
-                    label={t('Profile.Save')}
+                    label={
+                      loading ? (
+                        <Loader loaderStyle="white" />
+                      ) : (
+                        t('Profile.Save')
+                      )
+                    }
                     btnStyle="primary"
                     data-testid="save-button"
                     shadow
                     iconEnd={save}
+                    disabled={loading}
                   />
                 </ButtonWrapper>
               </FormikForm>
