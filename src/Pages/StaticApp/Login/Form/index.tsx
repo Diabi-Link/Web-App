@@ -8,6 +8,7 @@ import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
 
 import jwtDecode from 'jwt-decode';
+import { useRefreshToken } from '../../../../hooks/useRefreshToken';
 import { ValidateLoginSchema } from '../Validation';
 
 import Input from '../../../../ui/Input';
@@ -100,6 +101,7 @@ const Form = (): JSX.Element => {
   const { t } = useTranslation();
   const { dispatch } = useContext(UserContext);
   const { authToken, setAuthToken } = useAuthToken();
+  const { setRefreshToken } = useRefreshToken();
 
   const [fetchUser, { loading: awaitingFetch }] = useFetchUserLazyQuery({
     onCompleted: (payload) => {
@@ -111,7 +113,10 @@ const Form = (): JSX.Element => {
   });
 
   const [login, { loading: awaitingLogin }] = useLoginMutation({
-    onCompleted: (payload) => setAuthToken(payload.Login.accessToken),
+    onCompleted: (payload) => {
+      setAuthToken(payload.Login.accessToken);
+      setRefreshToken(payload.Login.refreshToken);
+    },
   });
 
   useEffect(() => {

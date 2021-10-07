@@ -2,12 +2,13 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { info as InfoIcon } from 'react-icons-kit/icomoon/info';
-import { useAuthToken } from '../../../hooks/useAuthToken';
 
 import { UserActionTypes, UserContext } from '../../../contexts/UserContext';
 import { ContextActionTypes, MainContext } from '../../../contexts/MainContext';
 
 import Button from '../../../ui/Button';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { useRefreshToken } from '../../../hooks/useRefreshToken';
 
 const Container = styled.div`
   height: 100vh;
@@ -37,6 +38,7 @@ const Home = (): React.ReactElement => {
   } = useContext(UserContext);
   const { dispatch: altDispatch } = useContext(MainContext);
   const { removeAuthToken, setAuthToken } = useAuthToken();
+  const { removeRefreshToken } = useRefreshToken();
 
   useEffect(() => {
     altDispatch({
@@ -53,6 +55,7 @@ const Home = (): React.ReactElement => {
   }, []);
   const logout = (): void => {
     removeAuthToken();
+    removeRefreshToken();
     dispatch({ type: UserActionTypes.EmptyUser });
   };
 

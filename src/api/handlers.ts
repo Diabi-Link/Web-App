@@ -82,6 +82,21 @@ const onErrorShared = (
   }
 };
 
+// const test = async () => {
+//   const refreshToken = localStorage.getItem('refreshToken');
+
+//   const res = await fetch('https://diabilink.herokuapp.com/refreshToken', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Access-Control-Allow-Origin': 'https://diabilink.herokuapp.com',
+//     },
+//     body: JSON.stringify({ refreshToken }),
+//   });
+
+//   console.log(res);
+// };
+
 export function useAPIQuery<TData = any, TVariables = OperationVariables>(
   query: DocumentNode,
   options?: QueryHookOptions<TData, TVariables>,

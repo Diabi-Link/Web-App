@@ -7,6 +7,7 @@ import { useAuthToken } from '../../hooks/useAuthToken';
 import { UserType } from '../../types/user';
 
 import Loader from '../../ui/Loader';
+import { useRefreshToken } from '../../hooks/useRefreshToken';
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,6 +45,7 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
   const [skip, setSkip] = React.useState(false);
 
   const { authToken, removeAuthToken } = useAuthToken();
+  const { removeRefreshToken } = useRefreshToken();
 
   const [decrypted, setDecrypted] = useState<{ userId: number }>({
     userId: -1,
@@ -70,6 +72,7 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
       }
     } catch {
       removeAuthToken();
+      removeRefreshToken();
       setWaitingToGetUserData(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
