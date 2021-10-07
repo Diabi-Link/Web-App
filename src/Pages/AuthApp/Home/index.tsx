@@ -1,9 +1,13 @@
-import React, { useContext } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import Button from '../../../ui/Button';
+import { info as InfoIcon } from 'react-icons-kit/icomoon/info';
+import { useAuthToken } from '../../../hooks/useAuthToken';
 
 import { UserActionTypes, UserContext } from '../../../contexts/UserContext';
-import { useAuthToken } from '../../../hooks/useAuthToken';
+import { ContextActionTypes, MainContext } from '../../../contexts/MainContext';
+
+import Button from '../../../ui/Button';
 
 const Container = styled.div`
   height: 100vh;
@@ -31,8 +35,22 @@ const Home = (): React.ReactElement => {
     state: { user },
     dispatch,
   } = useContext(UserContext);
+  const { dispatch: altDispatch } = useContext(MainContext);
   const { removeAuthToken, setAuthToken } = useAuthToken();
 
+  useEffect(() => {
+    altDispatch({
+      type: ContextActionTypes.SetNotice,
+      payload: {
+        label: 'Cette page est temporaire',
+        icon: InfoIcon,
+        noticeStyle: 'info',
+        persistent: true,
+        closeable: true,
+        duration: 0,
+      },
+    });
+  }, []);
   const logout = (): void => {
     removeAuthToken();
     dispatch({ type: UserActionTypes.EmptyUser });

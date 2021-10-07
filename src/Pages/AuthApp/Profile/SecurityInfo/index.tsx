@@ -1,13 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { /* useContext, */ useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
-
-// import { UserContext } from '../../../../contexts/UserContext';
 
 import Input from '../../../../ui/Input';
 
@@ -72,9 +70,6 @@ const InputLabel = styled.label`
 `;
 
 const SecurityInfo = ({ props }: Props) => {
-  // const {
-  //   state: { user },
-  // } = useContext(UserContext);
   const { t } = useTranslation();
 
   const [showActualPassword, setShowActualPassword] = useState(false);
