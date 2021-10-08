@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { info as InfoIcon } from 'react-icons-kit/icomoon/info';
 
+import { useNoMessageLazyQuery } from '../../../api';
 import { UserActionTypes, UserContext } from '../../../contexts/UserContext';
 import { ContextActionTypes, MainContext } from '../../../contexts/MainContext';
 
@@ -39,6 +40,8 @@ const Home = (): React.ReactElement => {
   const { dispatch: altDispatch } = useContext(MainContext);
   const { removeAuthToken, setAuthToken } = useAuthToken();
   const { removeRefreshToken } = useRefreshToken();
+
+  const [noMsg] = useNoMessageLazyQuery();
 
   useEffect(() => {
     altDispatch({
@@ -83,6 +86,11 @@ const Home = (): React.ReactElement => {
           label="Mettre un token invalide"
           btnStyle="primary"
           onClick={() => setAuthToken('test')}
+        />
+        <LogoutButton
+          label="Api sans message"
+          btnStyle="primary"
+          onClick={() => noMsg()}
         />
       </Wrapper>
     </Container>
