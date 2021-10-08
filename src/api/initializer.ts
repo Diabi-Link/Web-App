@@ -4,35 +4,71 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
   from,
+  ApolloLink,
+  Observable,
 } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import jwtDecode from 'jwt-decode';
-
+import { useRefreshToken } from '../hooks/useRefreshToken';
 import { useAuthToken } from '../hooks/useAuthToken';
 
 const httpLink = new HttpLink({
-  uri: 'https://backend-short-life-toke-nrgqpe.herokuapp.com/graphql/',
+  uri: 'https://backend-refresh-token-2te0wrpd.herokuapp.com/graphql/',
 });
 
-const authLink = (authToken: string | null) =>
-  setContext((_, { headers }) => {
-    return {
-      headers: {
-        ...headers,
-        authorization: authToken ? `Bearer ${authToken}` : '',
-      },
-    };
-  });
+// const authLink = (authToken: string | null) =>
+//   setContext((_, { headers }) => {
+//     return {
+//       headers: {
+//         ...headers,
+//         authorization: authToken ? `Bearer ${authToken}` : '',
+//       },
+//     };
+//   });
+
+const requestLink = new ApolloLink(
+  (operation, forward) =>
+    new Observable((observer) => {
+      let handle: any;
+      Promise.resolve(operation)
+        .then((op) => {
+          const accessToken = localStorage.getItem('authToken');
+          if (accessToken) {
+            op.setContext({
+              headers: {
+                authorization: `Bearer ${accessToken.replace(/['"]+/g, '')}`,
+              },
+            });
+          }
+        })
+        .then(() => {
+          handle = forward(operation).subscribe({
+            next: observer.next.bind(observer),
+            error: observer.error.bind(observer),
+            complete: observer.complete.bind(observer),
+          });
+        })
+        .catch(observer.error.bind(observer));
+
+      return () => {
+        if (handle) handle.unsubscribe();
+      };
+    }),
+);
 
 export const useAppApolloClient = (): ApolloClient<NormalizedCacheObject> => {
-  const { authToken } = useAuthToken();
+  const { removeAuthToken, setAuthToken } = useAuthToken();
+  const {
+    removeRefreshToken,
+    setRefreshToken,
+    refreshToken: refreshTokenSend,
+  } = useRefreshToken();
   return new ApolloClient({
     link: from([
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      new TokenRefreshLink({
-        accessTokenField: 'accessToken',
+      new TokenRefreshLink<{ accessToken; refreshToken }>({
+        accessTokenField: 'token',
         isTokenValidOrUndefined: () => {
           const token = localStorage.getItem('authToken');
 
@@ -44,8 +80,7 @@ export const useAppApolloClient = (): ApolloClient<NormalizedCacheObject> => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             const { exp } = jwtDecode(token);
-            console.log(exp);
-            if (2 >= 1) {
+            if (Date.now() >= exp * 1000) {
               return false;
             }
             return true;
@@ -54,26 +89,28 @@ export const useAppApolloClient = (): ApolloClient<NormalizedCacheObject> => {
           }
         },
         fetchAccessToken: () => {
-          const refreshToken = localStorage.getItem('refreshToken');
-
           return fetch(
-            'https://backend-short-life-toke-nrgqpe.herokuapp.com/refreshToken',
+            'https://backend-refresh-token-2te0wrpd.herokuapp.com/refreshToken',
             {
               method: 'POST',
               credentials: 'include',
-              body: JSON.stringify({ refreshToken }),
+              body: JSON.stringify({ refreshToken: refreshTokenSend }),
             },
           );
         },
-        handleFetch: (accessToken) => {
-          localStorage.setItem('authToken', JSON.stringify(accessToken));
+        handleFetch: (newTokens) => {
+          const { accessToken, refreshToken } = newTokens;
+          setAuthToken(accessToken);
+          setRefreshToken(refreshToken);
         },
-        handleError: (err) => {
-          console.warn('Your refresh token is invalid. Try to relogin');
-          console.error(err);
+        handleError: () => {
+          removeAuthToken();
+          removeRefreshToken();
         },
       }),
-      authLink(authToken),
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      requestLink,
       httpLink,
     ]),
     cache: new InMemoryCache(),
