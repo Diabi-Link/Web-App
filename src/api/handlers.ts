@@ -11,74 +11,17 @@ import {
   useQuery,
 } from '@apollo/client';
 import { DocumentNode } from 'graphql';
-import { Dispatch, useContext } from 'react';
-import {
-  MainContext,
-  ContextActions,
-  ContextActionTypes,
-} from '../contexts/MainContext';
-// import { UserActionTypes, UserContext } from '../contexts/UserContext';
-// import { useAuthToken } from '../hooks/useAuthToken';
+import { useContext } from 'react';
+import { UserActionTypes, UserContext } from '../contexts/UserContext';
+import { useAuthToken } from '../hooks/useAuthToken';
 
 type OperationVariables = Record<string, any>;
 
-const onErrorShared = (
-  error: ApolloError,
-  altDispatch: Dispatch<ContextActions>,
-) => {
-  const { graphQLErrors, networkError } = error;
+const onErrorShared = (error: ApolloError, logout: () => void) => {
+  const { networkError } = error;
 
-  if (graphQLErrors) {
-    graphQLErrors.forEach((err) => {
-      if (err.message) {
-        altDispatch({
-          type: ContextActionTypes.SetNotice,
-          payload: {
-            label: err.message,
-            noticeStyle: 'error',
-            persistent: false,
-            closeable: true,
-            duration: 5000,
-          },
-        });
-      } else {
-        altDispatch({
-          type: ContextActionTypes.SetNotice,
-          payload: {
-            label: 'Unexpected error',
-            noticeStyle: 'error',
-            persistent: false,
-            closeable: true,
-            duration: 5000,
-          },
-        });
-      }
-    });
-  }
   if (networkError) {
-    if (networkError.message) {
-      altDispatch({
-        type: ContextActionTypes.SetNotice,
-        payload: {
-          label: networkError.message,
-          noticeStyle: 'error',
-          persistent: false,
-          closeable: true,
-          duration: 5000,
-        },
-      });
-    } else {
-      altDispatch({
-        type: ContextActionTypes.SetNotice,
-        payload: {
-          label: 'Unexpected error',
-          noticeStyle: 'error',
-          persistent: false,
-          closeable: true,
-          duration: 5000,
-        },
-      });
-    }
+    logout();
   }
 };
 
@@ -101,17 +44,16 @@ export function useAPIQuery<TData = any, TVariables = OperationVariables>(
   query: DocumentNode,
   options?: QueryHookOptions<TData, TVariables>,
 ): QueryResult<TData, TVariables> {
-  // const { removeAuthToken } = useAuthToken();
-  // const { dispatch } = useContext(UserContext);
-  const { dispatch: altDispatch } = useContext(MainContext);
+  const { removeAuthToken } = useAuthToken();
+  const { dispatch } = useContext(UserContext);
 
-  // const logout = () => {
-  //   removeAuthToken();
-  //   dispatch({ type: UserActionTypes.EmptyUser });
-  // };
+  const logout = () => {
+    removeAuthToken();
+    dispatch({ type: UserActionTypes.EmptyUser });
+  };
 
   const onError = (error: ApolloError) => {
-    onErrorShared(error, altDispatch);
+    onErrorShared(error, logout);
     if (options?.onError) {
       options.onError(error);
     }
@@ -124,17 +66,16 @@ export function useAPILazyQuery<TData = any, TVariables = OperationVariables>(
   query: DocumentNode,
   options?: QueryHookOptions<TData, TVariables>,
 ): QueryTuple<TData, TVariables> {
-  // const { removeAuthToken } = useAuthToken();
-  // const { dispatch } = useContext(UserContext);
-  const { dispatch: altDispatch } = useContext(MainContext);
+  const { removeAuthToken } = useAuthToken();
+  const { dispatch } = useContext(UserContext);
 
-  // const logout = () => {
-  //   removeAuthToken();
-  //   dispatch({ type: UserActionTypes.EmptyUser });
-  // };
+  const logout = () => {
+    removeAuthToken();
+    dispatch({ type: UserActionTypes.EmptyUser });
+  };
 
   const onError = (error: ApolloError) => {
-    onErrorShared(error, altDispatch);
+    onErrorShared(error, logout);
     if (options?.onError) {
       options.onError(error);
     }
@@ -147,17 +88,16 @@ export function useAPIMutation<TData = any, TVariables = OperationVariables>(
   mutation: DocumentNode,
   options?: MutationHookOptions<TData, TVariables>,
 ): MutationTuple<TData, TVariables> {
-  // const { removeAuthToken } = useAuthToken();
-  // const { dispatch } = useContext(UserContext);
-  const { dispatch: altDispatch } = useContext(MainContext);
+  const { removeAuthToken } = useAuthToken();
+  const { dispatch } = useContext(UserContext);
 
-  // const logout = () => {
-  //   removeAuthToken();
-  //   dispatch({ type: UserActionTypes.EmptyUser });
-  // };
+  const logout = () => {
+    removeAuthToken();
+    dispatch({ type: UserActionTypes.EmptyUser });
+  };
 
   const onError = (error: ApolloError) => {
-    onErrorShared(error, altDispatch);
+    onErrorShared(error, logout);
     if (options?.onError) {
       options.onError(error);
     }
