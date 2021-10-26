@@ -4,6 +4,7 @@ import { Icon } from 'react-icons-kit';
 import { lock } from 'react-icons-kit/fa/lock';
 import { home } from 'react-icons-kit/fa/home';
 import { user } from 'react-icons-kit/fa/user';
+import { plus } from 'react-icons-kit/fa/plus';
 
 import { useLocation } from 'react-router-dom';
 import { ReactComponent as LogoText } from '../../../../assets/svgs/DiabiLink.svg';
@@ -149,6 +150,25 @@ const DrawerMenu = ({ children, onMobile }: Props) => {
               </ItemIcon>
               <ItemHeading isActive={location.pathname === '/'} level={2}>
                 Accueil
+              </ItemHeading>
+            </ItemWrapper>
+          </ItemContainer>
+
+          <ItemContainer
+            to="/add-measurement"
+            isActive={location.pathname === '/add-measurement'}
+            onClick={closeDrawerOnMobile}
+            data-testid="add-measurement-navigation-button"
+          >
+            <ItemWrapper>
+              <ItemIcon isActive={location.pathname === '/add-measurement'}>
+                <Icon icon={plus} size={34} />
+              </ItemIcon>
+              <ItemHeading
+                isActive={location.pathname === '/add-measurement'}
+                level={2}
+              >
+                Ajouter mesure
               </ItemHeading>
             </ItemWrapper>
           </ItemContainer>
