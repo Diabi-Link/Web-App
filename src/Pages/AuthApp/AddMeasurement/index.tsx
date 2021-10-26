@@ -10,6 +10,20 @@ const AddData = () => {
   const handleSubmit = ({ bloodSugarLevels }: { bloodSugarLevels: string }) => {
     // nothing
   };
+
+  const onInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLTextAreaElement;
+
+    if (
+      target.value &&
+      (target.value[target.value.length - 1] < '0' ||
+        target.value[target.value.length - 1] > '9' ||
+        target.value.length > 4)
+    ) {
+      target.value = target.value.slice(0, target.value.length - 1);
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -36,7 +50,35 @@ const AddData = () => {
                   placeholder="0.80"
                   content="g/L"
                   value={props.values.bloodSugarLevels}
+                  onInput={onInput}
+                  onBlur={(e) => {
+                    const { setFieldValue } = props;
+                    const { target } = e;
+
+                    if (target.value.length === 0) {
+                      return;
+                    }
+
+                    for (let i = target.value.length; i < 4; i += 1) {
+                      if (i === 1) {
+                        setFieldValue(
+                          'bloodSugarLevels',
+                          target.value.concat('.'),
+                        );
+                        target.value = target.value.concat('.');
+                      } else {
+                        setFieldValue(
+                          'bloodSugarLevels',
+                          target.value.concat('0'),
+                        );
+                        target.value = target.value.concat('0');
+                      }
+                    }
+                  }}
                   onChange={(e) => {
+                    if (e.target.value.length === 1) {
+                      e.target.value = e.target.value.concat('.');
+                    }
                     props.handleChange(e);
                   }}
                   errorText={

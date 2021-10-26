@@ -11,7 +11,7 @@ type Props = {
   helperText?: string;
   disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: () => any;
+  onBlur?: React.InputHTMLAttributes<HTMLInputElement>['onBlur'];
   onFocus?: () => any;
   onClick?: () => any;
   content?: string;
