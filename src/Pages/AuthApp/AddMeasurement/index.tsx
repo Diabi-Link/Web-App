@@ -1,14 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
+import { plus } from 'react-icons-kit/fa/plus';
 
 import { ValidateProfileSchema } from './Validation';
 import Heading from '../../../ui/Heading';
 import Input from '../../../ui/Input';
+import Button from '../../../ui/Button';
 
 const AddData = () => {
-  const handleSubmit = ({ bloodSugarLevels }: { bloodSugarLevels: string }) => {
-    // nothing
+  const handleSubmit = (
+    { bloodSugarLevels }: { bloodSugarLevels: string },
+    { resetForm }: { resetForm: () => void },
+  ) => {
+    resetForm();
   };
 
   const onInput = (e: React.FormEvent<HTMLInputElement>) => {
@@ -89,6 +94,17 @@ const AddData = () => {
                   }
                 />
               </MeasureWrapper>
+              <ButtonWrapper>
+                <MeasureButton
+                  type="submit"
+                  label="Ajouter la mesure"
+                  btnStyle="primary"
+                  data-testid="measure-button"
+                  shadow
+                  iconEnd={plus}
+                  disabled={props.values.bloodSugarLevels.length === 0}
+                />
+              </ButtonWrapper>
             </FormikForm>
           )}
         </Formik>
@@ -172,6 +188,16 @@ const MeasureInput = styled(Input)`
     position: absolute;
     right: 0.875rem;
   }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+`;
+
+const MeasureButton = styled(Button)`
+  margin-top: 5rem;
 `;
 
 export default AddData;
