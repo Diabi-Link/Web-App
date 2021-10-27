@@ -19,11 +19,16 @@ const AddData = () => {
   const onInput = (e: React.FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLTextAreaElement;
 
-    if (
-      target.value &&
-      (target.value[target.value.length - 1] < '0' ||
-        target.value[target.value.length - 1] > '9' ||
-        target.value.length > 4)
+    if (!target.value) {
+      return;
+    }
+
+    if (target.value.length >= 2 && target.value[1] !== '.') {
+      target.value = `${target.value.slice(0, 1)}.${target.value.slice(1)}`;
+    } else if (
+      target.value[target.value.length - 1] < '0' ||
+      target.value[target.value.length - 1] > '9' ||
+      target.value.length > 4
     ) {
       target.value = target.value.slice(0, target.value.length - 1);
     }
@@ -81,9 +86,6 @@ const AddData = () => {
                     }
                   }}
                   onChange={(e) => {
-                    if (e.target.value.length === 1) {
-                      e.target.value = e.target.value.concat('.');
-                    }
                     props.handleChange(e);
                   }}
                   errorText={
