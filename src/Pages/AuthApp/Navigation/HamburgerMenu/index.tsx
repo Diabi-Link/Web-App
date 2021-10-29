@@ -7,8 +7,9 @@ type Props = {
 };
 
 const Container = styled.div`
-  position: absolute;
-  top: 2rem;
+  position: fixed;
+  z-index: 9999;
+  top: 1rem;
   right: 1rem;
   width: 5rem;
   cursor: pointer;

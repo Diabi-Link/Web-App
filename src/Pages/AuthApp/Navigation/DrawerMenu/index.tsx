@@ -41,6 +41,7 @@ const DrawerContainer = styled.nav<Arguments>`
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
   transition: width 0.4s cubic-bezier(0.38, 0.01, 0.09, 0.98);
   border-radius: 0 0.45rem 0.45rem 0;
+  z-index: 9999;
 `;
 
 const DrawerWrapper = styled.div`
