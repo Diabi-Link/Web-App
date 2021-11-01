@@ -36,7 +36,25 @@ const ContentWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   height: 60%;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
+
+  @media (min-width: 380px) {
+    margin-bottom: 50px;
+  }
+`;
+
+const ConnectionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0px 20px;
+  font-size: 16px;
+  font-weight: 500;
+
+  @media (min-width: 420px) {
+    flex-direction: row;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -45,19 +63,19 @@ const ButtonWrapper = styled.div`
   justify-content: center;
 `;
 
-const ConnectionWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 40px 0px 20px;
-  font-size: 16px;
-  font-weight: 500;
-`;
-
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 90%;
   margin: 15px;
+
+  @media (min-width: 768px) {
+    width: 70%;
+  }
+
+  @media (min-width: 1024px) {
+    width: 50%;
+  }
 `;
 
 const InputLabel = styled.label`

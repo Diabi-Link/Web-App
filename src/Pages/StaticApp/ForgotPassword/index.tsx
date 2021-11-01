@@ -15,6 +15,19 @@ const Container = styled.div`
   max-width: 100vw;
 `;
 
+const Left = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  @media (orientation: landscape),
+    (min-width: 769px) and (orientation: landscape) {
+    width: 70vw;
+  }
+`;
+
 const Right = styled.div`
   display: flex;
   flex-direction: column;
@@ -26,14 +39,10 @@ const Right = styled.div`
   & > svg {
     margin: 30px 0px;
   }
-`;
 
-const Left = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 70vw;
-  height: 100vh;
+  @media (orientation: portrait), (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const FormWrapper = styled.div`
@@ -48,7 +57,11 @@ const BackWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  padding: 30px 100px;
+  padding: 30px 50px;
+
+  @media (min-width: 768px) {
+    padding: 30px 100px;
+  }
 `;
 
 const BackLink = styled(Link)`

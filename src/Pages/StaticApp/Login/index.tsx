@@ -16,6 +16,19 @@ const Container = styled.div`
   max-width: 100vw;
 `;
 
+const Left = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  @media (orientation: landscape),
+    (min-width: 769px) and (orientation: landscape) {
+    width: 55vw;
+  }
+`;
+
 const Right = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,14 +40,10 @@ const Right = styled.div`
   & > svg {
     margin: 30px 0px;
   }
-`;
 
-const Left = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 55vw;
-  height: 100vh;
+  @media (orientation: portrait), (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const ConnexionWrapper = styled.div`
@@ -50,7 +59,11 @@ const BackWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  padding: 30px 100px;
+  padding: 30px 50px;
+
+  @media (min-width: 768px) {
+    padding: 30px 100px;
+  }
 `;
 
 const BackLink = styled(Link)`
@@ -61,6 +74,15 @@ const BackLink = styled(Link)`
 
 const ArrowBack = styled(Icon)`
   color: ${({ theme }) => theme.main.primary};
+`;
+
+const Description = styled.p`
+  display: flex;
+  align-items: center;
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin: 30px 10px;
+  color: ${(props) => props.theme.main.white};
 `;
 
 const Text = styled.p`
@@ -84,15 +106,6 @@ const LogoWrapper = styled.div`
   @media (min-width: 1500px) {
     margin-top: 10rem;
   }
-`;
-
-const Description = styled.p`
-  display: flex;
-  align-items: center;
-  font-size: 1.875rem;
-  font-weight: 700;
-  margin: 30px 10px;
-  color: ${(props) => props.theme.main.white};
 `;
 
 const Login = (): JSX.Element => {

@@ -32,7 +32,7 @@ type InitialStateType = {
 const initialState: InitialStateType = {
   type: null,
   noticeData: {
-    label: 'label',
+    label: 'notice',
     type: 'button',
     noticeStyle: undefined,
     closeable: false,
