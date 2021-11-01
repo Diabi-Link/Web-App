@@ -25,6 +25,23 @@ const Container = styled.div`
   width: 100%;
   margin: 4rem 0;
 
+  & > h1 {
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 370px) {
+    margin: 0;
+  }
+
+  @media (min-width: 768px) and (orientation: portrait) {
+    margin: 8rem 0;
+  }
+
+  @media (min-width: 1024px) and (orientation: portrait) {
+    margin: 14rem 0;
+  }
+
   @media (min-width: 1500px) {
     width: 80%;
     margin: 6rem 0;
@@ -36,6 +53,11 @@ const Description = styled.div`
   font-size: 17px;
   font-weight: 400;
   margin: 1rem 0;
+
+  @media (min-width: 1024px) and (orientation: portrait) {
+    margin: 2rem 0;
+    font-size: 18px;
+  }
 
   @media (min-width: 1500px) {
     margin: 2rem 0;
@@ -59,11 +81,15 @@ const ButtonWrapper = styled.div`
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 90%;
   margin: 20px 0 50px;
 
+  @media (min-width: 768px) {
+    width: 50%;
+  }
+
   @media (min-width: 1500px) {
-    margin: 50px 0 70px;
+    margin-bottom: 70px;
   }
 `;
 
