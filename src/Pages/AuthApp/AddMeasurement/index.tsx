@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { plus } from 'react-icons-kit/fa/plus';
@@ -17,8 +17,16 @@ import {
 import Loader from '../../../ui/Loader';
 
 const AddData = () => {
+  const [date, setDate] = useState(new Date());
   const { t } = useTranslation();
   const { dispatch: altDispatch } = useContext(MainContext);
+
+  useEffect(() => {
+    const timer = setInterval(() => setDate(new Date()), 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  });
 
   const [addData, { loading }] = useAddData({
     onCompleted: ({ AddData: { value } }) => {
@@ -143,6 +151,13 @@ const AddData = () => {
                       : undefined
                   }
                 />
+                <MeasureHour>
+                  Heure de la mesure:{' '}
+                  {date.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </MeasureHour>
               </MeasureWrapper>
               <ButtonWrapper>
                 <MeasureButton
@@ -189,6 +204,7 @@ const PageTitle = styled(Heading)`
   position: relative;
   color: ${({ theme }) => theme.main.primaryLight};
   margin-top: 2rem;
+  text-align: center;
 
   &:before,
   &:after {
@@ -227,7 +243,6 @@ const MeasureTitle = styled(Heading)`
   color: ${({ theme }) => theme.main.primaryLight};
   font-size: 1.5rem;
   margin-bottom: 2rem;
-  text-align: center;
 `;
 
 const MeasureInput = styled(Input)`
@@ -249,6 +264,12 @@ const MeasureInput = styled(Input)`
   }
 `;
 
+const MeasureHour = styled.p`
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: ${(props) => props.theme.main.gray};
+`;
+
 const ButtonWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -256,7 +277,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const MeasureButton = styled(Button)`
-  margin-top: 5rem;
+  margin-top: 3rem;
 `;
 
 export default AddData;
