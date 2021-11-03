@@ -124,6 +124,7 @@ const Notice = (): JSX.Element => {
         label,
         closeable,
       },
+      reset,
     },
   } = useContext(MainContext);
   const [display, setDisplay] = useState(true);
@@ -143,7 +144,7 @@ const Notice = (): JSX.Element => {
 
   useEffect(() => {
     setDisplay(true);
-  }, [duration, persistent, type, noticeStyle, icon, label, closeable]);
+  }, [reset]);
 
   return (
     <ButtonElement type={type} display={display} noticeStyle={noticeStyle}>
