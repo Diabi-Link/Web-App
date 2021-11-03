@@ -96,5 +96,10 @@
     "NewPassword": "New Password",
     "ConfirmNewPassword": "Confirm your new password",
     "Save": "Save"
+  },
+  "AddMeasurement": {
+    "AddMeasurement": "Add a measurement",
+    "BloodSugarLevel": "Blood sugar level",
+    "SendMeasurement": "Add the measurement"
   }
 }

@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { plus } from 'react-icons-kit/fa/plus';
 
+import { useTranslation } from 'react-i18next';
 import { ValidateProfileSchema } from './Validation';
 import Heading from '../../../ui/Heading';
 import Input from '../../../ui/Input';
 import Button from '../../../ui/Button';
 
 const AddData = () => {
+  const { t } = useTranslation();
   const handleSubmit = (
     { bloodSugarLevels }: { bloodSugarLevels: string },
     { resetForm }: { resetForm: () => void },
@@ -37,7 +39,7 @@ const AddData = () => {
   return (
     <Container>
       <Wrapper>
-        <PageTitle level={1}>Ajouter une mesure</PageTitle>
+        <PageTitle level={1}>{t('AddMeasurement.AddMeasurement')}</PageTitle>
         <Formik
           initialValues={{
             bloodSugarLevels: '',
@@ -52,7 +54,9 @@ const AddData = () => {
           ) => (
             <FormikForm>
               <MeasureWrapper>
-                <MeasureTitle level={2}>Taux de glycémie</MeasureTitle>
+                <MeasureTitle level={2}>
+                  {t('AddMeasurement.BloodSugarLevel')}
+                </MeasureTitle>
                 <MeasureInput
                   name="bloodSugarLevels"
                   type="text"
@@ -99,7 +103,7 @@ const AddData = () => {
               <ButtonWrapper>
                 <MeasureButton
                   type="submit"
-                  label="Ajouter la mesure"
+                  label={t('AddMeasurement.SendMeasurement')}
                   btnStyle="primary"
                   data-testid="measure-button"
                   shadow
@@ -171,6 +175,7 @@ const MeasureTitle = styled(Heading)`
   color: ${({ theme }) => theme.main.primaryLight};
   font-size: 1.5rem;
   margin-bottom: 2rem;
+  text-align: center;
 `;
 
 const MeasureInput = styled(Input)`

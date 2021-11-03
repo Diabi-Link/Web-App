@@ -96,5 +96,10 @@
     "NewPassword": "Nouveau mot de passe",
     "ConfirmNewPassword": "Confirmez votre nouveau mot de passe",
     "Save": "Sauvegarder"
+  },
+  "AddMeasurement": {
+    "AddMeasurement": "Ajouter une mesure",
+    "BloodSugarLevel": "Taux de glycémie",
+    "SendMeasurement": "Ajouter la mesure"
   }
 }
