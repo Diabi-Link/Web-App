@@ -8,7 +8,7 @@ export enum ContextActionTypes {
   SetNotice = 'SET_NOTICE',
 }
 
-type NoticeType = {
+export type NoticeType = {
   label: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
   noticeStyle: 'success' | 'error' | 'info' | undefined;

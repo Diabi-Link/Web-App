@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { plus } from 'react-icons-kit/fa/plus';
@@ -8,13 +8,57 @@ import { ValidateProfileSchema } from './Validation';
 import Heading from '../../../ui/Heading';
 import Input from '../../../ui/Input';
 import Button from '../../../ui/Button';
+import { useAddData } from '../../../api';
+import {
+  ContextActionTypes,
+  MainContext,
+  NoticeType,
+} from '../../../contexts/MainContext';
+import Loader from '../../../ui/Loader';
 
 const AddData = () => {
   const { t } = useTranslation();
+  const { dispatch: altDispatch } = useContext(MainContext);
+
+  const [addData, { loading }] = useAddData({
+    onCompleted: ({ AddData: { value } }) => {
+      let label;
+      let noticeStyle: NoticeType['noticeStyle'];
+
+      if (value < 0.7) {
+        label =
+          'Votre mesure a bien été enregistrée. Attention ! Vous êtes en hypoglycémie.';
+        noticeStyle = 'error';
+      } else if (value >= 0.7 && value <= 1.25) {
+        label = 'Votre mesure a bien été enregistrée.';
+        noticeStyle = 'success';
+      } else {
+        label =
+          'Votre mesure a bien été enregistrée. Attention ! Vous êtes en hyperglycémie.';
+        noticeStyle = 'error';
+      }
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label,
+          noticeStyle,
+          persistent: false,
+          closeable: true,
+          duration: 5000,
+        },
+      });
+    },
+  });
+
   const handleSubmit = (
     { bloodSugarLevels }: { bloodSugarLevels: string },
     { resetForm }: { resetForm: () => void },
   ) => {
+    addData({
+      variables: {
+        dataInfo: { value: parseFloat(bloodSugarLevels), date: new Date() },
+      },
+    });
     resetForm();
   };
 
@@ -103,12 +147,20 @@ const AddData = () => {
               <ButtonWrapper>
                 <MeasureButton
                   type="submit"
-                  label={t('AddMeasurement.SendMeasurement')}
+                  label={
+                    loading ? (
+                      <Loader loaderStyle="white" />
+                    ) : (
+                      t('AddMeasurement.SendMeasurement')
+                    )
+                  }
                   btnStyle="primary"
                   data-testid="measure-button"
                   shadow
                   iconEnd={plus}
-                  disabled={props.values.bloodSugarLevels.length === 0}
+                  disabled={
+                    props.values.bloodSugarLevels.length === 0 || loading
+                  }
                 />
               </ButtonWrapper>
             </FormikForm>
