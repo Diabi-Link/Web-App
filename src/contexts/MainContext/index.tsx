@@ -8,7 +8,7 @@ export enum ContextActionTypes {
   SetNotice = 'SET_NOTICE',
 }
 
-type NoticeType = {
+export type NoticeType = {
   label: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
   noticeStyle: 'success' | 'error' | 'info' | undefined;
@@ -27,6 +27,7 @@ export type ContextActions = ActionMap<ContextPayload>[keyof ActionMap<ContextPa
 type InitialStateType = {
   type: ContextActionTypes | null;
   noticeData: NoticeType;
+  reset: boolean;
 };
 
 const initialState: InitialStateType = {
@@ -40,6 +41,7 @@ const initialState: InitialStateType = {
     duration: 0,
     icon: undefined,
   },
+  reset: false,
 };
 
 const reducer = (
@@ -51,6 +53,7 @@ const reducer = (
       return {
         type: action.type,
         noticeData: action.payload,
+        reset: !state.reset,
       };
 
     default:

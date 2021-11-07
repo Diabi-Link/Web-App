@@ -11,9 +11,10 @@ type Props = {
   helperText?: string;
   disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: () => any;
+  onBlur?: React.InputHTMLAttributes<HTMLInputElement>['onBlur'];
   onFocus?: () => any;
   onClick?: () => any;
+  content?: string;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'>;
 
 const Container = styled.div`
@@ -25,6 +26,7 @@ const InputWrapper = styled.div<{
   focused: Boolean;
   errorText?: String;
   disabled?: Boolean;
+  content: Props['content'];
 }>`
   display: flex;
   justify-content: center;
@@ -42,6 +44,19 @@ const InputWrapper = styled.div<{
     }};
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
   color: ${(props) => props.theme.main.gray};
+  position: relative;
+
+  ${({ content, theme }) =>
+    content &&
+    `
+      &:after {
+        content: 'g/L';
+        color: ${theme.main.dark};
+        font-size: 4rem;
+        position: absolute;
+        right: 0.875rem;
+      }
+    `}
 `;
 
 const InputElement = styled.input`
@@ -100,6 +115,7 @@ const Input = forwardRef(
       helperText,
       disabled,
       icon,
+      content,
       ...props
     }: Props,
     ref,
@@ -123,6 +139,7 @@ const Input = forwardRef(
           focused={focused}
           errorText={errorText}
           disabled={disabled}
+          content={content}
         >
           <InputElement
             {...props}
@@ -170,6 +187,7 @@ Input.defaultProps = {
   errorText: undefined,
   helperText: undefined,
   disabled: false,
+  content: '',
 };
 
 export default Input;
