@@ -100,7 +100,8 @@
   "AddMeasurement": {
     "AddMeasurement": "Ajouter une mesure",
     "BloodSugarLevel": "Taux de glycémie",
-    "SendMeasurement": "Ajouter la mesure"
+    "SendMeasurement": "Ajouter la mesure",
+    "Hour": "Heure de la mesure: "
   },
   "Analytics": {
     "Low": "Événement d'hypoglycémie",
