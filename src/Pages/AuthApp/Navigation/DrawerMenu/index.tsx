@@ -5,7 +5,7 @@ import { lock } from 'react-icons-kit/fa/lock';
 import { home } from 'react-icons-kit/fa/home';
 import { user } from 'react-icons-kit/fa/user';
 import { plus } from 'react-icons-kit/fa/plus';
-
+import { areaChart } from 'react-icons-kit/fa/areaChart';
 import { useLocation } from 'react-router-dom';
 import { ReactComponent as LogoText } from '../../../../assets/svgs/DiabiLink.svg';
 import Link from '../../../../ui/Link';
@@ -170,6 +170,25 @@ const DrawerMenu = ({ children, onMobile }: Props) => {
                 level={2}
               >
                 Ajouter mesure
+              </ItemHeading>
+            </ItemWrapper>
+          </ItemContainer>
+
+          <ItemContainer
+            to="/analytics"
+            isActive={location.pathname === '/analytics'}
+            onClick={closeDrawerOnMobile}
+            data-testid="analytics-navigation-button"
+          >
+            <ItemWrapper>
+              <ItemIcon isActive={location.pathname === '/analytics'}>
+                <Icon icon={areaChart} size={32} />
+              </ItemIcon>
+              <ItemHeading
+                isActive={location.pathname === '/analytics'}
+                level={2}
+              >
+                Analytics
               </ItemHeading>
             </ItemWrapper>
           </ItemContainer>
