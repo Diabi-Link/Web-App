@@ -7,31 +7,31 @@ import Button from '../../../../ui/Button';
 
 const data = [
   {
-    name: 'Page A',
+    name: '00:00',
     uv: 4000,
     hypo: 1,
     amt: 2400,
   },
   {
-    name: 'Page B',
+    name: '06:00',
     uv: 3000,
     hypo: 2,
     amt: 2210,
   },
   {
-    name: 'Page C',
+    name: '12:00',
     uv: 2000,
     hypo: 0,
     amt: 2290,
   },
   {
-    name: 'Page D',
+    name: '18:00',
     uv: 2780,
     hypo: 3,
     amt: 2000,
   },
   {
-    name: 'Page E',
+    name: '23:59',
     uv: 1890,
     hypo: 1,
     amt: 2181,
