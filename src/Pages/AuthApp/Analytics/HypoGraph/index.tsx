@@ -8,33 +8,23 @@ import Button from '../../../../ui/Button';
 const data = [
   {
     name: '00:00',
-    uv: 4000,
     hypo: 1,
-    amt: 2400,
   },
   {
     name: '06:00',
-    uv: 3000,
     hypo: 2,
-    amt: 2210,
   },
   {
     name: '12:00',
-    uv: 2000,
     hypo: 0,
-    amt: 2290,
   },
   {
     name: '18:00',
-    uv: 2780,
     hypo: 3,
-    amt: 2000,
   },
   {
     name: '23:59',
-    uv: 1890,
     hypo: 1,
-    amt: 2181,
   },
 ];
 
