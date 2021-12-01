@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Loader from '../../../../ui/Loader';
 import NavigationWrapper from '../NavigationWrapper';
-import AddMeasurement from '../../AddMeasurement';
 
 const Home = lazy(() => import('../../Home'));
 const Profile = lazy(() => import('../../Profile'));
+const AddMeasurement = lazy(() => import('../../AddMeasurement'));
+const Analytics = lazy(() => import('../../Analytics'));
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ const Nav = (): JSX.Element => {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/add-measurement" exact component={AddMeasurement} />
+          <Route path="/analytics" exact component={Analytics} />
           <Route path="/profile" exact component={Profile} />
           <Redirect to="/" />
         </Switch>

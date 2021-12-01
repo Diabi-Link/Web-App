@@ -18,6 +18,7 @@ export type Theme = {
     successLighter: string;
     info: string;
     infoLighter: string;
+    blueLight: string;
   };
 };
 
@@ -41,6 +42,7 @@ const theme = (): Theme => ({
     successLighter: '#88E4C9',
     info: '#E8D52D',
     infoLighter: '#F3E991',
+    blueLight: '#C6E7E8',
   },
 });
 

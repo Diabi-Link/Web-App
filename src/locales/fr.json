@@ -101,5 +101,11 @@
     "AddMeasurement": "Ajouter une mesure",
     "BloodSugarLevel": "Taux de glycémie",
     "SendMeasurement": "Ajouter la mesure"
+  },
+  "Analytics": {
+    "Low": "Événement d'hypoglycémie",
+    "7": "7 jours",
+    "14": "14 jours",
+    "30": "30 jours"
   }
 }

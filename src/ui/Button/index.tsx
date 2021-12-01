@@ -83,7 +83,7 @@ const getShadowColor = ({
     case 'primaryLight':
       return theme.main.primaryLighter;
     case 'white':
-      return theme.main.white;
+      return theme.main.whiteBroken;
     default:
       return theme.main.primaryLight;
   }
