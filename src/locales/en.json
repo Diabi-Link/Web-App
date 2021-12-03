@@ -100,7 +100,8 @@
   "AddMeasurement": {
     "AddMeasurement": "Add a measurement",
     "BloodSugarLevel": "Blood sugar level",
-    "SendMeasurement": "Add the measurement"
+    "SendMeasurement": "Add the measurement",
+    "Hour": "Hour of the measurement: "
   },
   "Analytics": {
     "Low": "Low Glucose Events",

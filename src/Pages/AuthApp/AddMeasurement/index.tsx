@@ -152,7 +152,7 @@ const AddData = () => {
                   }
                 />
                 <MeasureHour>
-                  Heure de la mesure:{' '}
+                  {t('AddMeasurement.Hour')}
                   {date.toLocaleTimeString([], {
                     hour: '2-digit',
                     minute: '2-digit',
