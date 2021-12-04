@@ -105,6 +105,7 @@
   },
   "Analytics": {
     "Low": "Low Glucose Events",
+    "TimeInTarget": "Time in target",
     "7": "7 days",
     "14": "14 days",
     "30": "30 days"

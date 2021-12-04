@@ -105,6 +105,7 @@
   },
   "Analytics": {
     "Low": "Événement d'hypoglycémie",
+    "TimeInTarget": "Temps dans la cible",
     "7": "7 jours",
     "14": "14 jours",
     "30": "30 jours"
