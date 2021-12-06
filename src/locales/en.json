@@ -105,8 +105,11 @@
   },
   "Analytics": {
     "Low": "Low Glucose Events",
+    "TimeInTarget": "Time in target",
+    "Daily": "Daily Graph",
     "7": "7 days",
     "14": "14 days",
-    "30": "30 days"
+    "30": "30 days",
+    "Value": "Value"
   }
 }

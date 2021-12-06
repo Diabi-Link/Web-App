@@ -57,6 +57,7 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
       setWaitingToGetUserData(false);
     },
     onError: () => {
+      removeAuthToken();
       setWaitingToGetUserData(false);
     },
   });
