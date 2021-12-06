@@ -33,6 +33,44 @@ const data = [
   },
 ];
 
+const data2 = [
+  {
+    name: '>240',
+    percentage: 16,
+  },
+  {
+    name: '181 - 240',
+    percentage: 54,
+  },
+  {
+    name: '70 - 180',
+    percentage: 25,
+  },
+  {
+    name: '<70',
+    percentage: 5,
+  },
+];
+
+const data3 = [
+  {
+    name: '>240',
+    percentage: 6,
+  },
+  {
+    name: '181 - 240',
+    percentage: 40,
+  },
+  {
+    name: '70 - 180',
+    percentage: 44,
+  },
+  {
+    name: '<70',
+    percentage: 10,
+  },
+];
+
 let ctx: CanvasRenderingContext2D | null;
 
 export const measureTextSize = ({
@@ -79,8 +117,25 @@ const TimeInTargetGraph = () => {
 
   const activeButton = [true, false, false];
   const [isActive, setIsActive] = useState<boolean[]>(activeButton);
+  const [dataChoosen, setDataChoosen] = useState<
+    {
+      name: string;
+      percentage: number;
+    }[]
+  >(data);
+
   const handleClick = (id: number): void => {
+    let newData: { name: string; percentage: number }[];
+
+    if (id === 0) {
+      newData = data;
+    } else if (id === 1) {
+      newData = data2;
+    } else {
+      newData = data3;
+    }
     setIsActive(isActive.map((active, key) => key === id));
+    setDataChoosen(newData);
   };
 
   const maxTextWidth = useMemo(
@@ -108,7 +163,7 @@ const TimeInTargetGraph = () => {
       <GraphWrapper>
         <ResponsiveContainer height={180}>
           <BarChart
-            data={data}
+            data={dataChoosen}
             margin={{
               top: 20,
               left: maxTextWidth + 20,

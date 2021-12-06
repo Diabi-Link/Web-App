@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
@@ -12,6 +12,7 @@ import {
   ReferenceArea,
 } from 'recharts';
 import { format } from 'date-fns';
+import Button from '../../../../ui/Button';
 
 const data = [
   {
@@ -52,8 +53,109 @@ const data = [
   },
 ];
 
+const data2 = [
+  {
+    time: new Date('July 4 2021 00:00').getTime(),
+    val: 38,
+  },
+  {
+    time: new Date('July 4 2021 04:53').getTime(),
+    val: 58,
+  },
+  {
+    time: new Date('July 4 2021 05:10').getTime(),
+    val: 89,
+  },
+  {
+    time: new Date('July 4 2021 09:20').getTime(),
+    val: 125,
+  },
+  {
+    time: new Date('July 4 2021 14:30').getTime(),
+    val: 150,
+  },
+  {
+    time: new Date('July 4 2021 17:00').getTime(),
+    val: 150,
+  },
+  {
+    time: new Date('July 4 2021 18:42').getTime(),
+    val: 140,
+  },
+  {
+    time: new Date('July 4 2021 22:09').getTime(),
+    val: 80,
+  },
+  {
+    time: new Date('July 4 2021 23:50').getTime(),
+    val: 120,
+  },
+];
+
+const data3 = [
+  {
+    time: new Date('July 4 2021 00:00').getTime(),
+    val: 300,
+  },
+  {
+    time: new Date('July 4 2021 04:53').getTime(),
+    val: 45,
+  },
+  {
+    time: new Date('July 4 2021 05:10').getTime(),
+    val: 120,
+  },
+  {
+    time: new Date('July 4 2021 09:20').getTime(),
+    val: 128,
+  },
+  {
+    time: new Date('July 4 2021 14:30').getTime(),
+    val: 75,
+  },
+  {
+    time: new Date('July 4 2021 17:00').getTime(),
+    val: 86,
+  },
+  {
+    time: new Date('July 4 2021 18:42').getTime(),
+    val: 57,
+  },
+  {
+    time: new Date('July 4 2021 22:09').getTime(),
+    val: 125,
+  },
+  {
+    time: new Date('July 4 2021 23:50').getTime(),
+    val: 40,
+  },
+];
+
 const DailyGraph = () => {
   const { t } = useTranslation();
+
+  const activeButton = [true, false, false];
+  const [isActive, setIsActive] = useState<boolean[]>(activeButton);
+  const [dataChoosen, setDataChoosen] = useState<
+    {
+      time: number;
+      val: number;
+    }[]
+  >(data);
+
+  const handleClick = (id: number): void => {
+    let newData: { time: number; val: number }[];
+
+    if (id === 0) {
+      newData = data;
+    } else if (id === 1) {
+      newData = data2;
+    } else {
+      newData = data3;
+    }
+    setIsActive(isActive.map((active, key) => key === id));
+    setDataChoosen(newData);
+  };
 
   return (
     <Container>
@@ -63,7 +165,7 @@ const DailyGraph = () => {
       <GraphWrapper>
         <ResponsiveContainer height={350}>
           <LineChart
-            data={data}
+            data={dataChoosen}
             margin={{
               top: 30,
               right: 30,
@@ -123,7 +225,36 @@ const DailyGraph = () => {
             <Line type="monotone" dataKey="val" stroke="#111" dot={false} />
           </LineChart>
         </ResponsiveContainer>
-      </GraphWrapper>
+      </GraphWrapper>{' '}
+      <ButtonsWrapper>
+        <DataButton
+          type="submit"
+          label="Test 1"
+          btnStyle="primary"
+          shadow
+          isActive={isActive[0]}
+          onClick={() => handleClick(0)}
+          // disabled={loading}
+        />
+        <DataButton
+          type="submit"
+          label="Test 2"
+          btnStyle="primary"
+          shadow
+          isActive={isActive[1]}
+          onClick={() => handleClick(1)}
+          // disabled={loading}
+        />
+        <DataButton
+          type="submit"
+          label="Test 3"
+          btnStyle="primary"
+          shadow
+          isActive={isActive[2]}
+          onClick={() => handleClick(2)}
+          // disabled={loading}
+        />
+      </ButtonsWrapper>
     </Container>
   );
 };
@@ -165,6 +296,23 @@ const GraphTitle = styled.label`
   font-weight: 600;
   color: black;
   margin-top: 20px;
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+`;
+
+const DataButton = styled(Button)<{
+  isActive: boolean;
+}>`
+  margin: 1.5rem 0.5rem;
+  background-color: ${({ isActive }) => (isActive ? 'white' : 0)};
+  color: ${({ isActive }) => (isActive ? 'black' : 0)};
+  &:hover:not(:disabled) {
+    background-color: ${({ isActive }) => (isActive ? 'white' : 0)};
+  }
 `;
 
 export default DailyGraph;
