@@ -16,7 +16,7 @@ import Button from '../../../../ui/Button';
 
 const data = [
   {
-    name: '>240',
+    name: '> 240',
     percentage: 36,
   },
   {
@@ -28,7 +28,7 @@ const data = [
     percentage: 40,
   },
   {
-    name: '<70',
+    name: '< 70',
     percentage: 1,
   },
 ];
@@ -101,9 +101,9 @@ const YAxisLeftTick = ({
 }) => {
   return (
     <Text
-      x={20}
+      x={90}
       y={y}
-      textAnchor="start"
+      textAnchor="end"
       verticalAnchor="end"
       style={{ fontWeight: 500 }}
     >
@@ -166,9 +166,9 @@ const TimeInTargetGraph = () => {
             data={dataChoosen}
             margin={{
               top: 20,
-              left: maxTextWidth + 20,
+              left: maxTextWidth + 30,
               right:
-                30 +
+                20 +
                 measureTextSize({
                   text: '100%',
                   size: 15,

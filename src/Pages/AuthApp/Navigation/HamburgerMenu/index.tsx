@@ -9,9 +9,9 @@ type Props = {
 const Container = styled.div`
   position: fixed;
   z-index: 9999;
-  top: 1rem;
+  top: 1.4rem;
   right: 1rem;
-  width: 5rem;
+  width: 3rem;
   cursor: pointer;
 `;
 
@@ -27,14 +27,14 @@ const HamburgerWrapper = styled.div`
   align-items: center;
   justify-content: center;
   :first-child {
-    margin-top: 0.7rem;
+    margin-top: 0.5rem;
   }
 `;
 
 const HamburgerLine = styled.div`
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.5rem;
   height: 0.3rem;
-  width: 3.3rem;
+  width: 2.3rem;
   background-color: ${({ theme }) => theme.main.primary};
 `;
 

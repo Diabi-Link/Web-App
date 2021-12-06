@@ -5,7 +5,6 @@ import { lock } from 'react-icons-kit/fa/lock';
 import { home } from 'react-icons-kit/fa/home';
 import { user as userIcon } from 'react-icons-kit/fa/user';
 import { plus } from 'react-icons-kit/fa/plus';
-import { lineChart } from 'react-icons-kit/fa/lineChart';
 import { areaChart } from 'react-icons-kit/fa/areaChart';
 import { useLocation } from 'react-router-dom';
 import { UserContext } from '../../../../contexts/UserContext';
@@ -161,60 +160,24 @@ const DrawerMenu = ({ children, onMobile }: Props) => {
           </ItemContainer>
 
           {user?.account === 'patient' && (
-            <>
-              <ItemContainer
-                to="/add-measurement"
-                isActive={location.pathname === '/add-measurement'}
-                onClick={closeDrawerOnMobile}
-                data-testid="add-measurement-navigation-button"
-              >
-                <ItemWrapper>
-                  <ItemIcon isActive={location.pathname === '/add-measurement'}>
-                    <Icon icon={plus} size={34} />
-                  </ItemIcon>
-                  <ItemHeading
-                    isActive={location.pathname === '/add-measurement'}
-                    level={2}
-                  >
-                    Ajouter mesure
-                  </ItemHeading>
-                </ItemWrapper>
-              </ItemContainer>
-              <ItemContainer
-                to="/time"
-                isActive={location.pathname === '/time'}
-                onClick={closeDrawerOnMobile}
-              >
-                <ItemWrapper>
-                  <ItemIcon isActive={location.pathname === '/time'}>
-                    <Icon icon={lineChart} size={34} />
-                  </ItemIcon>
-                  <ItemHeading
-                    isActive={location.pathname === '/time'}
-                    level={2}
-                  >
-                    Time Graph
-                  </ItemHeading>
-                </ItemWrapper>
-              </ItemContainer>
-              <ItemContainer
-                to="/daily"
-                isActive={location.pathname === '/daily'}
-                onClick={closeDrawerOnMobile}
-              >
-                <ItemWrapper>
-                  <ItemIcon isActive={location.pathname === '/daily'}>
-                    <Icon icon={lineChart} size={34} />
-                  </ItemIcon>
-                  <ItemHeading
-                    isActive={location.pathname === '/daily'}
-                    level={2}
-                  >
-                    Daily Graph
-                  </ItemHeading>
-                </ItemWrapper>
-              </ItemContainer>
-            </>
+            <ItemContainer
+              to="/add-measurement"
+              isActive={location.pathname === '/add-measurement'}
+              onClick={closeDrawerOnMobile}
+              data-testid="add-measurement-navigation-button"
+            >
+              <ItemWrapper>
+                <ItemIcon isActive={location.pathname === '/add-measurement'}>
+                  <Icon icon={plus} size={34} />
+                </ItemIcon>
+                <ItemHeading
+                  isActive={location.pathname === '/add-measurement'}
+                  level={2}
+                >
+                  Ajouter mesure
+                </ItemHeading>
+              </ItemWrapper>
+            </ItemContainer>
           )}
 
           <ItemContainer

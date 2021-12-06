@@ -106,7 +106,7 @@
   "Analytics": {
     "Low": "Événement d'hypoglycémie",
     "TimeInTarget": "Temps dans la cible",
-    "Daily": "Graph de la journée",
+    "Daily": "Taux glycémie quotidien",
     "7": "7 jours",
     "14": "14 jours",
     "30": "30 jours",

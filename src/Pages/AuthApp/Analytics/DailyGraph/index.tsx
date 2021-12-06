@@ -163,13 +163,13 @@ const DailyGraph = () => {
         <GraphTitle>{t('Analytics.Daily')}</GraphTitle>
       </TitleWrapper>
       <GraphWrapper>
-        <ResponsiveContainer height={350}>
+        <ResponsiveContainer height={275}>
           <LineChart
             data={dataChoosen}
             margin={{
               top: 30,
               right: 30,
-              left: 20,
+              left: 10,
               bottom: 5,
             }}
             layout="horizontal"
@@ -198,7 +198,7 @@ const DailyGraph = () => {
                 new Date('July 4 2021 15:00').getTime(),
                 new Date('July 4 2021 18:00').getTime(),
                 new Date('July 4 2021 21:00').getTime(),
-                new Date('July 5 2021 00:00').getTime(),
+                new Date('July 4 2021 23:59').getTime(),
               ]}
               tickFormatter={(unixTime: number) => format(unixTime, 'HH:mm')}
               type="number"
@@ -267,14 +267,13 @@ const Container = styled.div`
   border-radius: 15px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
   width: 92vw;
-  height: 350px;
 
   @media (min-width: 768px) {
     width: 60vw;
   }
 
   @media (min-width: 1024px) and (orientation: landscape) {
-    width: calc(70% + 30px);
+    width: calc(71%);
     height: auto;
   }
 `;

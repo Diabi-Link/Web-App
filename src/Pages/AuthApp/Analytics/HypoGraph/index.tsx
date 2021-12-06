@@ -48,7 +48,7 @@ const HypoGraph = () => {
             data={data}
             margin={{
               top: 30,
-              right: 30,
+              right: 20,
               left: 20,
               bottom: 5,
             }}
