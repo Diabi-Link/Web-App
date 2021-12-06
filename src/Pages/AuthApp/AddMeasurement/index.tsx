@@ -9,11 +9,7 @@ import Heading from '../../../ui/Heading';
 import Input from '../../../ui/Input';
 import Button from '../../../ui/Button';
 import { useAddData } from '../../../api';
-import {
-  ContextActionTypes,
-  MainContext,
-  NoticeType,
-} from '../../../contexts/MainContext';
+import { ContextActionTypes, MainContext } from '../../../contexts/MainContext';
 import Loader from '../../../ui/Loader';
 
 const AddData = () => {
@@ -29,27 +25,12 @@ const AddData = () => {
   });
 
   const [addData, { loading }] = useAddData({
-    onCompleted: ({ AddData: { value } }) => {
-      let label;
-      let noticeStyle: NoticeType['noticeStyle'];
-
-      if (value < 0.7) {
-        label =
-          'Votre mesure a bien été enregistrée. Attention ! Vous êtes en hypoglycémie.';
-        noticeStyle = 'error';
-      } else if (value >= 0.7 && value <= 1.25) {
-        label = 'Votre mesure a bien été enregistrée.';
-        noticeStyle = 'success';
-      } else {
-        label =
-          'Votre mesure a bien été enregistrée. Attention ! Vous êtes en hyperglycémie.';
-        noticeStyle = 'error';
-      }
+    onCompleted: ({ AddData: { isLevelGood, message } }) => {
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
-          label,
-          noticeStyle,
+          label: message,
+          noticeStyle: isLevelGood ? 'success' : 'error',
           persistent: false,
           closeable: true,
           duration: 5000,

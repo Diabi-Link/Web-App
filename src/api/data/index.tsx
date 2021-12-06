@@ -2,7 +2,7 @@ import { gql, MutationHookOptions } from '@apollo/client';
 import { useAPIMutation } from '../handlers';
 
 type AddDataResponse = {
-  AddData: { value: number };
+  AddData: { isLevelGood: boolean; message: string };
 };
 
 type AddDataData = {
@@ -15,7 +15,8 @@ type AddDataData = {
 const ADD_DATA = gql`
   mutation AddData($dataInfo: DataInfo!) {
     AddData(Data_info: $dataInfo) {
-      value
+      isLevelGood
+      message
     }
   }
 `;
