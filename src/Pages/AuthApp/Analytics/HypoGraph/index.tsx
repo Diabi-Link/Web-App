@@ -1,41 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { ResponsiveContainer, BarChart, XAxis, LabelList, Bar } from 'recharts';
+import jwtDecode from 'jwt-decode';
+import { useGetDataLazyQuery } from '../../../../api';
+import { useAuthToken } from '../../../../hooks/useAuthToken';
+import { pickDate, formatHypo, HypoData } from '../../../../utils';
 
 import Button from '../../../../ui/Button';
-
-const data = [
-  {
-    name: '00:00',
-    hypo: 1,
-  },
-  {
-    name: '06:00',
-    hypo: 2,
-  },
-  {
-    name: '12:00',
-    hypo: 0,
-  },
-  {
-    name: '18:00',
-    hypo: 3,
-  },
-  {
-    name: '23:59',
-    hypo: 1,
-  },
-];
+import Loader from '../../../../ui/Loader';
 
 const HypoGraph = () => {
   const { t } = useTranslation();
+  const { authToken } = useAuthToken();
 
   const activeButton = [true, false, false];
   const [isActive, setIsActive] = useState<boolean[]>(activeButton);
-  const handleClick = (id: number): void => {
+  const [period, setPeriod] = useState<number>(7);
+  const [data, setData] = useState<HypoData[]>([]);
+  const handleClick = (id: number, day: number): void => {
     setIsActive(isActive.map((active, key) => key === id));
+    setPeriod(day);
   };
+
+  const [getData, { loading }] = useGetDataLazyQuery({
+    onCompleted: (payload) => {
+      const { getData: dataTab } = payload;
+      const hypoData = formatHypo(dataTab);
+      setData(hypoData);
+    },
+  });
+
+  useEffect(() => {
+    if (authToken) {
+      const decrypted: { userId: number } = jwtDecode(authToken);
+      getData({
+        variables: {
+          from: new Date(pickDate(period)),
+          to: new Date(),
+          userID: decrypted.userId,
+        },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [period]);
 
   return (
     <Container>
@@ -62,7 +70,7 @@ const HypoGraph = () => {
             />
             <Bar
               dataKey="hypo"
-              animationDuration={1000}
+              animationDuration={500}
               fill="#FF5F5F"
               radius={15}
               barSize={20}
@@ -82,30 +90,48 @@ const HypoGraph = () => {
       <ButtonsWrapper>
         <DataButton
           type="submit"
-          label={t('Analytics.7')}
+          label={
+            loading && period === 7 ? (
+              <Loader loaderStyle="white" />
+            ) : (
+              t('Analytics.7')
+            )
+          }
           btnStyle="primary"
           shadow
           isActive={isActive[0]}
-          onClick={() => handleClick(0)}
-          // disabled={loading}
+          onClick={() => handleClick(0, 7)}
+          disabled={loading && period === 7}
         />
         <DataButton
           type="submit"
-          label={t('Analytics.14')}
+          label={
+            loading && period === 14 ? (
+              <Loader loaderStyle="white" />
+            ) : (
+              t('Analytics.14')
+            )
+          }
           btnStyle="primary"
           shadow
           isActive={isActive[1]}
-          onClick={() => handleClick(1)}
-          // disabled={loading}
+          onClick={() => handleClick(1, 14)}
+          disabled={loading && period === 14}
         />
         <DataButton
           type="submit"
-          label={t('Analytics.30')}
+          label={
+            loading && period === 30 ? (
+              <Loader loaderStyle="white" />
+            ) : (
+              t('Analytics.30')
+            )
+          }
           btnStyle="primary"
           shadow
           isActive={isActive[2]}
-          onClick={() => handleClick(2)}
-          // disabled={loading}
+          onClick={() => handleClick(2, 30)}
+          disabled={loading && period === 30}
         />
       </ButtonsWrapper>
     </Container>
@@ -165,7 +191,8 @@ const GraphTitle = styled.label`
 const DataButton = styled(Button)<{
   isActive: boolean;
 }>`
-  margin: 1.5rem 0.5rem;
+  width: 6rem;
+  margin: 1.5rem 0rem;
   background-color: ${({ isActive }) => (isActive ? 'white' : 0)};
   color: ${({ isActive }) => (isActive ? 'black' : 0)};
   &:hover:not(:disabled) {
