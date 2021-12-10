@@ -1,5 +1,33 @@
-import { gql, MutationHookOptions } from '@apollo/client';
-import { useAPIMutation } from '../handlers';
+import { gql, MutationHookOptions, QueryHookOptions } from '@apollo/client';
+import { DataType } from '../../types/data';
+import { useAPIMutation, useAPILazyQuery } from '../handlers';
+
+type GetDataResponse = {
+  getData: [DataType];
+};
+
+type GetDataData = {
+  from: Date;
+  to: Date;
+  userID: number;
+};
+
+const GET_DATA = gql`
+  query getData($from: DateTime!, $to: DateTime!, $userID: Float!) {
+    getData(from: $from, to: $to, UserID: $userID) {
+      id
+      value
+      date
+      userId
+    }
+  }
+`;
+
+export function useGetDataLazyQuery(
+  options?: QueryHookOptions<GetDataResponse, GetDataData>,
+) {
+  return useAPILazyQuery(GET_DATA, options);
+}
 
 type AddDataResponse = {
   AddData: { isLevelGood: boolean; message: string };

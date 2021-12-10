@@ -37,7 +37,7 @@ const Wrapper = styled.div`
 
   @media (min-width: 1024px) and (orientation: landscape) {
     justify-content: center;
-    width: 80vw;
+    width: 85vw;
   }
 `;
 
@@ -65,7 +65,7 @@ const TopWrapper = styled.div`
   @media (min-width: 1024px) and (orientation: landscape) {
     flex-direction: row;
     & > div {
-      margin: 5px;
+      margin: 10px;
     }
   }
 `;

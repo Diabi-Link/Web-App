@@ -190,8 +190,8 @@ const TimeInTargetGraph = () => {
               dataKey="percentage"
               minPointSize={2}
               animationDuration={1000}
-              radius={4}
-              barSize={28}
+              radius={10}
+              barSize={25}
               stroke="black"
               strokeWidth="0.4"
             >

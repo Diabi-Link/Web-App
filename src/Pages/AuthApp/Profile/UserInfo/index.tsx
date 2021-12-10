@@ -13,7 +13,7 @@ import { UserContext } from '../../../../contexts/UserContext';
 import Input from '../../../../ui/Input';
 import PhoneInput from '../../../../ui/PhoneInput';
 import DateInput from '../../../../ui/DateInput';
-import { capitalize } from '../../../../utils/capitalize';
+import { capitalize } from '../../../../utils';
 
 type Props = {
   props: FormikProps<{
