@@ -161,7 +161,7 @@ const TimeInTargetGraph = () => {
         <GraphTitle>{t('Analytics.TimeInTarget')}</GraphTitle>
       </TitleWrapper>
       <GraphWrapper>
-        <ResponsiveContainer height={180}>
+        <ResponsiveContainer height={140}>
           <BarChart
             data={dataChoosen}
             margin={{
@@ -191,7 +191,7 @@ const TimeInTargetGraph = () => {
               minPointSize={2}
               animationDuration={1000}
               radius={10}
-              barSize={25}
+              barSize={20}
               stroke="black"
               strokeWidth="0.4"
             >

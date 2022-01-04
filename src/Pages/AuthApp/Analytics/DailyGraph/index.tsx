@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
@@ -12,150 +12,51 @@ import {
   ReferenceArea,
 } from 'recharts';
 import { format } from 'date-fns';
-import Button from '../../../../ui/Button';
-
-const data = [
-  {
-    time: new Date('July 4 2021 00:00').getTime(),
-    val: 140,
-  },
-  {
-    time: new Date('July 4 2021 04:53').getTime(),
-    val: 70,
-  },
-  {
-    time: new Date('July 4 2021 05:10').getTime(),
-    val: 40,
-  },
-  {
-    time: new Date('July 4 2021 09:20').getTime(),
-    val: 170,
-  },
-  {
-    time: new Date('July 4 2021 14:30').getTime(),
-    val: 200,
-  },
-  {
-    time: new Date('July 4 2021 17:00').getTime(),
-    val: 86,
-  },
-  {
-    time: new Date('July 4 2021 18:42').getTime(),
-    val: 57,
-  },
-  {
-    time: new Date('July 4 2021 22:09').getTime(),
-    val: 145,
-  },
-  {
-    time: new Date('July 4 2021 23:50').getTime(),
-    val: 78,
-  },
-];
-
-const data2 = [
-  {
-    time: new Date('July 4 2021 00:00').getTime(),
-    val: 38,
-  },
-  {
-    time: new Date('July 4 2021 04:53').getTime(),
-    val: 58,
-  },
-  {
-    time: new Date('July 4 2021 05:10').getTime(),
-    val: 89,
-  },
-  {
-    time: new Date('July 4 2021 09:20').getTime(),
-    val: 125,
-  },
-  {
-    time: new Date('July 4 2021 14:30').getTime(),
-    val: 150,
-  },
-  {
-    time: new Date('July 4 2021 17:00').getTime(),
-    val: 150,
-  },
-  {
-    time: new Date('July 4 2021 18:42').getTime(),
-    val: 140,
-  },
-  {
-    time: new Date('July 4 2021 22:09').getTime(),
-    val: 80,
-  },
-  {
-    time: new Date('July 4 2021 23:50').getTime(),
-    val: 120,
-  },
-];
-
-const data3 = [
-  {
-    time: new Date('July 4 2021 00:00').getTime(),
-    val: 300,
-  },
-  {
-    time: new Date('July 4 2021 04:53').getTime(),
-    val: 45,
-  },
-  {
-    time: new Date('July 4 2021 05:10').getTime(),
-    val: 120,
-  },
-  {
-    time: new Date('July 4 2021 09:20').getTime(),
-    val: 128,
-  },
-  {
-    time: new Date('July 4 2021 14:30').getTime(),
-    val: 75,
-  },
-  {
-    time: new Date('July 4 2021 17:00').getTime(),
-    val: 86,
-  },
-  {
-    time: new Date('July 4 2021 18:42').getTime(),
-    val: 57,
-  },
-  {
-    time: new Date('July 4 2021 22:09').getTime(),
-    val: 125,
-  },
-  {
-    time: new Date('July 4 2021 23:50').getTime(),
-    val: 40,
-  },
-];
+import jwtDecode from 'jwt-decode';
+import { useAuthToken } from '../../../../hooks/useAuthToken';
+import { useGetDataLazyQuery } from '../../../../api';
+import {
+  // pickDate,
+  formatDaily,
+  dailyBrain,
+  // getDailyTicks,
+  // getDailyDomain,
+  DailyData,
+  BrainData,
+} from '../../../../utils';
 
 const DailyGraph = () => {
   const { t } = useTranslation();
+  const { authToken } = useAuthToken();
 
-  const activeButton = [true, false, false];
-  const [isActive, setIsActive] = useState<boolean[]>(activeButton);
-  const [dataChoosen, setDataChoosen] = useState<
-    {
-      time: number;
-      val: number;
-    }[]
-  >(data);
+  const [data, setData] = useState<DailyData[]>([]);
+  const [brain, setBrain] = useState<BrainData>();
 
-  const handleClick = (id: number): void => {
-    let newData: { time: number; val: number }[];
+  const [getData, { loading }] = useGetDataLazyQuery({
+    onCompleted: (payload) => {
+      const { getData: dataTab } = payload;
+      // const dailyTicks = getDailyTicks();
+      // const dailyDomain = getDailyDomain();
+      const dailyData = formatDaily(dataTab);
+      setData(dailyData);
+      const brainData = dailyBrain(dataTab);
+      setBrain(brainData);
+    },
+  });
 
-    if (id === 0) {
-      newData = data;
-    } else if (id === 1) {
-      newData = data2;
-    } else {
-      newData = data3;
+  useEffect(() => {
+    if (authToken) {
+      const decrypted: { userId: number } = jwtDecode(authToken);
+      getData({
+        variables: {
+          from: new Date('January 10 2022 00:00'),
+          to: new Date('January 11 2022 00:00'),
+          userID: decrypted.userId,
+        },
+      });
     }
-    setIsActive(isActive.map((active, key) => key === id));
-    setDataChoosen(newData);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
 
   return (
     <Container>
@@ -163,11 +64,11 @@ const DailyGraph = () => {
         <GraphTitle>{t('Analytics.Daily')}</GraphTitle>
       </TitleWrapper>
       <GraphWrapper>
-        <ResponsiveContainer height={275}>
+        <ResponsiveContainer height={200}>
           <LineChart
-            data={dataChoosen}
+            data={data}
             margin={{
-              top: 30,
+              top: 20,
               right: 30,
               left: 10,
               bottom: 5,
@@ -175,8 +76,8 @@ const DailyGraph = () => {
             layout="horizontal"
           >
             <ReferenceArea
-              x1={new Date('July 4 2021 00:00').getTime()}
-              x2={new Date('July 5 2021 00:00').getTime()}
+              x1={new Date('January 10 2022 00:00').getTime()}
+              x2={new Date('January 11 2022 00:00').getTime()}
               y1={70}
               y2={170}
               strokeOpacity={0}
@@ -186,25 +87,25 @@ const DailyGraph = () => {
             <XAxis
               dataKey="time"
               domain={[
-                new Date('July 4 2021 00:00').getTime(),
-                new Date('July 5 2021 00:00').getTime(),
+                new Date('January 10 2022 00:00').getTime(),
+                new Date('January 11 2022 00:00').getTime(),
               ]}
               ticks={[
-                new Date('July 4 2021 00:00').getTime(),
-                new Date('July 4 2021 03:00').getTime(),
-                new Date('July 4 2021 06:00').getTime(),
-                new Date('July 4 2021 09:00').getTime(),
-                new Date('July 4 2021 12:00').getTime(),
-                new Date('July 4 2021 15:00').getTime(),
-                new Date('July 4 2021 18:00').getTime(),
-                new Date('July 4 2021 21:00').getTime(),
-                new Date('July 4 2021 23:59').getTime(),
+                new Date('January 10 2022 00:00').getTime(),
+                new Date('January 10 2022 03:00').getTime(),
+                new Date('January 10 2022 06:00').getTime(),
+                new Date('January 10 2022 09:00').getTime(),
+                new Date('January 10 2022 12:00').getTime(),
+                new Date('January 10 2022 15:00').getTime(),
+                new Date('January 10 2022 18:00').getTime(),
+                new Date('January 10 2022 21:00').getTime(),
+                new Date('January 10 2022 23:59').getTime(),
               ]}
               tickFormatter={(unixTime: number) => format(unixTime, 'HH:mm')}
               type="number"
               padding="gap"
-              tickLine={false}
               strokeWidth="0.4"
+              tickCount={9}
               dy={10}
             />
             <YAxis
@@ -222,39 +123,21 @@ const DailyGraph = () => {
               ]}
               itemStyle={{ color: '#8884d8' }}
             />
-            <Line type="monotone" dataKey="val" stroke="#111" dot={false} />
+            <Line dataKey="val" stroke="#111" dot={false} />
           </LineChart>
         </ResponsiveContainer>
-      </GraphWrapper>{' '}
-      <ButtonsWrapper>
-        <DataButton
-          type="submit"
-          label="Test 1"
-          btnStyle="primary"
-          shadow
-          isActive={isActive[0]}
-          onClick={() => handleClick(0)}
-          // disabled={loading}
-        />
-        <DataButton
-          type="submit"
-          label="Test 2"
-          btnStyle="primary"
-          shadow
-          isActive={isActive[1]}
-          onClick={() => handleClick(1)}
-          // disabled={loading}
-        />
-        <DataButton
-          type="submit"
-          label="Test 3"
-          btnStyle="primary"
-          shadow
-          isActive={isActive[2]}
-          onClick={() => handleClick(2)}
-          // disabled={loading}
-        />
-      </ButtonsWrapper>
+      </GraphWrapper>
+      <InfoWrapper>
+        <Info>
+          {t('Analytics.TimeInTarget')} : {brain?.timeInTarget}%
+        </Info>
+        <Info>
+          {t('Analytics.LastScan')} : {brain?.lastScan}
+        </Info>
+        <Info>
+          {t('Analytics.Average')} : {brain?.average} mg/dL
+        </Info>
+      </InfoWrapper>
     </Container>
   );
 };
@@ -297,21 +180,21 @@ const GraphTitle = styled.label`
   margin-top: 20px;
 `;
 
-const ButtonsWrapper = styled.div`
+const InfoWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
   width: 100%;
+  margin: 2rem 0;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
-const DataButton = styled(Button)<{
-  isActive: boolean;
-}>`
-  margin: 1.5rem 0.5rem;
-  background-color: ${({ isActive }) => (isActive ? 'white' : 0)};
-  color: ${({ isActive }) => (isActive ? 'black' : 0)};
-  &:hover:not(:disabled) {
-    background-color: ${({ isActive }) => (isActive ? 'white' : 0)};
-  }
+const Info = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+  color: black;
 `;
 
 export default DailyGraph;
