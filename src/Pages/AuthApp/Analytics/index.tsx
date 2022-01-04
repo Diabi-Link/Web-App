@@ -20,15 +20,12 @@ const Analytics = (): JSX.Element => {
   const avatars = {
     patient: {
       svg: <ProfilePatient />,
-      description: t('Register.Account.Patient'),
     },
     medicalProfessional: {
       svg: <ProfileMP />,
-      description: t('Register.Account.MedicalProfessional'),
     },
     referent: {
       svg: <ProfileReferent />,
-      description: t('Register.Account.Referent'),
     },
   };
   return (
@@ -41,7 +38,9 @@ const Analytics = (): JSX.Element => {
         </TitleWrapper>
         <AccountWrapper>
           <AvatarWrapper>{user && avatars[user.account].svg}</AvatarWrapper>
-          <UserDesc>{user && avatars[user.account].description}</UserDesc>
+          <UserDesc>
+            {user && user.firstName} {user && user.lastName}
+          </UserDesc>
         </AccountWrapper>
         <TopWrapper>
           <TimeInTargetGraph />
@@ -102,9 +101,9 @@ const AvatarWrapper = styled.div`
 `;
 
 const UserDesc = styled.label`
-  font-size: 20px;
-  font-weight: 700;
-  color: ${(props) => props.theme.main.primary};
+  font-size: 22px;
+  font-weight: 600;
+  color: ${(props) => props.theme.main.dark};
   margin: auto 30px;
 `;
 
