@@ -51,7 +51,7 @@ const HypoGraph = () => {
         <GraphTitle>{t('Analytics.Low')}</GraphTitle>
       </TitleWrapper>
       <GraphWrapper>
-        <ResponsiveContainer height={180}>
+        <ResponsiveContainer height={140}>
           <BarChart
             data={data}
             margin={{

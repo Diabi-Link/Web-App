@@ -104,9 +104,12 @@
     "Hour": "Heure de la mesure: "
   },
   "Analytics": {
+    "Title": "Analytiques",
     "Low": "Événement d'hypoglycémie",
     "TimeInTarget": "Temps dans la cible",
     "Daily": "Taux glycémie quotidien",
+    "LastScan": "Dernier Scan",
+    "Average": "Moyenne",
     "7": "7 jours",
     "14": "14 jours",
     "30": "30 jours",
