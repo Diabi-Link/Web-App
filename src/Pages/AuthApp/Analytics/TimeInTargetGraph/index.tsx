@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
@@ -12,64 +12,15 @@ import {
   Cell,
 } from 'recharts';
 
+import jwtDecode from 'jwt-decode';
 import Button from '../../../../ui/Button';
-
-const data = [
-  {
-    name: '> 240',
-    percentage: 36,
-  },
-  {
-    name: '181 - 240',
-    percentage: 23,
-  },
-  {
-    name: '70 - 180',
-    percentage: 40,
-  },
-  {
-    name: '< 70',
-    percentage: 1,
-  },
-];
-
-const data2 = [
-  {
-    name: '>240',
-    percentage: 16,
-  },
-  {
-    name: '181 - 240',
-    percentage: 54,
-  },
-  {
-    name: '70 - 180',
-    percentage: 25,
-  },
-  {
-    name: '<70',
-    percentage: 5,
-  },
-];
-
-const data3 = [
-  {
-    name: '>240',
-    percentage: 6,
-  },
-  {
-    name: '181 - 240',
-    percentage: 40,
-  },
-  {
-    name: '70 - 180',
-    percentage: 44,
-  },
-  {
-    name: '<70',
-    percentage: 10,
-  },
-];
+import { useGetDataLazyQuery } from '../../../../api';
+import {
+  formatTimeInTarget,
+  pickDate,
+  TimeInTargetData,
+} from '../../../../utils';
+import { useAuthToken } from '../../../../hooks/useAuthToken';
 
 let ctx: CanvasRenderingContext2D | null;
 
@@ -116,27 +67,35 @@ const TimeInTargetGraph = () => {
   const { t } = useTranslation();
 
   const activeButton = [true, false, false];
+  const { authToken } = useAuthToken();
   const [isActive, setIsActive] = useState<boolean[]>(activeButton);
-  const [dataChoosen, setDataChoosen] = useState<
-    {
-      name: string;
-      percentage: number;
-    }[]
-  >(data);
-
-  const handleClick = (id: number): void => {
-    let newData: { name: string; percentage: number }[];
-
-    if (id === 0) {
-      newData = data;
-    } else if (id === 1) {
-      newData = data2;
-    } else {
-      newData = data3;
-    }
+  const [period, setPeriod] = useState<number>(7);
+  const [data, setData] = useState<TimeInTargetData[]>([]);
+  const handleClick = (id: number, day: number): void => {
     setIsActive(isActive.map((active, key) => key === id));
-    setDataChoosen(newData);
+    setPeriod(day);
   };
+
+  const [getData, { loading }] = useGetDataLazyQuery({
+    onCompleted: (payload) => {
+      const { getData: dataTab } = payload;
+      setData(formatTimeInTarget(dataTab));
+    },
+  });
+
+  useEffect(() => {
+    if (authToken) {
+      const decrypted: { userId: number } = jwtDecode(authToken);
+      getData({
+        variables: {
+          from: new Date(pickDate(period)),
+          to: new Date(),
+          userID: decrypted.userId,
+        },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [period]);
 
   const maxTextWidth = useMemo(
     () =>
@@ -152,7 +111,7 @@ const TimeInTargetGraph = () => {
         }
         return acc;
       }, 0),
-    [],
+    [data],
   );
 
   return (
@@ -163,7 +122,7 @@ const TimeInTargetGraph = () => {
       <GraphWrapper>
         <ResponsiveContainer height={140}>
           <BarChart
-            data={dataChoosen}
+            data={data}
             margin={{
               top: 20,
               left: maxTextWidth + 30,
@@ -203,7 +162,9 @@ const TimeInTargetGraph = () => {
                 position="right"
                 fontWeight={700}
                 fontSize={15}
-                formatter={(label: string) => `${label}%`}
+                formatter={(label: string) =>
+                  `${parseFloat(label).toFixed(0)}%`
+                }
                 fill="#111"
               />
             </Bar>
@@ -217,7 +178,7 @@ const TimeInTargetGraph = () => {
           btnStyle="primary"
           shadow
           isActive={isActive[0]}
-          onClick={() => handleClick(0)}
+          onClick={() => handleClick(0, 7)}
           // disabled={loading}
         />
         <DataButton
@@ -226,7 +187,7 @@ const TimeInTargetGraph = () => {
           btnStyle="primary"
           shadow
           isActive={isActive[1]}
-          onClick={() => handleClick(1)}
+          onClick={() => handleClick(1, 14)}
           // disabled={loading}
         />
         <DataButton
@@ -235,7 +196,7 @@ const TimeInTargetGraph = () => {
           btnStyle="primary"
           shadow
           isActive={isActive[2]}
-          onClick={() => handleClick(2)}
+          onClick={() => handleClick(2, 30)}
           // disabled={loading}
         />
       </ButtonsWrapper>
