@@ -21,6 +21,7 @@ import {
   TimeInTargetData,
 } from '../../../../utils';
 import { useAuthToken } from '../../../../hooks/useAuthToken';
+import Loader from '../../../../ui/Loader';
 
 let ctx: CanvasRenderingContext2D | null;
 
@@ -174,30 +175,45 @@ const TimeInTargetGraph = () => {
       <ButtonsWrapper>
         <DataButton
           type="submit"
-          label={t('Analytics.7')}
+          label={
+            loading && period === 7 ? (
+              <Loader loaderStyle="white" />
+            ) : (
+              t('Analytics.7')
+            )
+          }
           btnStyle="primary"
           shadow
           isActive={isActive[0]}
           onClick={() => handleClick(0, 7)}
-          // disabled={loading}
         />
         <DataButton
           type="submit"
-          label={t('Analytics.14')}
+          label={
+            loading && period === 14 ? (
+              <Loader loaderStyle="white" />
+            ) : (
+              t('Analytics.14')
+            )
+          }
           btnStyle="primary"
           shadow
           isActive={isActive[1]}
           onClick={() => handleClick(1, 14)}
-          // disabled={loading}
         />
         <DataButton
           type="submit"
-          label={t('Analytics.30')}
+          label={
+            loading && period === 30 ? (
+              <Loader loaderStyle="white" />
+            ) : (
+              t('Analytics.30')
+            )
+          }
           btnStyle="primary"
           shadow
           isActive={isActive[2]}
           onClick={() => handleClick(2, 30)}
-          // disabled={loading}
         />
       </ButtonsWrapper>
     </Container>
@@ -257,6 +273,7 @@ const GraphTitle = styled.label`
 const DataButton = styled(Button)<{
   isActive: boolean;
 }>`
+  width: 6rem;
   margin: 1.5rem 0.5rem;
   background-color: ${({ isActive }) => (isActive ? 'white' : 0)};
   color: ${({ isActive }) => (isActive ? 'black' : 0)};
