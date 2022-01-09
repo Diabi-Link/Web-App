@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
@@ -24,6 +24,8 @@ import { useAuthToken } from '../../../../hooks/useAuthToken';
 import Loader from '../../../../ui/Loader';
 
 let ctx: CanvasRenderingContext2D | null;
+
+const colors = ['#FFB21D', '#FFED4D', '#84FF4A', '#FF5F5F'];
 
 export const measureTextSize = ({
   text,
@@ -98,22 +100,22 @@ const TimeInTargetGraph = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
 
-  const maxTextWidth = useMemo(
-    () =>
-      data.reduce((acc, cur) => {
-        const value = cur.percentage;
-        const width = measureTextSize({
-          text: value.toLocaleString(),
-          size: 16,
-          fontFamily: 'Montserrat',
-        });
-        if (width > acc) {
-          return width;
-        }
-        return acc;
-      }, 0),
-    [data],
-  );
+  // const maxTextWidth = useMemo(
+  //   () =>
+  //     data.reduce((acc, cur) => {
+  //       const value = cur.percentage;
+  //       const width = measureTextSize({
+  //         text: value.toLocaleString(),
+  //         size: 16,
+  //         fontFamily: 'Montserrat',
+  //       });
+  //       if (width > acc) {
+  //         return width;
+  //       }
+  //       return acc;
+  //     }, 0),
+  //   [data],
+  // );
 
   return (
     <Container>
@@ -126,7 +128,7 @@ const TimeInTargetGraph = () => {
             data={data}
             margin={{
               top: 20,
-              left: maxTextWidth + 30,
+              left: 40,
               right:
                 20 +
                 measureTextSize({
@@ -155,8 +157,8 @@ const TimeInTargetGraph = () => {
               stroke="black"
               strokeWidth="0.4"
             >
-              {data.map((d) => {
-                return <Cell key={d.name} fill="#FF5F5F" />;
+              {data.map((d, idx) => {
+                return <Cell key={d.name} fill={colors[idx]} radius={3} />;
               })}
               <LabelList
                 dataKey="percentage"
