@@ -102,6 +102,7 @@ const HypoGraph = () => {
           isActive={isActive[0]}
           onClick={() => handleClick(0, 7)}
           disabled={loading && period === 7}
+          data-testid="hypo-7"
         />
         <DataButton
           type="submit"
@@ -117,6 +118,7 @@ const HypoGraph = () => {
           isActive={isActive[1]}
           onClick={() => handleClick(1, 14)}
           disabled={loading && period === 14}
+          data-testid="hypo-14"
         />
         <DataButton
           type="submit"
@@ -132,6 +134,7 @@ const HypoGraph = () => {
           isActive={isActive[2]}
           onClick={() => handleClick(2, 30)}
           disabled={loading && period === 30}
+          data-testid="hypo-30"
         />
       </ButtonsWrapper>
     </Container>

@@ -112,7 +112,10 @@
       "!src/**/*.stories.{js,ts,jsx,tsx}",
       "!src/hooks/**",
       "!src/ui/**",
-      "!src/assets/**"
+      "!src/assets/**",
+      "!src/utils/**",
+      "!src/contexts/**",
+      "!src/api/handlers.ts"
     ]
   }
 }

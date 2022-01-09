@@ -70,7 +70,7 @@ const AddData = () => {
   };
 
   return (
-    <Container>
+    <Container data-testid="auth-add-measurement-page">
       <Wrapper>
         <PageTitle level={1}>{t('AddMeasurement.AddMeasurement')}</PageTitle>
         <Formik
