@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
@@ -12,66 +12,20 @@ import {
   Cell,
 } from 'recharts';
 
+import jwtDecode from 'jwt-decode';
 import Button from '../../../../ui/Button';
-
-const data = [
-  {
-    name: '> 240',
-    percentage: 36,
-  },
-  {
-    name: '181 - 240',
-    percentage: 23,
-  },
-  {
-    name: '70 - 180',
-    percentage: 40,
-  },
-  {
-    name: '< 70',
-    percentage: 1,
-  },
-];
-
-const data2 = [
-  {
-    name: '>240',
-    percentage: 16,
-  },
-  {
-    name: '181 - 240',
-    percentage: 54,
-  },
-  {
-    name: '70 - 180',
-    percentage: 25,
-  },
-  {
-    name: '<70',
-    percentage: 5,
-  },
-];
-
-const data3 = [
-  {
-    name: '>240',
-    percentage: 6,
-  },
-  {
-    name: '181 - 240',
-    percentage: 40,
-  },
-  {
-    name: '70 - 180',
-    percentage: 44,
-  },
-  {
-    name: '<70',
-    percentage: 10,
-  },
-];
+import { useGetDataLazyQuery } from '../../../../api';
+import {
+  formatTimeInTarget,
+  pickDate,
+  TimeInTargetData,
+} from '../../../../utils';
+import { useAuthToken } from '../../../../hooks/useAuthToken';
+import Loader from '../../../../ui/Loader';
 
 let ctx: CanvasRenderingContext2D | null;
+
+const colors = ['#FFB21D', '#FFED4D', '#84FF4A', '#FF5F5F'];
 
 export const measureTextSize = ({
   text,
@@ -116,44 +70,52 @@ const TimeInTargetGraph = () => {
   const { t } = useTranslation();
 
   const activeButton = [true, false, false];
+  const { authToken } = useAuthToken();
   const [isActive, setIsActive] = useState<boolean[]>(activeButton);
-  const [dataChoosen, setDataChoosen] = useState<
-    {
-      name: string;
-      percentage: number;
-    }[]
-  >(data);
-
-  const handleClick = (id: number): void => {
-    let newData: { name: string; percentage: number }[];
-
-    if (id === 0) {
-      newData = data;
-    } else if (id === 1) {
-      newData = data2;
-    } else {
-      newData = data3;
-    }
+  const [period, setPeriod] = useState<number>(7);
+  const [data, setData] = useState<TimeInTargetData[]>([]);
+  const handleClick = (id: number, day: number): void => {
     setIsActive(isActive.map((active, key) => key === id));
-    setDataChoosen(newData);
+    setPeriod(day);
   };
 
-  const maxTextWidth = useMemo(
-    () =>
-      data.reduce((acc, cur) => {
-        const value = cur.percentage;
-        const width = measureTextSize({
-          text: value.toLocaleString(),
-          size: 16,
-          fontFamily: 'Montserrat',
-        });
-        if (width > acc) {
-          return width;
-        }
-        return acc;
-      }, 0),
-    [],
-  );
+  const [getData, { loading }] = useGetDataLazyQuery({
+    onCompleted: (payload) => {
+      const { getData: dataTab } = payload;
+      setData(formatTimeInTarget(dataTab));
+    },
+  });
+
+  useEffect(() => {
+    if (authToken) {
+      const decrypted: { userId: number } = jwtDecode(authToken);
+      getData({
+        variables: {
+          from: new Date(pickDate(period)),
+          to: new Date(),
+          userID: decrypted.userId,
+        },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [period]);
+
+  // const maxTextWidth = useMemo(
+  //   () =>
+  //     data.reduce((acc, cur) => {
+  //       const value = cur.percentage;
+  //       const width = measureTextSize({
+  //         text: value.toLocaleString(),
+  //         size: 16,
+  //         fontFamily: 'Montserrat',
+  //       });
+  //       if (width > acc) {
+  //         return width;
+  //       }
+  //       return acc;
+  //     }, 0),
+  //   [data],
+  // );
 
   return (
     <Container>
@@ -163,10 +125,10 @@ const TimeInTargetGraph = () => {
       <GraphWrapper>
         <ResponsiveContainer height={140}>
           <BarChart
-            data={dataChoosen}
+            data={data}
             margin={{
               top: 20,
-              left: maxTextWidth + 30,
+              left: 40,
               right:
                 20 +
                 measureTextSize({
@@ -195,15 +157,17 @@ const TimeInTargetGraph = () => {
               stroke="black"
               strokeWidth="0.4"
             >
-              {data.map((d) => {
-                return <Cell key={d.name} fill="#FF5F5F" />;
+              {data.map((d, idx) => {
+                return <Cell key={d.name} fill={colors[idx]} radius={3} />;
               })}
               <LabelList
                 dataKey="percentage"
                 position="right"
                 fontWeight={700}
                 fontSize={15}
-                formatter={(label: string) => `${label}%`}
+                formatter={(label: string) =>
+                  `${parseFloat(label).toFixed(0)}%`
+                }
                 fill="#111"
               />
             </Bar>
@@ -213,30 +177,45 @@ const TimeInTargetGraph = () => {
       <ButtonsWrapper>
         <DataButton
           type="submit"
-          label={t('Analytics.7')}
+          label={
+            loading && period === 7 ? (
+              <Loader loaderStyle="white" />
+            ) : (
+              t('Analytics.7')
+            )
+          }
           btnStyle="primary"
           shadow
           isActive={isActive[0]}
-          onClick={() => handleClick(0)}
-          // disabled={loading}
+          onClick={() => handleClick(0, 7)}
         />
         <DataButton
           type="submit"
-          label={t('Analytics.14')}
+          label={
+            loading && period === 14 ? (
+              <Loader loaderStyle="white" />
+            ) : (
+              t('Analytics.14')
+            )
+          }
           btnStyle="primary"
           shadow
           isActive={isActive[1]}
-          onClick={() => handleClick(1)}
-          // disabled={loading}
+          onClick={() => handleClick(1, 14)}
         />
         <DataButton
           type="submit"
-          label={t('Analytics.30')}
+          label={
+            loading && period === 30 ? (
+              <Loader loaderStyle="white" />
+            ) : (
+              t('Analytics.30')
+            )
+          }
           btnStyle="primary"
           shadow
           isActive={isActive[2]}
-          onClick={() => handleClick(2)}
-          // disabled={loading}
+          onClick={() => handleClick(2, 30)}
         />
       </ButtonsWrapper>
     </Container>
@@ -296,6 +275,7 @@ const GraphTitle = styled.label`
 const DataButton = styled(Button)<{
   isActive: boolean;
 }>`
+  width: 6rem;
   margin: 1.5rem 0.5rem;
   background-color: ${({ isActive }) => (isActive ? 'white' : 0)};
   color: ${({ isActive }) => (isActive ? 'black' : 0)};
