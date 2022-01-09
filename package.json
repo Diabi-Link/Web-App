@@ -115,7 +115,8 @@
       "!src/assets/**",
       "!src/utils/**",
       "!src/contexts/**",
-      "!src/api/handlers.ts"
+      "!src/api/handlers.ts",
+      "!src/Pages/AuthApp/Analytics/{DailyGraph,HypoGraph,TimeInTargetGraph}/**"
     ]
   }
 }
