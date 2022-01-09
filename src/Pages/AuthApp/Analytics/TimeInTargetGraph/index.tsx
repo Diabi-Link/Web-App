@@ -73,7 +73,24 @@ const TimeInTargetGraph = () => {
   const { authToken } = useAuthToken();
   const [isActive, setIsActive] = useState<boolean[]>(activeButton);
   const [period, setPeriod] = useState<number>(7);
-  const [data, setData] = useState<TimeInTargetData[]>([]);
+  const [data, setData] = useState<TimeInTargetData[]>([
+    {
+      name: '> 240',
+      percentage: 0,
+    },
+    {
+      name: '181 - 240',
+      percentage: 0,
+    },
+    {
+      name: '70 - 180',
+      percentage: 0,
+    },
+    {
+      name: '< 70',
+      percentage: 0,
+    },
+  ]);
   const handleClick = (id: number, day: number): void => {
     setIsActive(isActive.map((active, key) => key === id));
     setPeriod(day);
@@ -188,6 +205,7 @@ const TimeInTargetGraph = () => {
           shadow
           isActive={isActive[0]}
           onClick={() => handleClick(0, 7)}
+          data-testid="time-target-7"
         />
         <DataButton
           type="submit"
@@ -202,6 +220,7 @@ const TimeInTargetGraph = () => {
           shadow
           isActive={isActive[1]}
           onClick={() => handleClick(1, 14)}
+          data-testid="time-target-14"
         />
         <DataButton
           type="submit"
@@ -216,6 +235,7 @@ const TimeInTargetGraph = () => {
           shadow
           isActive={isActive[2]}
           onClick={() => handleClick(2, 30)}
+          data-testid="time-target-30"
         />
       </ButtonsWrapper>
     </Container>

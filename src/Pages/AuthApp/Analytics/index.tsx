@@ -29,7 +29,7 @@ const Analytics = (): JSX.Element => {
     },
   };
   return (
-    <Container>
+    <Container data-testid="auth-analytics-page">
       <Wrapper>
         <TitleWrapper>
           <Line />
