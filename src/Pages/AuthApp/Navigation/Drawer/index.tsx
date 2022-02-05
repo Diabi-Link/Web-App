@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import DrawerMenu from './DrawerMenu';
+import DrawerChat from './DrawerChat';
 
 type Props = {
   children?: React.ReactNode;
   onMobile?: {
     isOpen: boolean;
     setMobileIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+  chat: {
+    chatOn: boolean;
+    setChatOn: React.Dispatch<React.SetStateAction<boolean>>;
   };
 };
 
@@ -22,13 +27,14 @@ const getDrawerSize = ({ isOpen, isOnMobile }: Arguments) => {
   return isOpen ? '14.5rem' : '0rem';
 };
 
-const DrawerContainer = styled.nav<Arguments>`
+const DrawerContainer = styled.nav<Arguments & { chatOn: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
   width: ${({ isOpen, isOnMobile }) => getDrawerSize({ isOpen, isOnMobile })};
   min-height: 100%;
-  background: ${({ theme }) => theme.main.primary};
+  background: ${({ theme, chatOn }) =>
+    chatOn ? theme.main.white : theme.main.primary};
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
   transition: width 0.4s cubic-bezier(0.38, 0.01, 0.09, 0.98);
   border-radius: 0 0.45rem 0.45rem 0;
@@ -36,11 +42,12 @@ const DrawerContainer = styled.nav<Arguments>`
 `;
 
 const PageWrapper = styled.div<Arguments>`
-  padding-left: ${({ isOpen }) => getDrawerSize({ isOpen })};
+  padding-left: ${({ isOpen, isOnMobile }) =>
+    getDrawerSize({ isOpen, isOnMobile })};
   transition: padding-left 0.4s cubic-bezier(0.38, 0.01, 0.09, 0.98);
 `;
 
-const Drawer = ({ children, onMobile }: Props) => {
+const Drawer = ({ children, onMobile, chat: { chatOn, setChatOn } }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
 
@@ -53,20 +60,33 @@ const Drawer = ({ children, onMobile }: Props) => {
     <>
       <DrawerContainer
         isOpen={
-          isOpen || isLocked || (onMobile !== undefined && onMobile.isOpen)
+          isOpen ||
+          isLocked ||
+          (chatOn && onMobile === undefined) ||
+          (onMobile !== undefined && onMobile.isOpen)
         }
         isOnMobile={onMobile !== undefined}
         onMouseEnter={openDrawer}
         onMouseLeave={closeDrawer}
+        chatOn={chatOn}
       >
-        <DrawerMenu
-          onMobile={onMobile}
-          handleLock={handleLock}
-          isLocked={isLocked}
-        />
+        {!chatOn && (
+          <DrawerMenu
+            onMobile={onMobile}
+            handleLock={handleLock}
+            isLocked={isLocked}
+            setChatOn={setChatOn}
+          />
+        )}
+        {chatOn && <DrawerChat setChatOn={setChatOn} />}
       </DrawerContainer>
 
-      <PageWrapper isOpen={isOpen || isLocked}>{children}</PageWrapper>
+      <PageWrapper
+        isOpen={isOpen || isLocked || chatOn}
+        isOnMobile={onMobile !== undefined}
+      >
+        {children}
+      </PageWrapper>
     </>
   );
 };

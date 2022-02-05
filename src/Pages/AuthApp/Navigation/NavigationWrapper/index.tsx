@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { DeviceContext } from '../../../../contexts/DeviceContext';
 import Drawer from '../Drawer';
@@ -10,10 +10,16 @@ type Props = {
 
 const NavigationWrapper = ({ children }: Props) => {
   const { isMobileOrTablet } = useContext(DeviceContext);
+  const [chatOn, setChatOn] = useState(false);
+
   return (
     <>
-      {!isMobileOrTablet && <Drawer>{children}</Drawer>}
-      {isMobileOrTablet && <HamburgerMenu>{children}</HamburgerMenu>}
+      {!isMobileOrTablet && (
+        <Drawer chat={{ chatOn, setChatOn }}>{children}</Drawer>
+      )}
+      {isMobileOrTablet && (
+        <HamburgerMenu chat={{ chatOn, setChatOn }}>{children}</HamburgerMenu>
+      )}
     </>
   );
 };

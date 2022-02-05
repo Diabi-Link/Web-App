@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Dispatch, SetStateAction, useContext } from 'react';
 import styled from 'styled-components';
 import { Icon } from 'react-icons-kit';
 import { lock } from 'react-icons-kit/fa/lock';
@@ -20,6 +20,7 @@ type Props = {
   };
   handleLock: () => void;
   isLocked: boolean;
+  setChatOn: Dispatch<SetStateAction<boolean>>;
 };
 
 type Arguments = {
@@ -78,7 +79,7 @@ const ItemHeading = styled(Heading)<{ isActive: boolean }>`
   transition: 0.15s ease-in-out;
 `;
 
-const DrawerMenu = ({ onMobile, handleLock, isLocked }: Props) => {
+const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   const location = useLocation();
 
   const {
@@ -86,6 +87,7 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked }: Props) => {
   } = useContext(UserContext);
 
   const closeDrawerOnMobile = () => {
+    setChatOn(false);
     if (onMobile !== undefined) {
       onMobile.setMobileIsOpen(false);
     }
@@ -160,7 +162,7 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked }: Props) => {
       <ItemContainer
         to="/chat"
         isActive={location.pathname === '/chat'}
-        onClick={closeDrawerOnMobile}
+        onClick={() => setChatOn(true)}
         data-testid="chat-navigation-button"
       >
         <ItemWrapper>
