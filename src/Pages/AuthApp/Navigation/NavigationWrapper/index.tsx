@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { DeviceContext } from '../../../../contexts/DeviceContext';
-import DrawerMenu from '../DrawerMenu';
+import Drawer from '../Drawer';
 import HamburgerMenu from '../HamburgerMenu';
 
 type Props = {
@@ -12,7 +12,7 @@ const NavigationWrapper = ({ children }: Props) => {
   const { isMobileOrTablet } = useContext(DeviceContext);
   return (
     <>
-      {!isMobileOrTablet && <DrawerMenu>{children}</DrawerMenu>}
+      {!isMobileOrTablet && <Drawer>{children}</Drawer>}
       {isMobileOrTablet && <HamburgerMenu>{children}</HamburgerMenu>}
     </>
   );

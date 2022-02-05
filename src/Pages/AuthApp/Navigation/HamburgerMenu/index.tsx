@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import DrawerMenu from '../DrawerMenu';
+import Drawer from '../Drawer';
 
 type Props = {
   children: React.ReactNode;
@@ -78,7 +78,7 @@ const HamburgerMenu = ({ children }: Props) => {
         )}
         {isOpen && <Closer />}
       </Container>
-      <DrawerMenu onMobile={{ isOpen, setMobileIsOpen: setIsOpen }} />
+      <Drawer onMobile={{ isOpen, setMobileIsOpen: setIsOpen }} />
       {children}
     </>
   );
