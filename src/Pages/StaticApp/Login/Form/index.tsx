@@ -7,7 +7,6 @@ import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
 
-import jwtDecode from 'jwt-decode';
 import { ValidateLoginSchema } from '../Validation';
 
 import Input from '../../../../ui/Input';
@@ -123,7 +122,7 @@ const Form = (): JSX.Element => {
     onCompleted: (payload) => {
       dispatch({
         type: UserActionTypes.FetchUser,
-        payload: { ...payload.User },
+        payload: { ...payload.Me },
       });
     },
   });
@@ -134,8 +133,7 @@ const Form = (): JSX.Element => {
 
   useEffect(() => {
     if (authToken) {
-      const decrypted: { userId: number } = jwtDecode(authToken);
-      fetchUser({ variables: { id: decrypted.userId } });
+      fetchUser();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authToken]);

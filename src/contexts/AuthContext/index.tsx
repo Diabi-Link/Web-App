@@ -24,8 +24,8 @@ type Props = {
 };
 
 const FETCH_USER = gql`
-  query User($id: Float!) {
-    User(ID: $id) {
+  query Me {
+    Me {
       id
       email
       firstName
@@ -51,9 +51,8 @@ const AuthProvider = ({ children }: Props): React.ReactElement => {
 
   const { loading, data } = useQuery(FETCH_USER, {
     skip: skip || decrypted.userId === -1,
-    variables: { id: decrypted.userId },
     onCompleted: (payload) => {
-      setUser(payload.User);
+      setUser(payload.Me);
       setWaitingToGetUserData(false);
     },
     onError: () => {

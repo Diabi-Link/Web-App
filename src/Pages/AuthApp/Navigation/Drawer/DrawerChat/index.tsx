@@ -83,7 +83,7 @@ const ChatContact = ({
 };
 
 const DrawerChat = ({ setChatOn }: DrawerChatProps) => {
-  const [selected, setSelected] = useState('Carrasco');
+  const [selected, setSelected] = useState('Bousba');
   const [visibleContact, setVisibleContact] = useState(contacts);
   const [value, setValue] = useState('');
 
