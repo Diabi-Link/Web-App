@@ -10,6 +10,7 @@ const Profile = lazy(() => import('../../Profile'));
 const AddMeasurement = lazy(() => import('../../AddMeasurement'));
 const Analytics = lazy(() => import('../../Analytics'));
 const Alerts = lazy(() => import('../../Alerts'));
+const Chat = lazy(() => import('../../Chat'));
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,6 +36,7 @@ const Nav = (): JSX.Element => {
           <Route path="/analytics" component={Analytics} />
           <Route path="/alerts" component={Alerts} />
           <Route path="/profile" component={Profile} />
+          <Route path="/chat" exact component={Chat} />
           <Redirect to="/" />
         </Switch>
       </Suspense>

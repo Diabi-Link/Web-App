@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Icon } from 'react-icons-kit';
 import { search } from 'react-icons-kit/fa/search';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
+import { useHistory } from 'react-router-dom';
 import Heading from '../../../../../ui/Heading';
 import { AccountType } from '../../../../../types/user';
 import { ReactComponent as ProfilePatient } from '../../../../../assets/svgs/ProfilePatient.svg';
@@ -83,6 +84,7 @@ const ChatContact = ({
 };
 
 const DrawerChat = ({ setChatOn }: DrawerChatProps) => {
+  const history = useHistory();
   const [selected, setSelected] = useState('Bousba');
   const [visibleContact, setVisibleContact] = useState(contacts);
   const [value, setValue] = useState('');
@@ -123,7 +125,10 @@ const DrawerChat = ({ setChatOn }: DrawerChatProps) => {
         <ArrowBack
           icon={arrowLeft2}
           size={28}
-          onClick={() => setChatOn(false)}
+          onClick={() => {
+            setChatOn(false);
+            history.go(-1);
+          }}
         />
         <Heading level={2}>Contacts</Heading>
       </HeaderWrapper>
