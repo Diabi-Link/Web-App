@@ -4,7 +4,7 @@ import { UserType } from '../../types/user';
 import { useAPILazyQuery, useAPIMutation } from '../handlers';
 
 type UserResponse = {
-  User: UserType;
+  Me: UserType;
 };
 
 type FetchUserData = {
@@ -12,8 +12,8 @@ type FetchUserData = {
 };
 
 const FETCH_USER = gql`
-  query User($id: Float!) {
-    User(ID: $id) {
+  query Me {
+    Me {
       id
       email
       firstName

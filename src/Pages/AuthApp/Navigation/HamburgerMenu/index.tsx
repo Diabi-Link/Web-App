@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import DrawerMenu from '../DrawerMenu';
+import Drawer from '../Drawer';
 
 type Props = {
   children: React.ReactNode;
+  chat: {
+    chatOn: boolean;
+    setChatOn: React.Dispatch<React.SetStateAction<boolean>>;
+  };
 };
 
 const Container = styled.div`
@@ -61,7 +65,7 @@ const Closer = styled.div`
   }
 `;
 
-const HamburgerMenu = ({ children }: Props) => {
+const HamburgerMenu = ({ children, chat }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -78,7 +82,7 @@ const HamburgerMenu = ({ children }: Props) => {
         )}
         {isOpen && <Closer />}
       </Container>
-      <DrawerMenu onMobile={{ isOpen, setMobileIsOpen: setIsOpen }} />
+      <Drawer onMobile={{ isOpen, setMobileIsOpen: setIsOpen }} chat={chat} />
       {children}
     </>
   );
