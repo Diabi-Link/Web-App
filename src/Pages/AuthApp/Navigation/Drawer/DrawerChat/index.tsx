@@ -6,9 +6,7 @@ import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import { useHistory } from 'react-router-dom';
 import Heading from '../../../../../ui/Heading';
 import { AccountType } from '../../../../../types/user';
-import { ReactComponent as ProfilePatient } from '../../../../../assets/svgs/ProfilePatient.svg';
-import { ReactComponent as ProfileMP } from '../../../../../assets/svgs/ProfileMP.svg';
-import { ReactComponent as ProfileReferent } from '../../../../../assets/svgs/ProfileReferent.svg';
+import { avatars } from '../../../../../utils/avatars';
 
 type DrawerChatProps = {
   setChatOn: Dispatch<SetStateAction<boolean>>;
@@ -17,44 +15,32 @@ type DrawerChatProps = {
 type ChatContactProps = {
   firstName: string;
   lastName: string;
-  accountType: AccountType;
+  account: AccountType;
   selected: boolean;
   setSelected: Dispatch<SetStateAction<string>>;
-};
-
-const avatars = {
-  patient: {
-    svg: <ProfilePatient />,
-  },
-  medicalProfessional: {
-    svg: <ProfileMP />,
-  },
-  referent: {
-    svg: <ProfileReferent />,
-  },
 };
 
 const contacts: {
   firstName: string;
   lastName: string;
-  accountType: AccountType;
+  account: AccountType;
 }[] = [
-  { firstName: 'Nicolas', lastName: 'Carrasco', accountType: 'referent' },
+  { firstName: 'Nicolas', lastName: 'Carrasco', account: 'referent' },
   {
     firstName: 'Djhahid',
     lastName: 'Bousba',
-    accountType: 'medicalProfessional',
+    account: 'medicalProfessional',
   },
   {
     firstName: 'Thibault',
     lastName: 'Schmitt',
-    accountType: 'medicalProfessional',
+    account: 'medicalProfessional',
   },
-  { firstName: 'John', lastName: 'Doe', accountType: 'medicalProfessional' },
+  { firstName: 'John', lastName: 'Doe', account: 'medicalProfessional' },
   {
     firstName: 'John',
     lastName: 'TooLongName',
-    accountType: 'medicalProfessional',
+    account: 'medicalProfessional',
   },
 ];
 
@@ -66,7 +52,7 @@ contacts.sort((a, b) =>
 const ChatContact = ({
   firstName,
   lastName,
-  accountType,
+  account,
   selected,
   setSelected,
 }: ChatContactProps) => {
@@ -75,7 +61,7 @@ const ChatContact = ({
       selected={selected}
       onClick={() => setSelected(lastName)}
     >
-      <AvatarWrapper>{avatars[accountType].svg}</AvatarWrapper>
+      <AvatarWrapper>{avatars[account].svg}</AvatarWrapper>
       <NameWrapper>
         {firstName} {lastName}
       </NameWrapper>
@@ -96,7 +82,7 @@ const DrawerChat = ({ setChatOn }: DrawerChatProps) => {
       const newContacts: {
         firstName: string;
         lastName: string;
-        accountType: AccountType;
+        account: AccountType;
       }[] = [];
 
       contacts.forEach((contact) => {
@@ -130,7 +116,7 @@ const DrawerChat = ({ setChatOn }: DrawerChatProps) => {
             history.go(-1);
           }}
         />
-        <Heading level={2}>Contacts</Heading>
+        <Heading level={2}>Discussions</Heading>
       </HeaderWrapper>
       <InputWrapper>
         <SearchIcon icon={search} size={20} />
@@ -178,7 +164,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   padding-top: 10px;
   padding-bottom: 10px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  /* border-bottom: ${({ theme }) => `solid 1px ${theme.main.grayLighter}`}; */
   width: 100%;
 `;
 
