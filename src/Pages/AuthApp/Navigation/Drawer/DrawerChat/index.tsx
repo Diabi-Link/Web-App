@@ -39,7 +39,7 @@ const contacts: {
   { firstName: 'John', lastName: 'Doe', account: 'medicalProfessional' },
   {
     firstName: 'John',
-    lastName: 'TooLongName',
+    lastName: 'TooLongNameeeeeeeeee',
     account: 'medicalProfessional',
   },
 ];
@@ -210,7 +210,7 @@ const ChatContactContainer = styled.div`
 const ChatContactWrapper = styled.div<{ selected: boolean }>`
   display: flex;
   align-items: center;
-  width: 98%;
+  width: 97%;
   border-radius: 15px;
   margin-bottom: 5px;
   padding: 10px;
@@ -231,7 +231,6 @@ const AvatarWrapper = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-left: 10px;
 `;
 
 const NameWrapper = styled.p`
@@ -240,6 +239,7 @@ const NameWrapper = styled.p`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  max-width: 140px;
 `;
 
 export default DrawerChat;
