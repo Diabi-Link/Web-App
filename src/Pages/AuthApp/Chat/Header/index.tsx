@@ -23,6 +23,8 @@ const Header = ({
 };
 
 const Container = styled.div`
+  position: fixed;
+  width: 100%;
   display: flex;
   align-items: center;
   padding-top: 5px;
