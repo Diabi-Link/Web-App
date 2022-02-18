@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import { ChatContext } from '../../../contexts/ChatContext';
 import Discussion from './Discussion';
 
 import Header from './Header';
 
-const messages: { sender: 'you' | 'other'; text: string }[] = [
+let messages: { sender: 'you' | 'other'; text: string }[] = [
   {
     sender: 'you',
     text: 'Ok pas de soucis docteur ! La prochaine fois je ferais',
@@ -40,7 +41,8 @@ const messages: { sender: 'you' | 'other'; text: string }[] = [
   },
   {
     sender: 'you',
-    text: 'Ok pas de soucis docteur ! La prochaine fois je ferais',
+    text:
+      'Hic tenetur a sapiente delectus,  maiores  consequatur doloremque laudantium',
   },
   {
     sender: 'other',
@@ -74,9 +76,14 @@ const messages: { sender: 'you' | 'other'; text: string }[] = [
 ];
 
 const ChatPage = (): React.ReactElement => {
+  const { chatUserType } = useContext(ChatContext);
+
+  useEffect(() => {
+    messages = messages.sort(() => 0.5 - Math.random());
+  }, [chatUserType]);
   return (
     <Container data-testid="auth-chat-page">
-      <Header firstName="Nicolas" lastName="Carrasco" account="referent" />
+      <Header {...chatUserType} />
       <Discussion messages={messages} />
     </Container>
   );

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { avatars } from '../../../../utils/avatars';
-import { UserType } from '../../../../types/user';
+import { ChatUserType } from '../../../../types/chat';
 
-type Props = Pick<UserType, 'firstName' | 'lastName' | 'account'>;
+type Props = ChatUserType;
 
 const Header = ({
   firstName,
@@ -12,7 +12,7 @@ const Header = ({
 }: Props): React.ReactElement => {
   return (
     <Container>
-      <AvatarWrapper>{avatars[account].svg}</AvatarWrapper>
+      <AvatarWrapper>{account ? avatars[account].svg : null}</AvatarWrapper>
       <NameWrapper>
         <Text>
           {firstName} {lastName}

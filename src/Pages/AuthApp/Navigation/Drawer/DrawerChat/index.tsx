@@ -1,30 +1,31 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import { Icon } from 'react-icons-kit';
 import { search } from 'react-icons-kit/fa/search';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import { useHistory } from 'react-router-dom';
 import Heading from '../../../../../ui/Heading';
-import { AccountType } from '../../../../../types/user';
 import { avatars } from '../../../../../utils/avatars';
+import { ChatContext } from '../../../../../contexts/ChatContext';
+import { ChatUserType } from '../../../../../types/chat';
+import { DeepNonNullable } from '../../../../../types/utilities';
 
 type DrawerChatProps = {
   setChatOn: Dispatch<SetStateAction<boolean>>;
 };
 
 type ChatContactProps = {
-  firstName: string;
-  lastName: string;
-  account: AccountType;
   selected: boolean;
-  setSelected: Dispatch<SetStateAction<string>>;
-};
+  setSelected: Dispatch<ChatUserType>;
+} & DeepNonNullable<ChatUserType>;
 
-const contacts: {
-  firstName: string;
-  lastName: string;
-  account: AccountType;
-}[] = [
+const contacts: DeepNonNullable<ChatUserType[]> = [
   { firstName: 'Nicolas', lastName: 'Carrasco', account: 'referent' },
   {
     firstName: 'Djhahid',
@@ -59,7 +60,7 @@ const ChatContact = ({
   return (
     <ChatContactWrapper
       selected={selected}
-      onClick={() => setSelected(lastName)}
+      onClick={() => setSelected({ lastName, firstName, account })}
     >
       <AvatarWrapper>{avatars[account].svg}</AvatarWrapper>
       <NameWrapper>
@@ -71,19 +72,20 @@ const ChatContact = ({
 
 const DrawerChat = ({ setChatOn }: DrawerChatProps) => {
   const history = useHistory();
-  const [selected, setSelected] = useState('Bousba');
   const [visibleContact, setVisibleContact] = useState(contacts);
   const [value, setValue] = useState('');
+  const { chatUserType, setChatUserType } = useContext(ChatContext);
+
+  useEffect(() => {
+    setChatUserType(contacts[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const searchContact = ({
     target: { value: newValue },
   }: React.ChangeEvent<HTMLInputElement>) => {
     if (newValue !== '') {
-      const newContacts: {
-        firstName: string;
-        lastName: string;
-        account: AccountType;
-      }[] = [];
+      const newContacts: DeepNonNullable<ChatUserType[]> = [];
 
       contacts.forEach((contact) => {
         if (
@@ -132,8 +134,11 @@ const DrawerChat = ({ setChatOn }: DrawerChatProps) => {
         {visibleContact.map((contact) => (
           <ChatContact
             {...contact}
-            selected={selected === contact.lastName}
-            setSelected={setSelected}
+            selected={
+              chatUserType.lastName === contact.lastName &&
+              chatUserType.firstName === contact.firstName
+            }
+            setSelected={setChatUserType}
           />
         ))}
       </ChatContactContainer>
