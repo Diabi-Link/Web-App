@@ -1,10 +1,53 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 
-const Footer = (): React.ReactElement => {
+import SendImg from '../../../../assets/pngs/send.png';
+
+type Props = {
+  messages: { sender: 'you' | 'other'; text: string }[];
+  setMessages: Dispatch<
+    SetStateAction<{ sender: 'you' | 'other'; text: string }[]>
+  >;
+};
+
+const Footer = ({ messages, setMessages }: Props): React.ReactElement => {
+  const [sendAnim, setSendAnim] = useState(false);
+  const [value, setValue] = useState('');
+
+  const sendMessage = () => {
+    if (value !== '') {
+      setValue('');
+      setMessages([...messages, { sender: 'you', text: value }]);
+    }
+  };
+
+  const handleClick = () => {
+    setSendAnim(true);
+    setTimeout(() => setSendAnim(false), 200);
+    sendMessage();
+  };
+
+  const handleKeypress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log('yoss');
+    if (e.key === 'Enter') {
+      console.log('yo');
+      sendMessage();
+    }
+  };
+
   return (
     <Container>
-      <StyledInput placeholder="Écrivez votre message..." />
+      <StyledInput
+        placeholder="Écrivez votre message..."
+        name="message"
+        type="text"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyPress={handleKeypress}
+      />
+      <SendButton sendAnim={sendAnim} onClick={handleClick} type="submit">
+        <Send src={SendImg} alt="Send" />
+      </SendButton>
     </Container>
   );
 };
@@ -20,7 +63,7 @@ const Container = styled.div`
 
 const StyledInput = styled.input`
   border: none;
-  height: 45px;
+  height: 40px;
   padding: 0 20px;
   border-radius: 50px;
   background-color: ${(props) => props.theme.main.white};
@@ -32,6 +75,35 @@ const StyledInput = styled.input`
   }
   &:focus {
     outline: none;
+  }
+  width: 90%;
+`;
+
+const Send = styled.img`
+  max-width: 100%;
+`;
+
+const SendButton = styled.button<{ sendAnim: boolean }>`
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  width: 40px;
+
+  animation: ${({ sendAnim }) =>
+    sendAnim ? 'zoom-in-zoom-out 0.2s ease-in-out' : ''};
+
+  @keyframes zoom-in-zoom-out {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 `;
 

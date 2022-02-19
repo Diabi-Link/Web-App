@@ -11,7 +11,7 @@ const Discussion = ({ messages }: Props): React.ReactElement => {
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(messages)]);
+  }, [messages]);
 
   return (
     <Container>

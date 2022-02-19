@@ -81,14 +81,14 @@ const ChatPage = (): React.ReactElement => {
   const [messages, setMessages] = useState(mockMessages);
 
   useEffect(() => {
-    setMessages(mockMessages.sort(() => 0.5 - Math.random()));
+    setMessages([...mockMessages.sort(() => 0.5 - Math.random())]);
   }, [chatUserType]);
 
   return (
     <Container data-testid="auth-chat-page">
       <Header {...chatUserType} />
       <Discussion messages={messages} />
-      <Footer />
+      <Footer messages={messages} setMessages={setMessages} />
     </Container>
   );
 };
