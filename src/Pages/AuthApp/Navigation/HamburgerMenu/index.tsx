@@ -12,7 +12,7 @@ type Props = {
 
 const Container = styled.div`
   position: fixed;
-  z-index: 9999;
+  z-index: 10000;
   top: 1.4rem;
   right: 1rem;
   width: 3rem;
@@ -65,6 +65,28 @@ const Closer = styled.div`
   }
 `;
 
+const ContainerTest = styled.div<{ isOpen: boolean }>`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: ${({ isOpen }) => (isOpen ? 9999 : 0)};
+`;
+
+const ContainerTest2 = styled.div<{ isOpen: boolean }>`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+`;
+
+const ContainerTest3 = styled.div<{ isOpen: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: ${({ isOpen }) => (isOpen ? 9998 : 0)};
+  background-color: ${({ isOpen }) => (isOpen ? 'rgba(0, 0, 0, 0.8)' : '')};
+`;
+
 const HamburgerMenu = ({ children, chat }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -82,8 +104,10 @@ const HamburgerMenu = ({ children, chat }: Props) => {
         )}
         {isOpen && <Closer />}
       </Container>
+      <ContainerTest isOpen={isOpen} />
+      <ContainerTest3 isOpen={isOpen} />
       <Drawer onMobile={{ isOpen, setMobileIsOpen: setIsOpen }} chat={chat} />
-      {children}
+      <ContainerTest2 isOpen={isOpen}>{children}</ContainerTest2>
     </>
   );
 };
