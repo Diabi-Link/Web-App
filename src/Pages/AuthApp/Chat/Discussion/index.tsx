@@ -21,7 +21,9 @@ const Container = styled.div`
   width: auto;
   display: flex;
   flex-direction: column;
-  margin: 0 35px;
+  overflow-y: scroll;
+  flex-grow: inherit;
+  height: 80vh;
 `;
 
 const MessageWrapper = styled.div<{
@@ -30,6 +32,7 @@ const MessageWrapper = styled.div<{
   display: flex;
   justify-content: ${({ sender }) =>
     sender === 'you' ? 'flex-end' : 'flex-start'};
+  margin: 0 35px;
 `;
 
 const MessageText = styled.p<{

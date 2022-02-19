@@ -23,13 +23,11 @@ const Header = ({
 };
 
 const Container = styled.div`
-  position: fixed;
   width: 100%;
   display: flex;
   align-items: center;
   padding-top: 5px;
   padding-bottom: 5px;
-  padding-left: 20px;
   background-color: white;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
 `;
@@ -51,7 +49,7 @@ const AvatarWrapper = styled.div`
   width: 55px;
   height: 55px;
   border-radius: 50%;
-  margin-left: 10px;
+  margin-left: 30px;
 `;
 
 export default Header;

@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { ChatContext } from '../../../contexts/ChatContext';
 import Discussion from './Discussion';
+import Footer from './Footer';
 
 import Header from './Header';
 
@@ -85,6 +86,7 @@ const ChatPage = (): React.ReactElement => {
     <Container data-testid="auth-chat-page">
       <Header {...chatUserType} />
       <Discussion messages={messages} />
+      <Footer />
     </Container>
   );
 };
@@ -93,6 +95,7 @@ const Container = styled.div`
   width: auto;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 `;
 
 export default ChatPage;
