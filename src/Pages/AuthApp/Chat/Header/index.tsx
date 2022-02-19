@@ -51,6 +51,9 @@ const AvatarWrapper = styled.div`
   height: 55px;
   border-radius: 50%;
   margin-left: 30px;
+  @media (max-width: 420px) {
+    margin-left: 10px;
+  }
 `;
 
 export default Header;

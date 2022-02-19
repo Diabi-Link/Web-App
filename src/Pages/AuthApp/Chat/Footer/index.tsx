@@ -28,9 +28,7 @@ const Footer = ({ messages, setMessages }: Props): React.ReactElement => {
   };
 
   const handleKeypress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log('yoss');
     if (e.key === 'Enter') {
-      console.log('yo');
       sendMessage();
     }
   };
@@ -62,6 +60,13 @@ const Container = styled.div`
 `;
 
 const StyledInput = styled.input`
+  @media (max-width: 420px) {
+    width: 80%;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 88%;
+  }
   border: none;
   height: 40px;
   padding: 0 20px;
