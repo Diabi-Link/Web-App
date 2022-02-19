@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 type Props = {
@@ -6,6 +6,13 @@ type Props = {
 };
 
 const Discussion = ({ messages }: Props): React.ReactElement => {
+  const messageEndRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(messages)]);
+
   return (
     <Container>
       {messages.map((message) => (
@@ -13,6 +20,7 @@ const Discussion = ({ messages }: Props): React.ReactElement => {
           <MessageText sender={message.sender}>{message.text}</MessageText>
         </MessageWrapper>
       ))}
+      <MessageEnd ref={messageEndRef} />
     </Container>
   );
 };
@@ -47,5 +55,7 @@ const MessageText = styled.p<{
   border-radius: 20px;
   font-family: 'Helvetica Neue';
 `;
+
+const MessageEnd = styled.div``;
 
 export default Discussion;

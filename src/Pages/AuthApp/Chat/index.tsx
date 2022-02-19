@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ChatContext } from '../../../contexts/ChatContext';
 import Discussion from './Discussion';
@@ -6,7 +6,7 @@ import Footer from './Footer';
 
 import Header from './Header';
 
-let messages: { sender: 'you' | 'other'; text: string }[] = [
+const mockMessages: { sender: 'you' | 'other'; text: string }[] = [
   {
     sender: 'you',
     text: 'Ok pas de soucis docteur ! La prochaine fois je ferais',
@@ -78,10 +78,12 @@ let messages: { sender: 'you' | 'other'; text: string }[] = [
 
 const ChatPage = (): React.ReactElement => {
   const { chatUserType } = useContext(ChatContext);
+  const [messages, setMessages] = useState(mockMessages);
 
   useEffect(() => {
-    messages = messages.sort(() => 0.5 - Math.random());
+    setMessages(mockMessages.sort(() => 0.5 - Math.random()));
   }, [chatUserType]);
+
   return (
     <Container data-testid="auth-chat-page">
       <Header {...chatUserType} />

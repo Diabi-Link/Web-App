@@ -30,6 +30,7 @@ const Container = styled.div`
   padding-bottom: 5px;
   background-color: white;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 `;
 
 const NameWrapper = styled.div`
