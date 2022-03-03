@@ -15,40 +15,17 @@ import { avatars } from '../../../../../utils/avatars';
 import { ChatContext } from '../../../../../contexts/ChatContext';
 import { ChatUserType } from '../../../../../types/chat';
 import { DeepNonNullable } from '../../../../../types/utilities';
+import { useFetchUserLazyQuery } from '../../../../../api';
 
 type DrawerChatProps = {
   setChatOn: Dispatch<SetStateAction<boolean>>;
+  chatOn: boolean;
 };
 
 type ChatContactProps = {
   selected: boolean;
   setSelected: Dispatch<ChatUserType>;
 } & DeepNonNullable<ChatUserType>;
-
-const contacts: DeepNonNullable<ChatUserType[]> = [
-  { firstName: 'Nicolas', lastName: 'Carrasco', account: 'referent' },
-  {
-    firstName: 'Djhahid',
-    lastName: 'Bousba',
-    account: 'medicalProfessional',
-  },
-  {
-    firstName: 'Thibault',
-    lastName: 'Schmitt',
-    account: 'medicalProfessional',
-  },
-  { firstName: 'John', lastName: 'Doe', account: 'medicalProfessional' },
-  {
-    firstName: 'John',
-    lastName: 'TooLongNameeeeeeeeee',
-    account: 'medicalProfessional',
-  },
-];
-
-contacts.sort((a, b) =>
-  // eslint-disable-next-line no-nested-ternary
-  a.lastName > b.lastName ? 1 : b.lastName > a.lastName ? -1 : 0,
-);
 
 const ChatContact = ({
   firstName,
@@ -70,16 +47,32 @@ const ChatContact = ({
   );
 };
 
-const DrawerChat = ({ setChatOn }: DrawerChatProps) => {
+const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
   const history = useHistory();
-  const [visibleContact, setVisibleContact] = useState(contacts);
+  const [contacts, setContacts] = useState<DeepNonNullable<ChatUserType>[]>([]);
+  const [visibleContact, setVisibleContact] = useState<
+    DeepNonNullable<ChatUserType>[]
+  >([]);
   const [value, setValue] = useState('');
   const { chatUserType, setChatUserType } = useContext(ChatContext);
+  const [fetchUser] = useFetchUserLazyQuery({
+    onCompleted: (payload) => {
+      const newContacts = payload.Me.contact;
+
+      setContacts(newContacts);
+      setVisibleContact(newContacts);
+      setChatUserType(newContacts[0]);
+    },
+    fetchPolicy: 'network-only',
+  });
 
   useEffect(() => {
-    setChatUserType(contacts[0]);
+    if (chatOn) {
+      console.log('yo');
+      fetchUser();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [chatOn]);
 
   const searchContact = ({
     target: { value: newValue },

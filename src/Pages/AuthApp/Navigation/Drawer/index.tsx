@@ -78,7 +78,7 @@ const Drawer = ({ children, onMobile, chat: { chatOn, setChatOn } }: Props) => {
             setChatOn={setChatOn}
           />
         )}
-        {chatOn && <DrawerChat setChatOn={setChatOn} />}
+        {chatOn && <DrawerChat setChatOn={setChatOn} chatOn={chatOn} />}
       </DrawerContainer>
 
       <PageWrapper

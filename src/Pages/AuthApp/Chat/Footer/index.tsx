@@ -89,6 +89,7 @@ const Send = styled.img`
 `;
 
 const SendButton = styled.button<{ sendAnim: boolean }>`
+  cursor: pointer;
   margin-left: 10px;
   display: flex;
   justify-content: center;
