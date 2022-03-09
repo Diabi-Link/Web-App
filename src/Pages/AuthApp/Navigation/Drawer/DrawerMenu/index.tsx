@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import { Icon } from 'react-icons-kit';
 import { lock } from 'react-icons-kit/fa/lock';
 import { home } from 'react-icons-kit/fa/home';
+import { group } from 'react-icons-kit/fa/group';
 import { user as userIcon } from 'react-icons-kit/fa/user';
 import { plus } from 'react-icons-kit/fa/plus';
 import { areaChart } from 'react-icons-kit/fa/areaChart';
 import { comments } from 'react-icons-kit/fa/comments';
+import { ic_notifications as notification } from 'react-icons-kit/md/ic_notifications';
 import { useLocation } from 'react-router-dom';
 import { UserContext } from '../../../../../contexts/UserContext';
 import { ReactComponent as LogoText } from '../../../../../assets/svgs/DiabiLink.svg';
@@ -122,6 +124,25 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
         </ItemWrapper>
       </ItemContainer>
 
+      <ItemContainer
+        to="/contacts/menu"
+        isActive={location.pathname.includes('/contacts')}
+        onClick={closeDrawerOnMobile}
+        data-testid="contacts-navigation-button"
+      >
+        <ItemWrapper>
+          <ItemIcon isActive={location.pathname.includes('/contacts')}>
+            <Icon icon={group} size={32} />
+          </ItemIcon>
+          <ItemHeading
+            isActive={location.pathname.includes('/contacts')}
+            level={2}
+          >
+            Contacts
+          </ItemHeading>
+        </ItemWrapper>
+      </ItemContainer>
+
       {user?.account === 'patient' && (
         <ItemContainer
           to="/add-measurement"
@@ -155,6 +176,22 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
           </ItemIcon>
           <ItemHeading isActive={location.pathname === '/analytics'} level={2}>
             Analytics
+          </ItemHeading>
+        </ItemWrapper>
+      </ItemContainer>
+
+      <ItemContainer
+        to="/alerts"
+        isActive={location.pathname === '/alerts'}
+        onClick={closeDrawerOnMobile}
+        data-testid="alert-navigation-button"
+      >
+        <ItemWrapper>
+          <ItemIcon isActive={location.pathname === '/alerts'}>
+            <Icon icon={notification} size={34} />
+          </ItemIcon>
+          <ItemHeading isActive={location.pathname === '/alerts'} level={2}>
+            Alertes
           </ItemHeading>
         </ItemWrapper>
       </ItemContainer>
