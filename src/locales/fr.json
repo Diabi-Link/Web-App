@@ -5,7 +5,8 @@
     "Register": "S'inscrire"
   },
   "Link": {
-    "BackSite": "Revenir au site"
+    "BackSite": "Revenir au site",
+    "Back": "Retour"
   },
   "404": {
     "Title": "Il semblerait que vous vous soyez perdu !",
@@ -114,5 +115,23 @@
     "14": "14 jours",
     "30": "30 jours",
     "Value": "Valeur"
+  },
+  "Contacts": {
+    "Title": "Mes Contacts",
+    "Choice": "Veuillez séléctionner votre choix :",
+    "Add": "Ajouter un contact",
+    "List": "Trouver mes contacts",
+    "Validate": "Ajouter",
+    "MedicalPro": "Mon corps médical",
+    "Referent": "Mes référents",
+    "Patient": "Mes patients"
+  },
+  "Alerts": {
+    "Title": "Mes alertes",
+    "All": "Tout",
+    "1hour": "Dernière heure",
+    "24hours": "Dernière 24 heures",
+    "1week": "Dernière semaine",
+    "Filter": "Trier par flag :"
   }
 }

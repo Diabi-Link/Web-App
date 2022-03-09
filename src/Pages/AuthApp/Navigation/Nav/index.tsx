@@ -5,9 +5,11 @@ import Loader from '../../../../ui/Loader';
 import NavigationWrapper from '../NavigationWrapper';
 
 const Home = lazy(() => import('../../Home'));
+const Contacts = lazy(() => import('../../Contacts'));
 const Profile = lazy(() => import('../../Profile'));
 const AddMeasurement = lazy(() => import('../../AddMeasurement'));
 const Analytics = lazy(() => import('../../Analytics'));
+const Alerts = lazy(() => import('../../Alerts'));
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,9 +30,11 @@ const Nav = (): JSX.Element => {
       >
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/add-measurement" exact component={AddMeasurement} />
-          <Route path="/analytics" exact component={Analytics} />
-          <Route path="/profile" exact component={Profile} />
+          <Route path="/contacts" component={Contacts} />
+          <Route path="/add-measurement" component={AddMeasurement} />
+          <Route path="/analytics" component={Analytics} />
+          <Route path="/alerts" component={Alerts} />
+          <Route path="/profile" component={Profile} />
           <Redirect to="/" />
         </Switch>
       </Suspense>

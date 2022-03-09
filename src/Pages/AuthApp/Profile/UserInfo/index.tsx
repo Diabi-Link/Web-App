@@ -91,8 +91,6 @@ const UserInfo = ({ props }: Props) => {
   } = useContext(UserContext);
   const { t } = useTranslation();
 
-  // const birthDate = user?.birthDate as Date;
-
   return (
     <Wrapper>
       <SectionWrapper>
