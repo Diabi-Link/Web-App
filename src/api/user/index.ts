@@ -1,10 +1,12 @@
-import { gql, MutationHookOptions, QueryHookOptions } from '@apollo/client';
+import { gql, MutationHookOptions, LazyQueryHookOptions } from '@apollo/client';
+import { DeepNonNullable } from '../../types/utilities';
+import { ChatUserType } from '../../types/chat';
 
 import { UserType } from '../../types/user';
 import { useAPILazyQuery, useAPIMutation } from '../handlers';
 
 type UserResponse = {
-  Me: UserType;
+  Me: UserType & { contact: DeepNonNullable<ChatUserType>[] };
 };
 
 type FetchUserData = {
@@ -22,12 +24,17 @@ const FETCH_USER = gql`
       birthDate
       account
       phone
+      contact {
+        firstName
+        lastName
+        account
+      }
     }
   }
 `;
 
 export function useFetchUserLazyQuery(
-  options?: QueryHookOptions<UserResponse, FetchUserData>,
+  options?: LazyQueryHookOptions<UserResponse, FetchUserData>,
 ) {
   return useAPILazyQuery(FETCH_USER, options);
 }

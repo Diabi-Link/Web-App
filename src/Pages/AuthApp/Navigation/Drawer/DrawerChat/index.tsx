@@ -1,80 +1,45 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import { Icon } from 'react-icons-kit';
 import { search } from 'react-icons-kit/fa/search';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
+import { useHistory } from 'react-router-dom';
 import Heading from '../../../../../ui/Heading';
-import { AccountType } from '../../../../../types/user';
-import { ReactComponent as ProfilePatient } from '../../../../../assets/svgs/ProfilePatient.svg';
-import { ReactComponent as ProfileMP } from '../../../../../assets/svgs/ProfileMP.svg';
-import { ReactComponent as ProfileReferent } from '../../../../../assets/svgs/ProfileReferent.svg';
+import { avatars } from '../../../../../utils/avatars';
+import { ChatContext } from '../../../../../contexts/ChatContext';
+import { ChatUserType } from '../../../../../types/chat';
+import { DeepNonNullable } from '../../../../../types/utilities';
+import { useFetchUserLazyQuery } from '../../../../../api';
 
 type DrawerChatProps = {
   setChatOn: Dispatch<SetStateAction<boolean>>;
+  chatOn: boolean;
 };
 
 type ChatContactProps = {
-  firstName: string;
-  lastName: string;
-  accountType: AccountType;
   selected: boolean;
-  setSelected: Dispatch<SetStateAction<string>>;
-};
-
-const avatars = {
-  patient: {
-    svg: <ProfilePatient />,
-  },
-  medicalProfessional: {
-    svg: <ProfileMP />,
-  },
-  referent: {
-    svg: <ProfileReferent />,
-  },
-};
-
-const contacts: {
-  firstName: string;
-  lastName: string;
-  accountType: AccountType;
-}[] = [
-  { firstName: 'Nicolas', lastName: 'Carrasco', accountType: 'referent' },
-  {
-    firstName: 'Djhahid',
-    lastName: 'Bousba',
-    accountType: 'medicalProfessional',
-  },
-  {
-    firstName: 'Thibault',
-    lastName: 'Schmitt',
-    accountType: 'medicalProfessional',
-  },
-  { firstName: 'John', lastName: 'Doe', accountType: 'medicalProfessional' },
-  {
-    firstName: 'John',
-    lastName: 'TooLongName',
-    accountType: 'medicalProfessional',
-  },
-];
-
-contacts.sort((a, b) =>
-  // eslint-disable-next-line no-nested-ternary
-  a.lastName > b.lastName ? 1 : b.lastName > a.lastName ? -1 : 0,
-);
+  setSelected: Dispatch<ChatUserType>;
+} & DeepNonNullable<ChatUserType>;
 
 const ChatContact = ({
   firstName,
   lastName,
-  accountType,
+  account,
   selected,
   setSelected,
 }: ChatContactProps) => {
   return (
     <ChatContactWrapper
       selected={selected}
-      onClick={() => setSelected(lastName)}
+      onClick={() => setSelected({ lastName, firstName, account })}
     >
-      <AvatarWrapper>{avatars[accountType].svg}</AvatarWrapper>
+      <AvatarWrapper>{avatars[account].svg}</AvatarWrapper>
       <NameWrapper>
         {firstName} {lastName}
       </NameWrapper>
@@ -82,20 +47,38 @@ const ChatContact = ({
   );
 };
 
-const DrawerChat = ({ setChatOn }: DrawerChatProps) => {
-  const [selected, setSelected] = useState('Bousba');
-  const [visibleContact, setVisibleContact] = useState(contacts);
+const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
+  const history = useHistory();
+  const [contacts, setContacts] = useState<DeepNonNullable<ChatUserType>[]>([]);
+  const [visibleContact, setVisibleContact] = useState<
+    DeepNonNullable<ChatUserType>[]
+  >([]);
   const [value, setValue] = useState('');
+  const { chatUserType, setChatUserType } = useContext(ChatContext);
+  const [fetchUser] = useFetchUserLazyQuery({
+    onCompleted: (payload) => {
+      const newContacts = payload.Me.contact;
+
+      setContacts(newContacts);
+      setVisibleContact(newContacts);
+      setChatUserType(newContacts[0]);
+    },
+    fetchPolicy: 'network-only',
+  });
+
+  useEffect(() => {
+    if (chatOn) {
+      console.log('yo');
+      fetchUser();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatOn]);
 
   const searchContact = ({
     target: { value: newValue },
   }: React.ChangeEvent<HTMLInputElement>) => {
     if (newValue !== '') {
-      const newContacts: {
-        firstName: string;
-        lastName: string;
-        accountType: AccountType;
-      }[] = [];
+      const newContacts: DeepNonNullable<ChatUserType[]> = [];
 
       contacts.forEach((contact) => {
         if (
@@ -123,9 +106,12 @@ const DrawerChat = ({ setChatOn }: DrawerChatProps) => {
         <ArrowBack
           icon={arrowLeft2}
           size={28}
-          onClick={() => setChatOn(false)}
+          onClick={() => {
+            setChatOn(false);
+            history.go(-1);
+          }}
         />
-        <Heading level={2}>Contacts</Heading>
+        <Heading level={2}>Discussions</Heading>
       </HeaderWrapper>
       <InputWrapper>
         <SearchIcon icon={search} size={20} />
@@ -141,8 +127,11 @@ const DrawerChat = ({ setChatOn }: DrawerChatProps) => {
         {visibleContact.map((contact) => (
           <ChatContact
             {...contact}
-            selected={selected === contact.lastName}
-            setSelected={setSelected}
+            selected={
+              chatUserType.lastName === contact.lastName &&
+              chatUserType.firstName === contact.firstName
+            }
+            setSelected={setChatUserType}
           />
         ))}
       </ChatContactContainer>
@@ -173,7 +162,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   padding-top: 10px;
   padding-bottom: 10px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  /* border-bottom: ${({ theme }) => `solid 1px ${theme.main.grayLighter}`}; */
   width: 100%;
 `;
 
@@ -219,7 +208,7 @@ const ChatContactContainer = styled.div`
 const ChatContactWrapper = styled.div<{ selected: boolean }>`
   display: flex;
   align-items: center;
-  width: 98%;
+  width: 97%;
   border-radius: 15px;
   margin-bottom: 5px;
   padding: 10px;
@@ -240,7 +229,6 @@ const AvatarWrapper = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-left: 10px;
 `;
 
 const NameWrapper = styled.p`
@@ -249,6 +237,7 @@ const NameWrapper = styled.p`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  max-width: 140px;
 `;
 
 export default DrawerChat;

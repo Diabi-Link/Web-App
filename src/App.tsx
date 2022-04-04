@@ -12,7 +12,6 @@ import { UserProvider } from './contexts/UserContext';
 import { MainProvider } from './contexts/MainContext';
 
 import AppSelector from './Pages/AppSelector';
-import LanguageSwitcher from './ui/LanguageSwitcher';
 import Notice from './ui/Notice';
 import { DeviceProvider } from './contexts/DeviceContext';
 
@@ -28,7 +27,6 @@ const App = (): JSX.Element => {
               <DeviceProvider>
                 <Router>
                   <AppSelector />
-                  <LanguageSwitcher />
                   <Notice />
                 </Router>
               </DeviceProvider>

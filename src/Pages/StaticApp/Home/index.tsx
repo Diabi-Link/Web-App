@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import LanguageSwitcher from '../../../ui/LanguageSwitcher';
 
 const Container = styled.main`
   width: 100vw;
@@ -18,6 +19,7 @@ const Home = (): JSX.Element => {
   return (
     <Container>
       <Wrapper data-testid="HOME">HOME</Wrapper>
+      <LanguageSwitcher />
     </Container>
   );
 };
