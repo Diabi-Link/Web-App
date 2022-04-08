@@ -31,8 +31,7 @@ const List = (): JSX.Element => {
 
   return (
     <Container>
-      List
-      {/* <ListWrapper>
+      <ListWrapper>
         {user?.account === 'patient' ? (
           <ReferentList contacts={data?.Me.contact} />
         ) : (
@@ -53,7 +52,7 @@ const List = (): JSX.Element => {
           onClick={() => push('/contacts/add')}
           data-testid="next-button"
         />
-      </ButtonWrapper> */}
+      </ButtonWrapper>
     </Container>
   );
 };
