@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
+import { DocumentData } from 'firebase/firestore';
 import styled from 'styled-components';
 
 type Props = {
-  messages: { sender: 'you' | 'other'; text: string }[];
+  messages: DocumentData[] | undefined;
+  userId: number | undefined;
 };
 
-const Discussion = ({ messages }: Props): React.ReactElement => {
+const Discussion = ({ messages, userId }: Props): React.ReactElement => {
   const messageEndRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -15,11 +17,14 @@ const Discussion = ({ messages }: Props): React.ReactElement => {
 
   return (
     <Container>
-      {messages.map((message) => (
-        <MessageWrapper sender={message.sender}>
-          <MessageText sender={message.sender}>{message.text}</MessageText>
-        </MessageWrapper>
-      ))}
+      {messages !== undefined &&
+        messages.map((message) => (
+          <MessageWrapper sender={message.userId === userId}>
+            <MessageText sender={message.userId === userId}>
+              {message.text}
+            </MessageText>
+          </MessageWrapper>
+        ))}
       <MessageEnd ref={messageEndRef} />
     </Container>
   );
@@ -35,11 +40,10 @@ const Container = styled.div`
 `;
 
 const MessageWrapper = styled.div<{
-  sender: Props['messages'][number]['sender'];
+  sender: boolean;
 }>`
   display: flex;
-  justify-content: ${({ sender }) =>
-    sender === 'you' ? 'flex-end' : 'flex-start'};
+  justify-content: ${({ sender }) => (sender ? 'flex-end' : 'flex-start')};
   margin: 0 35px;
   @media (max-width: 768px) {
     margin: 0 15px;
@@ -51,7 +55,7 @@ const MessageWrapper = styled.div<{
 `;
 
 const MessageText = styled.p<{
-  sender: Props['messages'][number]['sender'];
+  sender: boolean;
 }>`
   max-width: 75ch;
   @media (max-width: 1024px) {
@@ -71,10 +75,10 @@ const MessageText = styled.p<{
   }
 
   background-color: ${({ theme, sender }) =>
-    sender === 'you' ? theme.main.primary : theme.main.white};
+    sender ? theme.main.primary : theme.main.white};
   padding: 10px 15px;
   color: ${({ theme, sender }) =>
-    sender === 'you' ? theme.main.white : theme.main.black};
+    sender ? theme.main.white : theme.main.black};
   border-radius: 20px;
   font-family: 'Helvetica Neue';
 `;
