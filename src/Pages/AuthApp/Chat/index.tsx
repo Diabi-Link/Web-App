@@ -1,94 +1,91 @@
 import React, { useContext, useEffect, useState } from 'react';
+import {
+  collection,
+  doc,
+  orderBy,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore';
+import {
+  useCollection,
+  useCollectionData,
+} from 'react-firebase-hooks/firestore';
 import styled from 'styled-components';
+
+import { UserContext } from '../../../contexts/UserContext';
+import firestore from '../../../firebase';
 import { ChatContext } from '../../../contexts/ChatContext';
 import Discussion from './Discussion';
 import Footer from './Footer';
-
 import Header from './Header';
-
-const mockMessages: { sender: 'you' | 'other'; text: string }[] = [
-  {
-    sender: 'you',
-    text: 'Ok pas de soucis docteur ! La prochaine fois je ferais',
-  },
-  {
-    sender: 'other',
-    text:
-      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem. dvhve ',
-  },
-  {
-    sender: 'you',
-    text:
-      'Ipsum dolor sit  veo consequat.  irure dolor in reprehenderit in voluptate velit',
-  },
-  {
-    sender: 'other',
-    text: 'Eos et accusa odio dignissimos ducimus.',
-  },
-  {
-    sender: 'other',
-    text:
-      'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit',
-  },
-  {
-    sender: 'other',
-    text:
-      'Itaque earum rerum hic tenetur a sapiente delectus,  maiores  consequatur aut perferendis',
-  },
-  {
-    sender: 'you',
-    text:
-      'Alno ditate non provident, similique sunt in culpa qofficia deserunt mollitia animi, id est laborum et dolorum fuga.',
-  },
-  {
-    sender: 'you',
-    text:
-      'Hic tenetur a sapiente delectus,  maiores  consequatur doloremque laudantium',
-  },
-  {
-    sender: 'other',
-    text:
-      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem. dvhve ',
-  },
-  {
-    sender: 'you',
-    text:
-      'Ipsum dolor sit  veo consequat.  irure dolor in reprehenderit in voluptate velit',
-  },
-  {
-    sender: 'other',
-    text: 'Eos et accusa odio dignissimos ducimus.',
-  },
-  {
-    sender: 'other',
-    text:
-      'Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit',
-  },
-  {
-    sender: 'other',
-    text:
-      'Itaque earum rerum hic tenetur a sapiente delectus,  maiores  consequatur aut perferendis',
-  },
-  {
-    sender: 'you',
-    text:
-      'Alno ditate non provident, similique sunt in culpa qofficia deserunt mollitia animi, id est laborum et dolorum fuga.',
-  },
-];
 
 const ChatPage = (): React.ReactElement => {
   const { chatUserType } = useContext(ChatContext);
-  const [messages, setMessages] = useState(mockMessages);
+  const {
+    state: { user },
+  } = useContext(UserContext);
+
+  const userIds = [
+    [`${user?.id}`, `${chatUserType?.id}`],
+    [`${chatUserType.id}`, `${user?.id}`],
+  ];
+
+  const collectionFirestore = collection(firestore, 'Conversations');
+
+  const [conversation, loadingConversation] = useCollection(
+    query(collectionFirestore, where('userIds', 'in', userIds)),
+  );
+
+  const collectionMessages = collection(
+    firestore,
+    `Conversations/${conversation?.docs[0]?.id}/Messages`,
+  );
+
+  const [messages] = useCollectionData(
+    conversation?.docs[0]?.id !== undefined
+      ? query(collectionMessages, orderBy('sendAt'))
+      : undefined,
+  );
+
+  const createConv = async () => {
+    if (user?.id && chatUserType.id) {
+      await setDoc(doc(collectionFirestore), {
+        userIds:
+          user.id > chatUserType.id
+            ? [`${chatUserType.id}`, `${user.id}`]
+            : [`${user.id}`, `${chatUserType.id}`],
+      });
+    }
+  };
+
+  const addMessage = async (text: string) => {
+    if (user?.id && collectionMessages) {
+      await setDoc(doc(collectionMessages), {
+        sendAt: Date.now(),
+        text,
+        userId: user.id,
+      });
+    }
+  };
 
   useEffect(() => {
-    setMessages([...mockMessages.sort(() => 0.5 - Math.random())]);
-  }, [chatUserType]);
+    if (!loadingConversation && conversation?.docs[0]?.id === undefined)
+      createConv();
+  }, [user?.id, chatUserType.id, loadingConversation]);
+
+  useEffect(() => {
+    console.log(
+      messages,
+      `Conversations/${conversation?.docs[0]?.id}/Messages`,
+    );
+  }, [messages]);
 
   return (
     <Container data-testid="auth-chat-page">
       <Header {...chatUserType} />
-      <Discussion messages={messages} />
-      <Footer messages={messages} setMessages={setMessages} />
+      <Discussion messages={messages} userId={user?.id} />
+      <Footer addMessage={addMessage} />
     </Container>
   );
 };

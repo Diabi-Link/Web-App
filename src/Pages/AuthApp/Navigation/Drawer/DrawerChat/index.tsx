@@ -33,11 +33,12 @@ const ChatContact = ({
   account,
   selected,
   setSelected,
+  id,
 }: ChatContactProps) => {
   return (
     <ChatContactWrapper
       selected={selected}
-      onClick={() => setSelected({ lastName, firstName, account })}
+      onClick={() => setSelected({ lastName, firstName, account, id })}
     >
       <AvatarWrapper>{avatars[account].svg}</AvatarWrapper>
       <NameWrapper>
@@ -68,7 +69,6 @@ const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
 
   useEffect(() => {
     if (chatOn) {
-      console.log('yo');
       fetchUser();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

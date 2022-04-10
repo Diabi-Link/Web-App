@@ -10,6 +10,7 @@ const ChatContext = React.createContext<{
     account: null,
     firstName: null,
     lastName: null,
+    id: null,
   },
   setChatUserType: () => null,
 });
@@ -23,6 +24,7 @@ const ChatProvider = ({ children }: Props): React.ReactElement => {
     account: null,
     firstName: null,
     lastName: null,
+    id: null,
   });
 
   return (

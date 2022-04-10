@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import { useAppApolloClient } from './api/initializer';
 
 import './i18n';
+import './firebase';
 import theme from './theme';
 import { AuthProvider } from './contexts/AuthContext';
 import { UserProvider } from './contexts/UserContext';
