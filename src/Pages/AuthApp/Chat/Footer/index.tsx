@@ -1,23 +1,20 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import SendImg from '../../../../assets/pngs/send.png';
 
 type Props = {
-  messages: { sender: 'you' | 'other'; text: string }[];
-  setMessages: Dispatch<
-    SetStateAction<{ sender: 'you' | 'other'; text: string }[]>
-  >;
+  addMessage: (text: string) => Promise<void>;
 };
 
-const Footer = ({ messages, setMessages }: Props): React.ReactElement => {
+const Footer = ({ addMessage }: Props): React.ReactElement => {
   const [sendAnim, setSendAnim] = useState(false);
   const [value, setValue] = useState('');
 
   const sendMessage = () => {
     if (value !== '') {
       setValue('');
-      setMessages([...messages, { sender: 'you', text: value }]);
+      addMessage(value);
     }
   };
 

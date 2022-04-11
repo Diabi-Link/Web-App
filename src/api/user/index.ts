@@ -28,6 +28,7 @@ const FETCH_USER = gql`
         firstName
         lastName
         account
+        id
       }
     }
   }
