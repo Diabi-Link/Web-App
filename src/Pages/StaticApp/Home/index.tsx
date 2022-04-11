@@ -1,26 +1,23 @@
 import React from 'react';
-import styled from 'styled-components';
 import LanguageSwitcher from '../../../ui/LanguageSwitcher';
-
-const Container = styled.main`
-  width: 100vw;
-  height: 100vh;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-`;
+import Footer from '../Footer';
+import HeroSection from '../HeroSection';
+import InfoSection from '../InfoSection';
+import { homeObjOne, homeObjTwo } from '../InfoSection/Data';
+import Services from '../Services';
+import Timeline from '../Timeline';
 
 const Home = (): JSX.Element => {
   return (
-    <Container>
-      <Wrapper data-testid="HOME">HOME</Wrapper>
+    <>
+      <HeroSection />
+      <InfoSection {...homeObjOne} />
+      <InfoSection {...homeObjTwo} />
+      <Services />
+      <Timeline />
+      <Footer />
       <LanguageSwitcher />
-    </Container>
+    </>
   );
 };
 

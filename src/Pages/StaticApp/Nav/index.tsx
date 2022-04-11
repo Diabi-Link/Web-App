@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import styled from 'styled-components';
 import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
 import Loader from '../../../ui/Loader';
@@ -6,6 +6,7 @@ import { RegisterProvider } from '../../../contexts/RegisterContext';
 import Page404 from '../404';
 
 import Navbar from '../Navbar';
+import Sidebar from '../Sidebar';
 
 const Home = lazy(() => import('../Home'));
 const Register = lazy(() => import('../Register'));
@@ -22,6 +23,10 @@ const Wrapper = styled.div`
 const Nav = (): JSX.Element => {
   const location = useLocation();
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+
   const locationsWithNavbar = ['/', '/404'];
   const needNavbar = locationsWithNavbar.includes(location.pathname);
 
@@ -33,7 +38,12 @@ const Nav = (): JSX.Element => {
         </Wrapper>
       }
     >
-      {needNavbar && <Navbar />}
+      {needNavbar && (
+        <>
+          <Sidebar isOpen={isOpen} toggle={toggle} />
+          <Navbar toggle={toggle} />
+        </>
+      )}
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/login" component={Login} />
