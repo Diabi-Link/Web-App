@@ -74,13 +74,6 @@ const ChatPage = (): React.ReactElement => {
       createConv();
   }, [user?.id, chatUserType.id, loadingConversation]);
 
-  useEffect(() => {
-    console.log(
-      messages,
-      `Conversations/${conversation?.docs[0]?.id}/Messages`,
-    );
-  }, [messages]);
-
   return (
     <Container data-testid="auth-chat-page">
       <Header {...chatUserType} />
