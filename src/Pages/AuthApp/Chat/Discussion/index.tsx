@@ -15,8 +15,8 @@ const Discussion = ({ messages, userId }: Props): React.ReactElement => {
   const { isMobileOrTablet } = useContext(DeviceContext);
 
   useEffect(() => {
-    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (messages && messages?.length > 0)
+      messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   return (
@@ -46,7 +46,10 @@ const Discussion = ({ messages, userId }: Props): React.ReactElement => {
             },
           );
           return (
-            <MessageContainer sender={message.userId === userId}>
+            <MessageContainer
+              sender={message.userId === userId}
+              key={message.sendAt}
+            >
               <MessageWrapper sender={message.userId === userId}>
                 <MessageDate isMobileOrTablet={isMobileOrTablet}>
                   {todayDate !== date && <>{date} à </>}

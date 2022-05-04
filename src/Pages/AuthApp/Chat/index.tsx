@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   collection,
   doc,
@@ -50,7 +50,7 @@ const ChatPage = (): React.ReactElement => {
 
   const createConv = async () => {
     if (user?.id && chatUserType.id) {
-      await setDoc(doc(collectionFirestore), {
+      setDoc(doc(collectionFirestore), {
         userIds:
           user.id > chatUserType.id
             ? [`${chatUserType.id}`, `${user.id}`]
@@ -61,7 +61,14 @@ const ChatPage = (): React.ReactElement => {
 
   const addMessage = async (text: string) => {
     if (user?.id && collectionMessages) {
-      await setDoc(doc(collectionMessages), {
+      setDoc(
+        doc(collectionFirestore, conversation?.docs[0]?.id),
+        {
+          lastMessageTimestamp: Date.now(),
+        },
+        { merge: true },
+      );
+      setDoc(doc(collectionMessages), {
         sendAt: Date.now(),
         text,
         userId: user.id,
@@ -72,6 +79,7 @@ const ChatPage = (): React.ReactElement => {
   useEffect(() => {
     if (!loadingConversation && conversation?.docs[0]?.id === undefined)
       createConv();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, chatUserType.id, loadingConversation]);
 
   return (
