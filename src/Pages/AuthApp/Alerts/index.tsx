@@ -26,7 +26,7 @@ const Alerts = (): JSX.Element => {
   };
 
   return (
-    <Container>
+    <Container data-testid="auth-alert-page">
       <Wrapper>
         <PageTitle level={1}>{t('Alerts.Title')}</PageTitle>
         <FilterWrapper>
@@ -64,7 +64,7 @@ const Alerts = (): JSX.Element => {
             shadow
             isActive={isActive[3]}
             onClick={() => handleClick(3)}
-            data-testid="hypo-30"
+            data-testid="hypo-34"
           />
         </FilterWrapper>
         <FlagWrapper>

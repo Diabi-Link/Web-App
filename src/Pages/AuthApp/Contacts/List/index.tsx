@@ -30,7 +30,7 @@ const List = (): JSX.Element => {
   }
 
   return (
-    <Container>
+    <Container data-testid="auth-contacts-list-page">
       <ListWrapper>
         {user?.account === 'patient' ? (
           <ReferentList contacts={data?.Me.contact} />

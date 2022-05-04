@@ -86,5 +86,4 @@ test('Auth App rendering/navigating hamburger menu', async () => {
     expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
   );
   userEvent.click(screen.getByTestId('logout-button'));
-  await waitFor(() => expect(screen.getByTestId(/HOME/i)).toBeInTheDocument());
 });

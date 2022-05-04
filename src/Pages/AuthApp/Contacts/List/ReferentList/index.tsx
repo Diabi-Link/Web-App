@@ -77,7 +77,7 @@ const ReferentList = ({ contacts }: Props): JSX.Element => {
   };
 
   return (
-    <Container>
+    <Container data-testid="auth-contact-list-referent">
       <Left>
         <PageTitle level={2}>{t('Contacts.MedicalPro')}</PageTitle>
         <ContactWrapper>

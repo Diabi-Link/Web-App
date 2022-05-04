@@ -57,7 +57,7 @@ const Add = (): JSX.Element => {
   };
 
   return (
-    <Container>
+    <Container data-testid="auth-contacts-add-page">
       <BoxWrapper>
         <StyledBox>
           <PageTitle level={2}>{t('Contacts.Add')}</PageTitle>
@@ -116,7 +116,7 @@ const Add = (): JSX.Element => {
         </StyledBox>
       </BoxWrapper>
       <BackWrapper>
-        <BackLink to="/contacts/menu">
+        <BackLink to="/contacts/menu" data-testid="back-arrow">
           <ArrowBack icon={arrowLeft2} size={20} />
           <Text>{t('Link.Back')}</Text>
         </BackLink>
