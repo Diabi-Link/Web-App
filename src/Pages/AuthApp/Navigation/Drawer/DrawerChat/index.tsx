@@ -3,6 +3,7 @@ import React, {
   SetStateAction,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import styled from 'styled-components';
@@ -10,12 +11,27 @@ import { Icon } from 'react-icons-kit';
 import { search } from 'react-icons-kit/fa/search';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import { useHistory } from 'react-router-dom';
+import {
+  useCollection,
+  useCollectionData,
+} from 'react-firebase-hooks/firestore';
+import {
+  collection,
+  DocumentData,
+  limitToLast,
+  orderBy,
+  query,
+  QueryDocumentSnapshot,
+  where,
+} from 'firebase/firestore';
 import Heading from '../../../../../ui/Heading';
 import { avatars } from '../../../../../utils/avatars';
 import { ChatContext } from '../../../../../contexts/ChatContext';
 import { ChatUserType } from '../../../../../types/chat';
 import { DeepNonNullable } from '../../../../../types/utilities';
 import { useFetchUserLazyQuery } from '../../../../../api';
+import firestore from '../../../../../firebase';
+import { UserContext } from '../../../../../contexts/UserContext';
 
 type DrawerChatProps = {
   setChatOn: Dispatch<SetStateAction<boolean>>;
@@ -25,6 +41,8 @@ type DrawerChatProps = {
 type ChatContactProps = {
   selected: boolean;
   setSelected: Dispatch<ChatUserType>;
+  conversation?: QueryDocumentSnapshot<DocumentData>;
+  visible: boolean;
 } & DeepNonNullable<ChatUserType>;
 
 const ChatContact = ({
@@ -34,26 +52,55 @@ const ChatContact = ({
   selected,
   setSelected,
   id,
+  conversation,
+  visible,
 }: ChatContactProps) => {
+  const collectionMessages = collection(
+    firestore,
+    `Conversations/${conversation?.id}/Messages`,
+  );
+
+  const [lastMessage, loading] = useCollectionData(
+    conversation?.id !== undefined
+      ? query(collectionMessages, orderBy('sendAt'), limitToLast(1))
+      : undefined,
+  );
+
   return (
     <ChatContactWrapper
       selected={selected}
       onClick={() => setSelected({ lastName, firstName, account, id })}
+      visible={visible}
     >
       <AvatarWrapper>{avatars[account].svg}</AvatarWrapper>
-      <NameWrapper>
-        {firstName} {lastName}
-      </NameWrapper>
+      <InfoWrapper>
+        <NameWrapper>
+          {firstName} {lastName}
+        </NameWrapper>
+        <LastMessageWrapper>
+          {lastMessage && lastMessage[0] && (
+            <>
+              {lastMessage[0].userId === id ? firstName : 'Vous'}:{' '}
+              {lastMessage[0].text}
+            </>
+          )}
+          {(!lastMessage || !lastMessage[0]) && !loading && <>Pas de message</>}
+        </LastMessageWrapper>
+      </InfoWrapper>
     </ChatContactWrapper>
   );
 };
 
 const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
   const history = useHistory();
+  const {
+    state: { user },
+  } = useContext(UserContext);
   const [contacts, setContacts] = useState<DeepNonNullable<ChatUserType>[]>([]);
-  const [visibleContact, setVisibleContact] = useState<
+  const [orderedContacts, setOrderedContacts] = useState<
     DeepNonNullable<ChatUserType>[]
   >([]);
+  const invisibles = useRef<number[]>([]);
   const [value, setValue] = useState('');
   const { chatUserType, setChatUserType } = useContext(ChatContext);
   const [fetchUser] = useFetchUserLazyQuery({
@@ -61,11 +108,49 @@ const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
       const newContacts = payload.Me.contact;
 
       setContacts(newContacts);
-      setVisibleContact(newContacts);
-      setChatUserType(newContacts[0]);
     },
     fetchPolicy: 'network-only',
   });
+
+  const collectionFirestore = collection(firestore, 'Conversations');
+  const [conversations] = useCollection(
+    query(
+      collectionFirestore,
+      where('userIds', 'array-contains', `${user?.id}`),
+    ),
+  );
+
+  const orderByLastMessageTimestamp = (a: ChatUserType, b: ChatUserType) => {
+    const aConv = conversations?.docs.find((doc) =>
+      doc.data()?.userIds.includes(a.id),
+    );
+    const bConv = conversations?.docs.find((doc) =>
+      doc.data()?.userIds.includes(b.id),
+    );
+
+    if (!bConv || !bConv.data()?.lastMessageTimestamp) {
+      return -1;
+    }
+    if (!aConv || !aConv?.data()?.lastMessageTimestamp) {
+      return 1;
+    }
+    return (
+      bConv.data().lastMessageTimestamp - aConv.data().lastMessageTimestamp
+    );
+  };
+
+  useEffect(() => {
+    if (
+      contacts.length > 0 &&
+      conversations?.docs &&
+      conversations.docs.length > 0
+    ) {
+      const newOrderedContacts = [...contacts];
+      newOrderedContacts.sort(orderByLastMessageTimestamp);
+      setOrderedContacts(newOrderedContacts);
+      setChatUserType(newOrderedContacts[0]);
+    }
+  }, [conversations, contacts]);
 
   useEffect(() => {
     if (chatOn) {
@@ -78,24 +163,23 @@ const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
     target: { value: newValue },
   }: React.ChangeEvent<HTMLInputElement>) => {
     if (newValue !== '') {
-      const newContacts: DeepNonNullable<ChatUserType[]> = [];
+      const newContactsIdx: number[] = [];
 
-      contacts.forEach((contact) => {
+      contacts.forEach((contact, idx) => {
         if (
           contact.firstName
             .toLocaleLowerCase()
-            .match(newValue.toLocaleLowerCase()) !== null ||
+            .match(newValue.toLocaleLowerCase()) === null &&
           contact.lastName
             .toLocaleLowerCase()
-            .match(newValue.toLocaleLowerCase()) !== null
+            .match(newValue.toLocaleLowerCase()) === null
         ) {
-          newContacts.push(contact);
+          newContactsIdx.push(idx);
         }
       });
-
-      setVisibleContact(newContacts);
+      invisibles.current = newContactsIdx;
     } else {
-      setVisibleContact(contacts);
+      invisibles.current = [];
     }
     setValue(newValue);
   };
@@ -124,7 +208,7 @@ const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
         />
       </InputWrapper>
       <ChatContactContainer>
-        {visibleContact.map((contact) => (
+        {orderedContacts.map((contact, idx) => (
           <ChatContact
             {...contact}
             selected={
@@ -132,6 +216,11 @@ const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
               chatUserType.firstName === contact.firstName
             }
             setSelected={setChatUserType}
+            conversation={conversations?.docs.find((doc) =>
+              doc.data()?.userIds.includes(contact.id),
+            )}
+            visible={!invisibles.current.includes(idx)}
+            key={contact.id}
           />
         ))}
       </ChatContactContainer>
@@ -205,13 +294,13 @@ const ChatContactContainer = styled.div`
   width: 100%;
 `;
 
-const ChatContactWrapper = styled.div<{ selected: boolean }>`
-  display: flex;
+const ChatContactWrapper = styled.div<{ selected: boolean; visible: boolean }>`
+  display: ${({ visible }) => (visible ? 'flex' : 'none')};
   align-items: center;
   width: 97%;
   border-radius: 15px;
   margin-bottom: 5px;
-  padding: 10px;
+  padding: 13px 10px;
   cursor: pointer;
   background-color: ${({ theme, selected }) =>
     selected ? theme.main.whiteBroken : 'transparent'};
@@ -231,13 +320,28 @@ const AvatarWrapper = styled.div`
   border-radius: 50%;
 `;
 
-const NameWrapper = styled.p`
+const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-left: 8px;
+  max-width: 140px;
+  white-space: nowrap;
+`;
+
+const NameWrapper = styled.p`
   font-weight: 500;
   text-overflow: ellipsis;
-  white-space: nowrap;
   overflow: hidden;
-  max-width: 140px;
+  margin: 0;
+`;
+
+const LastMessageWrapper = styled.p`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 8px 0 0 0;
+  font-size: 14px;
+  height: 18px;
+  color: ${({ theme }) => theme.main.grayDark};
 `;
 
 export default DrawerChat;
