@@ -9,7 +9,7 @@ import Timeline from '../Timeline';
 
 const Home = (): JSX.Element => {
   return (
-    <>
+    <div data-testid="static-home-page">
       <HeroSection />
       <InfoSection {...homeObjOne} />
       <InfoSection {...homeObjTwo} />
@@ -17,7 +17,7 @@ const Home = (): JSX.Element => {
       <Timeline />
       <Footer />
       <LanguageSwitcher />
-    </>
+    </div>
   );
 };
 

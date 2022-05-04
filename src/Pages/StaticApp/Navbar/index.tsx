@@ -1,6 +1,7 @@
 import { FaBars } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
 import { animateScroll as scroll } from 'react-scroll';
+import { useTranslation } from 'react-i18next';
 import {
   Nav,
   NavbarContainer,
@@ -21,6 +22,7 @@ type Props = {
 
 const Navbar = ({ toggle }: Props) => {
   const [scrollNav, setScrollNav] = useState(false);
+  const { t } = useTranslation();
 
   const changeNav = () => {
     if (window.scrollY >= 80) setScrollNav(true);
@@ -94,10 +96,10 @@ const Navbar = ({ toggle }: Props) => {
         </NavMenu>
         <NavBtn>
           <NavBtnLink to="/login" scrollNav={scrollNav}>
-            Se connecter
+            {t('StaticNav.Login')}
           </NavBtnLink>
           <NavBtnLink to="/register/user" scrollNav={scrollNav}>
-            S&apos;inscrire
+            {t('StaticNav.Register')}
           </NavBtnLink>
         </NavBtn>
       </NavbarContainer>

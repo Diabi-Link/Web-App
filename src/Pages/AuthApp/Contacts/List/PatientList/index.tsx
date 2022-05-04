@@ -70,7 +70,7 @@ const PatientList = ({ contacts }: Props): JSX.Element => {
   };
 
   return (
-    <Container>
+    <Container data-testid="auth-contact-list-patient">
       <PageTitle level={2}>{t('Contacts.Patient')}</PageTitle>
       <ContactWrapper>
         {contacts

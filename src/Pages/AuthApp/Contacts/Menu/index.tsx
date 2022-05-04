@@ -28,7 +28,7 @@ const Menu = (): JSX.Element => {
   );
 
   return (
-    <Container>
+    <Container data-testid="auth-contacts-menu-page">
       <ChoiceWrapper>
         <Heading level={2}>{t('Contacts.Choice')}</Heading>
         <AccountSelectorContainer>
