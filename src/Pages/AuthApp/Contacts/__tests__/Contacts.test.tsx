@@ -87,22 +87,6 @@ test('Inspecting contact page referent', async () => {
     </MockedProvider>,
   );
   await waitFor(() =>
-    expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
-  );
-  userEvent.click(screen.getByTestId('contacts-navigation-button'));
-  await waitFor(() =>
-    expect(screen.getByTestId('auth-contacts-menu-page')).toBeInTheDocument(),
-  );
-  userEvent.click(screen.getByTestId('add-box'));
-  await waitFor(() =>
-    expect(screen.getByTestId('auth-contacts-add-page')).toBeInTheDocument(),
-  );
-  userEvent.click(screen.getByTestId('back-arrow'));
-  await waitFor(() =>
-    expect(screen.getByTestId('auth-contacts-menu-page')).toBeInTheDocument(),
-  );
-  userEvent.click(screen.getByTestId('list-box'));
-  await waitFor(() =>
     expect(screen.getByTestId('auth-contacts-list-page')).toBeInTheDocument(),
   );
 });
