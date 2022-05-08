@@ -67,10 +67,8 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "dev": "react-scripts start",
-    "start": "serve -s build",
-    "build": "react-scripts build",
-    "heroku-postbuild": "npm run build",
+    "start": "react-scripts start",
+    "build": "CI=false && react-scripts build",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "test": "react-scripts test --watchAll=false --coverage",
     "test:update": "react-scripts test --watchAll=false --coverage --updateSnapshot",
