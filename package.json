@@ -123,7 +123,7 @@
       "!src/contexts/**",
       "!src/api/handlers.ts",
       "!src/Pages/AuthApp/Analytics/{DailyGraph,HypoGraph,TimeInTargetGraph}/**",
-      "!src/Pages/AuthApp/Chat/{Discussion,Footer}/**",
+      "!src/Pages/AuthApp/Chat/index.tsx",
       "!src/Pages/AuthApp/Navigation/Drawer/DrawerChat/**",
       "!src/index.tsx"
     ]
