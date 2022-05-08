@@ -24,6 +24,7 @@ import {
   QueryDocumentSnapshot,
   where,
 } from 'firebase/firestore';
+import { useTranslation } from 'react-i18next';
 import Heading from '../../../../../ui/Heading';
 import { avatars } from '../../../../../utils/avatars';
 import { ChatContext } from '../../../../../contexts/ChatContext';
@@ -55,6 +56,7 @@ const ChatContact = ({
   conversation,
   visible,
 }: ChatContactProps) => {
+  const { i18n } = useTranslation();
   const collectionMessages = collection(
     firestore,
     `Conversations/${conversation?.id}/Messages`,
@@ -65,6 +67,41 @@ const ChatContact = ({
       ? query(collectionMessages, orderBy('sendAt'), limitToLast(1))
       : undefined,
   );
+
+  const sendAtToText = (sendAt: Date) => {
+    const todayDate = new Date().toLocaleDateString(i18n.language, {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+    const date = new Date(sendAt).toLocaleDateString(i18n.language, {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+    const time = new Date(sendAt).toLocaleTimeString(i18n.language, {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    if (todayDate !== date) {
+      const today = new Date();
+      const msgDate = new Date(sendAt);
+      const utc1 = Date.UTC(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate(),
+      );
+      const utc2 = Date.UTC(
+        msgDate.getFullYear(),
+        msgDate.getMonth(),
+        msgDate.getDate(),
+      );
+      return `${Math.ceil(Math.abs(utc2 - utc1) / (1000 * 60 * 60 * 24))}j.`;
+    }
+    return time;
+  };
 
   return (
     <ChatContactWrapper
@@ -80,8 +117,11 @@ const ChatContact = ({
         <LastMessageWrapper>
           {lastMessage && lastMessage[0] && (
             <>
-              {lastMessage[0].userId === id ? firstName : 'Vous'}:{' '}
-              {lastMessage[0].text}
+              <LastMessage>
+                {lastMessage[0].userId === id ? firstName : 'Vous'}:{' '}
+                {lastMessage[0].text}
+              </LastMessage>
+              <SendAt>{sendAtToText(lastMessage[0].sendAt)}</SendAt>
             </>
           )}
           {(!lastMessage || !lastMessage[0]) && !loading && <>Pas de message</>}
@@ -335,13 +375,22 @@ const NameWrapper = styled.p`
   margin: 0;
 `;
 
-const LastMessageWrapper = styled.p`
-  text-overflow: ellipsis;
-  overflow: hidden;
+const LastMessageWrapper = styled.div`
+  display: flex;
+  align-items: center;
   margin: 8px 0 0 0;
   font-size: 14px;
   height: 18px;
   color: ${({ theme }) => theme.main.grayDark};
+`;
+
+const LastMessage = styled.p`
+  text-overflow: ellipsis;
+  overflow: hidden;
+`;
+
+const SendAt = styled.p`
+  margin-left: 8px;
 `;
 
 export default DrawerChat;
