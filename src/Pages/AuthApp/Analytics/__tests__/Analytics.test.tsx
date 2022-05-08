@@ -76,9 +76,6 @@ test('Inspecting analytics page', async () => {
       </BrowserRouter>
     </MockedProvider>,
   );
-  await waitFor(() =>
-    expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
-  );
   userEvent.click(screen.getByTestId('analytics-navigation-button'));
   await waitFor(() =>
     expect(screen.getByTestId('auth-analytics-page')).toBeInTheDocument(),
@@ -89,9 +86,4 @@ test('Inspecting analytics page', async () => {
   userEvent.click(screen.getByTestId('hypo-7'));
   userEvent.click(screen.getByTestId('hypo-14'));
   userEvent.click(screen.getByTestId('hypo-30'));
-  // await waitFor(() =>
-  //   expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
-  // );
-  // userEvent.click(screen.getByTestId('logout-button'));
-  // await waitFor(() => expect(screen.getByTestId(/HOME/i)).toBeInTheDocument());
 });

@@ -15,12 +15,16 @@ const Discussion = ({ messages, userId }: Props): React.ReactElement => {
   const { isMobileOrTablet } = useContext(DeviceContext);
 
   useEffect(() => {
-    if (messages && messages?.length > 0)
+    if (
+      messages &&
+      messages?.length > 0 &&
+      messageEndRef.current?.scrollIntoView
+    )
       messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   return (
-    <Container>
+    <Container data-testid="discussion-chat">
       {messages !== undefined &&
         messages.map((message) => {
           const todayDate = new Date().toLocaleDateString(i18n.language, {

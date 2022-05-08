@@ -31,7 +31,7 @@ const Footer = ({ addMessage }: Props): React.ReactElement => {
   };
 
   return (
-    <Container>
+    <Container data-testid="footer-chat">
       <StyledInput
         placeholder="Écrivez votre message..."
         name="message"
@@ -39,8 +39,14 @@ const Footer = ({ addMessage }: Props): React.ReactElement => {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyPress={handleKeypress}
+        data-testid="input"
       />
-      <SendButton sendAnim={sendAnim} onClick={handleClick} type="submit">
+      <SendButton
+        sendAnim={sendAnim}
+        onClick={handleClick}
+        type="submit"
+        data-testid="btn"
+      >
         <Send src={SendImg} alt="Send" />
       </SendButton>
     </Container>

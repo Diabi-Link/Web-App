@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { DeviceContext } from '../../../../contexts/DeviceContext';
 import Drawer from '../Drawer';
@@ -10,7 +11,8 @@ type Props = {
 
 const NavigationWrapper = ({ children }: Props) => {
   const { isMobileOrTablet } = useContext(DeviceContext);
-  const [chatOn, setChatOn] = useState(false);
+  const location = useLocation();
+  const [chatOn, setChatOn] = useState(location.pathname.endsWith('/chat'));
 
   return (
     <>

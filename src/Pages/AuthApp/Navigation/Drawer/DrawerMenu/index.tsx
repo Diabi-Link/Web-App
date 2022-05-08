@@ -4,16 +4,21 @@ import { Icon } from 'react-icons-kit';
 import { lock } from 'react-icons-kit/fa/lock';
 import { home } from 'react-icons-kit/fa/home';
 import { group } from 'react-icons-kit/fa/group';
+import { signOut } from 'react-icons-kit/fa/signOut';
 import { user as userIcon } from 'react-icons-kit/fa/user';
 import { plus } from 'react-icons-kit/fa/plus';
 import { areaChart } from 'react-icons-kit/fa/areaChart';
 import { comments } from 'react-icons-kit/fa/comments';
 import { ic_notifications as notification } from 'react-icons-kit/md/ic_notifications';
 import { useLocation } from 'react-router-dom';
-import { UserContext } from '../../../../../contexts/UserContext';
+import {
+  UserActionTypes,
+  UserContext,
+} from '../../../../../contexts/UserContext';
 import { ReactComponent as LogoText } from '../../../../../assets/svgs/DiabiLink.svg';
 import Link from '../../../../../ui/Link';
 import Heading from '../../../../../ui/Heading';
+import { useAuthToken } from '../../../../../hooks/useAuthToken';
 
 type Props = {
   onMobile?: {
@@ -41,6 +46,14 @@ const ItemContainer = styled(Link)<{ isActive: boolean }>`
   border: none;
   background-color: ${({ theme, isActive }) =>
     isActive ? theme.main.primaryLight : 'transparent'};
+  margin-top: 1.875rem;
+  cursor: pointer;
+`;
+
+const ItemNoLinkContainer = styled.div`
+  width: 100%;
+  border: none;
+  background-color: transparent;
   margin-top: 1.875rem;
   cursor: pointer;
 `;
@@ -83,6 +96,8 @@ const ItemHeading = styled(Heading)<{ isActive: boolean }>`
 
 const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   const location = useLocation();
+  const { dispatch } = useContext(UserContext);
+  const { removeAuthToken } = useAuthToken();
 
   const {
     state: { user },
@@ -93,6 +108,11 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
     if (onMobile !== undefined) {
       onMobile.setMobileIsOpen(false);
     }
+  };
+
+  const logout = (): void => {
+    removeAuthToken();
+    dispatch({ type: UserActionTypes.EmptyUser });
   };
 
   return (
@@ -227,6 +247,17 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
           </ItemHeading>
         </ItemWrapper>
       </ItemContainer>
+
+      <ItemNoLinkContainer onClick={logout}>
+        <ItemWrapper>
+          <ItemIcon isActive={false}>
+            <Icon icon={signOut} size={34} />
+          </ItemIcon>
+          <ItemHeading isActive={false} level={2}>
+            Déconnexion
+          </ItemHeading>
+        </ItemWrapper>
+      </ItemNoLinkContainer>
     </DrawerWrapper>
   );
 };

@@ -4,7 +4,6 @@ import React, {
   useMemo,
   Dispatch,
   useContext,
-  useEffect,
 } from 'react';
 
 import { ActionMap } from '../../types/utilities';
@@ -70,18 +69,19 @@ type UserProviderType = {
 const UserProvider: React.FC<UserProviderType> = ({
   children,
 }: UserProviderType) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const { user } = useContext(AuthContext);
-
+  const [state, dispatch] = useReducer(
+    reducer,
+    user
+      ? {
+          type: UserActionTypes.FetchUser,
+          user: { ...user, birthDate: new Date(user.birthDate) },
+        }
+      : initialState,
+  );
   const value = useMemo(() => {
     return { state, dispatch };
   }, [state]);
-
-  useEffect(() => {
-    if (user) {
-      dispatch({ type: UserActionTypes.FetchUser, payload: user });
-    }
-  }, [user]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
