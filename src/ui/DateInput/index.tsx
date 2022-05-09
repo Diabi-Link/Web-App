@@ -26,6 +26,9 @@ const DateInput = ({
   return (
     <DatePicker
       {...props}
+      dropdownMode="select"
+      showMonthDropdown
+      showYearDropdown
       customInput={
         <Input
           errorText={errorText}
