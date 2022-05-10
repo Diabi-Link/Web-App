@@ -188,7 +188,13 @@ const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
       const newOrderedContacts = [...contacts];
       newOrderedContacts.sort(orderByLastMessageTimestamp);
       setOrderedContacts(newOrderedContacts);
-      setChatUserType(newOrderedContacts[0]);
+      if (!chatUserType) setChatUserType(newOrderedContacts[0]);
+    } else if (
+      contacts.length > 0 &&
+      !(conversations?.docs && conversations.docs.length > 0)
+    ) {
+      setOrderedContacts(contacts);
+      setChatUserType(contacts[0]);
     }
   }, [conversations, contacts]);
 

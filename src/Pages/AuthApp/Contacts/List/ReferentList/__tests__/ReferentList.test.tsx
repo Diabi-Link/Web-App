@@ -45,6 +45,10 @@ const contacts: UserType[] = [
   },
 ];
 
+const handleDelete = () => {
+  console.log('hello');
+};
+
 test('Inspecting patient list', async () => {
   render(
     <MockedProvider>
@@ -53,7 +57,7 @@ test('Inspecting patient list', async () => {
           <AuthContext.Provider value={{ user: mockUser }}>
             <UserProvider>
               <I18nextProvider i18n={i18n}>
-                <ReferentList contacts={contacts} />
+                <ReferentList contacts={contacts} handleDelete={handleDelete} />
               </I18nextProvider>
             </UserProvider>
           </AuthContext.Provider>

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { Icon } from 'react-icons-kit';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
@@ -28,6 +28,7 @@ const Add = (): JSX.Element => {
   } = useContext(UserContext);
   const { dispatch: altDispatch } = useContext(MainContext);
   const { t } = useTranslation();
+  const { push } = useHistory();
 
   const [addContact, { loading }] = useAddContact({
     onCompleted: () => {
@@ -54,6 +55,7 @@ const Add = (): JSX.Element => {
       },
     });
     resetForm();
+    push('/contacts/menu');
   };
 
   return (

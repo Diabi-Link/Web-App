@@ -7,8 +7,12 @@ import { Icon } from 'react-icons-kit';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
+import {
+  ContextActionTypes,
+  MainContext,
+} from '../../../../contexts/MainContext';
 import { UserContext } from '../../../../contexts/UserContext';
-import { useGetContact } from '../../../../api';
+import { useGetContact, useDeleteContact } from '../../../../api';
 
 import Button from '../../../../ui/Button';
 import Loader from '../../../../ui/Loader';
@@ -20,22 +24,69 @@ const List = (): JSX.Element => {
   const {
     state: { user },
   } = useContext(UserContext);
+  const { dispatch: altDispatch } = useContext(MainContext);
   const { push } = useHistory();
   const { t } = useTranslation();
 
-  const { data, loading } = useGetContact();
+  const [deleteContact] = useDeleteContact({
+    onCompleted: () => {
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: 'Vous avez supprimer un utilisateur avec succès',
+          noticeStyle: 'success',
+          persistent: false,
+          closeable: true,
+          duration: 5000,
+        },
+      });
+      push('/contacts/menu');
+    },
+    onError: () => {
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: 'Une erreur est survenu lors de la suppression',
+          noticeStyle: 'error',
+          persistent: false,
+          closeable: true,
+          duration: 5000,
+        },
+      });
+    },
+  });
+
+  const { data, loading, refetch } = useGetContact({
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'cache-and-network',
+  });
 
   if (loading) {
     return <Loader loaderStyle="white" />;
   }
 
+  const handleDelete = async (id: number) => {
+    await deleteContact({
+      variables: {
+        id: [{ id: parseFloat(id.toString()) }],
+      },
+    });
+    refetch();
+  };
+
   return (
     <Container data-testid="auth-contacts-list-page">
       <ListWrapper>
         {user?.account === 'patient' ? (
-          <ReferentList contacts={data?.Me.contact} />
+          <ReferentList
+            contacts={data?.Me.contact}
+            handleDelete={handleDelete}
+          />
         ) : (
-          <PatientList contacts={data?.Me.contact} />
+          <PatientList
+            contacts={data?.Me.contact}
+            handleDelete={handleDelete}
+          />
         )}
       </ListWrapper>
       <ButtonWrapper>

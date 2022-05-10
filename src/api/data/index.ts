@@ -29,6 +29,27 @@ export function useGetDataLazyQuery(
   return useAPILazyQuery(GET_DATA, options);
 }
 
+type GetDataOfResponse = {
+  getDataOf: [DataType];
+};
+
+const GET_DATA_OF = gql`
+  query getDataOf($from: DateTime!, $to: DateTime!, $userID: Float!) {
+    getDataOf(from: $from, to: $to, UserID: $userID) {
+      id
+      value
+      date
+      userId
+    }
+  }
+`;
+
+export function useGetDataOfLazyQuery(
+  options?: QueryHookOptions<GetDataOfResponse, GetDataData>,
+) {
+  return useAPILazyQuery(GET_DATA_OF, options);
+}
+
 type AddDataResponse = {
   AddData: { isLevelGood: boolean; message: string };
 };

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
@@ -6,58 +6,17 @@ import { Icon } from 'react-icons-kit';
 import { trash } from 'react-icons-kit/fa/trash';
 import { ReactComponent as ProfilePatient } from '../../../../../assets/svgs/ProfilePatient.svg';
 
-import {
-  ContextActionTypes,
-  MainContext,
-} from '../../../../../contexts/MainContext';
 import { UserType } from '../../../../../types/user';
-import { useDeleteContact } from '../../../../../api';
 
 import Heading from '../../../../../ui/Heading';
 
 type Props = {
   contacts: UserType[] | undefined;
+  handleDelete: (id: number) => any;
 };
 
-const PatientList = ({ contacts }: Props): JSX.Element => {
+const PatientList = ({ contacts, handleDelete }: Props): JSX.Element => {
   const { t } = useTranslation();
-  const { dispatch: altDispatch } = useContext(MainContext);
-  // const [newContacts, setNewContacts] = useState(contacts);
-
-  const [deleteContact] = useDeleteContact({
-    onCompleted: () => {
-      altDispatch({
-        type: ContextActionTypes.SetNotice,
-        payload: {
-          label: 'Vous avez supprimer un utilisateur avec succès',
-          noticeStyle: 'success',
-          persistent: false,
-          closeable: true,
-          duration: 5000,
-        },
-      });
-    },
-    onError: () => {
-      altDispatch({
-        type: ContextActionTypes.SetNotice,
-        payload: {
-          label: 'Une erreur est survenu lors de la suppression',
-          noticeStyle: 'error',
-          persistent: false,
-          closeable: true,
-          duration: 5000,
-        },
-      });
-    },
-  });
-
-  const handleDelete = (id: number) => {
-    deleteContact({
-      variables: {
-        id: [{ id: parseFloat(id.toString()) }],
-      },
-    });
-  };
 
   const getYear = (date: Date) => {
     const i = new Date(date);

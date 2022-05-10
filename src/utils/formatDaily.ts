@@ -59,11 +59,17 @@ export const formatDaily = (data: [DataType]) => {
   return dailyData;
 };
 
-export const dailyBrain = (data: [DataType]) => {
-  const actualDate = new Date('January 10 2022 00:00').getTime();
+export const dailyBrain = (data: DataType[]) => {
+  const actualDate = new Date('May 11 2022 00:00').getTime();
   const todayTime: number[] = [];
   const targetTime: number[] = [];
   const allValues: number[] = [];
+  if (!data.length)
+    return {
+      timeInTarget: 0,
+      lastScan: '',
+      average: 0,
+    };
   const lastScan = new Date(data.slice(-1)[0].date);
 
   data.forEach((d) => {
