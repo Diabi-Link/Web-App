@@ -60,7 +60,7 @@ export const formatDaily = (data: [DataType]) => {
 };
 
 export const dailyBrain = (data: DataType[]) => {
-  const actualDate = new Date('May 10 2022 00:00').getTime();
+  const actualDate = new Date('May 11 2022 00:00').getTime();
   const todayTime: number[] = [];
   const targetTime: number[] = [];
   const allValues: number[] = [];

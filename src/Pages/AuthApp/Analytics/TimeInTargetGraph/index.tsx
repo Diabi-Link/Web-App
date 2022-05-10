@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,7 +14,11 @@ import {
 
 import jwtDecode from 'jwt-decode';
 import Button from '../../../../ui/Button';
-import { useGetDataLazyQuery } from '../../../../api';
+import {
+  useGetContact,
+  useGetDataLazyQuery,
+  useGetDataOfLazyQuery,
+} from '../../../../api';
 import {
   formatTimeInTarget,
   pickDate,
@@ -22,6 +26,7 @@ import {
 } from '../../../../utils';
 import { useAuthToken } from '../../../../hooks/useAuthToken';
 import Loader from '../../../../ui/Loader';
+import { UserContext } from '../../../../contexts/UserContext';
 
 let ctx: CanvasRenderingContext2D | null;
 
@@ -68,6 +73,9 @@ const YAxisLeftTick = ({
 
 const TimeInTargetGraph = () => {
   const { t } = useTranslation();
+  const {
+    state: { user },
+  } = useContext(UserContext);
 
   const activeButton = [true, false, false];
   const { authToken } = useAuthToken();
@@ -101,10 +109,21 @@ const TimeInTargetGraph = () => {
       const { getData: dataTab } = payload;
       setData(formatTimeInTarget(dataTab));
     },
+    fetchPolicy: 'network-only',
   });
 
+  const [getDataOf] = useGetDataOfLazyQuery({
+    onCompleted: (payload) => {
+      const { getDataOf: dataTab } = payload;
+      setData(formatTimeInTarget(dataTab));
+    },
+    fetchPolicy: 'network-only',
+  });
+
+  const { data: contacts } = useGetContact();
+
   useEffect(() => {
-    if (authToken) {
+    if (authToken && user?.account === 'patient') {
       const decrypted: { userId: number } = jwtDecode(authToken);
       getData({
         variables: {
@@ -113,9 +132,22 @@ const TimeInTargetGraph = () => {
           userID: decrypted.userId,
         },
       });
+    } else if (
+      (user?.account === 'referent' ||
+        user?.account === 'medicalProfessional') &&
+      contacts &&
+      contacts.Me.contact.length > 0
+    ) {
+      getDataOf({
+        variables: {
+          from: new Date(pickDate(period)),
+          to: new Date(),
+          userID: parseInt(contacts.Me.contact[0].id.toString(), 10),
+        },
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [period]);
+  }, [period, contacts, user]);
 
   // const maxTextWidth = useMemo(
   //   () =>

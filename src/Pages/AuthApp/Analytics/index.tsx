@@ -10,6 +10,7 @@ import { ReactComponent as ProfileMP } from '../../../assets/svgs/ProfileMP.svg'
 import { ReactComponent as ProfileReferent } from '../../../assets/svgs/ProfileReferent.svg';
 
 import { UserContext } from '../../../contexts/UserContext';
+import { useGetContact } from '../../../api';
 
 const Analytics = (): JSX.Element => {
   const { t } = useTranslation();
@@ -28,6 +29,8 @@ const Analytics = (): JSX.Element => {
       svg: <ProfileReferent />,
     },
   };
+
+  const { data: contacts } = useGetContact();
   return (
     <Container data-testid="auth-analytics-page">
       <Wrapper>
@@ -37,9 +40,20 @@ const Analytics = (): JSX.Element => {
           <Line />
         </TitleWrapper>
         <AccountWrapper>
-          <AvatarWrapper>{user && avatars[user.account].svg}</AvatarWrapper>
+          <AvatarWrapper>{user && avatars.patient.svg}</AvatarWrapper>
           <UserDesc>
-            {user && user.firstName} {user && user.lastName}
+            {user && user.account === 'patient' && user.firstName}{' '}
+            {user && user.account === 'patient' && user.lastName}
+            {user &&
+              user.account !== 'patient' &&
+              contacts &&
+              contacts.Me.contact.length > 0 &&
+              contacts.Me.contact[0].firstName}{' '}
+            {user &&
+              user.account !== 'patient' &&
+              contacts &&
+              contacts.Me.contact.length > 0 &&
+              contacts.Me.contact[0].lastName}
           </UserDesc>
         </AccountWrapper>
         <TopWrapper>

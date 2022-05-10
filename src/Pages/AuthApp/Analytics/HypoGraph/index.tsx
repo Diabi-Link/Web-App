@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { ResponsiveContainer, BarChart, XAxis, LabelList, Bar } from 'recharts';
 import jwtDecode from 'jwt-decode';
-import { useGetDataLazyQuery } from '../../../../api';
+import { UserContext } from '../../../../contexts/UserContext';
+import {
+  useGetContact,
+  useGetDataLazyQuery,
+  useGetDataOfLazyQuery,
+} from '../../../../api';
 import { useAuthToken } from '../../../../hooks/useAuthToken';
 import { pickDate, formatHypo, HypoData } from '../../../../utils';
 
@@ -13,6 +18,9 @@ import Loader from '../../../../ui/Loader';
 const HypoGraph = () => {
   const { t } = useTranslation();
   const { authToken } = useAuthToken();
+  const {
+    state: { user },
+  } = useContext(UserContext);
 
   const activeButton = [true, false, false];
   const [isActive, setIsActive] = useState<boolean[]>(activeButton);
@@ -29,10 +37,22 @@ const HypoGraph = () => {
       const hypoData = formatHypo(dataTab);
       setData(hypoData);
     },
+    fetchPolicy: 'network-only',
   });
 
+  const [getDataOf] = useGetDataOfLazyQuery({
+    onCompleted: (payload) => {
+      const { getDataOf: dataTab } = payload;
+      const hypoData = formatHypo(dataTab);
+      setData(hypoData);
+    },
+    fetchPolicy: 'network-only',
+  });
+
+  const { data: contacts } = useGetContact();
+
   useEffect(() => {
-    if (authToken) {
+    if (authToken && user?.account === 'patient') {
       const decrypted: { userId: number } = jwtDecode(authToken);
       getData({
         variables: {
@@ -41,9 +61,22 @@ const HypoGraph = () => {
           userID: decrypted.userId,
         },
       });
+    } else if (
+      (user?.account === 'referent' ||
+        user?.account === 'medicalProfessional') &&
+      contacts &&
+      contacts.Me.contact.length > 0
+    ) {
+      getDataOf({
+        variables: {
+          from: new Date(pickDate(period)),
+          to: new Date(),
+          userID: parseInt(contacts.Me.contact[0].id.toString(), 10),
+        },
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [period]);
+  }, [period, user, contacts]);
 
   return (
     <Container>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,7 +14,11 @@ import {
 import { format } from 'date-fns';
 import jwtDecode from 'jwt-decode';
 import { useAuthToken } from '../../../../hooks/useAuthToken';
-import { useGetDataLazyQuery } from '../../../../api';
+import {
+  useGetContact,
+  useGetDataLazyQuery,
+  useGetDataOfLazyQuery,
+} from '../../../../api';
 import {
   // pickDate,
   formatDaily,
@@ -24,39 +28,68 @@ import {
   DailyData,
   BrainData,
 } from '../../../../utils';
+import { UserContext } from '../../../../contexts/UserContext';
 
 const DailyGraph = () => {
   const { t } = useTranslation();
   const { authToken } = useAuthToken();
+  const {
+    state: { user },
+  } = useContext(UserContext);
 
   const [data, setData] = useState<DailyData[]>([]);
   const [brain, setBrain] = useState<BrainData>();
 
-  const [getData, { loading }] = useGetDataLazyQuery({
+  const [getData] = useGetDataLazyQuery({
     onCompleted: (payload) => {
       const { getData: dataTab } = payload;
-      // const dailyTicks = getDailyTicks();
-      // const dailyDomain = getDailyDomain();
       const dailyData = formatDaily(dataTab);
       setData(dailyData);
       const brainData = dailyBrain(dataTab);
       setBrain(brainData);
     },
+    fetchPolicy: 'network-only',
   });
 
+  const [getDataOf] = useGetDataOfLazyQuery({
+    onCompleted: (payload) => {
+      const { getDataOf: dataTab } = payload;
+      const dailyData = formatDaily(dataTab);
+      setData(dailyData);
+      const brainData = dailyBrain(dataTab);
+      setBrain(brainData);
+    },
+    fetchPolicy: 'network-only',
+  });
+
+  const { data: contacts } = useGetContact();
+
   useEffect(() => {
-    if (authToken) {
+    if (authToken && user?.account === 'patient') {
       const decrypted: { userId: number } = jwtDecode(authToken);
       getData({
         variables: {
-          from: new Date('January 10 2022 00:00'),
-          to: new Date('January 11 2022 00:00'),
+          from: new Date('May 11 2022 00:00'),
+          to: new Date('May 12 2022 00:00'),
           userID: decrypted.userId,
+        },
+      });
+    } else if (
+      (user?.account === 'referent' ||
+        user?.account === 'medicalProfessional') &&
+      contacts &&
+      contacts.Me.contact.length > 0
+    ) {
+      getDataOf({
+        variables: {
+          from: new Date('May 11 2022 00:00'),
+          to: new Date('May 12 2022 00:00'),
+          userID: parseInt(contacts.Me.contact[0].id.toString(), 10),
         },
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]);
+  }, [user, contacts]);
 
   return (
     <Container>
@@ -76,8 +109,8 @@ const DailyGraph = () => {
             layout="horizontal"
           >
             <ReferenceArea
-              x1={new Date('January 10 2022 00:00').getTime()}
-              x2={new Date('January 11 2022 00:00').getTime()}
+              x1={new Date('May 11 2022 00:00').getTime()}
+              x2={new Date('May 12 2022 00:00').getTime()}
               y1={70}
               y2={170}
               strokeOpacity={0}
@@ -87,19 +120,19 @@ const DailyGraph = () => {
             <XAxis
               dataKey="time"
               domain={[
-                new Date('January 10 2022 00:00').getTime(),
-                new Date('January 11 2022 00:00').getTime(),
+                new Date('May 11 2022 00:00').getTime(),
+                new Date('May 12 2022 00:00').getTime(),
               ]}
               ticks={[
-                new Date('January 10 2022 00:00').getTime(),
-                new Date('January 10 2022 03:00').getTime(),
-                new Date('January 10 2022 06:00').getTime(),
-                new Date('January 10 2022 09:00').getTime(),
-                new Date('January 10 2022 12:00').getTime(),
-                new Date('January 10 2022 15:00').getTime(),
-                new Date('January 10 2022 18:00').getTime(),
-                new Date('January 10 2022 21:00').getTime(),
-                new Date('January 10 2022 23:59').getTime(),
+                new Date('May 11 2022 00:00').getTime(),
+                new Date('May 11 2022 03:00').getTime(),
+                new Date('May 11 2022 06:00').getTime(),
+                new Date('May 11 2022 09:00').getTime(),
+                new Date('May 11 2022 12:00').getTime(),
+                new Date('May 11 2022 15:00').getTime(),
+                new Date('May 11 2022 18:00').getTime(),
+                new Date('May 11 2022 21:00').getTime(),
+                new Date('May 11 2022 23:59').getTime(),
               ]}
               tickFormatter={(unixTime: number) => format(unixTime, 'HH:mm')}
               type="number"
