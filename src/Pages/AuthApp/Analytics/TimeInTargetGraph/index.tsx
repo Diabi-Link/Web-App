@@ -108,7 +108,7 @@ const TimeInTargetGraph = () => {
       const decrypted: { userId: number } = jwtDecode(authToken);
       getData({
         variables: {
-          from: new Date(pickDate(period)),
+          from: new Date(pickDate('days', period)),
           to: new Date(),
           userID: decrypted.userId,
         },

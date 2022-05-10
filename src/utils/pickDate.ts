@@ -1,5 +1,15 @@
-export const pickDate = (period: number) => {
+export const pickDate = (type: string, period: number) => {
   const event = new Date();
-  event.setDate(event.getDate() - period);
+
+  switch (type) {
+    case 'hours':
+      event.setHours(event.getHours() - period);
+      break;
+    case 'days':
+      event.setDate(event.getDate() - period);
+      break;
+    default:
+      break;
+  }
   return event.toJSON();
 };

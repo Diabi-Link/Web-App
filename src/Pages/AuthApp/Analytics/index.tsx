@@ -28,6 +28,7 @@ const Analytics = (): JSX.Element => {
       svg: <ProfileReferent />,
     },
   };
+
   return (
     <Container data-testid="auth-analytics-page">
       <Wrapper>

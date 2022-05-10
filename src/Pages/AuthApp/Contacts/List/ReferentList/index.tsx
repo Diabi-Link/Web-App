@@ -243,6 +243,7 @@ const IconWrapper = styled.button`
     height: 2.5rem;
   }
 `;
+
 const NameWrapper = styled.div`
   display: flex;
   flex-direction: column;
