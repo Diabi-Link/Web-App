@@ -1,180 +1,44 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
-import HypoGraph from './HypoGraph';
-import DailyGraph from './DailyGraph';
-import TimeInTargetGraph from './TimeInTargetGraph';
-
-import { ReactComponent as ProfilePatient } from '../../../assets/svgs/ProfilePatient.svg';
-import { ReactComponent as ProfileMP } from '../../../assets/svgs/ProfileMP.svg';
-import { ReactComponent as ProfileReferent } from '../../../assets/svgs/ProfileReferent.svg';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { UserContext } from '../../../contexts/UserContext';
 import { useGetContact } from '../../../api';
+import UserAnalytics from './UserAnalytics';
+import PatientChoice from './PatientChoice';
+import { UserType } from '../../../types/user';
 
 const Analytics = (): JSX.Element => {
-  const { t } = useTranslation();
   const {
     state: { user },
   } = useContext(UserContext);
+  const [userAnalytics, setUserAnalytics] = useState<UserType | undefined>(
+    undefined,
+  );
 
-  const avatars = {
-    patient: {
-      svg: <ProfilePatient />,
-    },
-    medicalProfessional: {
-      svg: <ProfileMP />,
-    },
-    referent: {
-      svg: <ProfileReferent />,
-    },
-  };
+  const { data: contacts } = useGetContact({
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'cache-and-network',
+  });
 
-  const { data: contacts } = useGetContact();
-  return (
-    <Container data-testid="auth-analytics-page">
-      <Wrapper>
-        <TitleWrapper>
-          <Line />
-          <SectionTitle>{t('Analytics.Title')}</SectionTitle>
-          <Line />
-        </TitleWrapper>
-        <AccountWrapper>
-          <AvatarWrapper>{user && avatars.patient.svg}</AvatarWrapper>
-          <UserDesc>
-            {user && user.account === 'patient' && user.firstName}{' '}
-            {user && user.account === 'patient' && user.lastName}
-            {user &&
-              user.account !== 'patient' &&
-              contacts &&
-              contacts.Me.contact.length > 0 &&
-              contacts.Me.contact[0].firstName}{' '}
-            {user &&
-              user.account !== 'patient' &&
-              contacts &&
-              contacts.Me.contact.length > 0 &&
-              contacts.Me.contact[0].lastName}
-          </UserDesc>
-        </AccountWrapper>
-        <TopWrapper>
-          <TimeInTargetGraph />
-          <HypoGraph />
-        </TopWrapper>
-        <BottomWrapper>
-          <DailyGraph />
-        </BottomWrapper>
-      </Wrapper>
-    </Container>
+  useEffect(() => {
+    if (user) {
+      if (user.account === 'patient') setUserAnalytics(user);
+      if (user.account === 'referent' && contacts)
+        setUserAnalytics(contacts?.Me.contact[0]);
+    }
+  }, [user, contacts]);
+
+  return !userAnalytics && user?.account === 'medicalProfessional' ? (
+    <PatientChoice
+      contacts={contacts?.Me.contact?.filter((c) => c.account === 'patient')}
+      setUserAnalytics={setUserAnalytics}
+    />
+  ) : (
+    <UserAnalytics
+      user={userAnalytics}
+      userAccount={user?.account}
+      setUserAnalytics={setUserAnalytics}
+    />
   );
 };
-
-const Container = styled.div`
-  height: 100vh;
-  width: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-
-  @media (min-width: 1024px) and (orientation: landscape) {
-    justify-content: center;
-    width: 85vw;
-  }
-`;
-
-const AccountWrapper = styled.div`
-  display: flex;
-  width: 92vw;
-
-  @media (min-width: 768px) {
-    width: 60vw;
-  }
-
-  @media (min-width: 1024px) and (orientation: landscape) {
-    width: calc(71%);
-    height: auto;
-  }
-`;
-
-const AvatarWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${(props) => props.theme.main.primaryLight};
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-`;
-
-const UserDesc = styled.label`
-  font-size: 22px;
-  font-weight: 600;
-  color: ${(props) => props.theme.main.dark};
-  margin: auto 30px;
-`;
-
-const TitleWrapper = styled.div`
-  display: flex;
-  width: 92vw;
-
-  @media (min-width: 768px) {
-    width: 60vw;
-  }
-
-  @media (min-width: 1024px) and (orientation: landscape) {
-    width: calc(71%);
-    height: auto;
-  }
-`;
-
-const SectionTitle = styled.label`
-  display: flex;
-  font-size: 30px;
-  font-weight: 800;
-  color: ${(props) => props.theme.main.primary};
-  margin: 0px 15px;
-`;
-
-const Line = styled.div`
-  margin: auto 0;
-  border: 2px solid ${(props) => props.theme.main.primary};
-  background-color: ${(props) => props.theme.main.primary};
-  flex: 1;
-  height: 1px;
-`;
-
-const TopWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  margin: 5px;
-
-  & > div {
-    margin: 10px;
-  }
-
-  @media (min-width: 1024px) and (orientation: landscape) {
-    flex-direction: row;
-    & > div {
-      margin: 10px;
-    }
-  }
-`;
-
-const BottomWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-`;
 
 export default Analytics;

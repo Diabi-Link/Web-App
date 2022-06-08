@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
@@ -28,14 +28,17 @@ import {
   DailyData,
   BrainData,
 } from '../../../../utils';
-import { UserContext } from '../../../../contexts/UserContext';
+import { UserType } from '../../../../types/user';
 
-const DailyGraph = () => {
+const DailyGraph = ({
+  userAccount,
+  user,
+}: {
+  userAccount: UserType['account'] | undefined;
+  user?: UserType | null;
+}) => {
   const { t } = useTranslation();
   const { authToken } = useAuthToken();
-  const {
-    state: { user },
-  } = useContext(UserContext);
 
   const [data, setData] = useState<DailyData[]>([]);
   const [brain, setBrain] = useState<BrainData>();
@@ -63,28 +66,30 @@ const DailyGraph = () => {
   });
 
   const { data: contacts } = useGetContact();
+  const today = new Date();
+  const tommorow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
   useEffect(() => {
-    if (authToken && user?.account === 'patient') {
+    if (authToken && userAccount === 'patient') {
       const decrypted: { userId: number } = jwtDecode(authToken);
       getData({
         variables: {
-          from: new Date('May 11 2022 00:00'),
-          to: new Date('May 12 2022 00:00'),
+          from: new Date(`${today.toLocaleDateString()} 00:00`),
+          to: new Date(`${tommorow.toLocaleDateString()} 00:00`),
           userID: decrypted.userId,
         },
       });
     } else if (
-      (user?.account === 'referent' ||
-        user?.account === 'medicalProfessional') &&
+      (userAccount === 'referent' || userAccount === 'medicalProfessional') &&
+      user &&
       contacts &&
       contacts.Me.contact.length > 0
     ) {
       getDataOf({
         variables: {
-          from: new Date('May 11 2022 00:00'),
-          to: new Date('May 12 2022 00:00'),
-          userID: parseInt(contacts.Me.contact[0].id.toString(), 10),
+          from: new Date(`${today.toLocaleDateString()}  00:00`),
+          to: new Date(`${tommorow.toLocaleDateString()} 00:00`),
+          userID: parseInt(user.id.toString(), 10),
         },
       });
     }
@@ -109,8 +114,8 @@ const DailyGraph = () => {
             layout="horizontal"
           >
             <ReferenceArea
-              x1={new Date('May 11 2022 00:00').getTime()}
-              x2={new Date('May 12 2022 00:00').getTime()}
+              x1={new Date(`${today.toLocaleDateString()} 00:00`).getTime()}
+              x2={new Date(`${tommorow.toLocaleDateString()} 00:00`).getTime()}
               y1={70}
               y2={170}
               strokeOpacity={0}
@@ -120,19 +125,19 @@ const DailyGraph = () => {
             <XAxis
               dataKey="time"
               domain={[
-                new Date('May 11 2022 00:00').getTime(),
-                new Date('May 12 2022 00:00').getTime(),
+                new Date(`${today.toLocaleDateString()} 00:00`).getTime(),
+                new Date(`${tommorow.toLocaleDateString()} 00:00`).getTime(),
               ]}
               ticks={[
-                new Date('May 11 2022 00:00').getTime(),
-                new Date('May 11 2022 03:00').getTime(),
-                new Date('May 11 2022 06:00').getTime(),
-                new Date('May 11 2022 09:00').getTime(),
-                new Date('May 11 2022 12:00').getTime(),
-                new Date('May 11 2022 15:00').getTime(),
-                new Date('May 11 2022 18:00').getTime(),
-                new Date('May 11 2022 21:00').getTime(),
-                new Date('May 11 2022 23:59').getTime(),
+                new Date(`${today.toLocaleDateString()} 00:00`).getTime(),
+                new Date(`${today.toLocaleDateString()} 03:00`).getTime(),
+                new Date(`${today.toLocaleDateString()} 06:00`).getTime(),
+                new Date(`${today.toLocaleDateString()} 09:00`).getTime(),
+                new Date(`${today.toLocaleDateString()} 12:00`).getTime(),
+                new Date(`${today.toLocaleDateString()} 15:00`).getTime(),
+                new Date(`${today.toLocaleDateString()} 18:00`).getTime(),
+                new Date(`${today.toLocaleDateString()} 21:00`).getTime(),
+                new Date(`${today.toLocaleDateString()} 23:59`).getTime(),
               ]}
               tickFormatter={(unixTime: number) => format(unixTime, 'HH:mm')}
               type="number"

@@ -73,11 +73,12 @@ const Alerts = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading || !user) {
-    return <Loader loaderStyle="white" />;
-  }
+  // if (loading || !user) {
+  //   return <Loader loaderStyle="white" />;
+  // }
 
   const handleClick = (id: number, type: string, period: number): void => {
+    if (!user) return;
     setIsActiveButton(isActiveButton.map((active, key) => key === id));
     getAlerts({
       variables: {
@@ -106,6 +107,7 @@ const Alerts = (): JSX.Element => {
         <PageTitle level={1}>{t('Alerts.Title')}</PageTitle>
         <FilterWrapper>
           <FilterButton
+            data-testid="auth-alert-btn1"
             id="all"
             type="submit"
             label={t('Alerts.All')}
@@ -115,6 +117,7 @@ const Alerts = (): JSX.Element => {
             onClick={() => handleClick(0, 'days', 365)}
           />
           <FilterButton
+            data-testid="auth-alert-btn2"
             id="1hour"
             type="submit"
             label={t('Alerts.1hour')}
@@ -124,6 +127,7 @@ const Alerts = (): JSX.Element => {
             onClick={() => handleClick(1, 'hours', 1)}
           />
           <FilterButton
+            data-testid="auth-alert-btn3"
             id="1day"
             type="submit"
             label={t('Alerts.24hours')}
@@ -133,6 +137,7 @@ const Alerts = (): JSX.Element => {
             onClick={() => handleClick(2, 'days', 1)}
           />
           <FilterButton
+            data-testid="auth-alert-btn4"
             id="7days"
             type="submit"
             label={t('Alerts.1week')}

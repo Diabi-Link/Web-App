@@ -26,7 +26,7 @@ const mockUser: UserType = {
   lastName: 'Doe',
   email: 'john.doe@gmail.com',
   birthDate: new Date(),
-  account: 'patient',
+  account: 'referent',
 };
 
 test('Inspecting alerts page', async () => {
@@ -48,8 +48,8 @@ test('Inspecting alerts page', async () => {
   await waitFor(() =>
     expect(screen.getByTestId('auth-alert-page')).toBeInTheDocument(),
   );
-  userEvent.click(screen.getByTestId('hypo-7'));
-  userEvent.click(screen.getByTestId('hypo-14'));
-  userEvent.click(screen.getByTestId('hypo-30'));
-  userEvent.click(screen.getByTestId('hypo-34'));
+  userEvent.click(screen.getByTestId('auth-alert-btn1'));
+  userEvent.click(screen.getByTestId('auth-alert-btn2'));
+  userEvent.click(screen.getByTestId('auth-alert-btn3'));
+  userEvent.click(screen.getByTestId('auth-alert-btn4'));
 });

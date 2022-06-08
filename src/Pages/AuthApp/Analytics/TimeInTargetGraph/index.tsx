@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import {
@@ -26,7 +26,7 @@ import {
 } from '../../../../utils';
 import { useAuthToken } from '../../../../hooks/useAuthToken';
 import Loader from '../../../../ui/Loader';
-import { UserContext } from '../../../../contexts/UserContext';
+import { UserType } from '../../../../types/user';
 
 let ctx: CanvasRenderingContext2D | null;
 
@@ -71,11 +71,14 @@ const YAxisLeftTick = ({
   );
 };
 
-const TimeInTargetGraph = () => {
+const TimeInTargetGraph = ({
+  userAccount,
+  user,
+}: {
+  userAccount: UserType['account'] | undefined;
+  user?: UserType | null;
+}) => {
   const { t } = useTranslation();
-  const {
-    state: { user },
-  } = useContext(UserContext);
 
   const activeButton = [true, false, false];
   const { authToken } = useAuthToken();
@@ -123,7 +126,7 @@ const TimeInTargetGraph = () => {
   const { data: contacts } = useGetContact();
 
   useEffect(() => {
-    if (authToken && user?.account === 'patient') {
+    if (authToken && userAccount === 'patient') {
       const decrypted: { userId: number } = jwtDecode(authToken);
       getData({
         variables: {
@@ -133,8 +136,8 @@ const TimeInTargetGraph = () => {
         },
       });
     } else if (
-      (user?.account === 'referent' ||
-        user?.account === 'medicalProfessional') &&
+      (userAccount === 'referent' || userAccount === 'medicalProfessional') &&
+      user &&
       contacts &&
       contacts.Me.contact.length > 0
     ) {
@@ -142,7 +145,7 @@ const TimeInTargetGraph = () => {
         variables: {
           from: new Date(pickDate('days', period)),
           to: new Date(),
-          userID: parseInt(contacts.Me.contact[0].id.toString(), 10),
+          userID: parseInt(user.id.toString(), 10),
         },
       });
     }

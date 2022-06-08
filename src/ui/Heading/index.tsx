@@ -5,6 +5,7 @@ type Props = {
   children: string | React.ReactNode;
   level: 1 | 2 | 3 | 4 | 5 | 6;
   className?: string;
+  onClick?: any;
 };
 
 // TODO: define default font size and margin for differents levels
@@ -49,12 +50,18 @@ const StyledHeading = styled.div<{ as: string } & Props>`
   font-weight: bolder;
 `;
 
-const Heading = ({ level, children, className }: Props): JSX.Element => {
+const Heading = ({
+  level,
+  children,
+  className,
+  onClick,
+}: Props): JSX.Element => {
   return (
     <StyledHeading
       as={`h${level}` as React.ElementType}
       level={level}
       className={className || ''}
+      onClick={onClick}
     >
       {children}
     </StyledHeading>
