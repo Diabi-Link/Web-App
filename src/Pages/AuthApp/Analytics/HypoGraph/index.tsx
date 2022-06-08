@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { ResponsiveContainer, BarChart, XAxis, LabelList, Bar } from 'recharts';
 import jwtDecode from 'jwt-decode';
-import { UserContext } from '../../../../contexts/UserContext';
 import {
   useGetContact,
   useGetDataLazyQuery,
@@ -14,13 +13,17 @@ import { pickDate, formatHypo, HypoData } from '../../../../utils';
 
 import Button from '../../../../ui/Button';
 import Loader from '../../../../ui/Loader';
+import { UserType } from '../../../../types/user';
 
-const HypoGraph = () => {
+const HypoGraph = ({
+  userAccount,
+  user,
+}: {
+  userAccount: UserType['account'] | undefined;
+  user?: UserType | null;
+}) => {
   const { t } = useTranslation();
   const { authToken } = useAuthToken();
-  const {
-    state: { user },
-  } = useContext(UserContext);
 
   const activeButton = [true, false, false];
   const [isActive, setIsActive] = useState<boolean[]>(activeButton);
@@ -52,7 +55,7 @@ const HypoGraph = () => {
   const { data: contacts } = useGetContact();
 
   useEffect(() => {
-    if (authToken && user?.account === 'patient') {
+    if (authToken && userAccount === 'patient') {
       const decrypted: { userId: number } = jwtDecode(authToken);
       getData({
         variables: {
@@ -62,8 +65,8 @@ const HypoGraph = () => {
         },
       });
     } else if (
-      (user?.account === 'referent' ||
-        user?.account === 'medicalProfessional') &&
+      (userAccount === 'referent' || userAccount === 'medicalProfessional') &&
+      user &&
       contacts &&
       contacts.Me.contact.length > 0
     ) {
@@ -71,7 +74,7 @@ const HypoGraph = () => {
         variables: {
           from: new Date(pickDate('days', period)),
           to: new Date(),
-          userID: parseInt(contacts.Me.contact[0].id.toString(), 10),
+          userID: parseInt(user.id.toString(), 10),
         },
       });
     }

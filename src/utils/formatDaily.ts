@@ -47,7 +47,7 @@ export type BrainData = {
 //   return dailyTicks;
 // };
 
-export const formatDaily = (data: [DataType]) => {
+export const formatDaily = (data: DataType[]) => {
   const dailyData: DailyData[] = [];
 
   data.forEach((d) => {
@@ -60,7 +60,8 @@ export const formatDaily = (data: [DataType]) => {
 };
 
 export const dailyBrain = (data: DataType[]) => {
-  const actualDate = new Date('May 11 2022 00:00').getTime();
+  const today = new Date();
+  const actualDate = new Date(`${today.toLocaleDateString()} 00:00`).getTime();
   const todayTime: number[] = [];
   const targetTime: number[] = [];
   const allValues: number[] = [];
