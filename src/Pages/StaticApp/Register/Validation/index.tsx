@@ -1,5 +1,13 @@
 import * as Yup from 'yup';
 
+const minimumAge = new Date(
+  new Date().setFullYear(new Date().getFullYear() - 7),
+);
+
+const maximumAge = new Date(
+  new Date().setFullYear(new Date().getFullYear() - 120),
+);
+
 const ValidateUserSchema = Yup.object().shape({
   firstName: Yup.string()
     .max(30, 'Doit être inférieure à 30 caractères')
@@ -10,7 +18,11 @@ const ValidateUserSchema = Yup.object().shape({
   email: Yup.string()
     .email('Adresse email invalide')
     .required('Adresse email requise'),
-  birthDate: Yup.date().required('Date requise').nullable(),
+  birthDate: Yup.date()
+    .required('Date requise')
+    .nullable()
+    .max(minimumAge, 'Âge minimum de 7 ans requis')
+    .min(maximumAge, 'Âge maximum de 120 ans'),
 });
 
 const ValidatePasswordSchema = Yup.object().shape({
