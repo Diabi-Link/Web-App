@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Icon } from 'react-icons-kit';
 import { lock } from 'react-icons-kit/fa/lock';
 import { home } from 'react-icons-kit/fa/home';
@@ -15,10 +15,10 @@ import {
   UserActionTypes,
   UserContext,
 } from '../../../../../contexts/UserContext';
-import { ReactComponent as LogoText } from '../../../../../assets/svgs/DiabiLink.svg';
 import Link from '../../../../../ui/Link';
 import Heading from '../../../../../ui/Heading';
 import { useAuthToken } from '../../../../../hooks/useAuthToken';
+import { avatars } from '../../../../../utils/avatars';
 
 type Props = {
   onMobile?: {
@@ -46,7 +46,7 @@ const ItemContainer = styled(Link)<{ isActive: boolean }>`
   border: none;
   background-color: ${({ theme, isActive }) =>
     isActive ? theme.main.primaryLight : 'transparent'};
-  margin-top: 1.875rem;
+  margin-top: 1.475rem;
   cursor: pointer;
 `;
 
@@ -54,7 +54,7 @@ const ItemNoLinkContainer = styled.div`
   width: 100%;
   border: none;
   background-color: transparent;
-  margin-top: 1.875rem;
+  margin-top: 1.475rem;
   cursor: pointer;
 `;
 
@@ -64,6 +64,11 @@ const ItemWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  ${({ onClick }) =>
+    onClick !== undefined &&
+    css`
+      cursor: pointer;
+    `}
 `;
 
 const ItemIcon = styled.button<{ isActive: boolean }>`
@@ -78,12 +83,27 @@ const ItemIcon = styled.button<{ isActive: boolean }>`
 
 const LogoWrapper = styled.div<Pick<Arguments, 'isOnMobile'>>`
   margin-left: 0.625rem;
-  padding-top: ${({ isOnMobile }) => (isOnMobile ? '1rem' : '0')};
+  padding-top: 0.5rem;
+  display: flex;
+  align-items: center;
 `;
 
-const StyledLogoText = styled(LogoText)`
-  height: 1.35rem;
-  width: auto;
+const Photo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: ${(props) => props.theme.main.primaryLight};
+  border-radius: 50%;
+  margin-right: 10px;
+`;
+
+const NameText = styled.p`
+  color: ${({ theme }) => theme.main.white};
+  font-weight: 600;
+  width: 100%;
+  min-width: 14.5rem;
 `;
 
 const ItemHeading = styled(Heading)<{ isActive: boolean }>`
@@ -96,13 +116,12 @@ const ItemHeading = styled(Heading)<{ isActive: boolean }>`
 
 const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   const location = useLocation();
-  const { dispatch } = useContext(UserContext);
-  const { removeAuthToken } = useAuthToken();
-  const { push } = useHistory();
-
   const {
+    dispatch,
     state: { user },
   } = useContext(UserContext);
+  const { removeAuthToken } = useAuthToken();
+  const { push } = useHistory();
 
   const closeDrawerOnMobile = () => {
     setChatOn(false);
@@ -120,15 +139,28 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   return (
     <DrawerWrapper>
       <ItemWrapper>
-        {!onMobile && (
-          <ItemIcon onClick={handleLock} isActive={isLocked}>
-            <Icon icon={lock} size={34} />
-          </ItemIcon>
-        )}
         <LogoWrapper isOnMobile={onMobile !== undefined}>
-          <StyledLogoText />
+          <Photo>{user && avatars[user.account].svg}</Photo>{' '}
+          <NameText>
+            {user?.firstName} {user?.lastName}
+          </NameText>
         </LogoWrapper>
       </ItemWrapper>
+
+      <ItemNoLinkContainer>
+        <ItemWrapper onClick={handleLock}>
+          {!onMobile && (
+            <>
+              <ItemIcon isActive={isLocked}>
+                <Icon icon={lock} size={34} />
+              </ItemIcon>
+              <ItemHeading isActive={isLocked} level={2}>
+                Verrouiller
+              </ItemHeading>
+            </>
+          )}
+        </ItemWrapper>
+      </ItemNoLinkContainer>
 
       <ItemContainer
         to="/"
