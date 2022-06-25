@@ -10,7 +10,7 @@ import { plus } from 'react-icons-kit/fa/plus';
 import { areaChart } from 'react-icons-kit/fa/areaChart';
 import { comments } from 'react-icons-kit/fa/comments';
 import { ic_notifications as notification } from 'react-icons-kit/md/ic_notifications';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   UserActionTypes,
   UserContext,
@@ -98,6 +98,7 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   const location = useLocation();
   const { dispatch } = useContext(UserContext);
   const { removeAuthToken } = useAuthToken();
+  const { push } = useHistory();
 
   const {
     state: { user },
@@ -111,6 +112,7 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   };
 
   const logout = (): void => {
+    push('/');
     removeAuthToken();
     dispatch({ type: UserActionTypes.EmptyUser });
   };
