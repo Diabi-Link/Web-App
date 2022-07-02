@@ -2,7 +2,6 @@ import React, { Dispatch, SetStateAction, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { Icon } from 'react-icons-kit';
 import { lock } from 'react-icons-kit/fa/lock';
-import { home } from 'react-icons-kit/fa/home';
 import { group } from 'react-icons-kit/fa/group';
 import { signOut } from 'react-icons-kit/fa/signOut';
 import { user as userIcon } from 'react-icons-kit/fa/user';
@@ -163,6 +162,22 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
       </ItemNoLinkContainer>
 
       <ItemContainer
+        to="/analytics"
+        isActive={location.pathname === '/analytics'}
+        onClick={closeDrawerOnMobile}
+        data-testid="analytics-navigation-button"
+      >
+        <ItemWrapper>
+          <ItemIcon isActive={location.pathname === '/analytics'}>
+            <Icon icon={areaChart} size={32} />
+          </ItemIcon>
+          <ItemHeading isActive={location.pathname === '/analytics'} level={2}>
+            Analytics
+          </ItemHeading>
+        </ItemWrapper>
+      </ItemContainer>
+
+      {/* <ItemContainer
         to="/"
         isActive={location.pathname === '/'}
         onClick={closeDrawerOnMobile}
@@ -176,7 +191,7 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
             Accueil
           </ItemHeading>
         </ItemWrapper>
-      </ItemContainer>
+      </ItemContainer> */}
 
       <ItemContainer
         to="/contacts/menu"
@@ -217,22 +232,6 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
           </ItemWrapper>
         </ItemContainer>
       )}
-
-      <ItemContainer
-        to="/analytics"
-        isActive={location.pathname === '/analytics'}
-        onClick={closeDrawerOnMobile}
-        data-testid="analytics-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname === '/analytics'}>
-            <Icon icon={areaChart} size={32} />
-          </ItemIcon>
-          <ItemHeading isActive={location.pathname === '/analytics'} level={2}>
-            Analytics
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer>
 
       <ItemContainer
         to="/alerts"
