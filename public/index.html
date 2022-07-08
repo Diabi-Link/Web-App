@@ -9,16 +9,22 @@
       name="description"
       content="Application de suivi des patients diabétiques avec leur proches et le corps médical"
     />
-    <meta
-      name="keywords"
-      content="Diabète, Patient, Médecin, Diabétique"
-    />
-    <meta
-      name="author"
-      content="DiabiLink"
-    />
+    <meta name="keywords" content="Diabète, Patient, Médecin, Diabétique" />
+    <meta name="author" content="DiabiLink" />
     <link rel="apple-touch-icon" href="./icon.png" />
     <title>Diabi'Link</title>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-J58SNG0MHL"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-J58SNG0MHL');
+    </script>
   </head>
   <body>
     <div id="root"></div>
