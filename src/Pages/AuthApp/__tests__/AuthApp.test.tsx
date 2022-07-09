@@ -42,15 +42,15 @@ test('Auth App rendering/navigating drawer menu', async () => {
     </MockedProvider>,
   );
   await waitFor(() =>
-    expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
+    expect(screen.getByTestId('auth-analytics-page')).toBeInTheDocument(),
   );
   userEvent.click(screen.getByTestId('profile-navigation-button'));
   await waitFor(() =>
     expect(screen.getByTestId('profile-page')).toBeInTheDocument(),
   );
-  userEvent.click(screen.getByTestId('home-navigation-button'));
+  userEvent.click(screen.getByTestId('analytics-navigation-button'));
   await waitFor(() =>
-    expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
+    expect(screen.getByTestId('auth-analytics-page')).toBeInTheDocument(),
   );
 });
 
@@ -73,14 +73,14 @@ test('Auth App rendering/navigating hamburger menu', async () => {
     </MockedProvider>,
   );
   await waitFor(() =>
-    expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
+    expect(screen.getByTestId('auth-analytics-page')).toBeInTheDocument(),
   );
   userEvent.click(screen.getByTestId('profile-navigation-button'));
   await waitFor(() =>
     expect(screen.getByTestId('profile-page')).toBeInTheDocument(),
   );
-  userEvent.click(screen.getByTestId('home-navigation-button'));
+  userEvent.click(screen.getByTestId('analytics-navigation-button'));
   await waitFor(() =>
-    expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
+    expect(screen.getByTestId('auth-analytics-page')).toBeInTheDocument(),
   );
 });
