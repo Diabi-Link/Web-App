@@ -84,7 +84,8 @@
     "Confirm": {
       "Title": "Vérifiez votre email 📬",
       "Desc": "Votre inscription a bien été prise en compte. Un email va vous être envoyé prochainement avec un lien pour vérifier votre compte. Si vous n’avez pas reçu ce mail après quelques minutes, pensez à vérifier votre dossier spam.",
-      "ResendButton": "Renvoyez le mail"
+      "ResendButton": "Renvoyez le mail",
+      "Validate": "Valider le code"
     }
   },
   "Profile": {

@@ -26,6 +26,10 @@ const StepWrapper = styled.div`
   display: flex;
   align-items: center;
 
+  @media (max-width: 1200px) {
+    display: none;
+  }
+
   @media (min-width: 1500px) {
     margin: 3rem;
   }
@@ -39,6 +43,10 @@ const Right = styled.div`
   height: 100vh;
   background-color: ${(props) => props.theme.main.primaryLighter};
 
+  @media (max-width: 1200px) {
+    display: none;
+  }
+
   & > svg {
     margin: 30px 0px;
   }
@@ -49,6 +57,9 @@ const Left = styled.div`
   flex-direction: column;
   align-items: center;
   width: 70vw;
+  @media (max-width: 1200px) {
+    width: 100vw;
+  }
   height: 100vh;
 `;
 
@@ -84,7 +95,11 @@ const Text = styled.p`
   color: ${(props) => props.theme.main.primary};
 `;
 
-const StepNavWrapper = styled.div``;
+const StepNavWrapper = styled.div`
+  @media (max-width: 1200px) {
+    display: none;
+  }
+`;
 
 const Register = (): JSX.Element => {
   const { t } = useTranslation();
@@ -132,6 +147,7 @@ const Register = (): JSX.Element => {
         </StepWrapper>
         <FormWrapper>
           <Switch>
+            {/* <Route path="/register/user" exact render={() => <Confirm />} /> */}
             <Route
               path="/register/user"
               exact

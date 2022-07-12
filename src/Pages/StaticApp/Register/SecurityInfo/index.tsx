@@ -22,62 +22,6 @@ type Props = {
   onClick: (step: number) => void;
 };
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-
-  @media (min-width: 1500px) {
-    width: 80%;
-  }
-`;
-
-const Wrapper = styled(Form)`
-  width: 100%;
-  flex: 1;
-`;
-
-const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 60%;
-  margin-bottom: 50px;
-`;
-
-const PasswordBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-`;
-
-const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  margin: 15px;
-`;
-
-const InputLabel = styled.label`
-  font-size: 16px;
-  font-weight: 500;
-  margin: 15px 5px;
-`;
-
-const StyledButton = styled(Button)`
-  width: 150px;
-  height: 40px;
-`;
-
 const SecurityInfo = ({ onClick }: Props): JSX.Element => {
   const { t } = useTranslation();
   const {
@@ -205,5 +149,61 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
     </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  @media (min-width: 1500px) {
+    width: 80%;
+  }
+`;
+
+const Wrapper = styled(Form)`
+  width: 100%;
+  flex: 1;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 60%;
+  margin-bottom: 50px;
+`;
+
+const PasswordBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 15px;
+`;
+
+const InputLabel = styled.label`
+  font-size: 16px;
+  font-weight: 500;
+  margin: 15px 5px;
+`;
+
+const StyledButton = styled(Button)`
+  width: 150px;
+  height: 40px;
+`;
 
 export default SecurityInfo;
