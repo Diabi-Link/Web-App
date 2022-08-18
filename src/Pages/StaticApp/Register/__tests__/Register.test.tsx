@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import React from 'react';
 
@@ -26,7 +26,7 @@ const mockUser: UserType = {
   firstName: 'John',
   lastName: 'Doe',
   email: 'john.doe@gmail.com',
-  birthDate: new Date(date.getFullYear(), date.getMonth(), 1),
+  birthDate: new Date(date.getTime() - 24 * 60 * 60 * 1000 * 365 * 10),
   account: 'referent',
 };
 
@@ -52,9 +52,12 @@ test('Test register worflow', async () => {
   userEvent.type(screen.getByTestId('lastName-input'), mockUser.lastName);
   userEvent.type(screen.getByTestId('email-input'), mockUser.email);
   userEvent.click(screen.getByTestId('birthDate-input'));
-  userEvent.click(
-    document.getElementsByClassName('react-datepicker__day--001')[0],
+  const datePicker = screen.getByTestId('birthDate-input');
+  fireEvent.click(datePicker);
+  await waitFor(() =>
+    fireEvent.change(datePicker, { target: { value: '29 Oct, 2010' } }),
   );
+
   userEvent.click(screen.getByTestId('next-button'));
   await waitFor(() =>
     expect(screen.getByText(en.Register.Account.Title)).toBeInTheDocument(),

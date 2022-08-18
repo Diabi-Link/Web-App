@@ -27,19 +27,19 @@ export const formatTimeInTarget = (data: [DataType]) => {
   const timeInTargetData: TimeInTargetData[] = [
     {
       name: '> 240',
-      percentage: (maxHyper * 100) / length,
+      percentage: (maxHyper * 100) / length || 0,
     },
     {
       name: '181 - 240',
-      percentage: (hyper * 100) / length,
+      percentage: (hyper * 100) / length || 0,
     },
     {
       name: '70 - 180',
-      percentage: (normal * 100) / length,
+      percentage: (normal * 100) / length || 0,
     },
     {
       name: '< 70',
-      percentage: (hypo * 100) / length,
+      percentage: (hypo * 100) / length || 0,
     },
   ];
 

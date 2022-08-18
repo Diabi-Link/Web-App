@@ -41,7 +41,7 @@ test('Inspecting chat page', async () => {
     </MockedProvider>,
   );
   await waitFor(() =>
-    expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
+    expect(screen.getByTestId('auth-analytics-page')).toBeInTheDocument(),
   );
   userEvent.click(screen.getByTestId('chat-navigation-button'));
   await waitFor(() =>

@@ -1,4 +1,13 @@
+/* eslint-disable no-useless-escape */
 import * as Yup from 'yup';
+
+const minimumAge = new Date(
+  new Date().setFullYear(new Date().getFullYear() - 7),
+);
+
+const maximumAge = new Date(
+  new Date().setFullYear(new Date().getFullYear() - 120),
+);
 
 const ValidateUserSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -10,13 +19,19 @@ const ValidateUserSchema = Yup.object().shape({
   email: Yup.string()
     .email('Adresse email invalide')
     .required('Adresse email requise'),
-  birthDate: Yup.date().required('Date requise').nullable(),
+  birthDate: Yup.date()
+    .required('Date requise')
+    .nullable()
+    .max(minimumAge, 'Âge minimum de 7 ans requis')
+    .min(maximumAge, 'Âge maximum de 120 ans'),
 });
 
 const ValidatePasswordSchema = Yup.object().shape({
   password: Yup.string()
-    .min(8, 'Mot de passe trop court')
-    .max(20, 'Doit être inférieure à 20 caractères')
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      'Doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial',
+    )
     .required('Mot de passe requis'),
   confirmPassword: Yup.string()
     .oneOf(

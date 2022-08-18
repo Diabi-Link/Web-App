@@ -5,7 +5,6 @@ import Loader from '../../../../ui/Loader';
 import NavigationWrapper from '../NavigationWrapper';
 import { ChatProvider } from '../../../../contexts/ChatContext';
 
-const Home = lazy(() => import('../../Home'));
 const Contacts = lazy(() => import('../../Contacts'));
 const Profile = lazy(() => import('../../Profile'));
 const AddMeasurement = lazy(() => import('../../AddMeasurement'));
@@ -32,14 +31,13 @@ const Nav = (): JSX.Element => {
           }
         >
           <Switch>
-            <Route path="/" exact component={Home} />
             <Route path="/contacts" component={Contacts} />
             <Route path="/add-measurement" component={AddMeasurement} />
             <Route path="/analytics" component={Analytics} />
             <Route path="/alerts" component={Alerts} />
             <Route path="/profile" component={Profile} />
             <Route path="/chat" exact component={Chat} />
-            <Redirect to="/" />
+            <Redirect to="/analytics" />
           </Switch>
         </Suspense>
       </NavigationWrapper>

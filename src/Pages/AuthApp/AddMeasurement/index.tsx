@@ -58,8 +58,10 @@ const AddData = () => {
       return;
     }
 
-    if (target.value.length >= 2 && target.value[1] !== '.') {
-      target.value = `${target.value.slice(0, 1)}.${target.value.slice(1)}`;
+    target.value = target.value.replace(/\./g, ',').replace(/[^0-9,-]/g, '');
+
+    if (target.value.length === 2 && target.value[1] !== ',') {
+      target.value = `${target.value.slice(0, 1)},${target.value.slice(1)}`;
     } else if (
       target.value[target.value.length - 1] < '0' ||
       target.value[target.value.length - 1] > '9' ||
@@ -94,7 +96,7 @@ const AddData = () => {
                   name="bloodSugarLevels"
                   type="text"
                   data-testid="bloodSugarLevels-input"
-                  placeholder="0.80"
+                  placeholder="0,80"
                   content="g/L"
                   value={props.values.bloodSugarLevels}
                   onInput={onInput}

@@ -46,7 +46,7 @@ const PatientChoice = ({
   };
 
   return (
-    <Container>
+    <Container data-testid="auth-analytics-page">
       <Wrapper>
         <PageTitle level={1}>Choix du patient</PageTitle>
         <InputWrapper>
@@ -57,6 +57,7 @@ const PatientChoice = ({
             onChange={searchContact}
             placeholder="Rechercher dans mes patients..."
             icon={search}
+            data-testid="search-input"
           />
         </InputWrapper>
         {/* <SelectorWrapper>

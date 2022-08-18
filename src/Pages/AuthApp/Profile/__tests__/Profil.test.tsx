@@ -54,7 +54,7 @@ test('Test update profile workflow', async () => {
     </MockedProvider>,
   );
   await waitFor(() =>
-    expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
+    expect(screen.getByTestId('auth-analytics-page')).toBeInTheDocument(),
   );
   userEvent.click(screen.getByTestId('profile-navigation-button'));
   await waitFor(() =>
@@ -87,7 +87,7 @@ test('Test update profile workflow', async () => {
 //   userEvent.click(screen.getByTestId('button-login'));
 
 //   await waitFor(() =>
-//     expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
+//     expect(screen.getByTestId('auth-analytics-page')).toBeInTheDocument(),
 //   );
 //   userEvent.click(screen.getByTestId('profile-navigation-button'));
 //   await waitFor(() =>

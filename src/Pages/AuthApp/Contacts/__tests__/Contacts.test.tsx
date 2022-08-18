@@ -50,7 +50,7 @@ test('Inspecting contact page patient', async () => {
     </MockedProvider>,
   );
   await waitFor(() =>
-    expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
+    expect(screen.getByTestId('auth-analytics-page')).toBeInTheDocument(),
   );
   userEvent.click(screen.getByTestId('contacts-navigation-button'));
   await waitFor(() =>

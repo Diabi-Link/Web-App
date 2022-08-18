@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import * as Yup from 'yup';
 
 const minimumAge = new Date(
@@ -22,9 +23,10 @@ const ValidateProfileSchema = Yup.object().shape({
     .max(minimumAge, 'Âge minimum de 7 ans requis')
     .min(maximumAge, 'Âge maximum de 120 ans')
     .nullable(),
-  newPassword: Yup.string()
-    .min(8, 'Mot de passe trop court')
-    .max(20, 'Doit être inférieure à 20 caractères'),
+  newPassword: Yup.string().matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+    'Doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial',
+  ),
   confirmNewPassword: Yup.string().oneOf(
     [Yup.ref('newPassword'), null],
     'Les deux mots de passe doivent être identiques',
