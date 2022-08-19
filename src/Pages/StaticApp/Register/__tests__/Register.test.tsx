@@ -79,13 +79,15 @@ test('Test register worflow', async () => {
 test('Test confirm email page', async () => {
   window.history.pushState({}, 'Test page', '/register/confirm');
   render(
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <I18nextProvider i18n={i18n}>
-          <Register />
-        </I18nextProvider>
-      </ThemeProvider>
-    </BrowserRouter>,
+    <MockedProvider>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <I18nextProvider i18n={i18n}>
+            <Register />
+          </I18nextProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </MockedProvider>,
   );
   await waitFor(() =>
     expect(screen.getByText(en.Register.Confirm.Title)).toBeInTheDocument(),
