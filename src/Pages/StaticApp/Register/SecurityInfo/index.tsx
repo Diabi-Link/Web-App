@@ -30,6 +30,10 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
 
   const [signUp, { loading }] = useSignUpMutation({
     onCompleted: () => {
+      gtag('event', 'Sign up', {
+        event_category: 'Sign up',
+        event_label: 'Sign up with email',
+      });
       onClick(4);
     },
     onError: () => null, // TODO: Create a middleware to catch and handle API error

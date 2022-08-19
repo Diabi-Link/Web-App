@@ -26,6 +26,10 @@ const AddData = () => {
 
   const [addData, { loading }] = useAddData({
     onCompleted: ({ AddData: { isLevelGood, message } }) => {
+      gtag('event', 'Patient add measurement', {
+        event_category: 'Patient add measurement',
+        event_label: `Patient add measurement from web-app`,
+      });
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
@@ -45,7 +49,10 @@ const AddData = () => {
   ) => {
     addData({
       variables: {
-        dataInfo: { value: parseFloat(bloodSugarLevels), date: new Date() },
+        dataInfo: {
+          value: parseFloat(bloodSugarLevels.replace(/,/g, '.')),
+          date: new Date(),
+        },
       },
     });
     resetForm();
