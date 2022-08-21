@@ -61,7 +61,7 @@ export const formatDaily = (data: DataType[]) => {
 
 export const dailyBrain = (data: DataType[]) => {
   const today = new Date();
-  const actualDate = new Date(`${today.toLocaleDateString()} 00:00`).getTime();
+  const actualDate = new Date(`${today.toDateString()} 00:00`).getTime();
   const todayTime: number[] = [];
   const targetTime: number[] = [];
   const allValues: number[] = [];
