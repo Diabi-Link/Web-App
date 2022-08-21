@@ -124,8 +124,8 @@ const Form = (): JSX.Element => {
         type: UserActionTypes.FetchUser,
         payload: { ...payload.Me },
       });
-      gtag('event', 'Sign in', {
-        event_category: 'Sign in',
+      gtag('event', `Sign in as ${payload.Me.account}`, {
+        event_category: `Sign in as ${payload.Me.account}`,
         event_label: `Sign in for ${payload.Me.account}`,
       });
     },
