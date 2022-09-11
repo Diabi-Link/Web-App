@@ -1,6 +1,6 @@
 import { gql, MutationHookOptions, QueryHookOptions } from '@apollo/client';
 import { UserType } from '../../types/user';
-import { useAPIMutation, useAPIQuery } from '../handlers';
+import { useAPIMutation, useAPIQuery, useAPILazyQuery } from '../handlers';
 
 type UserResponse = {
   Me: {
@@ -80,4 +80,34 @@ export function useAddContact(
   options?: MutationHookOptions<AddContactResponse, AddContactData>,
 ) {
   return useAPIMutation(ADD_CONTACT, options);
+}
+
+type ContactUsData = {
+  email: string;
+  topic: string;
+  message: string;
+  firstName: string;
+  lastName: string;
+};
+
+const CONTACT_US = gql`
+  query contactUs(
+    $email: String!
+    $topic: String!
+    $message: String!
+    $firstName: String!
+    $lastName: String!
+  ) {
+    ContactUs(
+      email: $email
+      topic: $topic
+      message: $message
+      firstName: $firstName
+      lastName: $lastName
+    )
+  }
+`;
+
+export function useContactUs(options?: QueryHookOptions<{}, ContactUsData>) {
+  return useAPILazyQuery(CONTACT_US, options);
 }

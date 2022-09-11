@@ -2,7 +2,20 @@
   "StaticNav": {
     "Home": "Home",
     "Login": "Sign In",
-    "Register": "Sign Up"
+    "Register": "Sign Up",
+    "Error": "An error has occurred, please try again 😕"
+  },
+  "Navbar": {
+    "Solution": "Our solution",
+    "Services": "Our services",
+    "FAQ": "FAQ",
+    "Team": "Our team",
+    "Timeline": "Timeline",
+    "Contact": "Contact us"
+  },
+  "Footer": {
+    "Rights": "© 2022 DiabiLink. All rights reserved",
+    "Links": "Useful links"
   },
   "Link": {
     "BackSite": "Back to the site",
@@ -11,6 +24,68 @@
   "404": {
     "Title": "It seems that you got lost!",
     "Back": "Return home"
+  },
+  "Hero": {
+    "Title": "Control your health with more security",
+    "Subtitle": "Get the best follow-up to manage your disease safely.",
+    "Download": "Download :",
+    "AppStore": "App Store",
+    "PlayStore": "Play Store"
+  },
+  "Solution": {
+    "Title": "A customised monitoring application",
+    "Desc1": "DiabiLink takes care of the patient's lack of autonomy by offering him a monitoring tool adapted to his needs.",
+    "Desc2": "Our application will connect referrers, medical staff and patients in order to provide tailor-made assistance and optimal care to offer you the best follow-up according to your needs.",
+    "Desc3": "With DiabiLink, put on a safety net for living with diabetes !"
+  },
+  "Services": {
+    "Title": "A tool adapted to your needs",
+    "InstantMessaging": "Instant messaging",
+    "InstantMessagingDesc": "Communicate more easily with your contacts, via our application, so you don't lose the thread of the conversation.",
+    "Follow-Up": "Customised follow-up",
+    "Follow-UpDesc": "Track your or your patient's results with a single click, and get a tailored summary of their glucose levels.",
+    "Alerts": "Real-time alerts",
+    "AlertsDesc": "Receive real-time alerts of the latest events or information available, directly on your application."
+  },
+  "FAQ": {
+    "Title": "Any questions ?",
+    "Subtitle": "The most common questions are answered.",
+    "Q1": "How much does DiabiLink cost ?",
+    "A1": "We offer three types of plan. The patient plan is free, the referral plan is €4.99 per month and the medical plan is €19.99 per month.",
+    "Q2": "Are my relatives alerted to an abnormal incident ?",
+    "A2": "Your relatives receive an alert in case of an abnormal measurement in order to get help as soon as possible.",
+    "Q3": "Is our data protected ?",
+    "A3": "In the context of the GDPR, all the information contained on our application is protected and strictly confidential. Only those people to whom you have authorised access may consult your medical data."
+  },
+  "Team": {
+    "Title": "Our team",
+    "FrontDev": "Front-end Developer",
+    "BackDev": "Back-end Developer",
+    "iOSDev": "iOS Developer",
+    "AndroidDev": "Android Developer"
+  },
+  "Timeline": {
+    "Title": "Our timeline",
+    "September": "September 2020",
+    "Creation": "Project creation",
+    "Feb": "February 2021",
+    "Market": "Technical and market research",
+    "March": "March 2021",
+    "Dev": "Start of development",
+    "May": "May 2022",
+    "Beta": "Delivery of the application beta",
+    "Sept2022": "September 2022",
+    "AppGrowth": "Improvement of the app",
+    "January": "January 2023",
+    "AppDelivery": "Final delivery of the app"
+  },
+  "ContactUs": {
+    "Title": "Contact us",
+    "Topic": "Topic",
+    "Message": "Message",
+    "Send": "Send",
+    "Success": "Your message has been sent",
+    "Error": "Sending your message failed"
   },
   "SendCode": {
     "Title": "Forgot your password ?",
@@ -125,7 +200,8 @@
     "Validate": "Add",
     "MedicalPro": "My medical team",
     "Referent": "My referents",
-    "Patient": "My patients"
+    "Patient": "My patients",
+    "AddSuccess": "You have added a user successfully"
   },
   "Alerts": {
     "Title": "My alerts",

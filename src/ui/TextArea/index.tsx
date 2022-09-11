@@ -4,25 +4,28 @@ import { Icon } from 'react-icons-kit';
 
 type Props = {
   value: string;
-  type: string;
+
   placeholder?: string;
   icon?: JSX.Element;
   errorText?: string;
   helperText?: string;
   disabled?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: React.InputHTMLAttributes<HTMLInputElement>['onBlur'];
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onBlur?: React.TextareaHTMLAttributes<HTMLTextAreaElement>['onBlur'];
   onFocus?: () => any;
   onClick?: () => any;
   content?: string;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'>;
+} & Omit<
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+  'type' | 'onChange'
+>;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const InputWrapper = styled.div<{
+const TextAreaWrapper = styled.div<{
   focused: Boolean;
   errorText?: String;
   disabled?: Boolean;
@@ -59,14 +62,14 @@ const InputWrapper = styled.div<{
     `}
 `;
 
-const InputElement = styled.input`
+const TextAreaElement = styled.textarea`
   width: 100%;
-  height: 45px;
-  padding: 0 10px;
+  padding: 10px;
   background-color: transparent;
   border: none;
   font-size: 15px;
   font-weight: 400;
+  line-height: 1.5rem;
   color: ${(props) => props.theme.main.dark}
   ::placeholder {
     color: ${(props) => props.theme.main.gray};
@@ -102,7 +105,7 @@ const ErrorElement = styled.span`
   margin-top: 3px;
 `;
 
-const Input = forwardRef(
+const TextArea = forwardRef(
   (
     {
       onBlur,
@@ -110,13 +113,11 @@ const Input = forwardRef(
       onChange,
       onClick,
       value,
-      type,
       errorText,
       helperText,
       disabled,
       icon,
       content,
-
       ...props
     }: Props,
     ref,
@@ -128,7 +129,7 @@ const Input = forwardRef(
       setDelayedValue(value);
     }, [value]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
       if (onChange) {
         onChange(e);
       }
@@ -136,18 +137,17 @@ const Input = forwardRef(
 
     return (
       <Container>
-        <InputWrapper
+        <TextAreaWrapper
           focused={focused}
           errorText={errorText}
           disabled={disabled}
           content={content}
         >
-          <InputElement
+          <TextAreaElement
             {...props}
-            ref={ref as React.RefObject<HTMLInputElement>}
+            ref={ref as React.RefObject<HTMLTextAreaElement>}
             value={delayedValue}
             autoComplete="off"
-            type={type}
             onFocus={(e) => {
               if (onFocus) onFocus(e);
               setFocused(true);
@@ -170,7 +170,7 @@ const Input = forwardRef(
               selected={!!onClick}
             />
           )}
-        </InputWrapper>
+        </TextAreaWrapper>
         {helperText && <HelperElement>{helperText}</HelperElement>}
         {errorText && <ErrorElement>{errorText}</ErrorElement>}
       </Container>
@@ -178,7 +178,7 @@ const Input = forwardRef(
   },
 );
 
-Input.defaultProps = {
+TextArea.defaultProps = {
   onBlur: undefined,
   onFocus: undefined,
   onChange: undefined,
@@ -191,4 +191,4 @@ Input.defaultProps = {
   content: '',
 };
 
-export default Input;
+export default TextArea;

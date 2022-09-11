@@ -40,7 +40,6 @@ const Flag = styled.button`
 const Separator = styled.span`
   font-weight: bold;
   font-size: 16px;
-  font-family: Raleway;
   margin-left: 5px;
   margin-right: 5px;
   color: ${(props) => props.theme.main.primary};

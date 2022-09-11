@@ -17,7 +17,7 @@ const getFontSize = (level: Props['level']): string => {
     case 2:
       return '1.3rem';
     case 3:
-      return '0.9rem';
+      return '1rem';
     case 4:
       return 'auto';
     case 5:
@@ -30,7 +30,7 @@ const getFontSize = (level: Props['level']): string => {
 const getMargin = (level: Props['level']): string => {
   switch (level) {
     case 1:
-      return '1.875rem';
+      return '1.875rem 0';
     case 2:
       return '0.625rem 0';
     case 3:

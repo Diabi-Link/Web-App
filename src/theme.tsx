@@ -6,6 +6,7 @@ export type Theme = {
     white: string;
     whiteBroken: string;
     dark: string;
+    darkLighter: string;
     grayDarker: string;
     grayDark: string;
     gray: string;
@@ -28,8 +29,9 @@ const theme = (): Theme => ({
     primaryLight: '#81C6D6',
     primaryLighter: '#B3D9E2',
     white: '#fff',
-    whiteBroken: '#F1F1F1',
+    whiteBroken: '#FDFDFD',
     dark: '#111',
+    darkLighter: 'rgba(0, 0, 0, 0.25)',
     grayDarker: '#424242',
     grayDark: '#757575',
     gray: '#A9A9A9',

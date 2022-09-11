@@ -1,7 +1,9 @@
 import React from 'react';
+
+import { Icon } from 'react-icons-kit';
+import { ic_dehaze as Burger } from 'react-icons-kit/md/ic_dehaze';
 import {
-  CloseIcon,
-  Icon,
+  // Icon,
   SidebarContainer,
   SidebarLink,
   SidebarMenu,
@@ -18,9 +20,7 @@ type Props = {
 const Sidebar = ({ isOpen, toggle }: Props) => {
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
-      <Icon onClick={toggle}>
-        <CloseIcon />
-      </Icon>
+      {/* <Icon onClick={toggle}><CloseIcon /></Icon> */}
       <SidebarWrapper>
         <SidebarMenu>
           <SidebarLink to="about" onClick={toggle}>

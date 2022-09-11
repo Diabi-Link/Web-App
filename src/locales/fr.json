@@ -2,7 +2,20 @@
   "StaticNav": {
     "Home": "Accueil",
     "Login": "Se connecter",
-    "Register": "S'inscrire"
+    "Register": "S'inscrire",
+    "Error": "Une erreur s'est produite, veuillez réessayer 😕"
+  },
+  "Navbar": {
+    "Solution": "Notre solution",
+    "Services": "Nos services",
+    "FAQ": "FAQ",
+    "Team": "Notre équipe",
+    "Timeline": "Timeline",
+    "Contact": "Nous contacter"
+  },
+  "Footer": {
+    "Rights": "© 2022 DiabiLink. Tous droits réservés",
+    "Links": "Liens Utiles"
   },
   "Link": {
     "BackSite": "Revenir au site",
@@ -11,6 +24,68 @@
   "404": {
     "Title": "Il semblerait que vous vous soyez perdu !",
     "Back": "Revenir à l'écran d'accueil"
+  },
+  "Hero": {
+    "Title": "Contrôlez votre santé avec plus de sécurité",
+    "Subtitle": "Faites vous suivre au mieux pour gérer votre maladie en toute sécurité.",
+    "Download": "Téléchargez :",
+    "AppStore": "App Store",
+    "PlayStore": "Play Store"
+  },
+  "Solution": {
+    "Title": "Une application de suivi sur-mesure",
+    "Desc1": "DiabiLink prend en charge le manque d’autonomie du patient en lui offrant un outil de suivi adapté à ses besoins.",
+    "Desc2": "Notre application, mettra en relation référents, corps médical et patient afin d’apporter une assistance sur mesure et une prise en charge optimale pour vous offrir le meilleur suivi selon vos besoins.",
+    "Desc3": "Avec DiabiLink, enfilez un filet de sécurité pour vivre avec le diabète !"
+  },
+  "Services": {
+    "Title": "Un outil adapté à vos besoins",
+    "InstantMessaging": "Une messagerie instantanée",
+    "InstantMessagingDesc": "Communiquez plus facilement avec vos contacts, via notre application, pour ne plus perdre le fil de la conversation.",
+    "Follow-Up": "Un suivi sur mesure",
+    "Follow-UpDesc": "Suivez vos résultats ou ceux de votre patient en un seul clic, et obtenez un résumé sur mesure de son taux de glucose.",
+    "Alerts": "Des alertes en temps réel",
+    "AlertsDesc": "Recevez des alertes en temps réel des derniers événements ou informations disponibles, directement sur votre application."
+  },
+  "FAQ": {
+    "Title": "Des questions ?",
+    "Subtitle": "On répond aux questions les plus communes.",
+    "Q1": "Combien coûte DiabiLink ?",
+    "A1": "Nous proposons trois types de plan. Le plan patient est gratuit, le plan référent qui est à 4.99€ par mois ainsi que le plan corps médical à hauteur de 19,99€ par mois.",
+    "Q2": "Mes proches sont t-ils alertés lors d’un incident anormal ?",
+    "A2": "Vos proches reçoivent une alerte en cas de mesure anormale afin de recevoir de l'aide dans les plus brefs délais.",
+    "Q3": "Nos données sont-elles protégées ?",
+    "A3": "Dans le cadre de la RGPD, l’intégralité des informations contenues sur notre application est protégée et est strictement confidentielle. Seules les personnes auxquelles vous aurez autorisé l’accès, pourront consulter vos données médicales."
+  },
+  "Team": {
+    "Title": "Notre équipe",
+    "FrontDev": "Développeur Front",
+    "BackDev": "Développeur Back",
+    "iOSDev": "Développeur iOS",
+    "AndroidDev": "Développeur Android"
+  },
+  "Timeline": {
+    "Title": "Notre timeline",
+    "September": "Septembre 2020",
+    "Creation": "Création du projet",
+    "Feb": "Février 2021",
+    "Market": "Étude technique et sondage du marché",
+    "March": "Mars 2021",
+    "Dev": "Début du développement",
+    "May": "Mai 2022",
+    "Beta": "Livraison de la bêta de l’application",
+    "Sept2022": "Septembre 2022",
+    "AppGrowth": "Amélioration de l’app",
+    "January": "Janvier 2023",
+    "AppDelivery": "Livraison définitive de l’app"
+  },
+  "ContactUs": {
+    "Title": "Contactez-nous",
+    "Topic": "Objet",
+    "Message": "Message",
+    "Send": "Envoyer",
+    "Success": "Votre message a été envoyé",
+    "Error": "L'envoi de votre message a échoué"
   },
   "SendCode": {
     "Title": "Mot de passe oublié ?",
@@ -125,7 +200,8 @@
     "Validate": "Ajouter",
     "MedicalPro": "Mon corps médical",
     "Referent": "Mes référents",
-    "Patient": "Mes patients"
+    "Patient": "Mes patients",
+    "AddSuccess": "Vous avez ajouter un utilisateur avec succès"
   },
   "Alerts": {
     "Title": "Mes alertes",

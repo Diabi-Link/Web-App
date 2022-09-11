@@ -35,16 +35,14 @@ const colors = ['#FFB21D', '#FFED4D', '#84FF4A', '#FF5F5F'];
 export const measureTextSize = ({
   text,
   size,
-  fontFamily,
 }: {
   text: string;
   size: number;
-  fontFamily: string;
 }) => {
   if (!ctx) {
     ctx = document.createElement('canvas').getContext('2d');
     if (ctx) {
-      ctx.font = `${size}px '${fontFamily}`;
+      ctx.font = `${size}px 'Montserrat'`;
     }
   }
 
@@ -159,7 +157,6 @@ const TimeInTargetGraph = ({
   //       const width = measureTextSize({
   //         text: value.toLocaleString(),
   //         size: 16,
-  //         fontFamily: 'Montserrat',
   //       });
   //       if (width > acc) {
   //         return width;
@@ -186,7 +183,6 @@ const TimeInTargetGraph = ({
                 measureTextSize({
                   text: '100%',
                   size: 15,
-                  fontFamily: 'Montserrat',
                 }),
             }}
             layout="vertical"

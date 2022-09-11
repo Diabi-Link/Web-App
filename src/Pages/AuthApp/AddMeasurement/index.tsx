@@ -227,7 +227,6 @@ const MeasureTitle = styled(Heading)`
 `;
 
 const MeasureInput = styled(Input)`
-  font-family: 'Montserrat';
   height: 9rem;
   width: 20rem;
   font-size: 4rem;

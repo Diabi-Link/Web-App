@@ -35,8 +35,20 @@ const Add = (): JSX.Element => {
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
-          label: 'Vous avez ajouter un utilisateur avec succès',
+          label: t('Contacts.AddSuccess'),
           noticeStyle: 'success',
+          persistent: false,
+          closeable: true,
+          duration: 5000,
+        },
+      });
+    },
+    onError: () => {
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: t('StaticNav.Error'),
+          noticeStyle: 'error',
           persistent: false,
           closeable: true,
           duration: 5000,

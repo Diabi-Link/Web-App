@@ -25,84 +25,6 @@ type Props = {
   onClick: (step: number) => void;
 };
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-
-  @media (min-width: 1500px) {
-    width: 80%;
-  }
-`;
-
-const Wrapper = styled(Form)`
-  width: 100%;
-  flex: 1;
-`;
-
-const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 60%;
-  margin-bottom: 50px;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
-`;
-
-const InfoBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin: 20px 0px;
-
-  @media (min-width: 1500px) {
-    margin: 30px 0px 20px;
-  }
-`;
-
-const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-`;
-
-const ConnectionWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 40px 0px 20px;
-`;
-
-const InputLabel = styled.label`
-  font-size: 16px;
-  font-weight: 500;
-  margin: 15px 5px;
-`;
-
-const Text = styled.p`
-  font-size: 16px;
-  font-weight: 500;
-`;
-
-const ConnectLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 0px 10px;
-  color: ${(props) => props.theme.main.primary};
-`;
-
-const NextButton = styled(Button)`
-  width: 150px;
-  height: 40px;
-`;
-
 const User = ({ onClick }: Props): JSX.Element => {
   const { t } = useTranslation();
   const { state, dispatch } = useContext(RegisterContext);
@@ -230,5 +152,83 @@ const User = ({ onClick }: Props): JSX.Element => {
     </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  @media (min-width: 1500px) {
+    width: 80%;
+  }
+`;
+
+const Wrapper = styled(Form)`
+  width: 100%;
+  flex: 1;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 60%;
+  margin-bottom: 50px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+`;
+
+const InfoBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 20px 0px;
+
+  @media (min-width: 1500px) {
+    margin: 30px 0px 20px;
+  }
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+`;
+
+const ConnectionWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 40px 0px 20px;
+`;
+
+const InputLabel = styled.label`
+  font-size: 16px;
+  font-weight: 500;
+  margin: 15px 5px;
+`;
+
+const Text = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+const ConnectLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0px 10px;
+  color: ${(props) => props.theme.main.primary};
+`;
+
+const NextButton = styled(Button)`
+  width: 150px;
+  height: 40px;
+`;
 
 export default User;

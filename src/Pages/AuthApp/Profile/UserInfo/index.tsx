@@ -28,63 +28,6 @@ type Props = {
   }>;
 };
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  flex: 1;
-`;
-
-const SectionWrapper = styled.div`
-  display: flex;
-`;
-
-const SectionTitle = styled.label`
-  font-size: 16px;
-  font-weight: 700;
-  color: ${(props) => props.theme.main.primary};
-  margin: 15px;
-`;
-
-const LineStart = styled.div`
-  margin: auto 0;
-  border: 2px solid ${(props) => props.theme.main.primary};
-  background-color: ${(props) => props.theme.main.primary};
-  width: 10%;
-  height: 1px;
-`;
-
-const LineEnd = styled.div`
-  margin: auto 0;
-  border: 2px solid ${(props) => props.theme.main.primary};
-  background-color: ${(props) => props.theme.main.primary};
-  flex: 1 0 auto;
-  height: 1px;
-`;
-
-const InfoBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`;
-
-const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin: 15px 0px 15px 0px;
-  &:first-child {
-    margin-right: 30px;
-  }
-`;
-
-const InputLabel = styled.label`
-  font-size: 16px;
-  font-weight: 500;
-  margin: 15px 5px;
-`;
-
 const UserInfo = ({ props }: Props) => {
   const {
     state: { user },
@@ -196,5 +139,62 @@ const UserInfo = ({ props }: Props) => {
     </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  flex: 1;
+`;
+
+const SectionWrapper = styled.div`
+  display: flex;
+`;
+
+const SectionTitle = styled.label`
+  font-size: 16px;
+  font-weight: 700;
+  color: ${(props) => props.theme.main.primary};
+  margin: 15px;
+`;
+
+const LineStart = styled.div`
+  margin: auto 0;
+  border: 2px solid ${(props) => props.theme.main.primary};
+  background-color: ${(props) => props.theme.main.primary};
+  width: 10%;
+  height: 1px;
+`;
+
+const LineEnd = styled.div`
+  margin: auto 0;
+  border: 2px solid ${(props) => props.theme.main.primary};
+  background-color: ${(props) => props.theme.main.primary};
+  flex: 1 0 auto;
+  height: 1px;
+`;
+
+const InfoBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 15px 0px 15px 0px;
+  &:first-child {
+    margin-right: 30px;
+  }
+`;
+
+const InputLabel = styled.label`
+  font-size: 16px;
+  font-weight: 500;
+  margin: 15px 5px;
+`;
 
 export default UserInfo;
