@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Icon } from 'react-icons-kit';
-import { ic_dehaze as Burger } from 'react-icons-kit/md/ic_dehaze';
+// import { Icon } from 'react-icons-kit';
+// import { ic_dehaze as Burger } from 'react-icons-kit/md/ic_dehaze';
 import {
   // Icon,
   SidebarContainer,

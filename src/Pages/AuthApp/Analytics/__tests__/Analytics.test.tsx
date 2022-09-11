@@ -14,6 +14,7 @@ import { AuthContext } from '../../../../contexts/AuthContext';
 import { UserType } from '../../../../types/user';
 import theme from '../../../../theme';
 import i18n from '../../../../i18n';
+import PatientChoice from '../PatientChoice';
 
 const mockUser: UserType = {
   id: 1,
@@ -22,6 +23,15 @@ const mockUser: UserType = {
   email: 'john.doe@gmail.com',
   birthDate: new Date(),
   account: 'patient',
+};
+
+const mockUserDoctor: UserType = {
+  id: 1,
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'john.doe@gmail.com',
+  birthDate: new Date(),
+  account: 'medicalProfessional',
 };
 
 test('Inspecting add measurement page', async () => {
@@ -41,7 +51,7 @@ test('Inspecting add measurement page', async () => {
     </MockedProvider>,
   );
   await waitFor(() =>
-    expect(screen.getByTestId('auth-home-page')).toBeInTheDocument(),
+    expect(screen.getByTestId('auth-analytics-page')).toBeInTheDocument(),
   );
   userEvent.click(screen.getByTestId('add-measurement-navigation-button'));
   await waitFor(() =>
@@ -86,4 +96,30 @@ test('Inspecting analytics page', async () => {
   userEvent.click(screen.getByTestId('hypo-7'));
   userEvent.click(screen.getByTestId('hypo-14'));
   userEvent.click(screen.getByTestId('hypo-30'));
+});
+
+test('Inspecting analytics page when doctor', async () => {
+  render(
+    <MockedProvider>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <AuthContext.Provider value={{ user: mockUserDoctor }}>
+            <UserProvider>
+              <I18nextProvider i18n={i18n}>
+                <PatientChoice
+                  contacts={[mockUser]}
+                  setUserAnalytics={() => null}
+                />
+              </I18nextProvider>
+            </UserProvider>
+          </AuthContext.Provider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </MockedProvider>,
+  );
+  await waitFor(() =>
+    expect(screen.getByTestId('auth-analytics-page')).toBeInTheDocument(),
+  );
+
+  userEvent.type(screen.getByTestId('search-input'), mockUser.firstName);
 });

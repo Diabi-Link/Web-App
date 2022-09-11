@@ -24,7 +24,14 @@
       dataLayer.push(arguments);
     }
     gtag('js', new Date());
-    gtag('config', 'G-J58SNG0MHL');
+    gtag('config', 'G-J58SNG0MHL', { debug_mode: true });
+
+    window.onerror = function (msg) {
+      gtag('event', 'error js', {
+        event_category: 'error js',
+        event_label: msg,
+      });
+    };
   </script>
 </head>
 

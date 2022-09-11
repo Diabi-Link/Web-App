@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { ReactComponent as SolutionSvg } from '../../../../assets/svgs/Solution.svg';
+import SolutionImg from '../../../../assets/pngs/Solution.png';
 
 import Heading from '../../../../ui/Heading';
 
@@ -18,7 +18,7 @@ const Solution = () => {
         <Content level={3}>{t('Solution.Desc3')}</Content>
       </DescriptionWrapper>
       <ImgWrapper>
-        <SolutionSvg />
+        <img src={SolutionImg} alt="Solution" />
       </ImgWrapper>
     </SolutionContainer>
   );
@@ -32,9 +32,10 @@ const SolutionContainer = styled.div`
   position: relative;
   padding: 5rem;
 
-  @media (orientation: portrait) and (max-width: 600px) {
+  @media (orientation: portrait) and (max-width: 900px) {
     flex-direction: column;
     padding: 2rem;
+    align-items: center;
   }
 `;
 
@@ -47,7 +48,7 @@ const DescriptionWrapper = styled.div`
     margin: 1rem 0;
   }
 
-  @media (orientation: portrait) and (max-width: 600px) {
+  @media (orientation: portrait) and (max-width: 900px) {
     width: auto;
     margin-right: 0;
   }
@@ -58,8 +59,23 @@ const ImgWrapper = styled.div`
   justify-content: center;
   width: 30vw;
 
-  @media (orientation: portrait) and (max-width: 600px) {
+  & > img {
+    width: 30rem;
+  }
+
+  @media (orientation: portrait) and (max-width: 900px) {
+    padding: 2rem 0;
     width: auto;
+
+    & > img {
+      width: 25rem;
+    }
+  }
+
+  @media (orientation: portrait) and (max-width: 600px) {
+    & > img {
+      width: 20rem;
+    }
   }
 `;
 

@@ -74,8 +74,8 @@ const DailyGraph = ({
       const decrypted: { userId: number } = jwtDecode(authToken);
       getData({
         variables: {
-          from: new Date(`${today.toLocaleDateString()} 00:00`),
-          to: new Date(`${tommorow.toLocaleDateString()} 00:00`),
+          from: new Date(`${today.toDateString()} 00:00`),
+          to: new Date(`${tommorow.toDateString()} 00:00`),
           userID: decrypted.userId,
         },
       });
@@ -87,8 +87,8 @@ const DailyGraph = ({
     ) {
       getDataOf({
         variables: {
-          from: new Date(`${today.toLocaleDateString()}  00:00`),
-          to: new Date(`${tommorow.toLocaleDateString()} 00:00`),
+          from: new Date(`${today.toDateString()}  00:00`),
+          to: new Date(`${tommorow.toDateString()} 00:00`),
           userID: parseInt(user.id.toString(), 10),
         },
       });
@@ -114,8 +114,8 @@ const DailyGraph = ({
             layout="horizontal"
           >
             <ReferenceArea
-              x1={new Date(`${today.toLocaleDateString()} 00:00`).getTime()}
-              x2={new Date(`${tommorow.toLocaleDateString()} 00:00`).getTime()}
+              x1={new Date(`${today.toDateString()} 00:00`).getTime()}
+              x2={new Date(`${tommorow.toDateString()} 00:00`).getTime()}
               y1={70}
               y2={170}
               strokeOpacity={0}
@@ -125,19 +125,19 @@ const DailyGraph = ({
             <XAxis
               dataKey="time"
               domain={[
-                new Date(`${today.toLocaleDateString()} 00:00`).getTime(),
-                new Date(`${tommorow.toLocaleDateString()} 00:00`).getTime(),
+                new Date(`${today.toDateString()} 00:00`).getTime(),
+                new Date(`${tommorow.toDateString()} 00:00`).getTime(),
               ]}
               ticks={[
-                new Date(`${today.toLocaleDateString()} 00:00`).getTime(),
-                new Date(`${today.toLocaleDateString()} 03:00`).getTime(),
-                new Date(`${today.toLocaleDateString()} 06:00`).getTime(),
-                new Date(`${today.toLocaleDateString()} 09:00`).getTime(),
-                new Date(`${today.toLocaleDateString()} 12:00`).getTime(),
-                new Date(`${today.toLocaleDateString()} 15:00`).getTime(),
-                new Date(`${today.toLocaleDateString()} 18:00`).getTime(),
-                new Date(`${today.toLocaleDateString()} 21:00`).getTime(),
-                new Date(`${today.toLocaleDateString()} 23:59`).getTime(),
+                new Date(`${today.toDateString()} 00:00`).getTime(),
+                new Date(`${today.toDateString()} 03:00`).getTime(),
+                new Date(`${today.toDateString()} 06:00`).getTime(),
+                new Date(`${today.toDateString()} 09:00`).getTime(),
+                new Date(`${today.toDateString()} 12:00`).getTime(),
+                new Date(`${today.toDateString()} 15:00`).getTime(),
+                new Date(`${today.toDateString()} 18:00`).getTime(),
+                new Date(`${today.toDateString()} 21:00`).getTime(),
+                new Date(`${today.toDateString()} 23:59`).getTime(),
               ]}
               tickFormatter={(unixTime: number) => format(unixTime, 'HH:mm')}
               type="number"

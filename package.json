@@ -106,6 +106,7 @@
     "babel-loader": "8.1.0"
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.10",
     "@types/react-scroll": "^1.8.3",
     "husky": "^6.0.0"
   },
@@ -121,6 +122,9 @@
       "!src/Pages/AuthApp/Analytics/{DailyGraph,HypoGraph,TimeInTargetGraph}/**",
       "!src/Pages/AuthApp/Chat/index.tsx",
       "!src/Pages/AuthApp/Navigation/Drawer/DrawerChat/**",
+      "!src/Pages/StaticApp/Register/SecurityInfo/**",
+      "!src/Pages/StaticApp/ForgotPassword/ResetPassword.tsx",
+      "!src/Pages/StaticApp/Navbar/index.tsx",
       "!src/index.tsx"
     ]
   }

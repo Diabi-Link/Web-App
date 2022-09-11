@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { ReactComponent as WhiteMemberSvg } from '../../../../assets/svgs/WhiteMember.svg';
-import { ReactComponent as BlackMemberSvg } from '../../../../assets/svgs/BlackMember.svg';
+import Member1 from '../../../../assets/pngs/Member1.png';
+import Member2 from '../../../../assets/pngs/Member2.png';
 
 import Heading from '../../../../ui/Heading';
 
@@ -14,32 +14,32 @@ const Team = () => {
     {
       name: 'Djahid Bousba',
       role: t('Team.FrontDev'),
-      icon: <WhiteMemberSvg />,
+      icon: <img src={Member1} alt="Member1" />,
     },
     {
       name: 'Nicolas Carrasco',
       role: t('Team.FrontDev'),
-      icon: <WhiteMemberSvg />,
+      icon: <img src={Member1} alt="Member1" />,
     },
     {
       name: 'Théo Henault',
       role: t('Team.BackDev'),
-      icon: <WhiteMemberSvg />,
+      icon: <img src={Member1} alt="Member1" />,
     },
     {
       name: 'Mathis Paroissien',
       role: t('Team.iOSDev'),
-      icon: <WhiteMemberSvg />,
+      icon: <img src={Member1} alt="Member1" />,
     },
     {
       name: 'Thibault Schmitt',
       role: t('Team.BackDev'),
-      icon: <BlackMemberSvg />,
+      icon: <img src={Member2} alt="Member2" />,
     },
     {
       name: 'Laurent Sferlazza',
       role: t('Team.AndroidDev'),
-      icon: <WhiteMemberSvg />,
+      icon: <img src={Member1} alt="Member1" />,
     },
   ];
 
@@ -100,6 +100,10 @@ const MemberBox = styled.div`
 
   :nth-child(3n) {
     margin-bottom: 2rem;
+  }
+
+  & > img {
+    width: 7rem;
   }
 `;
 

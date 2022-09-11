@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { appleinc, android } from 'react-icons-kit/icomoon/';
 
-import { ReactComponent as AppMockupSvg } from '../../../../assets/svgs/AppMockup.svg';
+import AppMockup from '../../../../assets/pngs/AppMockup.png';
 
 import Heading from '../../../../ui/Heading';
 import Button from '../../../../ui/Button';
@@ -39,7 +39,7 @@ const Hero = () => {
         </AppWrapper>
       </InfoWrapper>
       <ImgWrapper>
-        <AppMockupSvg />
+        <img src={AppMockup} alt="AppMockup" />
       </ImgWrapper>
     </HeroContainer>
   );
@@ -74,6 +74,16 @@ const ImgWrapper = styled.div`
   @media (orientation: portrait) {
     display: none;
   }
+
+  & > img {
+    width: 40rem;
+  }
+
+  @media (max-width: 1300px) {
+    & > img {
+      width: 30rem;
+    }
+  }
 `;
 
 const AppWrapper = styled.div`
@@ -91,7 +101,8 @@ const ButtonWrapper = styled.div`
     margin: 0 2rem 0 0;
   }
 
-  @media (orientation: portrait) {
+  @media (orientation: portrait) and (max-width: 800px) {
+    flex-direction: column;
     margin: 0;
 
     & > button {

@@ -26,8 +26,8 @@ const Navbar = ({ toggle }: Props) => {
   return (
     <Nav>
       <Img onClick={toggleHome} src={LogoRounded} alt="logo" />
-      <MobileIcon onClick={toggle}>
-        <Icon icon={Burger} size={20} />
+      <MobileIcon /* onClick={toggle} */>
+        <Icon icon={Burger} size={35} />
       </MobileIcon>
       <NavMenu>
         <NavLinks to="solution" smooth duration={500} spy offset={-150}>
@@ -96,15 +96,14 @@ const Nav = styled.nav`
 
 const MobileIcon = styled.div`
   display: block;
-  posisiton: absolute;
+  position: absolute;
   top: 0;
-  right: 0;
-  transform: translate(-100%, 60%);
+  transform: translate(0%, 60%);
   font-size: 1.8rem;
   cursor: pointer;
   color: white;
 
-  @media (min-width: 599px) {
+  @media (min-width: 1099px) {
     display: none;
   }
 `;
@@ -112,7 +111,7 @@ const MobileIcon = styled.div`
 const NavMenu = styled.ul`
   display: flex;
 
-  @media (orientation: portrait) and (max-width: 600px) {
+  @media (orientation: portrait) and (max-width: 1100px) {
     display: none;
   }
 `;
@@ -135,7 +134,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1100px) {
     display: none;
   }
 `;
@@ -155,7 +154,7 @@ const Img = styled.img`
   margin: 0 0 0px 0;
   padding-right: 0;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1100px) {
     display: none;
   }
 `;
