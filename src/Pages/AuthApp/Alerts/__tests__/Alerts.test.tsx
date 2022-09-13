@@ -12,7 +12,6 @@ import { MockedProvider } from '@apollo/client/testing';
 import { ThemeProvider } from 'styled-components';
 import userEvent from '@testing-library/user-event';
 import { I18nextProvider } from 'react-i18next';
-import AppSelector from '../../../AppSelector';
 import { UserProvider } from '../../../../contexts/UserContext';
 import { AuthContext } from '../../../../contexts/AuthContext';
 import { UserType } from '../../../../types/user';
@@ -52,4 +51,14 @@ test('Inspecting alerts page', async () => {
   userEvent.click(screen.getByTestId('auth-alert-btn2'));
   userEvent.click(screen.getByTestId('auth-alert-btn3'));
   userEvent.click(screen.getByTestId('auth-alert-btn4'));
+  await waitFor(() =>
+    expect(screen.getByTestId('auth-alert-page')).toBeInTheDocument(),
+  );
+  userEvent.click(screen.getByTestId('flag-0'));
+  userEvent.click(screen.getByTestId('flag-1'));
+  userEvent.click(screen.getByTestId('flag-2'));
+  userEvent.click(screen.getByTestId('flag-3'));
+  await waitFor(() =>
+    expect(screen.getByTestId('auth-alert-page')).toBeInTheDocument(),
+  );
 });
