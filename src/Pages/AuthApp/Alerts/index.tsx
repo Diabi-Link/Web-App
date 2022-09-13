@@ -186,37 +186,45 @@ const Alerts = (): JSX.Element => {
             // loading || networkStatus === NetworkStatus.refetch ? (
             //   <Loader loaderStyle="primary" size={14} />
             // ) : (
+            /* istanbul ignore next */
             alerts
+              /* istanbul ignore next */
               ?.filter(
+                /* istanbul ignore next */
                 (v) =>
                   flags.find((f) => f.name === v.flag)?.isActive &&
                   !deleteTab.includes(v.message),
               )
-              .map((v) => (
-                <StyledBox
-                  color={flags.find((f) => f.name === v.flag)?.color || 'green'}
-                >
-                  <Info>
-                    <AlertIconWrapper>
-                      <img
-                        src={flags.find((f) => f.name === v.flag)?.icon}
-                        alt="RedIcon"
-                      />
-                    </AlertIconWrapper>
-                    <InfoText level={3}>{v?.message}</InfoText>
-                  </Info>
-                  <IconWrapper
-                    type="submit"
-                    data-testid="trash-button"
-                    onClick={() => handleDelete(v?.message)}
+              .map(
+                /* istanbul ignore next */
+                (v) => (
+                  <StyledBox
                     color={
                       flags.find((f) => f.name === v.flag)?.color || 'green'
                     }
                   >
-                    <Icon icon={CloseIcon} size={25} />
-                  </IconWrapper>
-                </StyledBox>
-              ))
+                    <Info>
+                      <AlertIconWrapper>
+                        <img
+                          src={flags.find((f) => f.name === v.flag)?.icon}
+                          alt="RedIcon"
+                        />
+                      </AlertIconWrapper>
+                      <InfoText level={3}>{v?.message}</InfoText>
+                    </Info>
+                    <IconWrapper
+                      type="submit"
+                      data-testid="trash-button"
+                      onClick={() => handleDelete(v?.message)}
+                      color={
+                        flags.find((f) => f.name === v.flag)?.color || 'green'
+                      }
+                    >
+                      <Icon icon={CloseIcon} size={25} />
+                    </IconWrapper>
+                  </StyledBox>
+                ),
+              )
             // )
           }
           {/* {} */}
