@@ -9,7 +9,7 @@ import { ReactComponent as ProfileReferent } from '../../../../../assets/svgs/Pr
 
 import { UserType } from '../../../../../types/user';
 
-import Heading from '../../../../../ui/Heading';
+import { Heading } from '../../../../../ui/Heading';
 
 type Props = {
   contacts: UserType[] | undefined;

@@ -8,7 +8,7 @@ import { ReactComponent as ProfilePatient } from '../../../../../assets/svgs/Pro
 
 import { UserType } from '../../../../../types/user';
 
-import Heading from '../../../../../ui/Heading';
+import { Heading } from '../../../../../ui/Heading';
 
 type Props = {
   contacts: UserType[] | undefined;

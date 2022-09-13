@@ -8,6 +8,9 @@ export const pickDate = (type: string, period: number) => {
     case 'days':
       event.setDate(event.getDate() - period);
       break;
+    case 'milliseconds':
+      event.setMilliseconds(event.getMilliseconds() - period);
+      break;
     default:
       break;
   }

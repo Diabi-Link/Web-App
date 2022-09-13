@@ -6,7 +6,7 @@ import { ReactComponent as InstantMessagingSvg } from '../../../../assets/svgs/I
 import { ReactComponent as AnalyticsToolsSvg } from '../../../../assets/svgs/AnalyticsTools.svg';
 import { ReactComponent as AlertsSvg } from '../../../../assets/svgs/Alerts.svg';
 
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 
 const Services = () => {
   const { t } = useTranslation();

@@ -11,7 +11,7 @@ import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
 
 import DiabiLink from '../../../../assets/svgs/DiabiLink.svg';
 
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 
 const Footer = () => {
   const { t } = useTranslation();

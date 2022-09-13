@@ -9,7 +9,7 @@ import { ic_mail as mail } from 'react-icons-kit/md/ic_mail';
 import { ValidateMailSchema } from '../Validation';
 import { usePasswordRecoveryLazyQuery } from '../../../../api';
 
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 import Input from '../../../../ui/Input';
 import Button from '../../../../ui/Button';
 import Loader from '../../../../ui/Loader';

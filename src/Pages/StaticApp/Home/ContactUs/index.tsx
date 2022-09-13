@@ -12,7 +12,7 @@ import {
 } from '../../../../contexts/MainContext';
 import { useContactUs } from '../../../../api';
 
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 import Input from '../../../../ui/Input';
 import TextArea from '../../../../ui/TextArea';
 import Button from '../../../../ui/Button';

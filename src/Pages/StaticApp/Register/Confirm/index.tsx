@@ -8,7 +8,7 @@ import { send } from 'react-icons-kit/fa/send';
 import { RegisterContext } from '../../../../contexts/RegisterContext';
 import { useVerifEmail, useVerifEmailLink } from '../../../../api';
 
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 import Button from '../../../../ui/Button';
 import Loader from '../../../../ui/Loader';
 
@@ -148,7 +148,7 @@ const TileWrapper = styled.div`
 const CodeTile = styled.input`
   width: 30px;
   height: 50px;
-  border: ${({ theme }) => `1px solid black`};
+  border: 1px solid black;
   border-radius: 10px;
   background-color: white;
   margin: 30px 10px;

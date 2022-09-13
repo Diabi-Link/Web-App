@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Member1 from '../../../../assets/pngs/Member1.png';
 import Member2 from '../../../../assets/pngs/Member2.png';
 
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 
 const Team = () => {
   const { t } = useTranslation();

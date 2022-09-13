@@ -9,6 +9,7 @@ import TimeInTargetGraph from './TimeInTargetGraph';
 import { ReactComponent as ProfilePatient } from '../../../assets/svgs/ProfilePatient.svg';
 
 import { UserType } from '../../../types/user';
+import { PageTitle } from '../../../ui/Heading';
 
 const UserAnalytics = ({
   user,
@@ -24,11 +25,7 @@ const UserAnalytics = ({
   return (
     <Container data-testid="auth-analytics-page">
       <Wrapper>
-        <TitleWrapper>
-          <Line />
-          <SectionTitle>{t('Analytics.Title')}</SectionTitle>
-          <Line />
-        </TitleWrapper>
+        <PageTitle level={1}>{t('Analytics.Title')}</PageTitle>
         {userAccount === 'medicalProfessional' && (
           <BackWrapper onClick={() => setUserAnalytics(undefined)}>
             <ArrowBack icon={arrowLeft2} size={20} />
@@ -70,11 +67,6 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-
-  @media (min-width: 1024px) and (orientation: landscape) {
-    justify-content: center;
-    width: 85vw;
-  }
 `;
 
 const AccountWrapper = styled.div`
@@ -106,37 +98,6 @@ const UserDesc = styled.label`
   font-weight: 600;
   color: ${(props) => props.theme.main.dark};
   margin: auto 30px;
-`;
-
-const TitleWrapper = styled.div`
-  display: flex;
-  width: 92vw;
-  margin-top: 30px;
-
-  @media (min-width: 768px) {
-    width: 60vw;
-  }
-
-  @media (min-width: 1024px) and (orientation: landscape) {
-    width: calc(71%);
-    height: auto;
-  }
-`;
-
-const SectionTitle = styled.label`
-  display: flex;
-  font-size: 30px;
-  font-weight: 800;
-  color: ${(props) => props.theme.main.primary};
-  margin: 0px 15px;
-`;
-
-const Line = styled.div`
-  margin: auto 0;
-  border: 2px solid ${(props) => props.theme.main.primary};
-  background-color: ${(props) => props.theme.main.primary};
-  flex: 1;
-  height: 1px;
 `;
 
 const TopWrapper = styled.div`

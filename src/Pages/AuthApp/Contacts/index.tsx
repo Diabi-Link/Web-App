@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Heading from '../../../ui/Heading';
+import { PageTitle } from '../../../ui/Heading';
 
 import Menu from './Menu';
 import Add from './Add';
@@ -45,41 +45,6 @@ const Wrapper = styled.div`
 
   @media (min-width: 1024px) and (orientation: landscape) {
     width: 85vw;
-  }
-`;
-
-const PageTitle = styled(Heading)`
-  position: relative;
-  color: ${({ theme }) => theme.main.primaryLight};
-  margin-top: 2rem;
-  text-align: center;
-
-  &:before,
-  &:after {
-    content: '';
-    height: 10%;
-    top: 50%;
-    position: absolute;
-  }
-
-  &:before {
-    background-color: ${({ theme }) => theme.main.whiteBroken};
-    left: -1.5em;
-    right: -1.5em;
-    z-index: -1;
-    height: 101%;
-  }
-
-  &:after {
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80vw;
-    z-index: -2;
-    background-color: ${({ theme }) => theme.main.primaryLight};
-  }
-
-  @media (max-width: 768px) {
-    display: none;
   }
 `;
 

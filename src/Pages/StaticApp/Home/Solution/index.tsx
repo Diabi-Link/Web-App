@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import SolutionImg from '../../../../assets/pngs/Solution.png';
 
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 
 const Solution = () => {
   const { t } = useTranslation();

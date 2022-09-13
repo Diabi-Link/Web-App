@@ -155,22 +155,22 @@ const SectionWrapper = styled.div`
 const SectionTitle = styled.label`
   font-size: 16px;
   font-weight: 700;
-  color: ${(props) => props.theme.main.primary};
+  color: ${({ theme }) => theme.main.primaryLight};
   margin: 15px;
 `;
 
 const LineStart = styled.div`
   margin: auto 0;
-  border: 2px solid ${(props) => props.theme.main.primary};
-  background-color: ${(props) => props.theme.main.primary};
+  border: 2px solid ${({ theme }) => theme.main.primaryLight};
+  background-color: ${({ theme }) => theme.main.primaryLight};
   width: 10%;
   height: 1px;
 `;
 
 const LineEnd = styled.div`
   margin: auto 0;
-  border: 2px solid ${(props) => props.theme.main.primary};
-  background-color: ${(props) => props.theme.main.primary};
+  border: 2px solid ${({ theme }) => theme.main.primaryLight};
+  background-color: ${({ theme }) => theme.main.primaryLight};
   flex: 1 0 auto;
   height: 1px;
 `;

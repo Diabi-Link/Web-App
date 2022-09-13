@@ -5,7 +5,7 @@ import { plus } from 'react-icons-kit/fa/plus';
 
 import { useTranslation } from 'react-i18next';
 import { ValidateProfileSchema } from './Validation';
-import Heading from '../../../ui/Heading';
+import { Heading, PageTitle } from '../../../ui/Heading';
 import Input from '../../../ui/Input';
 import Button from '../../../ui/Button';
 import { useAddData } from '../../../api';
@@ -188,37 +188,6 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 80vw;
-`;
-
-const PageTitle = styled(Heading)`
-  position: relative;
-  color: ${({ theme }) => theme.main.primaryLight};
-  margin-top: 2rem;
-  text-align: center;
-
-  &:before,
-  &:after {
-    content: '';
-    height: 10%;
-    top: 50%;
-    position: absolute;
-  }
-
-  &:before {
-    background-color: ${({ theme }) => theme.main.whiteBroken};
-    left: -1.5em;
-    right: -1.5em;
-    z-index: -1;
-    height: 101%;
-  }
-
-  &:after {
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80vw;
-    z-index: -2;
-    background-color: ${({ theme }) => theme.main.primaryLight};
-  }
 `;
 
 const MeasureWrapper = styled.div`

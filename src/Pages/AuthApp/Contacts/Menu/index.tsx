@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { ReactComponent as AddSvg } from '../../../../assets/svgs/ContactAdd.svg';
 import { ReactComponent as ListSvg } from '../../../../assets/svgs/ContactList.svg';
 
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 import Button from '../../../../ui/Button';
 
 export type AccountType = 'add' | 'list';

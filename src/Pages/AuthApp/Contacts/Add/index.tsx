@@ -18,7 +18,7 @@ import {
 import { useAddContact } from '../../../../api';
 
 import Input from '../../../../ui/Input';
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 import Button from '../../../../ui/Button';
 import Loader from '../../../../ui/Loader';
 

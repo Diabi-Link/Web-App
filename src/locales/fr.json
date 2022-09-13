@@ -13,6 +13,18 @@
     "Timeline": "Timeline",
     "Contact": "Nous contacter"
   },
+  "Drawer": {
+    "Lock": "Verrouiller",
+    "Analytics": "Analytiques",
+    "Contacts": "Contacts",
+    "AddMeasure": "Ajouter mesure",
+    "Alerts": "Alertes",
+    "Chat": "Chat",
+    "Profile": "Profil",
+    "Logout": "Déconnexion",
+    "Search": "Rechercher un contact",
+    "You": "Vous"
+  },
   "Footer": {
     "Rights": "© 2022 DiabiLink. Tous droits réservés",
     "Links": "Liens Utiles"

@@ -11,11 +11,13 @@ import { ReactComponent as ProfileReferent } from '../../../assets/svgs/ProfileR
 
 import { UserActionTypes, UserContext } from '../../../contexts/UserContext';
 import { MainContext, ContextActionTypes } from '../../../contexts/MainContext';
+import { useUpdateUser } from '../../../api';
 
 import UserInfo from './UserInfo';
 import SecurityInfo from './SecurityInfo';
+
+import { PageTitle } from '../../../ui/Heading';
 import Button from '../../../ui/Button';
-import { useUpdateUser } from '../../../api';
 import Loader from '../../../ui/Loader';
 
 const Profile = (): React.ReactElement => {
@@ -96,11 +98,7 @@ const Profile = (): React.ReactElement => {
   return (
     <Container data-testid="profile-page">
       <Wrapper>
-        <TitleWrapper>
-          <Line />
-          <SectionTitle>{t('Profile.Title')}</SectionTitle>
-          <Line />
-        </TitleWrapper>
+        <PageTitle level={1}>{t('Profile.Title')}</PageTitle>
         <AccountWrapper>
           <AvatarWrapper>{user && avatars[user.account].svg}</AvatarWrapper>
           <UserDesc>{user && avatars[user.account].description}</UserDesc>
@@ -178,43 +176,14 @@ const Container = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 80vw;
-`;
-
-const TitleWrapper = styled.div`
-  display: flex;
-  width: 100%;
-
-  @media (min-width: 1500px) {
-    width: 80%;
-  }
-`;
-
-const SectionTitle = styled.label`
-  display: flex;
-  font-size: 30px;
-  font-weight: 800;
-  color: ${(props) => props.theme.main.primary};
-  margin: 15px;
-`;
-
-const Line = styled.div`
-  margin: auto 0;
-  border: 2px solid ${(props) => props.theme.main.primary};
-  background-color: ${(props) => props.theme.main.primary};
-  flex: 1;
-  height: 1px;
+  height: 100vh;
 `;
 
 const AccountWrapper = styled.div`
   display: flex;
   width: 100%;
-
-  @media (min-width: 1500px) {
-    width: 80%;
-  }
 `;
 
 const AvatarWrapper = styled.div`
@@ -231,7 +200,7 @@ const AvatarWrapper = styled.div`
 const UserDesc = styled.label`
   font-size: 30px;
   font-weight: 700;
-  color: ${(props) => props.theme.main.primary};
+  color: ${({ theme }) => theme.main.primaryLight};
   margin: auto 30px;
 `;
 
@@ -255,23 +224,19 @@ const InfoWrapper = styled.div`
     flex-direction: column;
     width: 100%;
   }
-
-  @media (min-width: 1500px) {
-    width: 80%;
-  }
 `;
 
 const Left = styled.div`
   display: flex;
   flex-direction: column;
-  width: 55%;
+  width: 50%;
   margin-right: 5vw;
 `;
 
 const Right = styled.div`
   display: flex;
   flex-direction: column;
-  width: 45%;
+  width: 50%;
 `;
 
 const SaveButton = styled(Button)`
