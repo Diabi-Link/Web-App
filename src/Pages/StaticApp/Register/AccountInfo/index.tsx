@@ -14,7 +14,7 @@ import {
   RegisterActionTypes,
 } from '../../../../contexts/RegisterContext';
 import Button from '../../../../ui/Button';
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 import AccountInfoText from '../AccountInfoText';
 
 import { AccountType } from '../../../../types/user';

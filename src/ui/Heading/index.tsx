@@ -50,7 +50,7 @@ const StyledHeading = styled.div<{ as: string } & Props>`
   font-weight: bolder;
 `;
 
-const Heading = ({
+export const Heading = ({
   level,
   children,
   className,
@@ -68,6 +68,39 @@ const Heading = ({
   );
 };
 
-Heading.defaultProps = { className: '' };
+export const PageTitle = styled(Heading)`
+  position: relative;
+  color: ${({ theme }) => theme.main.primaryLight};
+  margin-top: 2rem;
+  text-align: center;
 
-export default Heading;
+  &:before,
+  &:after {
+    content: '';
+    height: 10%;
+    top: 50%;
+    position: absolute;
+  }
+
+  &:before {
+    background-color: ${({ theme }) => theme.main.whiteBroken};
+    left: -1.5em;
+    right: -1.5em;
+    z-index: -1;
+    height: 101%;
+  }
+
+  &:after {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+    z-index: -2;
+    background-color: ${({ theme }) => theme.main.primaryLight};
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+Heading.defaultProps = { className: '' };

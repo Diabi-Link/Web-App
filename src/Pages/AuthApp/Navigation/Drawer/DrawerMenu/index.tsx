@@ -10,12 +10,13 @@ import { areaChart } from 'react-icons-kit/fa/areaChart';
 import { comments } from 'react-icons-kit/fa/comments';
 import { ic_notifications as notification } from 'react-icons-kit/md/ic_notifications';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   UserActionTypes,
   UserContext,
 } from '../../../../../contexts/UserContext';
 import Link from '../../../../../ui/Link';
-import Heading from '../../../../../ui/Heading';
+import { Heading } from '../../../../../ui/Heading';
 import { useAuthToken } from '../../../../../hooks/useAuthToken';
 import { avatars } from '../../../../../utils/avatars';
 
@@ -32,6 +33,173 @@ type Props = {
 type Arguments = {
   isOpen: boolean;
   isOnMobile?: boolean;
+};
+
+const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
+  const { t } = useTranslation();
+  const location = useLocation();
+  const {
+    dispatch,
+    state: { user },
+  } = useContext(UserContext);
+  const { removeAuthToken } = useAuthToken();
+  const { push } = useHistory();
+
+  const closeDrawerOnMobile = () => {
+    setChatOn(false);
+    if (onMobile !== undefined) {
+      onMobile.setMobileIsOpen(false);
+    }
+  };
+
+  const logout = (): void => {
+    push('/');
+    removeAuthToken();
+    dispatch({ type: UserActionTypes.EmptyUser });
+  };
+
+  return (
+    <DrawerWrapper>
+      <ItemWrapper>
+        <LogoWrapper isOnMobile={onMobile !== undefined}>
+          <Photo>{user && avatars[user.account].svg}</Photo>{' '}
+          <NameText>
+            {user?.firstName} {user?.lastName}
+          </NameText>
+        </LogoWrapper>
+      </ItemWrapper>
+
+      <ItemNoLinkContainer>
+        <ItemWrapper onClick={handleLock}>
+          {!onMobile && (
+            <>
+              <ItemIcon isActive={isLocked}>
+                <Icon icon={lock} size={34} />
+              </ItemIcon>
+              <ItemHeading isActive={isLocked} level={2}>
+                {t('Drawer.Lock')}
+              </ItemHeading>
+            </>
+          )}
+        </ItemWrapper>
+      </ItemNoLinkContainer>
+
+      <ItemContainer
+        to="/analytics"
+        isActive={location.pathname === '/analytics'}
+        onClick={closeDrawerOnMobile}
+        data-testid="analytics-navigation-button"
+      >
+        <ItemWrapper>
+          <ItemIcon isActive={location.pathname === '/analytics'}>
+            <Icon icon={areaChart} size={32} />
+          </ItemIcon>
+          <ItemHeading isActive={location.pathname === '/analytics'} level={2}>
+            {t('Drawer.Analytics')}
+          </ItemHeading>
+        </ItemWrapper>
+      </ItemContainer>
+
+      <ItemContainer
+        to="/contacts/menu"
+        isActive={location.pathname.includes('/contacts')}
+        onClick={closeDrawerOnMobile}
+        data-testid="contacts-navigation-button"
+      >
+        <ItemWrapper>
+          <ItemIcon isActive={location.pathname.includes('/contacts')}>
+            <Icon icon={group} size={32} />
+          </ItemIcon>
+          <ItemHeading
+            isActive={location.pathname.includes('/contacts')}
+            level={2}
+          >
+            {t('Drawer.Contacts')}
+          </ItemHeading>
+        </ItemWrapper>
+      </ItemContainer>
+
+      {user?.account === 'patient' && (
+        <ItemContainer
+          to="/add-measurement"
+          isActive={location.pathname === '/add-measurement'}
+          onClick={closeDrawerOnMobile}
+          data-testid="add-measurement-navigation-button"
+        >
+          <ItemWrapper>
+            <ItemIcon isActive={location.pathname === '/add-measurement'}>
+              <Icon icon={plus} size={34} />
+            </ItemIcon>
+            <ItemHeading
+              isActive={location.pathname === '/add-measurement'}
+              level={2}
+            >
+              {t('Drawer.AddMeasure')}
+            </ItemHeading>
+          </ItemWrapper>
+        </ItemContainer>
+      )}
+
+      <ItemContainer
+        to="/alerts"
+        isActive={location.pathname === '/alerts'}
+        onClick={closeDrawerOnMobile}
+        data-testid="alert-navigation-button"
+      >
+        <ItemWrapper>
+          <ItemIcon isActive={location.pathname === '/alerts'}>
+            <Icon icon={notification} size={34} />
+          </ItemIcon>
+          <ItemHeading isActive={location.pathname === '/alerts'} level={2}>
+            {t('Drawer.Alerts')}
+          </ItemHeading>
+        </ItemWrapper>
+      </ItemContainer>
+
+      <ItemContainer
+        to="/chat"
+        isActive={location.pathname === '/chat'}
+        onClick={() => setChatOn(true)}
+        data-testid="chat-navigation-button"
+      >
+        <ItemWrapper>
+          <ItemIcon isActive={location.pathname === '/chat'}>
+            <Icon icon={comments} size={32} />
+          </ItemIcon>
+          <ItemHeading isActive={location.pathname === '/chat'} level={2}>
+            {t('Drawer.Chat')}
+          </ItemHeading>
+        </ItemWrapper>
+      </ItemContainer>
+
+      <ItemContainer
+        to="/profile"
+        isActive={location.pathname === '/profile'}
+        onClick={closeDrawerOnMobile}
+        data-testid="profile-navigation-button"
+      >
+        <ItemWrapper>
+          <ItemIcon isActive={location.pathname === '/profile'}>
+            <Icon icon={userIcon} size={34} />
+          </ItemIcon>
+          <ItemHeading isActive={location.pathname === '/profile'} level={2}>
+            {t('Drawer.Profile')}
+          </ItemHeading>
+        </ItemWrapper>
+      </ItemContainer>
+
+      <ItemNoLinkContainer onClick={logout}>
+        <ItemWrapper>
+          <ItemIcon isActive={false}>
+            <Icon icon={signOut} size={34} />
+          </ItemIcon>
+          <ItemHeading isActive={false} level={2}>
+            {t('Drawer.Logout')}
+          </ItemHeading>
+        </ItemWrapper>
+      </ItemNoLinkContainer>
+    </DrawerWrapper>
+  );
 };
 
 const DrawerWrapper = styled.div`
@@ -112,187 +280,5 @@ const ItemHeading = styled(Heading)<{ isActive: boolean }>`
     isActive ? theme.main.white : theme.main.primaryLighter};
   transition: 0.15s ease-in-out;
 `;
-
-const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
-  const location = useLocation();
-  const {
-    dispatch,
-    state: { user },
-  } = useContext(UserContext);
-  const { removeAuthToken } = useAuthToken();
-  const { push } = useHistory();
-
-  const closeDrawerOnMobile = () => {
-    setChatOn(false);
-    if (onMobile !== undefined) {
-      onMobile.setMobileIsOpen(false);
-    }
-  };
-
-  const logout = (): void => {
-    push('/');
-    removeAuthToken();
-    dispatch({ type: UserActionTypes.EmptyUser });
-  };
-
-  return (
-    <DrawerWrapper>
-      <ItemWrapper>
-        <LogoWrapper isOnMobile={onMobile !== undefined}>
-          <Photo>{user && avatars[user.account].svg}</Photo>{' '}
-          <NameText>
-            {user?.firstName} {user?.lastName}
-          </NameText>
-        </LogoWrapper>
-      </ItemWrapper>
-
-      <ItemNoLinkContainer>
-        <ItemWrapper onClick={handleLock}>
-          {!onMobile && (
-            <>
-              <ItemIcon isActive={isLocked}>
-                <Icon icon={lock} size={34} />
-              </ItemIcon>
-              <ItemHeading isActive={isLocked} level={2}>
-                Verrouiller
-              </ItemHeading>
-            </>
-          )}
-        </ItemWrapper>
-      </ItemNoLinkContainer>
-
-      <ItemContainer
-        to="/analytics"
-        isActive={location.pathname === '/analytics'}
-        onClick={closeDrawerOnMobile}
-        data-testid="analytics-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname === '/analytics'}>
-            <Icon icon={areaChart} size={32} />
-          </ItemIcon>
-          <ItemHeading isActive={location.pathname === '/analytics'} level={2}>
-            Analytics
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer>
-
-      {/* <ItemContainer
-        to="/"
-        isActive={location.pathname === '/'}
-        onClick={closeDrawerOnMobile}
-        data-testid="home-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname === '/'}>
-            <Icon icon={home} size={34} />
-          </ItemIcon>
-          <ItemHeading isActive={location.pathname === '/'} level={2}>
-            Accueil
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer> */}
-
-      <ItemContainer
-        to="/contacts/menu"
-        isActive={location.pathname.includes('/contacts')}
-        onClick={closeDrawerOnMobile}
-        data-testid="contacts-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname.includes('/contacts')}>
-            <Icon icon={group} size={32} />
-          </ItemIcon>
-          <ItemHeading
-            isActive={location.pathname.includes('/contacts')}
-            level={2}
-          >
-            Contacts
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer>
-
-      {user?.account === 'patient' && (
-        <ItemContainer
-          to="/add-measurement"
-          isActive={location.pathname === '/add-measurement'}
-          onClick={closeDrawerOnMobile}
-          data-testid="add-measurement-navigation-button"
-        >
-          <ItemWrapper>
-            <ItemIcon isActive={location.pathname === '/add-measurement'}>
-              <Icon icon={plus} size={34} />
-            </ItemIcon>
-            <ItemHeading
-              isActive={location.pathname === '/add-measurement'}
-              level={2}
-            >
-              Ajouter mesure
-            </ItemHeading>
-          </ItemWrapper>
-        </ItemContainer>
-      )}
-
-      <ItemContainer
-        to="/alerts"
-        isActive={location.pathname === '/alerts'}
-        onClick={closeDrawerOnMobile}
-        data-testid="alert-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname === '/alerts'}>
-            <Icon icon={notification} size={34} />
-          </ItemIcon>
-          <ItemHeading isActive={location.pathname === '/alerts'} level={2}>
-            Alertes
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer>
-
-      <ItemContainer
-        to="/chat"
-        isActive={location.pathname === '/chat'}
-        onClick={() => setChatOn(true)}
-        data-testid="chat-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname === '/chat'}>
-            <Icon icon={comments} size={32} />
-          </ItemIcon>
-          <ItemHeading isActive={location.pathname === '/chat'} level={2}>
-            Chat
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer>
-
-      <ItemContainer
-        to="/profile"
-        isActive={location.pathname === '/profile'}
-        onClick={closeDrawerOnMobile}
-        data-testid="profile-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname === '/profile'}>
-            <Icon icon={userIcon} size={34} />
-          </ItemIcon>
-          <ItemHeading isActive={location.pathname === '/profile'} level={2}>
-            Profil
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer>
-
-      <ItemNoLinkContainer onClick={logout}>
-        <ItemWrapper>
-          <ItemIcon isActive={false}>
-            <Icon icon={signOut} size={34} />
-          </ItemIcon>
-          <ItemHeading isActive={false} level={2}>
-            Déconnexion
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemNoLinkContainer>
-    </DrawerWrapper>
-  );
-};
 
 export default DrawerMenu;

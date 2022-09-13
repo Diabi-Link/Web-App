@@ -10,7 +10,7 @@ import { useSignUpMutation } from '../../../../api';
 
 import { RegisterContext } from '../../../../contexts/RegisterContext';
 import { ValidatePasswordSchema } from '../Validation';
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 import Button from '../../../../ui/Button';
 import Input from '../../../../ui/Input';
 

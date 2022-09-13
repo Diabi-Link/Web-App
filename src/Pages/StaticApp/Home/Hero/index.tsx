@@ -6,7 +6,7 @@ import { appleinc, android } from 'react-icons-kit/icomoon/';
 
 import AppMockup from '../../../../assets/pngs/AppMockup.png';
 
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 import Button from '../../../../ui/Button';
 
 const Hero = () => {

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from 'react-icons-kit';
 import { ic_filter_tilt_shift as Circle } from 'react-icons-kit/md/ic_filter_tilt_shift';
 
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 
 const Timeline = () => {
   const { t } = useTranslation();

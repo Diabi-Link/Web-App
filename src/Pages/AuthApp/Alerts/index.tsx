@@ -3,42 +3,51 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Icon } from 'react-icons-kit';
 import { ic_close as CloseIcon } from 'react-icons-kit/md/ic_close';
+
 import { NotificationType } from '../../../types/notification';
 import { pickDate } from '../../../utils';
 import { useGetAlertsLazyQuery } from '../../../api';
 
+import GreenIcon from '../../../assets/pngs/GreenIcon.png';
+import OrangeIcon from '../../../assets/pngs/OrangeIcon.png';
+import YellowIcon from '../../../assets/pngs/YellowIcon.png';
+import RedIcon from '../../../assets/pngs/RedIcon.png';
 import { UserContext } from '../../../contexts/UserContext';
 
-import Heading from '../../../ui/Heading';
+import { Heading, PageTitle } from '../../../ui/Heading';
 import Button from '../../../ui/Button';
-import Loader from '../../../ui/Loader';
 
 interface Flags {
   color: string;
   name: string;
   isActive: boolean;
+  icon: any;
 }
 
 const FlagsTab: Flags[] = [
   {
-    color: '#42C505',
+    color: '#97E174',
     name: 'green',
     isActive: true,
+    icon: GreenIcon,
   },
   {
-    color: '#FFE500',
+    color: '#FFF59A',
     name: 'yellow',
     isActive: true,
+    icon: YellowIcon,
   },
   {
-    color: '#FFA800',
+    color: '#FFBF42',
     name: 'orange',
     isActive: true,
+    icon: OrangeIcon,
   },
   {
-    color: '#E10303',
+    color: '#FF8585',
     name: 'red',
     isActive: true,
+    icon: RedIcon,
   },
 ];
 
@@ -54,10 +63,21 @@ const Alerts = (): JSX.Element => {
   const [alerts, setAlerts] = useState<NotificationType[]>();
   const [deleteTab, setDeleteTab] = useState<string[]>([]);
 
-  const [getAlerts, { loading }] = useGetAlertsLazyQuery({
+  const [getAlerts] = useGetAlertsLazyQuery({
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    pollInterval: 2000,
     onCompleted: (payload: any) => {
       const { getAlertHistory: alertsTab } = payload;
       setAlerts(alertsTab);
+      if (!user) return;
+      getAlerts({
+        variables: {
+          from: new Date(pickDate('days', 365)),
+          to: new Date(),
+          userID: parseFloat(user.id.toString()),
+        },
+      });
     },
   });
 
@@ -72,10 +92,6 @@ const Alerts = (): JSX.Element => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // if (loading || !user) {
-  //   return <Loader loaderStyle="white" />;
-  // }
 
   const handleClick = (id: number, type: string, period: number): void => {
     if (!user) return;
@@ -100,6 +116,8 @@ const Alerts = (): JSX.Element => {
   const handleDelete = (message: string) => {
     setDeleteTab([...deleteTab, message]);
   };
+
+  // if (loading) return <div>...</div>;
 
   return (
     <Container data-testid="auth-alert-page">
@@ -164,31 +182,44 @@ const Alerts = (): JSX.Element => {
           ))}
         </FlagWrapper>
         <AlertsWrapper>
-          {alerts
-            ?.filter(
-              (v) =>
-                flags.find((f) => f.name === v.Flag)?.isActive &&
-                !deleteTab.includes(v.Message),
-            )
-            .map((v) => (
-              <StyledBox>
-                <Info>
-                  <FlagLine
-                    fill={
-                      flags.find((f) => f.name === v.Flag)?.color || 'green'
-                    }
-                  />
-                  <InfoText level={3}>{v?.Message}</InfoText>
-                </Info>
-                <IconWrapper
-                  type="submit"
-                  data-testid="trash-button"
-                  onClick={() => handleDelete(v?.Message)}
+          {
+            // loading || networkStatus === NetworkStatus.refetch ? (
+            //   <Loader loaderStyle="primary" size={14} />
+            // ) : (
+            alerts
+              ?.filter(
+                (v) =>
+                  flags.find((f) => f.name === v.flag)?.isActive &&
+                  !deleteTab.includes(v.message),
+              )
+              .map((v) => (
+                <StyledBox
+                  color={flags.find((f) => f.name === v.flag)?.color || 'green'}
                 >
-                  <Icon icon={CloseIcon} size={25} />
-                </IconWrapper>
-              </StyledBox>
-            ))}
+                  <Info>
+                    <AlertIconWrapper>
+                      <img
+                        src={flags.find((f) => f.name === v.flag)?.icon}
+                        alt="RedIcon"
+                      />
+                    </AlertIconWrapper>
+                    <InfoText level={3}>{v?.message}</InfoText>
+                  </Info>
+                  <IconWrapper
+                    type="submit"
+                    data-testid="trash-button"
+                    onClick={() => handleDelete(v?.message)}
+                    color={
+                      flags.find((f) => f.name === v.flag)?.color || 'green'
+                    }
+                  >
+                    <Icon icon={CloseIcon} size={25} />
+                  </IconWrapper>
+                </StyledBox>
+              ))
+            // )
+          }
+          {/* {} */}
         </AlertsWrapper>
       </Wrapper>
     </Container>
@@ -250,41 +281,6 @@ const AlertsWrapper = styled.div`
     width: 80vw;
   }
   margin-bottom: 2rem;
-`;
-
-const PageTitle = styled(Heading)`
-  position: relative;
-  color: ${({ theme }) => theme.main.primaryLight};
-  margin-top: 2rem;
-  text-align: center;
-
-  &:before,
-  &:after {
-    content: '';
-    height: 10%;
-    top: 50%;
-    position: absolute;
-  }
-
-  &:before {
-    background-color: ${({ theme }) => theme.main.whiteBroken};
-    left: -1.5em;
-    right: -1.5em;
-    z-index: -1;
-    height: 101%;
-  }
-
-  &:after {
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80vw;
-    z-index: -2;
-    background-color: ${({ theme }) => theme.main.primaryLight};
-  }
-
-  @media (max-width: 1200px) {
-    display: none;
-  }
 `;
 
 const FilterTitle = styled(Heading)`
@@ -362,7 +358,9 @@ const FlagButton = styled(Button)<{
   }
 `;
 
-const StyledBox = styled.div`
+const StyledBox = styled.div<{
+  color: string;
+}>`
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -371,19 +369,16 @@ const StyledBox = styled.div`
   width: 100%;
   border-radius: 10px;
   box-shadow: ${({ theme }) =>
-    `0 0.063rem 0.17rem 0.033rem ${theme.main.grayLight}`};
+    `0 0.063rem 0.17rem 0.033rem ${theme.main.darkLighter}`};
 
-  background-color: ${({ theme }) => theme.main.primaryLighter};
+  background-color: ${({ color }) => color};
 `;
 
-const FlagLine = styled.div<{
-  fill: string;
-}>`
-  height: 60%;
-  width: 0.2rem;
-  border-radius: 10px;
-  background-color: ${({ fill }) => fill};
-  margin: 0rem 1rem;
+const AlertIconWrapper = styled.div`
+  & > img {
+    width: 2rem;
+  }
+  margin-right: 1rem;
 `;
 
 const Info = styled.div`
@@ -395,15 +390,17 @@ const Info = styled.div`
 
 const InfoText = styled(Heading)`
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 500;
 `;
 
-const IconWrapper = styled.button`
+const IconWrapper = styled.button<{
+  color: string;
+}>`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: ${({ theme }) => `2px solid ${theme.main.primaryLight}`};
-  background-color: ${(props) => props.theme.main.primaryLighter};
+  border: 2px solid black;
+  background-color: ${({ color }) => color};
   width: 2rem;
   height: 2rem;
   border-radius: 10px;

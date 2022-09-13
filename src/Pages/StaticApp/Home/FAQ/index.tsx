@@ -8,7 +8,7 @@ import {
   ic_expand_more as ExpandMore,
 } from 'react-icons-kit/md';
 
-import Heading from '../../../../ui/Heading';
+import { Heading } from '../../../../ui/Heading';
 
 const FAQ = () => {
   const { t } = useTranslation();

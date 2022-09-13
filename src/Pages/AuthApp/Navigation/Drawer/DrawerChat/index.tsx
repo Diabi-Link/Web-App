@@ -25,7 +25,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { useTranslation } from 'react-i18next';
-import Heading from '../../../../../ui/Heading';
+import { Heading } from '../../../../../ui/Heading';
 import { avatars } from '../../../../../utils/avatars';
 import { ChatContext } from '../../../../../contexts/ChatContext';
 import { ChatUserType } from '../../../../../types/chat';
@@ -56,7 +56,7 @@ const ChatContact = ({
   conversation,
   visible,
 }: ChatContactProps) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const collectionMessages = collection(
     firestore,
     `Conversations/${conversation?.id}/Messages`,
@@ -118,7 +118,7 @@ const ChatContact = ({
           {lastMessage && lastMessage[0] && (
             <>
               <LastMessage>
-                {lastMessage[0].userId === id ? firstName : 'Vous'}:{' '}
+                {lastMessage[0].userId === id ? firstName : t('Drawer.You')}:{' '}
                 {lastMessage[0].text}
               </LastMessage>
               <SendAt>{sendAtToText(lastMessage[0].sendAt)}</SendAt>
@@ -133,6 +133,7 @@ const ChatContact = ({
 
 const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
   const history = useHistory();
+  const { t } = useTranslation();
   const {
     state: { user },
   } = useContext(UserContext);
@@ -250,7 +251,7 @@ const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
           type="text"
           value={value}
           onChange={searchContact}
-          placeholder="Rechercher un contact"
+          placeholder={t('Drawer.Search')}
         />
       </InputWrapper>
       <ChatContactContainer>
