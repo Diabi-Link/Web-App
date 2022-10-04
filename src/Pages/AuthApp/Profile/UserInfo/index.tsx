@@ -146,6 +146,10 @@ const Wrapper = styled.div`
   justify-content: center;
   width: 100%;
   flex: 1;
+
+  & > div:last-child {
+    width: 100%;
+  }
 `;
 
 const SectionWrapper = styled.div`
@@ -179,15 +183,17 @@ const InfoBox = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  flex-wrap: wrap;
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: 15px 0px 15px 0px;
-  &:first-child {
-    margin-right: 30px;
+  margin: 15px 0;
+
+  @media (min-width: 700px) {
+    width: 48%;
   }
 `;
 

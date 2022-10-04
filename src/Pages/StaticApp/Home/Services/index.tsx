@@ -91,13 +91,24 @@ const Title = styled(Heading)`
     transform: translateX(-50%);
     background-color: white;
   }
-  font-size: 2.2rem;
-  margin-bottom: 6rem;
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  text-align: center;
+
+  @media (min-width: 1200px) {
+    margin-bottom: 6rem;
+    font-size: 2.5rem;
+  }
 `;
 
 const Content = styled(Heading)`
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 500;
+  font-size: 0.8rem;
+
+  @media (min-width: 600px) {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
 `;
 
 export default Services;

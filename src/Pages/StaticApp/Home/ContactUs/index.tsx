@@ -329,14 +329,22 @@ const Title = styled(Heading)`
     transform: translateX(-50%);
     background-color: white;
   }
-  font-size: 2.2rem;
-  margin-bottom: 4rem;
+  font-size: 1.5rem;
+  margin-bottom: 6rem;
+
+  @media (min-width: 1200px) {
+    font-size: 2.5rem;
+  }
 `;
 
 const Content = styled(Heading)`
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: 600;
   margin: 0 1rem;
+
+  @media (min-width: 1200px) {
+    font-size: 1.3rem;
+  }
 `;
 
 export default ContactUs;

@@ -213,6 +213,8 @@ const ButtonWrapper = styled.div`
 const FieldWrapper = styled.div`
   display: flex;
   width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 const InfoWrapper = styled.div`
@@ -229,14 +231,23 @@ const InfoWrapper = styled.div`
 const Left = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
-  margin-right: 5vw;
+  width: 100%;
+
+  @media (min-width: 1200px) {
+    width: 48%;
+  }
 `;
 
 const Right = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
+  margin-top: 5vw;
+
+  @media (min-width: 1200px) {
+    width: 48%;
+    margin: 0;
+  }
 `;
 
 const SaveButton = styled(Button)`

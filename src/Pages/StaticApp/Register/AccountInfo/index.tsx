@@ -23,72 +23,6 @@ type Props = {
   onClick: (step: number) => void;
 };
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-
-  @media (min-width: 1500px) {
-    width: 80%;
-  }
-`;
-
-const Wrapper = styled.div`
-  width: 100%;
-  flex: 1;
-`;
-
-const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 60%;
-  margin-bottom: 50px;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-`;
-
-const AccountSelectorContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
-  margin: 2.4rem 0;
-`;
-
-const AccountSelectorWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const StyledBox = styled(Button)<{
-  isSelected: boolean;
-}>`
-  padding: 1.7rem 0.5rem 0;
-  box-shadow: ${({ isSelected, theme }) =>
-    isSelected
-      ? `0 0.063rem 1.2rem 0 ${darken(0.1, theme.main.primary)}`
-      : `0 0.063rem 0.17rem 0.033rem ${theme.main.grayLight}`};
-  &:hover:not(:disabled) {
-    background-color: ${({ theme }) => theme.main.white};
-    box-shadow: ${({ isSelected, theme }) =>
-      `0 0.063rem 1.2rem 0 ${
-        isSelected ? darken(0.1, theme.main.primary) : theme.main.primaryLight
-      }`};
-  }
-`;
-
-const StyledButton = styled(Button)`
-  width: 150px;
-  height: 40px;
-`;
-
 const Account = ({ onClick }: Props): JSX.Element => {
   const { t } = useTranslation();
   const {
@@ -166,7 +100,7 @@ const Account = ({ onClick }: Props): JSX.Element => {
           <StyledButton
             type="button"
             label={t('Register.Account.BackButton')}
-            btnStyle="primary"
+            btnStyle="white"
             shadow
             iconStart={arrowLeft2}
             onClick={() => onClick(1)}
@@ -185,5 +119,93 @@ const Account = ({ onClick }: Props): JSX.Element => {
     </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+
+  @media (min-width: 1500px) {
+    width: 80%;
+  }
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  flex: 1;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  text-align: justify;
+
+  @media (min-width: 700px) {
+    height: 50%;
+  }
+
+  @media (min-width: 1300px) {
+    height: 60%;
+    margin-bottom: 50px;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap-reverse;
+`;
+
+const AccountSelectorContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin: 2.4rem 0;
+`;
+
+const AccountSelectorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StyledBox = styled(Button)<{
+  isSelected: boolean;
+}>`
+  padding: 1.7rem 0.5rem 0;
+  box-shadow: ${({ isSelected, theme }) =>
+    isSelected
+      ? `0 0.063rem 1.2rem 0 ${darken(0.1, theme.main.primary)}`
+      : `0 0.063rem 0.17rem 0.033rem ${theme.main.grayLight}`};
+  &:hover:not(:disabled) {
+    background-color: ${({ theme }) => theme.main.white};
+    box-shadow: ${({ isSelected, theme }) =>
+      `0 0.063rem 1.2rem 0 ${
+        isSelected ? darken(0.1, theme.main.primary) : theme.main.primaryLight
+      }`};
+  }
+  margin: 1rem 0;
+
+  @media (min-width: 700px) {
+    margin: 0;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  width: 150px;
+  height: 40px;
+  margin: 1rem auto;
+
+  @media (min-width: 700px) {
+    margin: 0;
+  }
+`;
 
 export default Account;

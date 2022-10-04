@@ -120,8 +120,13 @@ const Title = styled(Heading)`
     transform: translateX(-50%);
     background-color: white;
   }
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   margin-bottom: 6rem;
+  text-align: center;
+
+  @media (min-width: 1200px) {
+    font-size: 2.5rem;
+  }
 `;
 
 const Content = styled(Heading)`

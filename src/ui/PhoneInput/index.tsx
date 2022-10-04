@@ -18,6 +18,14 @@ type Props = {
 
 const PhoneWrapper = styled.div`
   display: flex;
+
+  & > div:first-child {
+    width: 30%;
+  }
+
+  & > div:last-child {
+    width: 70%;
+  }
 `;
 
 const PhoneInput = ({ value, errorText, onChange, placeholder }: Props) => {
