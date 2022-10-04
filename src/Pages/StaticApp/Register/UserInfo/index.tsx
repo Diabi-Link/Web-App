@@ -159,6 +159,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  text-align: center;
 
   @media (min-width: 1500px) {
     width: 80%;
@@ -173,37 +174,58 @@ const Wrapper = styled(Form)`
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 60%;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
+
+  @media (min-width: 700px) {
+    height: 50%;
+  }
+
+  @media (min-width: 1300px) {
+    height: 60%;
+    margin-bottom: 50px;
+  }
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   width: 100%;
-  justify-content: flex-end;
+  justify-content: center;
+
+  @media (min-width: 1500px) {
+    justify-content: flex-end;
+  }
 `;
 
 const InfoBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
-  margin: 20px 0px;
-
-  @media (min-width: 1500px) {
-    margin: 30px 0px 20px;
-  }
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: 100%;
+  margin: 0.5rem 0;
+  text-align: left;
+
+  @media (min-width: 600px) {
+    width: 40%;
+  }
 `;
 
 const ConnectionWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  margin: 40px 0px 20px;
+  margin: 20px 0;
+
+  @media (min-width: 700px) {
+    flex-direction: row;
+    margin: 40px 0px 20px;
+  }
 `;
 
 const InputLabel = styled.label`

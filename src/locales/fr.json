@@ -145,7 +145,7 @@
       "Button": "Suivant"
     },
     "Account": {
-      "Title": "Choisissez votre type de compte...",
+      "Title": "Choisissez votre type de compte",
       "Patient": "Patient",
       "Referent": "Référent",
       "MedicalPro": "Corps médical",
@@ -170,7 +170,7 @@
     },
     "Confirm": {
       "Title": "Vérifiez votre email 📬",
-      "Desc": "Votre inscription a bien été prise en compte. Un email va vous être envoyé prochainement avec un lien pour vérifier votre compte. Si vous n’avez pas reçu ce mail après quelques minutes, pensez à vérifier votre dossier spam.",
+      "Desc": "Votre inscription a bien été prise en compte. Un email va vous être envoyé bientôt avec un lien pour vérifier votre compte. Si vous n’avez pas reçu ce mail après quelques minutes, pensez à vérifier votre dossier spam.",
       "ResendButton": "Renvoyez le mail",
       "Validate": "Valider le code"
     }
@@ -180,7 +180,7 @@
     "User": "Utilisateur",
     "Security": "Compte & Sécurité",
     "PhoneNumber": "Numéro de téléphone",
-    "ToFill": "Ajoutez votre numéro",
+    "ToFill": "Entrez votre numéro",
     "ActualPassword": "Mot de passe actuel",
     "NewPassword": "Nouveau mot de passe",
     "ConfirmNewPassword": "Confirmez votre nouveau mot de passe",

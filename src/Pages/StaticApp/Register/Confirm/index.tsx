@@ -80,7 +80,7 @@ const Confirm = (): JSX.Element => {
                     t('Register.Confirm.ResendButton')
                   )
                 }
-                btnStyle="primary"
+                btnStyle="white"
                 outlined
                 shadow
                 iconEnd={send}
@@ -105,6 +105,7 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   margin: 4rem 0;
+  text-align: center;
 
   @media (min-width: 1500px) {
     width: 80%;
@@ -116,10 +117,11 @@ const Description = styled.div`
   text-align: justify;
   font-size: 17px;
   font-weight: 400;
-  margin: 3rem 3.5rem 0 0;
+  margin: 2rem 0 0 0;
 
   @media (min-width: 1500px) {
     font-size: 18px;
+    margin: 3rem 3.5rem 0;
   }
 `;
 

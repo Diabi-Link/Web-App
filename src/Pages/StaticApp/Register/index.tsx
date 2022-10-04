@@ -147,7 +147,6 @@ const Register = (): JSX.Element => {
         </StepWrapper>
         <FormWrapper>
           <Switch>
-            {/* <Route path="/register/user" exact render={() => <Confirm />} /> */}
             <Route
               path="/register/user"
               exact

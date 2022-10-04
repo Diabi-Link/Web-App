@@ -145,7 +145,7 @@
       "Button": "Next"
     },
     "Account": {
-      "Title": "Choose your account type...",
+      "Title": "Choose your account type",
       "Patient": "Patient",
       "Referent": "Referent",
       "MedicalPro": "Medical Professional",

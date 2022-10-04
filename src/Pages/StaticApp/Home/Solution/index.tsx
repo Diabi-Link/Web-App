@@ -57,24 +57,24 @@ const DescriptionWrapper = styled.div`
 const ImgWrapper = styled.div`
   display: flex;
   justify-content: center;
-  width: 30vw;
+  align-items: center;
+  width: auto;
 
   & > img {
-    width: 30rem;
+    height: 15rem;
   }
 
-  @media (orientation: portrait) and (max-width: 900px) {
-    padding: 2rem 0;
-    width: auto;
+  @media (min-width: 900px) {
+    width: 27vw;
 
     & > img {
-      width: 25rem;
+      height: 20rem;
     }
   }
 
-  @media (orientation: portrait) and (max-width: 600px) {
+  @media (min-width: 1200px) {
     & > img {
-      width: 20rem;
+      height: 25rem;
     }
   }
 `;
@@ -88,17 +88,30 @@ const Title = styled(Heading)`
     width: 8rem;
     position: absolute;
     bottom: -2rem;
-    left: 45%;
+    left: 50%;
     transform: translateX(-50%);
     background-color: ${({ theme }) => theme.main.primaryLight};
   }
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   margin-bottom: 6rem;
+  text-align: center;
+
+  @media (min-width: 1200px) {
+    font-size: 2.5rem;
+    text-align: left;
+    &:before {
+      left: 33%;
+    }
+  }
 `;
 
 const Content = styled(Heading)`
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1rem;
+
+  @media (min-width: 600px) {
+    font-weight: 600;
+  }
 `;
 
 export default Solution;

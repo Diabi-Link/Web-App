@@ -116,19 +116,27 @@ const Title = styled(Heading)`
     transform: translateX(-50%);
     background-color: ${({ theme }) => theme.main.primaryLight};
   }
-  font-size: 2.2rem;
+  font-size: 1.5rem;
+  margin-bottom: 6rem;
+  text-align: center;
+
+  @media (min-width: 1200px) {
+    font-size: 2.5rem;
+  }
 `;
 
 const Subtitle = styled(Heading)`
   font-weight: 600;
-  font-size: 0.7rem;
-  margin: 4rem 0;
+  font-size: 0.9rem;
+  margin: 2rem 0;
 `;
 
 const Question = styled(Heading)`
   margin: 1.5rem 0;
+  text-align: left;
+  font-size: 1.1rem;
 
-  @media (orientation: portrait) and (max-width: 600px) {
+  @media (min-width: 1000px) {
     font-size: 1.3rem;
   }
 `;
@@ -136,7 +144,11 @@ const Question = styled(Heading)`
 const Content = styled(Heading)`
   text-align: left;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.9rem;
+
+  @media (min-width: 600px) {
+    font-size: 1rem;
+  }
 `;
 
 const Button = styled.button`

@@ -90,6 +90,11 @@ const AppWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 2rem 0;
+  align-items: center;
+
+  @media (min-width: 1024px) {
+    align-items: flex-start;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -101,26 +106,35 @@ const ButtonWrapper = styled.div`
     margin: 0 2rem 0 0;
   }
 
-  @media (orientation: portrait) and (max-width: 800px) {
+  @media (orientation: portrait) and (max-width: 600px) {
     flex-direction: column;
     margin: 0;
 
     & > button {
-      margin: 1rem 1rem 0 0;
+      margin: 1rem 0rem 0 0;
     }
   }
 `;
 
 const Title = styled(Heading)`
-  font-size: 2.5rem;
+  font-size: 1.7rem;
+  text-align: center;
 
-  @media (max-width: 768px) and (orientation: portrait) {
-    font-size: 2.2rem;
+  @media (min-width: 1024px) {
+    text-align: left;
+    font-size: 2.5rem;
   }
 `;
 
 const Content = styled(Heading)`
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 0.8rem;
+  text-align: justify;
+
+  @media (min-width: 600px) {
+    font-size: 1rem;
+    font-weight: 600;
+  }
 `;
 
 const NavButton = styled(Button)`

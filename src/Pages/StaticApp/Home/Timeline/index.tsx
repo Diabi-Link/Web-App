@@ -105,7 +105,6 @@ const Separator = styled.div`
 
 const Title = styled(Heading)`
   position: relative;
-  margin-bottom: 5rem;
 
   &:before {
     content: '';
@@ -117,14 +116,28 @@ const Title = styled(Heading)`
     transform: translateX(-50%);
     background-color: ${({ theme }) => theme.main.primaryLight};
   }
-  font-size: 2.2rem;
+  font-size: 1.5rem;
+  margin-bottom: 6rem;
+  text-align: center;
+
+  @media (min-width: 1200px) {
+    font-size: 2.5rem;
+  }
 `;
 
 const Content = styled(Heading)<{ align: string }>`
   width: 40%;
   text-align: ${({ align }) => align};
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.8rem;
+
+  @media (min-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 1rem;
+  }
 `;
 
 export default Timeline;

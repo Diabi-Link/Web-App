@@ -126,7 +126,7 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
               <StyledButton
                 type="button"
                 label={t('Register.Security.BackButton')}
-                btnStyle="primary"
+                btnStyle="white"
                 shadow
                 iconStart={arrowLeft2}
                 onClick={() => onClick(2)}
@@ -160,6 +160,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  text-align: center;
 
   @media (min-width: 1500px) {
     width: 80%;
@@ -174,8 +175,16 @@ const Wrapper = styled(Form)`
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 60%;
-  margin-bottom: 50px;
+  margin-bottom: 2rem;
+
+  @media (min-width: 700px) {
+    height: 50%;
+  }
+
+  @media (min-width: 1300px) {
+    height: 60%;
+    margin-bottom: 50px;
+  }
 `;
 
 const PasswordBox = styled.div`
@@ -190,13 +199,19 @@ const ButtonWrapper = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  flex-wrap: wrap-reverse;
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
-  margin: 15px;
+  width: 100%;
+  margin: 0.5rem 0;
+  text-align: left;
+
+  @media (min-width: 600px) {
+    width: 50%;
+  }
 `;
 
 const InputLabel = styled.label`
@@ -208,6 +223,11 @@ const InputLabel = styled.label`
 const StyledButton = styled(Button)`
   width: 150px;
   height: 40px;
+  margin: 1rem auto;
+
+  @media (min-width: 700px) {
+    margin: 0;
+  }
 `;
 
 export default SecurityInfo;
