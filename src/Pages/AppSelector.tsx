@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '@sentry/react';
 import React, { useContext } from 'react';
 
 import { UserContext } from '../contexts/UserContext';
@@ -10,7 +11,13 @@ const AppSelector = (): React.ReactElement => {
     state: { user },
   } = useContext(UserContext);
 
-  return user ? <AuthNav /> : <StaticNav />;
+  return user ? (
+    <AuthNav />
+  ) : (
+    <ErrorBoundary fallback={<>Erreur détectée</>}>
+      <StaticNav />
+    </ErrorBoundary>
+  );
 };
 
 export default AppSelector;
