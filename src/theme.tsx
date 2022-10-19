@@ -4,55 +4,55 @@ export type Theme = {
     primaryLight: string;
     primaryLighter: string;
     white: string;
+    whiteDarker: string;
     whiteBroken: string;
     dark: string;
     darkLighter: string;
+    darkBlue: string;
+    darkGreen: string;
+    darkRed: string;
+    darkYellow: string;
     grayDarker: string;
     grayDark: string;
     gray: string;
     grayLight: string;
     grayLighter: string;
-    error: string;
-    errorLight: string;
-    errorLighter: string;
-    success: string;
-    successLighter: string;
-    info: string;
-    infoLighter: string;
+    red: string;
+    redLighter: string;
+    green: string;
+    greenLighter: string;
+    yellow: string;
+    yellowLighter: string;
     blueLight: string;
-    redLight: string;
-    orangeLight: string;
-    greenLight: string;
-    yellowLight: string;
   };
 };
 
 const theme = (): Theme => ({
   main: {
     primary: '#56B5CB',
-    primaryLight: '#81C6D6',
-    primaryLighter: '#B3D9E2',
+    primaryLight: '#83C7D6',
+    primaryLighter: '#9EDEED',
     white: '#fff',
+    whiteDarker: '#ecfeff',
     whiteBroken: '#F1F1F1',
     dark: '#111',
     darkLighter: 'rgba(0, 0, 0, 0.25)',
+    darkBlue: '#0F4C5A',
+    darkGreen: '#047B57',
+    darkRed: '#992424',
+    darkYellow: '#4F3A04',
     grayDarker: '#424242',
     grayDark: '#757575',
     gray: '#A9A9A9',
     grayLight: '#CACACA',
     grayLighter: '#E9E8E8',
-    error: '#E40000',
-    errorLight: '#FD7676',
-    errorLighter: '#FFA4A4',
-    success: '#18DBA0',
-    successLighter: '#88E4C9',
-    info: '#E8D52D',
-    infoLighter: '#F3E991',
-    blueLight: '#C6E7E8',
-    redLight: 'FF8585',
-    orangeLight: 'FFBF42',
-    greenLight: '97E174',
-    yellowLight: 'FFF59A',
+    red: '#F6404B',
+    redLighter: '#FF9A9A',
+    green: '#18DBA0',
+    greenLighter: '#B5F9E4',
+    yellow: '#E7D006',
+    yellowLighter: '#FFE792',
+    blueLight: '#CBE2E8',
   },
 });
 

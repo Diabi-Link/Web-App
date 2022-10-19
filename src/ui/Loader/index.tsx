@@ -67,7 +67,7 @@ const Dots = styled.span<{
 `;
 
 const Loader = ({
-  loaderStyle = 'default',
+  loaderStyle = 'primary',
   size = 6,
 }: Props): React.ReactElement => {
   const convertPxToRem = 0.0625;

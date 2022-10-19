@@ -38,7 +38,7 @@ const Profile = (): React.ReactElement => {
         type: ContextActionTypes.SetNotice,
         payload: {
           label: 'Sauvegarde réussie',
-          noticeStyle: 'success',
+          noticeStyle: 'green',
           persistent: false,
           closeable: false,
           duration: 5000,

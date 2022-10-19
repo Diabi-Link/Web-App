@@ -39,7 +39,7 @@ const ContactUs = () => {
         type: ContextActionTypes.SetNotice,
         payload: {
           label: t('ContactUs.Success'),
-          noticeStyle: 'success',
+          noticeStyle: 'green',
           persistent: false,
           closeable: true,
           duration: 5000,
@@ -51,7 +51,7 @@ const ContactUs = () => {
         type: ContextActionTypes.SetNotice,
         payload: {
           label: t('ContactUs.Error'),
-          noticeStyle: 'error',
+          noticeStyle: 'red',
           persistent: false,
           closeable: true,
           duration: 5000,

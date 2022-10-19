@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { darken } from 'polished';
 import { Icon } from 'react-icons-kit';
 import { Theme } from '../../theme';
 
@@ -26,10 +25,11 @@ type GettersArguments = {
 const getBackgroundColor = ({
   btnStyle,
   theme,
-}: Omit<GettersArguments, 'outlined'>): string => {
+  outlined,
+}: GettersArguments): string => {
   switch (btnStyle) {
     case 'primary':
-      return theme.main.primary;
+      return outlined ? theme.main.primary : theme.main.primaryLight;
     case 'primaryLight':
       return theme.main.primaryLight;
     case 'white':
@@ -46,7 +46,7 @@ const getBorderColor = ({
 }: GettersArguments): string => {
   switch (btnStyle) {
     case 'primary':
-      return outlined ? theme.main.white : theme.main.primary;
+      return outlined ? theme.main.white : theme.main.primaryLight;
     case 'primaryLight':
       return outlined ? theme.main.white : theme.main.primaryLight;
     case 'white':
@@ -59,10 +59,11 @@ const getBorderColor = ({
 const getLabelColor = ({
   btnStyle,
   theme,
-}: Omit<GettersArguments, 'outlined'>): string => {
+  outlined,
+}: GettersArguments): string => {
   switch (btnStyle) {
     case 'primary':
-      return theme.main.white;
+      return outlined ? theme.main.white : theme.main.darkBlue;
     case 'primaryLight':
       return theme.main.white;
     case 'white':
@@ -78,7 +79,7 @@ const getShadowColor = ({
 }: Omit<GettersArguments, 'outlined'>): string => {
   switch (btnStyle) {
     case 'primary':
-      return theme.main.darkLighter;
+      return theme.main.blueLight;
     case 'primaryLight':
       return theme.main.primaryLighter;
     case 'white':
@@ -106,41 +107,24 @@ const ButtonElement = styled.button<{
     ${({ btnStyle, theme, outlined }) =>
       getBorderColor({ btnStyle, theme, outlined })};
   border-radius: 10px;
-  color: ${({ btnStyle, theme }) => getLabelColor({ btnStyle, theme })};
+  color: ${({ btnStyle, theme, outlined }) =>
+    getLabelColor({ btnStyle, theme, outlined })};
 
-  background-color: ${({ btnStyle, theme }) =>
-    getBackgroundColor({ btnStyle, theme })};
+  background-color: ${({ btnStyle, theme, outlined }) =>
+    getBackgroundColor({ btnStyle, theme, outlined })};
 
-  box-shadow: ${({ theme, shadow }) =>
-    shadow ? `2px 3px 4px ${theme.main.darkLighter}` : 'none'};
+  box-shadow: ${({ btnStyle, theme, shadow }) => {
+    if (shadow)
+      return `2px 5px 4px ${getShadowColor({
+        btnStyle,
+        theme,
+      })}`;
+    return 'none';
+  }};
 
   &:disabled {
     cursor: not-allowed;
     opacity: 0.65;
-  }
-
-  &:hover:not(:disabled) {
-    background-color: ${({ btnStyle, theme }) =>
-      darken(0.1, getBackgroundColor({ btnStyle, theme }))};
-    box-shadow: ${({ btnStyle, theme, outlined, shadow }) => {
-      if (outlined)
-        return `0px 0px 7px 1px ${darken(
-          0.1,
-          getShadowColor({
-            btnStyle,
-            theme,
-          }),
-        )}`;
-      if (shadow)
-        return `2px 3px 4px ${getShadowColor({
-          btnStyle,
-          theme,
-        })}`;
-      return 'none';
-    }};
-    border: 0.12rem solid
-      ${({ btnStyle, theme, outlined }) =>
-        getBorderColor({ btnStyle, theme, outlined })};
   }
 `;
 

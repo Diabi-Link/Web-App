@@ -61,14 +61,12 @@ const Navbar = ({ toggle }: Props) => {
           outlined
           onClick={() => push('/login')}
           data-testid="login-button"
-          shadow
         />
         <NavButton
           label={t('StaticNav.Register')}
           btnStyle="white"
           onClick={() => push('/register/user')}
           data-testid="register-button"
-          shadow
         />
       </ButtonWrapper>
     </Nav>

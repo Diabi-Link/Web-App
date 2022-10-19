@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { ReactComponent as InstantMessagingSvg } from '../../../../assets/svgs/InstantMessaging.svg';
-import { ReactComponent as AnalyticsToolsSvg } from '../../../../assets/svgs/AnalyticsTools.svg';
-import { ReactComponent as AlertsSvg } from '../../../../assets/svgs/Alerts.svg';
+import { ReactComponent as ChatCircleSvg } from '../../../../assets/svgs/ChatCircle.svg';
+import { ReactComponent as AnalyticsCircleSvg } from '../../../../assets/svgs/AnalyticsCircle.svg';
+import { ReactComponent as AlertsCircleSvg } from '../../../../assets/svgs/AlertsCircle.svg';
 
 import { Heading } from '../../../../ui/Heading';
 
@@ -16,17 +16,17 @@ const Services = () => {
         <Title level={1}>{t('Services.Title')}</Title>
         <ServicesListWrapper>
           <ServiceBox>
-            <InstantMessagingSvg />
+            <ChatCircleSvg />
             <Heading level={2}>{t('Services.InstantMessaging')}</Heading>
             <Content level={3}>{t('Services.InstantMessagingDesc')}</Content>
           </ServiceBox>
           <ServiceBox>
-            <AnalyticsToolsSvg />
+            <AnalyticsCircleSvg />
             <Heading level={2}>{t('Services.Follow-Up')}</Heading>
             <Content level={3}>{t('Services.Follow-UpDesc')}</Content>
           </ServiceBox>
           <ServiceBox>
-            <AlertsSvg />
+            <AlertsCircleSvg />
             <Heading level={2}>{t('Services.Alerts')}</Heading>
             <Content level={3}>{t('Services.AlertsDesc')}</Content>
           </ServiceBox>

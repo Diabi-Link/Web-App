@@ -60,22 +60,6 @@ const PatientChoice = ({
             data-testid="search-input"
           />
         </InputWrapper>
-        {/* <SelectorWrapper>
-          <Text type="regular">Trier par :</Text>
-          <Text
-            type={selected === 'name' ? 'selected' : 'unselected'}
-            onClick={() => setSelected('name')}
-          >
-            Nom
-          </Text>
-          <Text type="regular">-</Text>
-          <Text
-            type={selected === 'hour' ? 'selected' : 'unselected'}
-            onClick={() => setSelected('hour')}
-          >
-            Heure de scan
-          </Text>
-        </SelectorWrapper> */}
         <PatientTitle level={2}>{t('Contacts.Patient')}</PatientTitle>
 
         <ContactWrapper>
@@ -141,24 +125,6 @@ const StyledInput = styled(Input)`
     width: 420px;
   }
 `;
-
-// const SelectorWrapper = styled.div`
-//   display: flex;
-//   align-items: center;
-//   width: 100%;
-//   margin-top: 20px;
-// `;
-
-// const Text = styled.p<{ type: 'regular' | 'selected' | 'unselected' }>`
-//   margin-right: 10px;
-//   color: ${({ type, theme }) => {
-//     if (type === 'selected') return theme.main.primary;
-//     if (type === 'unselected') return theme.main.gray;
-//     return theme.main.dark;
-//   }};
-//   font-weight: ${({ type }) => (type === 'selected' ? 'bold' : 'normal')};
-//   cursor: ${({ type }) => (type !== 'regular' ? 'pointer' : 'auto')};
-// `;
 
 const PatientTitle = styled(Heading)`
   position: relative;

@@ -1,14 +1,11 @@
-import React, { Dispatch, SetStateAction, useContext } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import styled, { css } from 'styled-components';
-import { Icon } from 'react-icons-kit';
-import { lock } from 'react-icons-kit/fa/lock';
-import { group } from 'react-icons-kit/fa/group';
-import { signOut } from 'react-icons-kit/fa/signOut';
-import { user as userIcon } from 'react-icons-kit/fa/user';
-import { plus } from 'react-icons-kit/fa/plus';
-import { areaChart } from 'react-icons-kit/fa/areaChart';
-import { comments } from 'react-icons-kit/fa/comments';
-import { ic_notifications as notification } from 'react-icons-kit/md/ic_notifications';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -19,6 +16,16 @@ import Link from '../../../../../ui/Link';
 import { Heading } from '../../../../../ui/Heading';
 import { useAuthToken } from '../../../../../hooks/useAuthToken';
 import { avatars } from '../../../../../utils/avatars';
+
+import { ReactComponent as UnlockSvg } from '../../../../../assets/svgs/Unlock.svg';
+import { ReactComponent as LockSvg } from '../../../../../assets/svgs/Lock.svg';
+import { ReactComponent as AddSvg } from '../../../../../assets/svgs/Add.svg';
+import { ReactComponent as AnalyticsSvg } from '../../../../../assets/svgs/Analytics.svg';
+import { ReactComponent as ChatSvg } from '../../../../../assets/svgs/Chat.svg';
+import { ReactComponent as LogoutSvg } from '../../../../../assets/svgs/Logout.svg';
+import { ReactComponent as ProfileSvg } from '../../../../../assets/svgs/Profile.svg';
+import { ReactComponent as ContactsSvg } from '../../../../../assets/svgs/Contacts.svg';
+import { ReactComponent as AlertsSvg } from '../../../../../assets/svgs/Alerts.svg';
 
 type Props = {
   onMobile?: {
@@ -35,6 +42,15 @@ type Arguments = {
   isOnMobile?: boolean;
 };
 
+const routes = [
+  '/analytics',
+  '/contacts',
+  '/add-measurement',
+  '/alerts',
+  '/chat',
+  '/profile',
+];
+
 const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -44,6 +60,7 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   } = useContext(UserContext);
   const { removeAuthToken } = useAuthToken();
   const { push } = useHistory();
+  const [div, setDiv] = useState(0);
 
   const closeDrawerOnMobile = () => {
     setChatOn(false);
@@ -57,6 +74,10 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
     removeAuthToken();
     dispatch({ type: UserActionTypes.EmptyUser });
   };
+
+  useEffect(() => {
+    setDiv(routes.findIndex((r) => location.pathname.includes(r)));
+  }, [location.pathname]);
 
   return (
     <DrawerWrapper>
@@ -73,125 +94,131 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
         <ItemWrapper onClick={handleLock}>
           {!onMobile && (
             <>
-              <ItemIcon isActive={isLocked}>
-                <Icon icon={lock} size={34} />
+              <ItemIcon isActive={false}>
+                {isLocked ? <LockSvg /> : <UnlockSvg />}
               </ItemIcon>
-              <ItemHeading isActive={isLocked} level={2}>
-                {t('Drawer.Lock')}
+              <ItemHeading isActive={false} level={2}>
+                {isLocked ? t('Drawer.Unlock') : t('Drawer.Lock')}
               </ItemHeading>
             </>
           )}
         </ItemWrapper>
       </ItemNoLinkContainer>
 
-      <ItemContainer
-        to="/analytics"
-        isActive={location.pathname === '/analytics'}
-        onClick={closeDrawerOnMobile}
-        data-testid="analytics-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname === '/analytics'}>
-            <Icon icon={areaChart} size={32} />
-          </ItemIcon>
-          <ItemHeading isActive={location.pathname === '/analytics'} level={2}>
-            {t('Drawer.Analytics')}
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer>
-
-      <ItemContainer
-        to="/contacts/menu"
-        isActive={location.pathname.includes('/contacts')}
-        onClick={closeDrawerOnMobile}
-        data-testid="contacts-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname.includes('/contacts')}>
-            <Icon icon={group} size={32} />
-          </ItemIcon>
-          <ItemHeading
-            isActive={location.pathname.includes('/contacts')}
-            level={2}
-          >
-            {t('Drawer.Contacts')}
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer>
-
-      {user?.account === 'patient' && (
+      <NavContainer>
+        <Divider index={div} />
         <ItemContainer
-          to="/add-measurement"
-          isActive={location.pathname === '/add-measurement'}
+          to="/analytics"
+          isActive={location.pathname === '/analytics'}
           onClick={closeDrawerOnMobile}
-          data-testid="add-measurement-navigation-button"
+          data-testid="analytics-navigation-button"
         >
           <ItemWrapper>
-            <ItemIcon isActive={location.pathname === '/add-measurement'}>
-              <Icon icon={plus} size={34} />
+            <ItemIcon isActive={location.pathname === '/analytics'}>
+              <AnalyticsSvg />
             </ItemIcon>
             <ItemHeading
-              isActive={location.pathname === '/add-measurement'}
+              isActive={location.pathname === '/analytics'}
               level={2}
             >
-              {t('Drawer.AddMeasure')}
+              {t('Drawer.Analytics')}
             </ItemHeading>
           </ItemWrapper>
         </ItemContainer>
-      )}
 
-      <ItemContainer
-        to="/alerts"
-        isActive={location.pathname === '/alerts'}
-        onClick={closeDrawerOnMobile}
-        data-testid="alert-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname === '/alerts'}>
-            <Icon icon={notification} size={34} />
-          </ItemIcon>
-          <ItemHeading isActive={location.pathname === '/alerts'} level={2}>
-            {t('Drawer.Alerts')}
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer>
+        <ItemContainer
+          to="/contacts/menu"
+          isActive={location.pathname.includes('/contacts')}
+          onClick={closeDrawerOnMobile}
+          data-testid="contacts-navigation-button"
+        >
+          <ItemWrapper>
+            <ItemIcon isActive={location.pathname.includes('/contacts')}>
+              <ContactsSvg />
+            </ItemIcon>
+            <ItemHeading
+              isActive={location.pathname.includes('/contacts')}
+              level={2}
+            >
+              {t('Drawer.Contacts')}
+            </ItemHeading>
+          </ItemWrapper>
+        </ItemContainer>
 
-      <ItemContainer
-        to="/chat"
-        isActive={location.pathname === '/chat'}
-        onClick={() => setChatOn(true)}
-        data-testid="chat-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname === '/chat'}>
-            <Icon icon={comments} size={32} />
-          </ItemIcon>
-          <ItemHeading isActive={location.pathname === '/chat'} level={2}>
-            {t('Drawer.Chat')}
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer>
+        {user?.account === 'patient' && (
+          <ItemContainer
+            to="/add-measurement"
+            isActive={location.pathname === '/add-measurement'}
+            onClick={closeDrawerOnMobile}
+            data-testid="add-measurement-navigation-button"
+          >
+            <ItemWrapper>
+              <ItemIcon isActive={location.pathname === '/add-measurement'}>
+                <AddSvg />
+              </ItemIcon>
+              <ItemHeading
+                isActive={location.pathname === '/add-measurement'}
+                level={2}
+              >
+                {t('Drawer.AddMeasure')}
+              </ItemHeading>
+            </ItemWrapper>
+          </ItemContainer>
+        )}
 
-      <ItemContainer
-        to="/profile"
-        isActive={location.pathname === '/profile'}
-        onClick={closeDrawerOnMobile}
-        data-testid="profile-navigation-button"
-      >
-        <ItemWrapper>
-          <ItemIcon isActive={location.pathname === '/profile'}>
-            <Icon icon={userIcon} size={34} />
-          </ItemIcon>
-          <ItemHeading isActive={location.pathname === '/profile'} level={2}>
-            {t('Drawer.Profile')}
-          </ItemHeading>
-        </ItemWrapper>
-      </ItemContainer>
+        <ItemContainer
+          to="/alerts"
+          isActive={location.pathname === '/alerts'}
+          onClick={closeDrawerOnMobile}
+          data-testid="alert-navigation-button"
+        >
+          <ItemWrapper>
+            <ItemIcon isActive={location.pathname === '/alerts'}>
+              <AlertsSvg />
+            </ItemIcon>
+            <ItemHeading isActive={location.pathname === '/alerts'} level={2}>
+              {t('Drawer.Alerts')}
+            </ItemHeading>
+          </ItemWrapper>
+        </ItemContainer>
+
+        <ItemContainer
+          to="/chat"
+          isActive={location.pathname === '/chat'}
+          onClick={() => setChatOn(true)}
+          data-testid="chat-navigation-button"
+        >
+          <ItemWrapper>
+            <ItemIcon isActive={location.pathname === '/chat'}>
+              <ChatSvg />
+            </ItemIcon>
+            <ItemHeading isActive={location.pathname === '/chat'} level={2}>
+              {t('Drawer.Chat')}
+            </ItemHeading>
+          </ItemWrapper>
+        </ItemContainer>
+
+        <ItemContainer
+          to="/profile"
+          isActive={location.pathname === '/profile'}
+          onClick={closeDrawerOnMobile}
+          data-testid="profile-navigation-button"
+        >
+          <ItemWrapper>
+            <ItemIcon isActive={location.pathname === '/profile'}>
+              <ProfileSvg />
+            </ItemIcon>
+            <ItemHeading isActive={location.pathname === '/profile'} level={2}>
+              {t('Drawer.Profile')}
+            </ItemHeading>
+          </ItemWrapper>
+        </ItemContainer>
+      </NavContainer>
 
       <ItemNoLinkContainer onClick={logout}>
         <ItemWrapper>
           <ItemIcon isActive={false}>
-            <Icon icon={signOut} size={34} />
+            <LogoutSvg />
           </ItemIcon>
           <ItemHeading isActive={false} level={2}>
             {t('Drawer.Logout')}
@@ -206,22 +233,28 @@ const DrawerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
+  & > div:nth-child(2) {
+    margin: 1.475rem 0;
+  }
+`;
+
+const NavContainer = styled.div`
+  position: relative;
 `;
 
 const ItemContainer = styled(Link)<{ isActive: boolean }>`
   width: 100%;
-  border: none;
-  background-color: ${({ theme, isActive }) =>
-    isActive ? theme.main.primaryLight : 'transparent'};
-  margin-top: 1.475rem;
+  // border: none;
   cursor: pointer;
+  position: relative;
+  margin-bottom: 1.475rem;
 `;
 
 const ItemNoLinkContainer = styled.div`
   width: 100%;
   border: none;
   background-color: transparent;
-  margin-top: 1.475rem;
   cursor: pointer;
 `;
 
@@ -238,13 +271,48 @@ const ItemWrapper = styled.div`
     `}
 `;
 
+const Divider = styled.div<{ index: number }>`
+  position: absolute;
+  top: 0;
+  height: 60px;
+  width: 100%;
+  border-radius: 25px 0 0 25px;
+  background-color: ${({ theme }) => theme.main.whiteBroken};
+  transition: 0.5s;
+  transform: ${({ index }) => `translateY(calc(82.5px * ${index}))`};
+  &:before {
+    content: '';
+    position: absolute;
+
+    background-color: transparent;
+    top: -11px;
+    right: 0px;
+    height: 11px;
+    width: 6px;
+    border-bottom-right-radius: 25px;
+    box-shadow: ${({ theme }) => `0 5px 0 0 ${theme.main.whiteBroken}`};
+  }
+  &:after {
+    content: '';
+    position: absolute;
+
+    background-color: transparent;
+    bottom: -11px;
+    right: 0px;
+    height: 11px;
+    width: 6px;
+    border-top-right-radius: 25px;
+    box-shadow: ${({ theme }) => `0 -5px 0 0 ${theme.main.whiteBroken}`};
+  }
+`;
+
 const ItemIcon = styled.button<{ isActive: boolean }>`
   padding: 0.625rem;
   background-color: transparent;
   border: none;
   cursor: pointer;
   color: ${({ theme, isActive }) =>
-    isActive ? theme.main.white : theme.main.primaryLighter};
+    isActive ? theme.main.primary : theme.main.primaryLighter};
   transition: 0.15s ease-in-out;
 `;
 
@@ -273,11 +341,11 @@ const NameText = styled.p`
   min-width: 14.5rem;
 `;
 
-const ItemHeading = styled(Heading)<{ isActive: boolean }>`
+const ItemHeading = styled(Heading)<{ isActive: boolean; isLock?: boolean }>`
   margin-left: 0.625rem;
   font-weight: bold;
   color: ${({ theme, isActive }) =>
-    isActive ? theme.main.white : theme.main.primaryLighter};
+    isActive ? theme.main.primary : theme.main.primaryLighter};
   transition: 0.15s ease-in-out;
 `;
 

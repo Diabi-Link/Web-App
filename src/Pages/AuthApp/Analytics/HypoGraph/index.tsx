@@ -87,11 +87,11 @@ const HypoGraph = ({
         <GraphTitle>{t('Analytics.Low')}</GraphTitle>
       </TitleWrapper>
       <GraphWrapper>
-        <ResponsiveContainer height={140}>
+        <ResponsiveContainer height={200}>
           <BarChart
             data={data}
             margin={{
-              top: 30,
+              top: 50,
               right: 20,
               left: 20,
               bottom: 5,
@@ -108,15 +108,13 @@ const HypoGraph = ({
               dataKey="hypo"
               animationDuration={500}
               fill="#FF5F5F"
-              radius={15}
-              barSize={20}
-              stroke="black"
-              strokeWidth="0.4"
+              radius={4}
+              barSize={26}
             >
               <LabelList
                 dataKey="hypo"
                 position="top"
-                fontWeight={700}
+                fontWeight={500}
                 fontSize={15}
               />
             </Bar>
@@ -181,7 +179,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  background-color: ${(props) => props.theme.main.blueLight};
+  background-color: ${(props) => props.theme.main.whiteDarker};
   border-radius: 15px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
   width: 92vw;

@@ -3,27 +3,39 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { Icon } from 'react-icons-kit';
-import { ic_check as CheckIcon } from 'react-icons-kit/md/ic_check';
 import { ic_close as CloseIcon } from 'react-icons-kit/md/ic_close';
 import { Theme } from '../../theme';
 
 import { MainContext } from '../../contexts/MainContext';
 
-export type ButtonTheme = 'success' | 'error' | 'info' | undefined;
+export type ButtonTheme = 'green' | 'red' | 'yellow' | undefined;
 
 type GettersArguments = {
   noticeStyle: ButtonTheme;
   theme: Theme;
 };
 
+const getBorderColor = ({ noticeStyle, theme }: GettersArguments): string => {
+  switch (noticeStyle) {
+    case 'green':
+      return theme.main.green;
+    case 'red':
+      return theme.main.red;
+    case 'yellow':
+      return theme.main.yellow;
+    default:
+      return 'rgba(255, 255, 255, 0.4)';
+  }
+};
+
 const getShadowColor = ({ noticeStyle, theme }: GettersArguments): string => {
   switch (noticeStyle) {
-    case 'success':
-      return theme.main.successLighter;
-    case 'error':
-      return theme.main.errorLighter;
-    case 'info':
-      return theme.main.infoLighter;
+    case 'green':
+      return theme.main.greenLighter;
+    case 'red':
+      return theme.main.redLighter;
+    case 'yellow':
+      return theme.main.yellowLighter;
     default:
       return 'rgba(255, 255, 255, 0.4)';
   }
@@ -34,12 +46,12 @@ const getBackgroundColor = ({
   theme,
 }: GettersArguments): string => {
   switch (noticeStyle) {
-    case 'success':
-      return theme.main.success;
-    case 'error':
-      return theme.main.errorLight;
-    case 'info':
-      return theme.main.info;
+    case 'green':
+      return theme.main.greenLighter;
+    case 'red':
+      return theme.main.redLighter;
+    case 'yellow':
+      return theme.main.yellowLighter;
     default:
       return 'rgba(255, 255, 255, 0.4)';
   }
@@ -47,8 +59,12 @@ const getBackgroundColor = ({
 
 const getColor = ({ noticeStyle, theme }: GettersArguments): string => {
   switch (noticeStyle) {
-    case 'info':
-      return theme.main.dark;
+    case 'green':
+      return theme.main.darkGreen;
+    case 'red':
+      return theme.main.darkRed;
+    case 'yellow':
+      return theme.main.darkYellow;
     default:
       return theme.main.white;
   }
@@ -66,8 +82,8 @@ const ButtonElement = styled.button<{
   padding: 0.7rem 1.2rem;
   border: none;
   border-radius: 10px;
-  font-weight: 500;
-  font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 1rem;
   z-index: 99;
   position: fixed;
   bottom: 10px;
@@ -95,6 +111,19 @@ const ButtonElement = styled.button<{
   }
 `;
 
+const Border = styled.div<{
+  noticeStyle: ButtonTheme;
+  theme: Theme;
+}>`
+  left: 0;
+  position: absolute;
+  border-radius: 10px 0 0 10px;
+  height: 100%;
+  width: 2%;
+  background-color: ${({ noticeStyle, theme }) =>
+    getBorderColor({ noticeStyle, theme })};
+`;
+
 const IconStart = styled(Icon)`
   margin-bottom: 0.5rem;
   @media (orientation: landscape) and (min-width: 768px) {
@@ -108,7 +137,7 @@ const IconEnd = styled(Icon)<{ closeable?: Boolean }>`
   margin-top: 0.5rem;
   @media (orientation: landscape) and (min-width: 768px) {
     margin-top: 0rem;
-    margin-left: 0.7rem;
+    margin-left: 0.5rem;
   }
 `;
 
@@ -148,13 +177,14 @@ const Notice = (): JSX.Element => {
 
   return (
     <ButtonElement type={type} display={display} noticeStyle={noticeStyle}>
+      <Border noticeStyle={noticeStyle} />
       {icon && <IconStart icon={icon} size={18} />}
       {label}
       <IconEnd
         closeable={closeable}
-        icon={noticeStyle === 'success' ? CheckIcon : CloseIcon}
+        icon={CloseIcon}
         onClick={() => closeable && closeNotice()}
-        size={25}
+        size={22}
       />
     </ButtonElement>
   );

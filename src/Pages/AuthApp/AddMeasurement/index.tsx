@@ -34,7 +34,7 @@ const AddData = () => {
         type: ContextActionTypes.SetNotice,
         payload: {
           label: message,
-          noticeStyle: isLevelGood ? 'success' : 'error',
+          noticeStyle: isLevelGood ? 'green' : 'red',
           persistent: false,
           closeable: true,
           duration: 5000,

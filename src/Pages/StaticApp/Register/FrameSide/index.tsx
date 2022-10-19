@@ -6,7 +6,7 @@ import { ReactComponent as AccountSvg } from '../../../../assets/svgs/AccountFor
 import { ReactComponent as UserSvg } from '../../../../assets/svgs/UserForm.svg';
 import { ReactComponent as SecuritySvg } from '../../../../assets/svgs/SecurityForm.svg';
 import { ReactComponent as MailSvg } from '../../../../assets/svgs/Mail.svg';
-import { ReactComponent as LogoText } from '../../../../assets/svgs/DiabiLink.svg';
+import { ReactComponent as LogoText } from '../../../../assets/svgs/DiabiLinkDark.svg';
 
 type Props = {
   step: number;
@@ -34,8 +34,8 @@ const Description = styled.p`
   align-items: center;
   font-size: 1.3rem;
   font-weight: 600;
-  margin: 30px 50px;
-  color: ${(props) => props.theme.main.white};
+  margin: 30px 80px;
+  color: ${(props) => props.theme.main.darkBlue};
 
   @media (min-width: 1500px) {
     font-size: 1.55rem;

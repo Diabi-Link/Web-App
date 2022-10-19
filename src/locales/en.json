@@ -15,9 +15,10 @@
   },
   "Drawer": {
     "Lock": "Lock",
+    "Unlock": "Unlock",
     "Analytics": "Analytics",
     "Contacts": "Contacts",
-    "AddMeasure": "Add Measure",
+    "AddMeasure": "Measure",
     "Alerts": "Alerts",
     "Chat": "Chat",
     "Profile": "Profile",
@@ -208,12 +209,15 @@
     "Title": "My Contacts",
     "Choice": "Please select your choice :",
     "Add": "Add a contact",
+    "Manage": "Manage my contacts",
     "List": "Find my contacts",
     "Validate": "Add",
     "MedicalPro": "My medical team",
     "Referent": "My referents",
     "Patient": "My patients",
-    "AddSuccess": "You have added a user successfully"
+    "AddSuccess": "You have added a user successfully",
+    "Accept": "Accept",
+    "Decline": "Decline"
   },
   "Alerts": {
     "Title": "My alerts",

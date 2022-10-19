@@ -20,11 +20,8 @@ import {
   useGetDataOfLazyQuery,
 } from '../../../../api';
 import {
-  // pickDate,
   formatDaily,
   dailyBrain,
-  // getDailyTicks,
-  // getDailyDomain,
   DailyData,
   BrainData,
 } from '../../../../utils';
@@ -184,7 +181,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  background-color: ${(props) => props.theme.main.blueLight};
+  background-color: ${(props) => props.theme.main.whiteDarker};
   border-radius: 15px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
   width: 92vw;

@@ -6,7 +6,7 @@ import { Icon } from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 
 import { ReactComponent as LoginSvg } from '../../../assets/svgs/Login.svg';
-import { ReactComponent as LogoText } from '../../../assets/svgs/DiabiLink.svg';
+import { ReactComponent as LogoText } from '../../../assets/svgs/DiabiLinkDark.svg';
 
 import Form from './Form';
 
@@ -82,7 +82,7 @@ const Description = styled.p`
   font-size: 1.875rem;
   font-weight: 700;
   margin: 30px 10px;
-  color: ${(props) => props.theme.main.white};
+  color: ${(props) => props.theme.main.darkBlue};
 `;
 
 const Text = styled.p`

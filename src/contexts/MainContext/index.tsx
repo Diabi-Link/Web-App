@@ -11,7 +11,7 @@ export enum ContextActionTypes {
 export type NoticeType = {
   label: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
-  noticeStyle: 'success' | 'error' | 'info' | undefined;
+  noticeStyle: 'green' | 'red' | 'yellow' | undefined;
   closeable?: Boolean;
   persistent?: Boolean;
   duration?: number;

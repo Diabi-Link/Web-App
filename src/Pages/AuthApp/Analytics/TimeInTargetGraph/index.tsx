@@ -30,7 +30,7 @@ import { UserType } from '../../../../types/user';
 
 let ctx: CanvasRenderingContext2D | null;
 
-const colors = ['#FFB21D', '#FFED4D', '#84FF4A', '#FF5F5F'];
+const colors = ['#FFB21D', '#FFED4D', '#18DBA0', '#F6404B'];
 
 export const measureTextSize = ({
   text,
@@ -59,7 +59,7 @@ const YAxisLeftTick = ({
   return (
     <Text
       x={90}
-      y={y}
+      y={y + 4}
       textAnchor="end"
       verticalAnchor="end"
       style={{ fontWeight: 500 }}
@@ -150,29 +150,13 @@ const TimeInTargetGraph = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period, contacts, user]);
 
-  // const maxTextWidth = useMemo(
-  //   () =>
-  //     data.reduce((acc, cur) => {
-  //       const value = cur.percentage;
-  //       const width = measureTextSize({
-  //         text: value.toLocaleString(),
-  //         size: 16,
-  //       });
-  //       if (width > acc) {
-  //         return width;
-  //       }
-  //       return acc;
-  //     }, 0),
-  //   [data],
-  // );
-
   return (
     <Container>
       <TitleWrapper>
         <GraphTitle>{t('Analytics.TimeInTarget')}</GraphTitle>
       </TitleWrapper>
       <GraphWrapper>
-        <ResponsiveContainer height={140}>
+        <ResponsiveContainer height={200}>
           <BarChart
             data={data}
             margin={{
@@ -201,17 +185,15 @@ const TimeInTargetGraph = ({
               minPointSize={2}
               animationDuration={1000}
               radius={10}
-              barSize={20}
-              stroke="black"
-              strokeWidth="0.4"
+              barSize={26}
             >
               {data.map((d, idx) => {
-                return <Cell key={d.name} fill={colors[idx]} radius={3} />;
+                return <Cell key={d.name} fill={colors[idx]} radius={4} />;
               })}
               <LabelList
                 dataKey="percentage"
                 position="right"
-                fontWeight={700}
+                fontWeight={500}
                 fontSize={15}
                 formatter={(label: string) =>
                   `${parseFloat(label).toFixed(0)}%`
@@ -277,7 +259,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  background-color: ${(props) => props.theme.main.blueLight};
+  background-color: ${(props) => props.theme.main.whiteDarker};
   border-radius: 15px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
   width: 92vw;
@@ -318,7 +300,7 @@ const GraphTitle = styled.label`
   display: flex;
   justify-content: center;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   color: black;
   margin-top: 20px;
 `;

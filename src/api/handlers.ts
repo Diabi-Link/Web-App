@@ -17,8 +17,6 @@ import {
   ContextActions,
   ContextActionTypes,
 } from '../contexts/MainContext';
-// import { UserActionTypes, UserContext } from '../contexts/UserContext';
-// import { useAuthToken } from '../hooks/useAuthToken';
 
 type OperationVariables = Record<string, any>;
 
@@ -35,7 +33,7 @@ const onErrorShared = (
           type: ContextActionTypes.SetNotice,
           payload: {
             label: err.message,
-            noticeStyle: 'error',
+            noticeStyle: 'red',
             persistent: false,
             closeable: true,
             duration: 5000,
@@ -46,7 +44,7 @@ const onErrorShared = (
           type: ContextActionTypes.SetNotice,
           payload: {
             label: 'Unexpected error',
-            noticeStyle: 'error',
+            noticeStyle: 'red',
             persistent: false,
             closeable: true,
             duration: 5000,
@@ -61,7 +59,7 @@ const onErrorShared = (
         type: ContextActionTypes.SetNotice,
         payload: {
           label: networkError.message,
-          noticeStyle: 'error',
+          noticeStyle: 'red',
           persistent: false,
           closeable: true,
           duration: 5000,
@@ -72,7 +70,7 @@ const onErrorShared = (
         type: ContextActionTypes.SetNotice,
         payload: {
           label: 'Unexpected error',
-          noticeStyle: 'error',
+          noticeStyle: 'red',
           persistent: false,
           closeable: true,
           duration: 5000,
@@ -86,14 +84,7 @@ export function useAPIQuery<TData = any, TVariables = OperationVariables>(
   query: DocumentNode,
   options?: QueryHookOptions<TData, TVariables>,
 ): QueryResult<TData, TVariables> {
-  // const { removeAuthToken } = useAuthToken();
-  // const { dispatch } = useContext(UserContext);
   const { dispatch: altDispatch } = useContext(MainContext);
-
-  // const logout = () => {
-  //   removeAuthToken();
-  //   dispatch({ type: UserActionTypes.EmptyUser });
-  // };
 
   const onError = (error: ApolloError) => {
     onErrorShared(error, altDispatch);
@@ -109,14 +100,7 @@ export function useAPILazyQuery<TData = any, TVariables = OperationVariables>(
   query: DocumentNode,
   options?: QueryHookOptions<TData, TVariables>,
 ): QueryTuple<TData, TVariables> {
-  // const { removeAuthToken } = useAuthToken();
-  // const { dispatch } = useContext(UserContext);
   const { dispatch: altDispatch } = useContext(MainContext);
-
-  // const logout = () => {
-  //   removeAuthToken();
-  //   dispatch({ type: UserActionTypes.EmptyUser });
-  // };
 
   const onError = (error: ApolloError) => {
     onErrorShared(error, altDispatch);
@@ -132,14 +116,7 @@ export function useAPIMutation<TData = any, TVariables = OperationVariables>(
   mutation: DocumentNode,
   options?: MutationHookOptions<TData, TVariables>,
 ): MutationTuple<TData, TVariables> {
-  // const { removeAuthToken } = useAuthToken();
-  // const { dispatch } = useContext(UserContext);
   const { dispatch: altDispatch } = useContext(MainContext);
-
-  // const logout = () => {
-  //   removeAuthToken();
-  //   dispatch({ type: UserActionTypes.EmptyUser });
-  // };
 
   const onError = (error: ApolloError) => {
     onErrorShared(error, altDispatch);

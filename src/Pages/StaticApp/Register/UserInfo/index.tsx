@@ -211,7 +211,7 @@ const InputWrapper = styled.div`
   text-align: left;
 
   @media (min-width: 600px) {
-    width: 40%;
+    width: 48%;
   }
 `;
 

@@ -275,8 +275,6 @@ const DrawerChat = ({ setChatOn, chatOn }: DrawerChatProps) => {
   );
 };
 
-// React.ChangeEvent<HTMLInputElement>
-
 const DrawerWrapper = styled.div`
   display: flex;
   flex-direction: column;

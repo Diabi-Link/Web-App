@@ -36,7 +36,7 @@ const Add = (): JSX.Element => {
         type: ContextActionTypes.SetNotice,
         payload: {
           label: t('Contacts.AddSuccess'),
-          noticeStyle: 'success',
+          noticeStyle: 'green',
           persistent: false,
           closeable: true,
           duration: 5000,
@@ -48,7 +48,7 @@ const Add = (): JSX.Element => {
         type: ContextActionTypes.SetNotice,
         payload: {
           label: t('StaticNav.Error'),
-          noticeStyle: 'error',
+          noticeStyle: 'red',
           persistent: false,
           closeable: true,
           duration: 5000,

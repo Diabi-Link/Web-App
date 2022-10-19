@@ -14,10 +14,11 @@
     "Contact": "Nous contacter"
   },
   "Drawer": {
-    "Lock": "Verrouiller",
+    "Lock": "Vérrouiller",
+    "Unlock": "Déverrouiller",
     "Analytics": "Analytiques",
     "Contacts": "Contacts",
-    "AddMeasure": "Ajouter mesure",
+    "AddMeasure": "Mesure",
     "Alerts": "Alertes",
     "Chat": "Chat",
     "Profile": "Profil",
@@ -208,12 +209,15 @@
     "Title": "Mes Contacts",
     "Choice": "Veuillez séléctionner votre choix :",
     "Add": "Ajouter un contact",
+    "Manage": "Gérer mes contacts",
     "List": "Trouver mes contacts",
     "Validate": "Ajouter",
     "MedicalPro": "Mon corps médical",
     "Referent": "Mes référents",
     "Patient": "Mes patients",
-    "AddSuccess": "Vous avez ajouter un utilisateur avec succès"
+    "AddSuccess": "Vous avez ajouter un utilisateur avec succès",
+    "Accept": "Accepter",
+    "Decline": "Refuser"
   },
   "Alerts": {
     "Title": "Mes alertes",
