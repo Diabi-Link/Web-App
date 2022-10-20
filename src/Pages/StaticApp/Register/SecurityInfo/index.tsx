@@ -48,19 +48,27 @@ const SecurityInfo = ({ onClick }: Props): JSX.Element => {
     password: string;
     confirmPassword: string;
   }) => {
-    import('bcryptjs').then((bcrypt) => {
-      const salt = bcrypt.genSaltSync(10);
-      const hash = bcrypt.hashSync(password, salt);
-
-      signUp({
-        variables: {
-          userData: {
-            ...(user as DeepNonNullable<RegisterType>),
-            password: hash,
-          },
+    signUp({
+      variables: {
+        userData: {
+          ...(user as DeepNonNullable<RegisterType>),
+          password,
         },
-      });
+      },
     });
+    // import('bcryptjs').then((bcrypt) => {
+    //   const salt = bcrypt.genSaltSync(10);
+    //   const hash = bcrypt.hashSync(password, salt);
+
+    //   signUp({
+    //     variables: {
+    //       userData: {
+    //         ...(user as DeepNonNullable<RegisterType>),
+    //         password: hash,
+    //       },
+    //     },
+    //   });
+    // });
   };
 
   return (

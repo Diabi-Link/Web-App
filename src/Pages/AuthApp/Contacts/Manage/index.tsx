@@ -36,7 +36,7 @@ const Manage = (): JSX.Element => {
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
-          label: 'Vous avez supprimer un utilisateur avec succès',
+          label: 'Vous avez supprimez un utilisateur avec succès',
           noticeStyle: 'green',
           persistent: false,
           closeable: true,

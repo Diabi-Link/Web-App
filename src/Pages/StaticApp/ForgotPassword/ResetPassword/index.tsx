@@ -111,12 +111,7 @@ const ResetPassword = (): JSX.Element => {
     password: string;
     code: string;
   }) => {
-    import('bcryptjs').then((bcrypt) => {
-      const salt = bcrypt.genSaltSync(10);
-      const hash = bcrypt.hashSync(newPassword, salt);
-
-      passwordRecoveryLink({ variables: { newPassword: hash, secretId } });
-    });
+    passwordRecoveryLink({ variables: { newPassword, secretId } });
   };
 
   return (

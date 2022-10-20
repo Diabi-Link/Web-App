@@ -51,6 +51,14 @@ const routes = [
   '/profile',
 ];
 
+const medicalProRoutes = [
+  '/analytics',
+  '/contacts',
+  '/alerts',
+  '/chat',
+  '/profile',
+];
+
 const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -76,7 +84,9 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   };
 
   useEffect(() => {
-    setDiv(routes.findIndex((r) => location.pathname.includes(r)));
+    const routesToSearch =
+      user?.account === 'medicalProfessional' ? medicalProRoutes : routes;
+    setDiv(routesToSearch.findIndex((r) => location.pathname.includes(r)));
   }, [location.pathname]);
 
   return (
@@ -327,7 +337,7 @@ const Photo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
+  width: 50px;
   height: 40px;
   background-color: ${(props) => props.theme.main.primaryLight};
   border-radius: 50%;

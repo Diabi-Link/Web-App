@@ -54,7 +54,7 @@ const Profile = (): React.ReactElement => {
     },
     medicalProfessional: {
       svg: <ProfileMP />,
-      description: t('Register.Account.MedicalProfessional'),
+      description: t('Register.Account.MedicalPro'),
     },
     referent: {
       svg: <ProfileReferent />,
@@ -82,17 +82,13 @@ const Profile = (): React.ReactElement => {
     },
     { resetForm }: { resetForm: () => void },
   ) => {
-    import('bcryptjs').then(async (bcrypt) => {
-      const salt = bcrypt.genSaltSync(10);
-      const password = newPassword ? bcrypt.hashSync(newPassword, salt) : '';
-
-      await updateUser({
-        variables: {
-          userInfo: { email, firstName, lastName, birthDate, password, phone },
-        },
-      });
-      resetForm();
+    const password = newPassword || '';
+    await updateUser({
+      variables: {
+        userInfo: { email, firstName, lastName, birthDate, password, phone },
+      },
     });
+    resetForm();
   };
 
   return (

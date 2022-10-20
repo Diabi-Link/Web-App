@@ -33,7 +33,7 @@ const List = (): JSX.Element => {
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
-          label: 'Vous avez supprimer un utilisateur avec succès',
+          label: 'Vous avez supprimez un utilisateur avec succès',
           noticeStyle: 'green',
           persistent: false,
           closeable: true,
@@ -60,19 +60,6 @@ const List = (): JSX.Element => {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'cache-and-network',
   });
-
-  useEffect(() => {
-    altDispatch({
-      type: ContextActionTypes.SetNotice,
-      payload: {
-        label: 'Vous avez supprimer un utilisateur avec succès',
-        noticeStyle: 'yellow',
-        persistent: true,
-        closeable: true,
-        // duration: 5000,
-      },
-    });
-  }, []);
 
   if (loading) {
     return <Loader loaderStyle="white" />;
