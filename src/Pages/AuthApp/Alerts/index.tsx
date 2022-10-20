@@ -8,48 +8,56 @@ import { NotificationType } from '../../../types/notification';
 import { pickDate } from '../../../utils';
 import { useGetAlertsLazyQuery } from '../../../api';
 
-import GreenIcon from '../../../assets/pngs/GreenIcon.png';
-import OrangeIcon from '../../../assets/pngs/OrangeIcon.png';
-import YellowIcon from '../../../assets/pngs/YellowIcon.png';
-import RedIcon from '../../../assets/pngs/RedIcon.png';
 import { UserContext } from '../../../contexts/UserContext';
+
+import { ReactComponent as GreenIconSvg } from '../../../assets/svgs/GreenIcon.svg';
+import { ReactComponent as YellowIconSvg } from '../../../assets/svgs/YellowIcon.svg';
+import { ReactComponent as OrangeIconSvg } from '../../../assets/svgs/OrangeIcon.svg';
+import { ReactComponent as RedIconSvg } from '../../../assets/svgs/RedIcon.svg';
 
 import { Heading, PageTitle } from '../../../ui/Heading';
 import Button from '../../../ui/Button';
 
 interface Flags {
   color: string;
+  border: string;
   name: string;
   isActive: boolean;
   icon: any;
 }
 
-const FlagsTab: Flags[] = [
-  {
-    color: '#97E174',
-    name: 'green',
-    isActive: true,
-    icon: GreenIcon,
-  },
-  {
-    color: '#FFF59A',
-    name: 'yellow',
-    isActive: true,
-    icon: YellowIcon,
-  },
-  {
-    color: '#FFBF42',
-    name: 'orange',
-    isActive: true,
-    icon: OrangeIcon,
-  },
-  {
-    color: '#FF8585',
-    name: 'red',
-    isActive: true,
-    icon: RedIcon,
-  },
-];
+const FlagsTab = (): Flags[] => {
+  return [
+    {
+      color: '#B5F9E4',
+      border: '#18DBA0',
+      name: 'green',
+      isActive: true,
+      icon: <GreenIconSvg />,
+    },
+    {
+      color: '#FFE792',
+      border: '#E7D006',
+      name: 'yellow',
+      isActive: true,
+      icon: <YellowIconSvg />,
+    },
+    {
+      color: '#FFC267',
+      border: '#FF9C27',
+      name: 'orange',
+      isActive: true,
+      icon: <OrangeIconSvg />,
+    },
+    {
+      color: '#FF9A9A',
+      border: '#F6404B',
+      name: 'red',
+      isActive: true,
+      icon: <RedIconSvg />,
+    },
+  ];
+};
 
 const Alerts = (): JSX.Element => {
   const { t } = useTranslation();
@@ -59,7 +67,7 @@ const Alerts = (): JSX.Element => {
 
   const activeButton = [true, false, false, false];
   const [isActiveButton, setIsActiveButton] = useState<boolean[]>(activeButton);
-  const [flags, setFlags] = useState<Flags[]>(FlagsTab);
+  const [flags, setFlags] = useState<Flags[]>(FlagsTab());
   const [alerts, setAlerts] = useState<NotificationType[]>();
   const [deleteTab, setDeleteTab] = useState<string[]>([]);
 
@@ -116,8 +124,6 @@ const Alerts = (): JSX.Element => {
   const handleDelete = (message: string) => {
     setDeleteTab([...deleteTab, message]);
   };
-
-  // if (loading) return <div>...</div>;
 
   return (
     <Container data-testid="auth-alert-page">
@@ -203,12 +209,14 @@ const Alerts = (): JSX.Element => {
                       flags.find((f) => f.name === v.flag)?.color || 'green'
                     }
                   >
+                    <Border
+                      color={
+                        flags.find((f) => f.name === v.flag)?.border || 'green'
+                      }
+                    />
                     <Info>
                       <AlertIconWrapper>
-                        <img
-                          src={flags.find((f) => f.name === v.flag)?.icon}
-                          alt="RedIcon"
-                        />
+                        {flags.find((f) => f.name === v.flag)?.icon}
                       </AlertIconWrapper>
                       <InfoText level={3}>{v?.message}</InfoText>
                     </Info>
@@ -255,6 +263,84 @@ const Wrapper = styled.div`
   }
 `;
 
+const AlertsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: scroll;
+  height: 100%;
+  width: 90vw;
+  @media (min-width: 1200px) {
+    width: 80vw;
+  }
+  margin-bottom: 2rem;
+`;
+
+const Border = styled.div<{
+  color: string;
+}>`
+  left: 0;
+  position: absolute;
+  border-radius: 10px 0 0 10px;
+  height: 100%;
+  width: 1%;
+  background-color: ${({ color }) => color};
+`;
+
+const StyledBox = styled.div<{
+  color: string;
+}>`
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 3.5rem;
+  margin: 1.5rem 0;
+  width: 95%;
+  border-radius: 10px;
+  box-shadow: ${({ theme }) =>
+    `0 0.063rem 0.17rem 0.033rem ${theme.main.darkLighter}`};
+  background-color: ${({ color }) => color};
+`;
+
+const AlertIconWrapper = styled.div`
+  display: flex;
+  & > svg {
+    width: 2rem;
+  }
+  margin-right: 1rem;
+`;
+
+const Info = styled.div`
+  display: flex;
+  align-items: center;
+  width: 80%;
+`;
+
+const InfoText = styled(Heading)`
+  font-size: 1rem;
+  font-weight: 500;
+`;
+
+const IconWrapper = styled.button<{
+  color: string;
+}>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  background-color: ${({ color }) => color};
+  width: 2rem;
+  height: 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+
+  @media (min-width: 1500px) {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+`;
+
 const FilterWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -276,19 +362,6 @@ const FlagWrapper = styled.div`
   @media (min-width: 1200px) {
     width: 80vw;
   }
-`;
-
-const AlertsWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  overflow: scroll;
-  height: 100%;
-  width: 90vw;
-  @media (min-width: 1200px) {
-    width: 80vw;
-  }
-  margin-bottom: 2rem;
 `;
 
 const FilterTitle = styled(Heading)`
@@ -363,60 +436,6 @@ const FlagButton = styled(Button)<{
   @media (min-width: 1200px) {
     width: ${({ isActive }) => (isActive ? '1.2rem' : '1rem')};
     height: ${({ isActive }) => (isActive ? '1.2rem' : '1rem')};
-  }
-`;
-
-const StyledBox = styled.div<{
-  color: string;
-}>`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  min-height: 4rem;
-  margin: 1.5rem 0;
-  width: 100%;
-  border-radius: 10px;
-  box-shadow: ${({ theme }) =>
-    `0 0.063rem 0.17rem 0.033rem ${theme.main.darkLighter}`};
-
-  background-color: ${({ color }) => color};
-`;
-
-const AlertIconWrapper = styled.div`
-  & > img {
-    width: 2rem;
-  }
-  margin-right: 1rem;
-`;
-
-const Info = styled.div`
-  display: flex;
-  align-items: center;
-  width: 80%;
-  height: 100%;
-`;
-
-const InfoText = styled(Heading)`
-  font-size: 1rem;
-  font-weight: 500;
-`;
-
-const IconWrapper = styled.button<{
-  color: string;
-}>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid black;
-  background-color: ${({ color }) => color};
-  width: 2rem;
-  height: 2rem;
-  border-radius: 10px;
-  cursor: pointer;
-
-  @media (min-width: 1500px) {
-    width: 2.5rem;
-    height: 2.5rem;
   }
 `;
 

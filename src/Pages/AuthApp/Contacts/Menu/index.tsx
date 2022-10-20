@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 import { ReactComponent as AddSvg } from '../../../../assets/svgs/ContactAdd.svg';
-import { ReactComponent as ManageSvg } from '../../../../assets/svgs/ContactManage.svg';
+// import { ReactComponent as ManageSvg } from '../../../../assets/svgs/ContactManage.svg';
 import { ReactComponent as ListSvg } from '../../../../assets/svgs/ContactList.svg';
 
 import { Heading } from '../../../../ui/Heading';

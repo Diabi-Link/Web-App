@@ -12,6 +12,7 @@ export type Theme = {
     darkGreen: string;
     darkRed: string;
     darkYellow: string;
+    darkOrange: string;
     grayDarker: string;
     grayDark: string;
     gray: string;
@@ -23,6 +24,8 @@ export type Theme = {
     greenLighter: string;
     yellow: string;
     yellowLighter: string;
+    orange: string;
+    orangeLighter: string;
     blueLight: string;
   };
 };
@@ -41,6 +44,7 @@ const theme = (): Theme => ({
     darkGreen: '#047B57',
     darkRed: '#992424',
     darkYellow: '#4F3A04',
+    darkOrange: '#C76002',
     grayDarker: '#424242',
     grayDark: '#757575',
     gray: '#A9A9A9',
@@ -52,6 +56,8 @@ const theme = (): Theme => ({
     greenLighter: '#B5F9E4',
     yellow: '#E7D006',
     yellowLighter: '#FFE792',
+    orange: '#FF9C27',
+    orangeLighter: '#FFC267',
     blueLight: '#CBE2E8',
   },
 });

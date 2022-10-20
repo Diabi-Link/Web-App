@@ -11,7 +11,7 @@ import {
   ContextActionTypes,
   MainContext,
 } from '../../../../contexts/MainContext';
-import { UserContext } from '../../../../contexts/UserContext';
+// import { UserContext } from '../../../../contexts/UserContext';
 import { useGetContact, useDeleteContact } from '../../../../api';
 
 import { ReactComponent as ProfilePatient } from '../../../../assets/svgs/ProfilePatient.svg';
@@ -20,13 +20,13 @@ import Button from '../../../../ui/Button';
 import Loader from '../../../../ui/Loader';
 import { Heading } from '../../../../ui/Heading';
 
-import PatientList from './PatientList';
-import ReferentList from './ReferentList';
+// import PatientList from './PatientList';
+// import ReferentList from './ReferentList';
 
 const Manage = (): JSX.Element => {
-  const {
-    state: { user },
-  } = useContext(UserContext);
+  // const {
+  //   state: { user },
+  // } = useContext(UserContext);
   const { dispatch: altDispatch } = useContext(MainContext);
   const { push } = useHistory();
   const { t } = useTranslation();
