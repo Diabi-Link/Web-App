@@ -38,6 +38,9 @@
     "Title": "It seems that you got lost!",
     "Back": "Return home"
   },
+  "Chat": {
+    "SearchContact": "Add contacts"
+  },
   "Hero": {
     "Title": "Control your health with more security",
     "Subtitle": "Get the best follow-up to manage your disease safely.",

@@ -38,6 +38,9 @@
     "Title": "Il semblerait que vous vous soyez perdu !",
     "Back": "Revenir à l'écran d'accueil"
   },
+  "Chat": {
+    "SearchContact": "Ajouter des contacts"
+  },
   "Hero": {
     "Title": "Contrôlez votre santé avec plus de sécurité",
     "Subtitle": "Faites vous suivre au mieux pour gérer votre maladie en toute sécurité.",
