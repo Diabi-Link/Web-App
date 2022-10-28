@@ -112,11 +112,6 @@ const Login = (): JSX.Element => {
   const { t } = useTranslation();
   return (
     <Container>
-      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-      {/* @ts-ignore */}
-      <button onClick={beakrWorld} type="button">
-        Break world
-      </button>
       <Left>
         <BackWrapper>
           <BackLink to="/">

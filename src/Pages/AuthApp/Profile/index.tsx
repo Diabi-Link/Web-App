@@ -93,6 +93,11 @@ const Profile = (): React.ReactElement => {
 
   return (
     <Container data-testid="profile-page">
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}
+      <button onClick={beakrWorld} type="button">
+        Break world
+      </button>
       <Wrapper>
         <PageTitle level={1}>{t('Profile.Title')}</PageTitle>
         <AccountWrapper>
