@@ -41,27 +41,30 @@ const Confirm = (): JSX.Element => {
         {(props: FormikProps<{ code: string[] }>) => (
           <Wrapper>
             <TileWrapper>
-              {props.values.code.map((c, index) => (
-                <CodeTile
-                  name="code"
-                  maxLength={1}
-                  // && !props.values.code[index - 1]
-                  // disabled={!!c}
-                  value={c}
-                  ref={(el) =>
-                    !c && !!props.values.code[index - 1] && el?.focus()
-                  }
-                  // ref={(el) => !!props.values.code[0] && el?.focus()}
-                  onChange={(e) => {
-                    props.setFieldValue(
-                      'code',
-                      props.values.code.map((d, idx) =>
-                        idx === index ? e.target.value : d,
-                      ),
-                    );
-                  }}
-                />
-              ))}
+              {props.values.code.map((c, index) => {
+                return (
+                  <CodeTile
+                    name="code"
+                    maxLength={1}
+                    disabled={
+                      !c && !props.values.code[index - 1] && index !== 0
+                    }
+                    value={c}
+                    ref={(el) =>
+                      !c && !!props.values.code[index - 1] && el?.focus()
+                    }
+                    // ref={(el) => !!props.values.code[0] && el?.focus()}
+                    onChange={(e) => {
+                      props.setFieldValue(
+                        'code',
+                        props.values.code.map((d, idx) =>
+                          idx === index ? e.target.value : d,
+                        ),
+                      );
+                    }}
+                  />
+                );
+              })}
             </TileWrapper>
             <ButtonWrapper>
               <StyledButton

@@ -6,7 +6,7 @@ import { RegisterProvider } from '../../../contexts/RegisterContext';
 import Page404 from '../404';
 
 import Navbar from '../Navbar';
-import Sidebar from '../Sidebar';
+import HamburgerMenu from '../HamburgerMenu';
 
 const Home = lazy(() => import('../Home'));
 const Register = lazy(() => import('../Register'));
@@ -40,7 +40,7 @@ const Nav = (): JSX.Element => {
     >
       {needNavbar && (
         <>
-          <Sidebar isOpen={isOpen} toggle={toggle} />
+          <HamburgerMenu isOpen={isOpen} toggle={toggle} />
           <Navbar toggle={toggle} />
         </>
       )}

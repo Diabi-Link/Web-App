@@ -4,9 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { animateScroll as scroll, Link } from 'react-scroll';
 import { useTranslation } from 'react-i18next';
 
-import { Icon } from 'react-icons-kit';
-import { ic_dehaze as Burger } from 'react-icons-kit/md/ic_dehaze';
-
+import { ReactComponent as HamburgerIconSvg } from '../../../assets/svgs/HamburgerIcon.svg';
 import LogoRounded from '../../../assets/svgs/LogoRounded.svg';
 
 import Button from '../../../ui/Button';
@@ -26,8 +24,8 @@ const Navbar = ({ toggle }: Props) => {
   return (
     <Nav>
       <Img onClick={toggleHome} src={LogoRounded} alt="logo" />
-      <MobileIcon /* onClick={toggle} */>
-        <Icon icon={Burger} size={35} />
+      <MobileIcon onClick={toggle}>
+        <HamburgerIconSvg />
       </MobileIcon>
       <NavMenu>
         <NavLinks to="solution" smooth duration={500} spy offset={-150}>
