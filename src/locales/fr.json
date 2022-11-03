@@ -173,7 +173,9 @@
       "Title": "Vérifiez votre email 📬",
       "Desc": "Votre inscription a bien été prise en compte. Un email va vous être envoyé bientôt avec un lien pour vérifier votre compte. Si vous n’avez pas reçu ce mail après quelques minutes, pensez à vérifier votre dossier spam.",
       "ResendButton": "Renvoyez le mail",
-      "Validate": "Valider le code"
+      "Validate": "Valider le code",
+      "LinkSuccess": "Le lien vous a été envoyé par mail",
+      "VerifSuccess": "Votre compte a été verifié avec succès"
     }
   },
   "Profile": {

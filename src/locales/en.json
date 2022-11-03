@@ -173,7 +173,9 @@
       "Title": "Check your email 📬",
       "Desc": "Your registration has been successfully completed. An email will be sent to you shortly with a link to verify your account. If you have not received this email after a few minutes, please check your spam folder.",
       "ResendButton": "Send the mail again",
-      "Validate": "Validate code"
+      "Validate": "Validate code",
+      "LinkSuccess": "The link has been sent to you by email",
+      "VerifSuccess": "Your account has been successfully verified"
     }
   },
   "Profile": {

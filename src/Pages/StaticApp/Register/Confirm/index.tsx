@@ -1,11 +1,16 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { Formik, Form, FormikProps } from 'formik';
 import { arrowRight2 } from 'react-icons-kit/icomoon/arrowRight2';
 import { send } from 'react-icons-kit/fa/send';
 
 import { RegisterContext } from '../../../../contexts/RegisterContext';
+import {
+  ContextActionTypes,
+  MainContext,
+} from '../../../../contexts/MainContext';
 import { useVerifEmail, useVerifEmailLink } from '../../../../api';
 
 import { Heading } from '../../../../ui/Heading';
@@ -17,14 +22,68 @@ const Confirm = (): JSX.Element => {
   const {
     state: { user },
   } = useContext(RegisterContext);
+  const { dispatch: altDispatch } = useContext(MainContext);
+  const { push } = useHistory();
 
-  const [verifEmail, { loading }] = useVerifEmail();
-  const [verifEmailLink] = useVerifEmailLink();
+  const [verifEmail, { loading }] = useVerifEmail({
+    onCompleted: () => {
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: t('Register.Confirm.LinkSuccess'),
+          noticeStyle: 'green',
+          persistent: false,
+          closeable: true,
+          duration: 5000,
+        },
+      });
+    },
+    onError: () => {
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: t('StaticNav.Error'),
+          noticeStyle: 'red',
+          persistent: false,
+          closeable: true,
+          duration: 5000,
+        },
+      });
+    },
+  });
+  const [verifEmailLink] = useVerifEmailLink({
+    onCompleted: () => {
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: t('Register.Confirm.VerifSuccess'),
+          noticeStyle: 'green',
+          persistent: false,
+          closeable: true,
+          duration: 5000,
+        },
+      });
+      push('/login');
+    },
+    onError: () => {
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: t('StaticNav.Error'),
+          noticeStyle: 'red',
+          persistent: false,
+          closeable: true,
+          duration: 5000,
+        },
+      });
+    },
+  });
 
   const handleSubmit = ({ code }: { code: string[] }) => {
     verifEmailLink({
       variables: {
-        secretId: code.toString(),
+        email: user.email,
+        secretId: code.toString().replaceAll(',', ''),
       },
     });
   };
@@ -53,7 +112,6 @@ const Confirm = (): JSX.Element => {
                     ref={(el) =>
                       !c && !!props.values.code[index - 1] && el?.focus()
                     }
-                    // ref={(el) => !!props.values.code[0] && el?.focus()}
                     onChange={(e) => {
                       props.setFieldValue(
                         'code',
@@ -90,7 +148,9 @@ const Confirm = (): JSX.Element => {
                 disabled={loading}
                 onClick={() =>
                   verifEmail({
-                    variables: { email: user.email },
+                    variables: {
+                      email: user.email,
+                    },
                   })
                 }
               />
