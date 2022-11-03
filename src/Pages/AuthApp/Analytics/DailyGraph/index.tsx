@@ -168,15 +168,21 @@ const DailyGraph = ({
         </ResponsiveContainer>
       </GraphWrapper>
       <InfoWrapper>
-        <Info>
-          {t('Analytics.TimeInTarget')} : {brain?.timeInTarget}%
-        </Info>
-        <Info>
-          {t('Analytics.LastScan')} : {brain?.lastScan}
-        </Info>
-        <Info>
-          {t('Analytics.Average')} : {brain?.average} mg/dL
-        </Info>
+        {data.length > 0 ? (
+          <>
+            <Info>
+              {t('Analytics.TimeInTarget')} : {brain?.timeInTarget}%
+            </Info>
+            <Info>
+              {t('Analytics.LastScan')} : {brain?.lastScan}
+            </Info>
+            <Info>
+              {t('Analytics.Average')} : {brain?.average} mg/dL
+            </Info>
+          </>
+        ) : (
+          <Info>Aucune mesure faite aujourd&apos;hui</Info>
+        )}
       </InfoWrapper>
     </Container>
   );

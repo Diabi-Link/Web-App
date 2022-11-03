@@ -188,7 +188,8 @@
     "ActualPassword": "Mot de passe actuel",
     "NewPassword": "Nouveau mot de passe",
     "ConfirmNewPassword": "Confirmez votre nouveau mot de passe",
-    "Save": "Sauvegarder"
+    "Save": "Modifier le profil",
+    "UpdatePassword": "Modifier le mot de passe"
   },
   "AddMeasurement": {
     "AddMeasurement": "Ajouter une mesure",

@@ -188,7 +188,8 @@
     "ActualPassword": "Actual Password",
     "NewPassword": "New Password",
     "ConfirmNewPassword": "Confirm your new password",
-    "Save": "Save"
+    "Save": "Update profil",
+    "UpdatePassword": "Update password"
   },
   "AddMeasurement": {
     "AddMeasurement": "Add a measurement",
