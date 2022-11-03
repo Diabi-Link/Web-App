@@ -101,7 +101,7 @@ const DailyGraph = ({
       <GraphWrapper>
         <ResponsiveContainer height={200}>
           <LineChart
-            data={data}
+            data={data.length === 1 ? [...data, ...data] : data}
             margin={{
               top: 20,
               right: 30,
@@ -119,6 +119,12 @@ const DailyGraph = ({
               fill="rgb(255, 255, 255)"
             />
             <CartesianGrid vertical={false} stroke="#B4B4B4" strokeWidth={1} />
+            <Line
+              dataKey="val"
+              stroke="#8884d8"
+              dot={data.length === 1}
+              isAnimationActive={false}
+            />
             <XAxis
               dataKey="time"
               domain={[
@@ -158,7 +164,6 @@ const DailyGraph = ({
               ]}
               itemStyle={{ color: '#8884d8' }}
             />
-            <Line dataKey="val" stroke="#111" dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </GraphWrapper>
