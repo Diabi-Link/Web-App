@@ -8,6 +8,7 @@
   "Navbar": {
     "Solution": "Notre solution",
     "Services": "Nos services",
+    "Pricing": "Nos tarifs",
     "FAQ": "FAQ",
     "Team": "Notre équipe",
     "Timeline": "Timeline",
@@ -59,6 +60,9 @@
     "Follow-UpDesc": "Suivez vos résultats ou ceux de votre patient en un seul clic, et obtenez un résumé sur mesure de son taux de glucose.",
     "Alerts": "Des alertes en temps réel",
     "AlertsDesc": "Recevez des alertes en temps réel des derniers événements ou informations disponibles, directement sur votre application."
+  },
+  "Pricing": {
+    "Title": "Nos tarifs"
   },
   "FAQ": {
     "Title": "Des questions ?",
@@ -182,12 +186,19 @@
     "Title": "Mon profil",
     "User": "Utilisateur",
     "Security": "Compte & Sécurité",
+    "Membership": "Abonnement",
     "PhoneNumber": "Numéro de téléphone",
     "ToFill": "Entrez votre numéro",
     "ActualPassword": "Mot de passe actuel",
     "NewPassword": "Nouveau mot de passe",
     "ConfirmNewPassword": "Confirmez votre nouveau mot de passe",
-    "Save": "Sauvegarder"
+    "Save": "Sauvegarder",
+    "Status": "Statut",
+    "ExpirationDate": "Date d'expiration",
+    "ActiveMembership": "Activer mon abonnement",
+    "StopMembership": "Résilier l'abonnement",
+    "Active": "Actif",
+    "Inactive": "Inactif"
   },
   "AddMeasurement": {
     "AddMeasurement": "Ajouter une mesure",

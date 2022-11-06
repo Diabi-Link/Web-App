@@ -36,6 +36,10 @@ const Navbar = ({ toggle }: Props) => {
           {t('Navbar.Services')}
         </NavLinks>
 
+        <NavLinks to="pricing" smooth duration={500} spy offset={-150}>
+          {t('Navbar.Pricing')}
+        </NavLinks>
+
         <NavLinks to="faq" smooth duration={500} spy offset={-150}>
           {t('Navbar.FAQ')}
         </NavLinks>

@@ -8,6 +8,7 @@
   "Navbar": {
     "Solution": "Our solution",
     "Services": "Our services",
+    "Pricing": "Our pricing",
     "FAQ": "FAQ",
     "Team": "Our team",
     "Timeline": "Timeline",
@@ -59,6 +60,9 @@
     "Follow-UpDesc": "Track your or your patient's results with a single click, and get a tailored summary of their glucose levels.",
     "Alerts": "Real-time alerts",
     "AlertsDesc": "Receive real-time alerts of the latest events or information available, directly on your application."
+  },
+  "Pricing": {
+    "Title": "Our pricing"
   },
   "FAQ": {
     "Title": "Any questions ?",
@@ -182,12 +186,19 @@
     "Title": "My Profile",
     "User": "User",
     "Security": "Account & Security",
+    "Membership": "Membership",
     "PhoneNumber": "Phone Number",
     "ToFill": "Add your number",
     "ActualPassword": "Actual Password",
     "NewPassword": "New Password",
     "ConfirmNewPassword": "Confirm your new password",
-    "Save": "Save"
+    "Save": "Save",
+    "Status": "Status",
+    "ExpirationDate": "Expiration date",
+    "ActiveMembership": "Activate my subscription",
+    "StopMembership": "Cancel subscription",
+    "Active": "Active",
+    "Inactive": "Inactive"
   },
   "AddMeasurement": {
     "AddMeasurement": "Add a measurement",

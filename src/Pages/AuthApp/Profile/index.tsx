@@ -15,6 +15,7 @@ import { useUpdateUser } from '../../../api';
 
 import UserInfo from './UserInfo';
 import SecurityInfo from './SecurityInfo';
+import Membership from './Membership';
 
 import { PageTitle } from '../../../ui/Heading';
 import Button from '../../../ui/Button';
@@ -128,12 +129,15 @@ const Profile = (): React.ReactElement => {
             ) => (
               <FormikForm>
                 <FieldWrapper>
-                  <Left>
+                  <SectionWrapper>
                     <UserInfo props={props} />
-                  </Left>
-                  <Right>
+                  </SectionWrapper>
+                  <SectionWrapper>
                     <SecurityInfo props={props} />
-                  </Right>
+                  </SectionWrapper>
+                  <SectionWrapper>
+                    <Membership props={props} />
+                  </SectionWrapper>
                 </FieldWrapper>
                 <ButtonWrapper>
                   <SaveButton
@@ -224,25 +228,17 @@ const InfoWrapper = styled.div`
   }
 `;
 
-const Left = styled.div`
+const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding: 1rem;
 
   @media (min-width: 1200px) {
-    width: 48%;
-  }
-`;
-
-const Right = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 5vw;
-
-  @media (min-width: 1200px) {
-    width: 48%;
-    margin: 0;
+    width: 37%;
+    :last-child {
+      width: 25%;
+    }
   }
 `;
 

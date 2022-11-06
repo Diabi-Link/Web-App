@@ -52,6 +52,17 @@ const HamburgerMenu = ({ isOpen, toggle }: Props) => {
         </HamburgerLink>
 
         <HamburgerLink
+          to="pricing"
+          smooth
+          duration={500}
+          spy
+          offset={-60}
+          onClick={toggle}
+        >
+          {t('Navbar.Pricing')}
+        </HamburgerLink>
+
+        <HamburgerLink
           to="faq"
           smooth
           duration={500}
