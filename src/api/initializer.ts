@@ -1,39 +1,18 @@
 import {
   ApolloClient,
-  // split,
-  HttpLink,
   InMemoryCache,
   NormalizedCacheObject,
   from,
+  ApolloLink,
 } from '@apollo/client';
-// import { getMainDefinition } from '@apollo/client/utilities';
 import { setContext } from '@apollo/client/link/context';
-// import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-// import { createClient } from 'graphql-ws';
+import { createUploadLink } from 'apollo-upload-client';
 
 import { useAuthToken } from '../hooks/useAuthToken';
 
-const httpLink = new HttpLink({
+const link = (createUploadLink({
   uri: 'https://diabilink.herokuapp.com/graphql/',
-});
-
-// const wsLink = new GraphQLWsLink(
-//   createClient({
-//     url: 'ws://diabilink.herokuapp.com/subscriptions',
-//   }),
-// );
-
-// const splitLink = split(
-//   ({ query }) => {
-//     const definition = getMainDefinition(query);
-//     return (
-//       definition.kind === 'OperationDefinition' &&
-//       definition.operation === 'subscription'
-//     );
-//   },
-//   wsLink,
-//   httpLink,
-// );
+}) as unknown) as ApolloLink;
 
 const authLink = (authToken: string | null) =>
   setContext((_, { headers }) => {
@@ -48,7 +27,7 @@ const authLink = (authToken: string | null) =>
 export const useAppApolloClient = (): ApolloClient<NormalizedCacheObject> => {
   const { authToken } = useAuthToken();
   return new ApolloClient({
-    link: from([authLink(authToken), httpLink]),
+    link: from([authLink(authToken), link]),
     cache: new InMemoryCache(),
   });
 };
