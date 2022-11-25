@@ -6,6 +6,7 @@ import Footer from './Footer';
 import Hero from './Hero';
 import Solution from './Solution';
 import Services from './Services';
+import Pricing from './Pricing';
 import FAQ from './FAQ';
 import Team from './Team';
 import Timeline from './Timeline';
@@ -17,6 +18,7 @@ const Home = (): JSX.Element => {
       <Hero />
       <Solution />
       <Services />
+      <Pricing />
       <FAQ />
       <Team />
       <Timeline />

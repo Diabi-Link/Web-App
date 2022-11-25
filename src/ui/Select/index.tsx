@@ -78,7 +78,7 @@ const IconElement = styled(Icon)<{
 const SvgElement = styled.div`
   padding-top: 0.3rem;
   margin-left: 0.5rem;
-  width: 2rem;
+  width: 15px;
 `;
 
 const HelperElement = styled.span`

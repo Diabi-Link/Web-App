@@ -8,7 +8,7 @@ import { PageTitle } from '../../../ui/Heading';
 import Menu from './Menu';
 import Add from './Add';
 import List from './List';
-// import Manage from './Manage';
+import Manage from './Manage';
 
 const Contacts = (): JSX.Element => {
   const { t } = useTranslation();
@@ -20,7 +20,7 @@ const Contacts = (): JSX.Element => {
         <Switch>
           <Route path="/contacts/menu" exact render={() => <Menu />} />
           <Route path="/contacts/add" render={() => <Add />} />
-          {/* <Route path="/contacts/manage" render={() => <Manage />} /> */}
+          <Route path="/contacts/manage" render={() => <Manage />} />
           <Route path="/contacts/list" render={() => <List />} />
           <Redirect to="/contacts" />
         </Switch>

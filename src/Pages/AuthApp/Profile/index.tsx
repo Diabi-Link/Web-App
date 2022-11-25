@@ -15,6 +15,7 @@ import { useUpdateUser } from '../../../api';
 
 import UserInfo from './UserInfo';
 import SecurityInfo from './SecurityInfo';
+import Membership from './Membership';
 
 import { PageTitle } from '../../../ui/Heading';
 import Button from '../../../ui/Button';
@@ -155,7 +156,13 @@ const Profile = (): React.ReactElement => {
                     phone: string;
                   }>,
                 ) => (
-                  <FormikForm>
+                  <FormikForm
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      height: '100%',
+                    }}
+                  >
                     <UserInfo props={props} />
                     <ButtonWrapper>
                       <SaveButton
@@ -164,7 +171,7 @@ const Profile = (): React.ReactElement => {
                           loading ? (
                             <Loader loaderStyle="white" />
                           ) : (
-                            t('Profile.Save')
+                            t('Profile.UpdateProfil')
                           )
                         }
                         btnStyle="primary"
@@ -178,7 +185,7 @@ const Profile = (): React.ReactElement => {
                 )}
               </Formik>
             </Left>
-            <Right>
+            <Center>
               <Formik
                 initialValues={{
                   actualPassword: '',
@@ -217,6 +224,9 @@ const Profile = (): React.ReactElement => {
                   </FormikForm>
                 )}
               </Formik>
+            </Center>
+            <Right>
+              <Membership />
             </Right>
           </FieldWrapper>
         </InfoWrapper>
@@ -267,6 +277,7 @@ const UserDesc = styled.label`
 const ButtonWrapper = styled.div`
   display: flex;
   width: 100%;
+  margin-top: auto;
   justify-content: center;
 `;
 
@@ -294,7 +305,19 @@ const Left = styled.div`
   width: 100%;
 
   @media (min-width: 1200px) {
-    width: 52%;
+    width: 47%;
+  }
+`;
+
+const Center = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 5vw;
+
+  @media (min-width: 1200px) {
+    width: 22%;
+    margin: 0;
   }
 `;
 
@@ -305,7 +328,7 @@ const Right = styled.div`
   margin-top: 5vw;
 
   @media (min-width: 1200px) {
-    width: 38%;
+    width: 22%;
     margin: 0;
   }
 `;

@@ -42,7 +42,7 @@ type Arguments = {
   isOnMobile?: boolean;
 };
 
-const routes = [
+const patientRoutes = [
   '/analytics',
   '/contacts',
   '/add-measurement',
@@ -51,13 +51,7 @@ const routes = [
   '/profile',
 ];
 
-const medicalProRoutes = [
-  '/analytics',
-  '/contacts',
-  '/alerts',
-  '/chat',
-  '/profile',
-];
+const routes = ['/analytics', '/contacts', '/alerts', '/chat', '/profile'];
 
 const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   const { t } = useTranslation();
@@ -84,9 +78,9 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   };
 
   useEffect(() => {
-    const routesToSearch =
-      user?.account === 'medicalProfessional' ? medicalProRoutes : routes;
+    const routesToSearch = user?.account === 'patient' ? patientRoutes : routes;
     setDiv(routesToSearch.findIndex((r) => location.pathname.includes(r)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   return (

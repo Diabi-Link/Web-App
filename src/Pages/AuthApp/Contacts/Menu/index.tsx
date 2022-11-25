@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 import { ReactComponent as AddSvg } from '../../../../assets/svgs/ContactAdd.svg';
-// import { ReactComponent as ManageSvg } from '../../../../assets/svgs/ContactManage.svg';
+import { ReactComponent as ManageSvg } from '../../../../assets/svgs/ContactManage.svg';
 import { ReactComponent as ListSvg } from '../../../../assets/svgs/ContactList.svg';
 
 import { Heading } from '../../../../ui/Heading';
@@ -19,12 +19,12 @@ const Menu = (): JSX.Element => {
   const accountSelector = (type: AccountType): JSX.Element => (
     <AccountSelectorWrapper>
       {type === 'add' && <AddSvg width={120} />}
-      {/* {type === 'manage' && <ManageSvg width={120} />} */}
+      {type === 'manage' && <ManageSvg width={120} />}
       {type === 'list' && <ListSvg width={120} />}
 
       <Heading level={3}>
         {type === 'add' && t('Contacts.Add')}
-        {/* {type === 'manage' && t('Contacts.Manage')} */}
+        {type === 'manage' && t('Contacts.Manage')}
         {type === 'list' && t('Contacts.List')}
       </Heading>
     </AccountSelectorWrapper>
@@ -42,13 +42,13 @@ const Menu = (): JSX.Element => {
             isSelected={false}
             data-testid="add-box"
           />
-          {/* <StyledBox
+          <StyledBox
             label={accountSelector('manage')}
             onClick={() => push('/contacts/manage')}
             btnStyle="white"
             isSelected={false}
             data-testid="manage-box"
-          /> */}
+          />
           <StyledBox
             label={accountSelector('list')}
             onClick={() => push('/contacts/list')}

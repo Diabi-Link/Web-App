@@ -99,7 +99,7 @@ const SecurityInfo = ({ props }: Props) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   flex: 1;
 `;
@@ -136,7 +136,7 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: 15px 0px 15px 0px;
+  margin-top: 15px;
 `;
 
 const InputLabel = styled.label`

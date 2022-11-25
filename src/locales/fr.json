@@ -8,6 +8,7 @@
   "Navbar": {
     "Solution": "Notre solution",
     "Services": "Nos services",
+    "Pricing": "Nos tarifs",
     "FAQ": "FAQ",
     "Team": "Notre équipe",
     "Timeline": "Timeline",
@@ -62,6 +63,9 @@
     "Follow-UpDesc": "Suivez vos résultats ou ceux de votre patient en un seul clic, et obtenez un résumé sur mesure de son taux de glucose.",
     "Alerts": "Des alertes en temps réel",
     "AlertsDesc": "Recevez des alertes en temps réel des derniers événements ou informations disponibles, directement sur votre application."
+  },
+  "Pricing": {
+    "Title": "Nos tarifs"
   },
   "FAQ": {
     "Title": "Des questions ?",
@@ -176,20 +180,30 @@
       "Title": "Vérifiez votre email 📬",
       "Desc": "Votre inscription a bien été prise en compte. Un email va vous être envoyé bientôt avec un lien pour vérifier votre compte. Si vous n’avez pas reçu ce mail après quelques minutes, pensez à vérifier votre dossier spam.",
       "ResendButton": "Renvoyez le mail",
-      "Validate": "Valider le code"
+      "Validate": "Valider le code",
+      "LinkSuccess": "Le lien vous a été envoyé par mail",
+      "VerifSuccess": "Votre compte a été verifié avec succès"
     }
   },
   "Profile": {
     "Title": "Mon profil",
     "User": "Utilisateur",
     "Security": "Compte & Sécurité",
+    "Membership": "Abonnement",
     "PhoneNumber": "Numéro de téléphone",
     "ToFill": "Entrez votre numéro",
     "ActualPassword": "Mot de passe actuel",
     "NewPassword": "Nouveau mot de passe",
     "ConfirmNewPassword": "Confirmez votre nouveau mot de passe",
-    "Save": "Modifier le profil",
-    "UpdatePassword": "Modifier le mot de passe"
+    "UpdateProfil": "Modifier le profil",
+    "UpdatePassword": "Modifier le mot de passe",
+    "Save": "Sauvegarder",
+    "Status": "Statut",
+    "ExpirationDate": "Date d'expiration",
+    "ActiveMembership": "Activer mon abonnement",
+    "StopMembership": "Résilier l'abonnement",
+    "Active": "Actif",
+    "Inactive": "Inactif"
   },
   "AddMeasurement": {
     "AddMeasurement": "Ajouter une mesure",
@@ -215,11 +229,14 @@
     "Add": "Ajouter un contact",
     "Manage": "Gérer mes contacts",
     "List": "Trouver mes contacts",
-    "Validate": "Ajouter",
+    "Validate": "Valider",
     "MedicalPro": "Mon corps médical",
     "Referent": "Mes référents",
     "Patient": "Mes patients",
+    "Request": "Mes demandes",
     "AddSuccess": "Vous avez ajouter un utilisateur avec succès",
+    "AddText": "Êtes-vous sûr de vouloir ajouter ce contact à votre liste ?",
+    "DeclineText": "Êtes-vous sûr de vouloir refuser cette demande de contact ?",
     "Accept": "Accepter",
     "Decline": "Refuser"
   },

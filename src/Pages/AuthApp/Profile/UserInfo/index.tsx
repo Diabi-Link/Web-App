@@ -140,7 +140,7 @@ const UserInfo = ({ props }: Props) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   flex: 1;
 
@@ -187,7 +187,7 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: 15px 0;
+  margin-top: 15px;
 
   @media (min-width: 700px) {
     width: 48%;
