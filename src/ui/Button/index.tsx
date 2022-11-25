@@ -3,7 +3,13 @@ import styled from 'styled-components';
 import { Icon } from 'react-icons-kit';
 import { Theme } from '../../theme';
 
-export type ButtonTheme = 'primary' | 'primaryLight' | 'white' | 'default';
+export type ButtonTheme =
+  | 'primary'
+  | 'primaryLight'
+  | 'white'
+  | 'default'
+  | 'green'
+  | 'red';
 
 type Props = {
   label: string | JSX.Element;
@@ -34,6 +40,10 @@ const getBackgroundColor = ({
       return theme.main.primaryLight;
     case 'white':
       return theme.main.white;
+    case 'green':
+      return theme.main.greenLighter;
+    case 'red':
+      return theme.main.redLighter;
     default:
       return theme.main.whiteBroken;
   }
@@ -51,6 +61,10 @@ const getBorderColor = ({
       return outlined ? theme.main.white : theme.main.primaryLight;
     case 'white':
       return outlined ? theme.main.primary : theme.main.white;
+    case 'green':
+      return outlined ? theme.main.green : theme.main.greenLighter;
+    case 'red':
+      return outlined ? theme.main.red : theme.main.redLighter;
     default:
       return theme.main.grayLight;
   }
@@ -68,6 +82,10 @@ const getLabelColor = ({
       return theme.main.white;
     case 'white':
       return theme.main.primary;
+    case 'green':
+      return theme.main.darkGreen;
+    case 'red':
+      return theme.main.darkRed;
     default:
       return theme.main.dark;
   }
@@ -84,6 +102,10 @@ const getShadowColor = ({
       return theme.main.primaryLighter;
     case 'white':
       return theme.main.darkLighter;
+    case 'green':
+      return theme.main.greenLighter;
+    case 'red':
+      return theme.main.redLighter;
     default:
       return theme.main.primaryLight;
   }
@@ -103,7 +125,7 @@ const ButtonElement = styled.button<{
   white-space: nowrap;
   transition: 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   justify-content: center;
-  border: 0.12rem solid
+  border: 2px solid
     ${({ btnStyle, theme, outlined }) =>
       getBorderColor({ btnStyle, theme, outlined })};
   border-radius: 10px;

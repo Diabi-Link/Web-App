@@ -26,12 +26,13 @@ type VerifEmailLinkResponse = {
 };
 
 type VerifEmailLinkData = {
+  email: string;
   secretId: string;
 };
 
 const VERIF_EMAIL_LINK = gql`
-  mutation VerifEmailLink($secretId: String!) {
-    VerifEmailLink(secretId: $secretId)
+  mutation VerifEmailLink($email: String!, $secretId: String!) {
+    VerifEmailLink(email: $email, secretId: $secretId)
   }
 `;
 

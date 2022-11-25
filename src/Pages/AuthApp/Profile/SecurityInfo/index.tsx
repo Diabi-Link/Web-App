@@ -11,14 +11,9 @@ import Input from '../../../../ui/Input';
 
 type Props = {
   props: FormikProps<{
-    email: string;
-    firstName: string;
-    lastName: string;
-    birthDate: null;
     newPassword: string;
     confirmNewPassword: string;
-    acutalPassword: string;
-    phone: string;
+    actualPassword: string;
   }>;
 };
 
@@ -43,10 +38,15 @@ const SecurityInfo = ({ props }: Props) => {
           name="actualPassword"
           type={showActualPassword ? 'text' : 'password'}
           placeholder="•••••••••"
-          value={props.values.acutalPassword}
+          value={props.values.actualPassword}
           onChange={(e) => {
             props.handleChange(e);
           }}
+          errorText={
+            props.errors.actualPassword && props.touched.actualPassword
+              ? props.errors.actualPassword
+              : undefined
+          }
           icon={showActualPassword ? eye : eyeBlocked}
           onClick={() => setShowActualPassword(!showActualPassword)}
           data-testid="actualPassword-input"
@@ -99,7 +99,7 @@ const SecurityInfo = ({ props }: Props) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   flex: 1;
 `;
@@ -136,7 +136,7 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: 15px 0px 15px 0px;
+  margin-top: 15px;
 `;
 
 const InputLabel = styled.label`

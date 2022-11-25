@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
@@ -10,6 +10,8 @@ import { ReactComponent as ProfileReferent } from '../../../../../assets/svgs/Pr
 import { UserType } from '../../../../../types/user';
 
 import { Heading } from '../../../../../ui/Heading';
+import Modal from '../../../../../ui/Modal';
+import Button from '../../../../../ui/Button';
 
 type Props = {
   contacts: UserType[] | undefined;
@@ -18,60 +20,97 @@ type Props = {
 
 const ReferentList = ({ contacts, handleDelete }: Props): JSX.Element => {
   const { t } = useTranslation();
+  const [contactToDelete, setContactToDelete] = useState<UserType | null>(null);
 
   return (
-    <Container data-testid="auth-contact-list-referent">
-      <Left>
-        <PageTitle level={2}>{t('Contacts.MedicalPro')}</PageTitle>
-        <ContactWrapper>
-          {contacts
-            ?.filter((c) => c.account === 'medicalProfessional')
-            .map((c) => (
-              <StyledBox>
-                <AvatarWrapper>
-                  <ProfileMP />
-                </AvatarWrapper>
-                <NameWrapper>
-                  <Name level={2}>{`${c.firstName} ${c.lastName}`}</Name>
-                  <Email level={3}>Mail : {c.email}</Email>
-                </NameWrapper>
-                <IconWrapper
-                  type="submit"
-                  data-testid="trash-button"
-                  onClick={() => handleDelete(c.id)}
-                >
-                  <Icon icon={trash} size={20} />
-                </IconWrapper>
-              </StyledBox>
-            ))}
-        </ContactWrapper>
-      </Left>
-      <Right>
-        <PageTitle level={2}>{t('Contacts.Referent')}</PageTitle>
-        <ContactWrapper>
-          {contacts
-            ?.filter((c) => c.account === 'referent')
-            .map((c) => (
-              <StyledBox>
-                <AvatarWrapper>
-                  <ProfileReferent />
-                </AvatarWrapper>
-                <NameWrapper>
-                  <Name level={2}>{`${c.firstName} ${c.lastName}`}</Name>
-                  <Email level={3}>Mail : {c.email}</Email>
-                </NameWrapper>
-                <IconWrapper
-                  type="submit"
-                  data-testid="trash-button"
-                  onClick={() => handleDelete(c.id)}
-                >
-                  <Icon icon={trash} size={20} />
-                </IconWrapper>
-              </StyledBox>
-            ))}
-        </ContactWrapper>
-      </Right>
-    </Container>
+    <>
+      <Modal
+        isOpen={!!contactToDelete}
+        closeModal={() => setContactToDelete(null)}
+      >
+        {contactToDelete && (
+          <ModalWrapper>
+            <Heading level={3}>
+              Êtes-vous sûr de supprimer {contactToDelete.firstName}{' '}
+              {contactToDelete.lastName} de votre liste de contact ?
+            </Heading>
+            <ButtonWrapper>
+              <StyledButton
+                type="button"
+                label="Non"
+                btnStyle="default"
+                onClick={() => {
+                  setContactToDelete(null);
+                }}
+              />
+              <RightStyledButton
+                type="button"
+                label="Oui"
+                btnStyle="primary"
+                onClick={() => {
+                  handleDelete(contactToDelete.id);
+                  setContactToDelete(null);
+                }}
+              />
+            </ButtonWrapper>
+          </ModalWrapper>
+        )}
+      </Modal>
+      <Container data-testid="auth-contact-list-referent">
+        <Left>
+          <PageTitle level={2}>{t('Contacts.MedicalPro')}</PageTitle>
+          <ContactWrapper>
+            {contacts
+              ?.filter((c) => c.account === 'medicalProfessional')
+              .map((c) => (
+                <StyledBox>
+                  <AvatarWrapper>
+                    <ProfileMP />
+                  </AvatarWrapper>
+                  <NameWrapper>
+                    <Name level={2}>{`${c.firstName} ${c.lastName}`}</Name>
+                    <Email level={3}>Mail : {c.email}</Email>
+                  </NameWrapper>
+                  <IconWrapper
+                    type="submit"
+                    data-testid="trash-button"
+                    onClick={() => setContactToDelete(c)}
+                    // onClick={() => handleDelete(c.id)}
+                  >
+                    <Icon icon={trash} size={20} />
+                  </IconWrapper>
+                </StyledBox>
+              ))}
+          </ContactWrapper>
+        </Left>
+        <Right>
+          <PageTitle level={2}>{t('Contacts.Referent')}</PageTitle>
+          <ContactWrapper>
+            {contacts
+              ?.filter((c) => c.account === 'referent')
+              .map((c) => (
+                <StyledBox>
+                  <AvatarWrapper>
+                    <ProfileReferent />
+                  </AvatarWrapper>
+                  <NameWrapper>
+                    <Name level={2}>{`${c.firstName} ${c.lastName}`}</Name>
+                    <Email level={3}>Mail : {c.email}</Email>
+                  </NameWrapper>
+                  <IconWrapper
+                    type="submit"
+                    data-testid="trash-button"
+                    onClick={() => setContactToDelete(c)}
+                    // onClick={() => handleDelete(c.id)}
+                  >
+                    <Icon icon={trash} size={20} />
+                  </IconWrapper>
+                </StyledBox>
+              ))}
+          </ContactWrapper>
+        </Right>
+      </Container>
+    </>
   );
 };
 
@@ -217,6 +256,26 @@ const Name = styled(Heading)`
 const Email = styled(Heading)`
   font-size: 0.8rem;
   font-weight: 400;
+`;
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const StyledButton = styled(Button)`
+  width: 60px;
+`;
+
+const RightStyledButton = styled(StyledButton)`
+  margin-left: 18px;
 `;
 
 export default ReferentList;

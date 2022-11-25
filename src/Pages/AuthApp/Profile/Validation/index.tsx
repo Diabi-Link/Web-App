@@ -23,15 +23,23 @@ const ValidateProfileSchema = Yup.object().shape({
     .max(minimumAge, 'Âge minimum de 7 ans requis')
     .min(maximumAge, 'Âge maximum de 120 ans')
     .nullable(),
-  newPassword: Yup.string().matches(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-    'Doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial',
-  ),
-  confirmNewPassword: Yup.string().oneOf(
-    [Yup.ref('newPassword'), null],
-    'Les deux mots de passe doivent être identiques',
-  ),
   phone: Yup.string().matches(/^((\+)33|0)[1-9](\d{2}){4}$/, 'Numéro invalide'),
 });
 
-export { ValidateProfileSchema };
+const ValidatePasswordSchema = Yup.object().shape({
+  actualPassword: Yup.string().required('Champ obligatoire'),
+  newPassword: Yup.string()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      'Doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial',
+    )
+    .required('Champ obligatoire'),
+  confirmNewPassword: Yup.string()
+    .oneOf(
+      [Yup.ref('newPassword'), null],
+      'Les deux mots de passe doivent être identiques',
+    )
+    .required('Champ obligatoire'),
+});
+
+export { ValidateProfileSchema, ValidatePasswordSchema };

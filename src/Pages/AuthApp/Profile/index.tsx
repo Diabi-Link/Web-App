@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { save } from 'react-icons-kit/fa/save';
-import { ValidateProfileSchema } from './Validation';
+import { ValidatePasswordSchema, ValidateProfileSchema } from './Validation';
 
 import { ReactComponent as ProfilePatient } from '../../../assets/svgs/ProfilePatient.svg';
 import { ReactComponent as ProfileMP } from '../../../assets/svgs/ProfileMP.svg';
@@ -15,6 +15,7 @@ import { useUpdateUser } from '../../../api';
 
 import UserInfo from './UserInfo';
 import SecurityInfo from './SecurityInfo';
+import Membership from './Membership';
 
 import { PageTitle } from '../../../ui/Heading';
 import Button from '../../../ui/Button';
@@ -37,11 +38,30 @@ const Profile = (): React.ReactElement => {
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
-          label: 'Sauvegarde réussie',
+          label: 'Utilisateur modifié',
           noticeStyle: 'green',
           persistent: false,
           closeable: false,
-          duration: 5000,
+          duration: 2000,
+        },
+      });
+    },
+  });
+
+  const [updateUserPassword, { loading: passwordLoading }] = useUpdateUser({
+    onCompleted: (payload) => {
+      dispatch({
+        type: UserActionTypes.FetchUser,
+        payload: payload.UpdateUser,
+      });
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: 'Mot de passe modifié',
+          noticeStyle: 'green',
+          persistent: false,
+          closeable: false,
+          duration: 2000,
         },
       });
     },
@@ -62,30 +82,44 @@ const Profile = (): React.ReactElement => {
     },
   };
 
+  const handleSubmitPassword = async (
+    {
+      newPassword,
+    }: {
+      newPassword?: string;
+      confirmNewPassword?: string;
+      actualPassword?: string;
+    },
+    { resetForm }: { resetForm: () => void },
+  ) => {
+    const password = newPassword || '';
+    await updateUserPassword({
+      variables: {
+        userInfo: { password },
+      },
+    });
+    resetForm();
+  };
+
   const handleSubmit = async (
     {
       email,
       firstName,
       lastName,
       birthDate,
-      newPassword,
       phone,
     }: {
-      email: string;
-      firstName: string;
-      lastName: string;
-      birthDate: Date | null | undefined;
-      newPassword: string;
-      confirmNewPassword: string;
-      acutalPassword: string;
-      phone: string;
+      email?: string;
+      firstName?: string;
+      lastName?: string;
+      birthDate?: Date | null | undefined;
+      phone?: string;
     },
     { resetForm }: { resetForm: () => void },
   ) => {
-    const password = newPassword || '';
     await updateUser({
       variables: {
-        userInfo: { email, firstName, lastName, birthDate, password, phone },
+        userInfo: { email, firstName, lastName, birthDate, phone },
       },
     });
     resetForm();
@@ -105,61 +139,101 @@ const Profile = (): React.ReactElement => {
           <UserDesc>{user && avatars[user.account].description}</UserDesc>
         </AccountWrapper>
         <InfoWrapper>
-          <Formik
-            initialValues={{
-              email: '',
-              firstName: '',
-              lastName: '',
-              birthDate: null,
-              acutalPassword: '',
-              newPassword: '',
-              confirmNewPassword: '',
-              phone: '',
-            }}
-            validationSchema={ValidateProfileSchema}
-            onSubmit={handleSubmit}
-          >
-            {(
-              props: FormikProps<{
-                email: string;
-                firstName: string;
-                lastName: string;
-                birthDate: null;
-                acutalPassword: string;
-                newPassword: string;
-                confirmNewPassword: string;
-                phone: string;
-              }>,
-            ) => (
-              <FormikForm>
-                <FieldWrapper>
-                  <Left>
+          <FieldWrapper>
+            <Left>
+              <Formik
+                initialValues={{
+                  email: '',
+                  firstName: '',
+                  lastName: '',
+                  birthDate: null,
+                  phone: '',
+                }}
+                validationSchema={ValidateProfileSchema}
+                onSubmit={handleSubmit}
+              >
+                {(
+                  props: FormikProps<{
+                    email: string;
+                    firstName: string;
+                    lastName: string;
+                    birthDate: null;
+                    phone: string;
+                  }>,
+                ) => (
+                  <FormikForm
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      height: '100%',
+                    }}
+                  >
                     <UserInfo props={props} />
-                  </Left>
-                  <Right>
+                    <ButtonWrapper>
+                      <SaveButton
+                        type="submit"
+                        label={
+                          loading ? (
+                            <Loader loaderStyle="white" />
+                          ) : (
+                            t('Profile.UpdateProfil')
+                          )
+                        }
+                        btnStyle="primary"
+                        data-testid="save-button"
+                        shadow
+                        iconEnd={save}
+                        disabled={loading}
+                      />
+                    </ButtonWrapper>
+                  </FormikForm>
+                )}
+              </Formik>
+            </Left>
+            <Center>
+              <Formik
+                initialValues={{
+                  actualPassword: '',
+                  newPassword: '',
+                  confirmNewPassword: '',
+                }}
+                validationSchema={ValidatePasswordSchema}
+                onSubmit={handleSubmitPassword}
+              >
+                {(
+                  props: FormikProps<{
+                    actualPassword: string;
+                    newPassword: string;
+                    confirmNewPassword: string;
+                  }>,
+                ) => (
+                  <FormikForm>
                     <SecurityInfo props={props} />
-                  </Right>
-                </FieldWrapper>
-                <ButtonWrapper>
-                  <SaveButton
-                    type="submit"
-                    label={
-                      loading ? (
-                        <Loader loaderStyle="white" />
-                      ) : (
-                        t('Profile.Save')
-                      )
-                    }
-                    btnStyle="primary"
-                    data-testid="save-button"
-                    shadow
-                    iconEnd={save}
-                    disabled={loading}
-                  />
-                </ButtonWrapper>
-              </FormikForm>
-            )}
-          </Formik>
+                    <ButtonWrapper>
+                      <SaveButton
+                        type="submit"
+                        label={
+                          passwordLoading ? (
+                            <Loader loaderStyle="white" />
+                          ) : (
+                            t('Profile.UpdatePassword')
+                          )
+                        }
+                        btnStyle="primary"
+                        data-testid="save-button"
+                        shadow
+                        iconEnd={save}
+                        disabled={passwordLoading}
+                      />
+                    </ButtonWrapper>
+                  </FormikForm>
+                )}
+              </Formik>
+            </Center>
+            <Right>
+              <Membership />
+            </Right>
+          </FieldWrapper>
         </InfoWrapper>
       </Wrapper>
     </Container>
@@ -192,8 +266,8 @@ const AvatarWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.main.primaryLight};
-  width: 170px;
-  height: 170px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   margin: 30px 0px;
 `;
@@ -208,6 +282,7 @@ const UserDesc = styled.label`
 const ButtonWrapper = styled.div`
   display: flex;
   width: 100%;
+  margin-top: auto;
   justify-content: center;
 `;
 
@@ -235,7 +310,19 @@ const Left = styled.div`
   width: 100%;
 
   @media (min-width: 1200px) {
-    width: 48%;
+    width: 47%;
+  }
+`;
+
+const Center = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 5vw;
+
+  @media (min-width: 1200px) {
+    width: 22%;
+    margin: 0;
   }
 `;
 
@@ -246,13 +333,13 @@ const Right = styled.div`
   margin-top: 5vw;
 
   @media (min-width: 1200px) {
-    width: 48%;
+    width: 22%;
     margin: 0;
   }
 `;
 
 const SaveButton = styled(Button)`
-  margin-top: 2rem;
+  margin: 20px 0;
 `;
 
 export default Profile;
