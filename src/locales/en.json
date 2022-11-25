@@ -39,6 +39,9 @@
     "Title": "It seems that you got lost!",
     "Back": "Return home"
   },
+  "Chat": {
+    "SearchContact": "Add contacts"
+  },
   "Hero": {
     "Title": "Control your health with more security",
     "Subtitle": "Get the best follow-up to manage your disease safely.",
@@ -192,6 +195,8 @@
     "ActualPassword": "Actual Password",
     "NewPassword": "New Password",
     "ConfirmNewPassword": "Confirm your new password",
+    "UpdateProfil": "Update profil",
+    "UpdatePassword": "Update password",
     "Save": "Save",
     "Status": "Status",
     "ExpirationDate": "Expiration date",

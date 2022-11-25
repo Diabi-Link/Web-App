@@ -41,7 +41,7 @@ const TextAreaWrapper = styled.div<{
   border-radius: 10px;
   border-bottom: 3px solid
     ${(props) => {
-      if (props.errorText) return props.theme.main.error;
+      if (props.errorText) return props.theme.main.red;
       if (props.focused) return props.theme.main.primaryLight;
       return 'transparent';
     }};
@@ -101,7 +101,7 @@ const HelperElement = styled.span`
 const ErrorElement = styled.span`
   font-size: 14px;
   font-weight: 300;
-  color: ${(props) => props.theme.main.error};
+  color: ${(props) => props.theme.main.red};
   margin-top: 3px;
 `;
 

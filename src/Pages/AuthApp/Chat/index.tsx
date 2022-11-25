@@ -13,18 +13,28 @@ import {
 } from 'react-firebase-hooks/firestore';
 import styled from 'styled-components';
 
+import { useTranslation } from 'react-i18next';
 import { UserContext } from '../../../contexts/UserContext';
 import firestore from '../../../firebase';
 import { ChatContext } from '../../../contexts/ChatContext';
 import Discussion from './Discussion';
 import Footer from './Footer';
 import Header from './Header';
+import { useGetContact } from '../../../api';
+import { Heading } from '../../../ui/Heading';
+import Link from '../../../ui/Link';
 
 const ChatPage = (): React.ReactElement => {
   const { chatUserType } = useContext(ChatContext);
   const {
     state: { user },
   } = useContext(UserContext);
+  const { t } = useTranslation();
+
+  const { data } = useGetContact({
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'cache-and-network',
+  });
 
   const userIds = [
     [`${user?.id}`, `${chatUserType?.id}`],
@@ -84,9 +94,20 @@ const ChatPage = (): React.ReactElement => {
 
   return (
     <Container data-testid="auth-chat-page">
-      <Header {...chatUserType} />
-      <Discussion messages={messages} userId={user?.id} />
-      <Footer addMessage={addMessage} />
+      {data && data.Me?.contact?.length > 1 ? (
+        <>
+          <Header {...chatUserType} />
+          <Discussion messages={messages} userId={user?.id} />
+          <Footer addMessage={addMessage} />
+        </>
+      ) : (
+        <Wrapper>
+          <Heading level={3}>Aucun contact</Heading>
+          <Link to="/contacts/add" $linkStyle="primary" $bold>
+            {t('Chat.SearchContact')}
+          </Link>
+        </Wrapper>
+      )}
     </Container>
   );
 };
@@ -96,6 +117,14 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `;
 
 export default ChatPage;

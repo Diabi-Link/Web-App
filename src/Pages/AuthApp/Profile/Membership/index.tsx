@@ -1,27 +1,13 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 import { ReactComponent as CheckIconSvg } from '../../../../assets/svgs/Check.svg';
 
 import Button from '../../../../ui/Button';
 
-type Props = {
-  props: FormikProps<{
-    email: string;
-    firstName: string;
-    lastName: string;
-    birthDate: null;
-    newPassword: string;
-    confirmNewPassword: string;
-    acutalPassword: string;
-    phone: string;
-  }>;
-};
-
-const Membership = ({ props }: Props) => {
+const Membership = () => {
   const { t } = useTranslation();
 
   const [active, setActive] = useState(true);
