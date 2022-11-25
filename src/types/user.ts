@@ -8,4 +8,5 @@ export type UserType = {
   birthDate: Date;
   account: AccountType;
   phone?: string;
+  picture?: string;
 };

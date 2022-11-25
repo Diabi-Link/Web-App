@@ -24,6 +24,7 @@ const FETCH_USER = gql`
       birthDate
       account
       phone
+      picture
       contact {
         firstName
         lastName
@@ -74,4 +75,20 @@ export function useUpdateUser(
   options?: MutationHookOptions<UpdateUserResponse, UpdateUserData>,
 ) {
   return useAPIMutation(UPDATE_USER, options);
+}
+
+type UpdatePictureData = {
+  picture: File;
+};
+
+const UPLOAD_PICTURE = gql`
+  mutation UploadPicture($picture: Upload!) {
+    UploadPicture(picture: $picture)
+  }
+`;
+
+export function useUpdatePicture(
+  options?: MutationHookOptions<boolean, UpdatePictureData>,
+) {
+  return useAPIMutation(UPLOAD_PICTURE, options);
 }
