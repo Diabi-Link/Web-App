@@ -1,9 +1,10 @@
-import React, { lazy, Suspense /* , useEffect, useContext */ } from 'react';
+import React, { lazy, Suspense, useContext } from 'react';
 import styled from 'styled-components';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Loader from '../../../../ui/Loader';
 import NavigationWrapper from '../NavigationWrapper';
 import { ChatProvider } from '../../../../contexts/ChatContext';
+import { UserContext } from '../../../../contexts/UserContext';
 // import { UserContext } from '../../../../contexts/UserContext';
 // import {
 //   ContextActionTypes,
@@ -29,6 +30,10 @@ const Wrapper = styled.div`
 `;
 
 const Nav = (): JSX.Element => {
+  const {
+    state: { user },
+  } = useContext(UserContext);
+
   return (
     <ChatProvider>
       <NavigationWrapper>
@@ -40,13 +45,17 @@ const Nav = (): JSX.Element => {
           }
         >
           <Switch>
-            <Route path="/contacts" component={Contacts} />
-            <Route path="/add-measurement" component={AddMeasurement} />
-            <Route path="/analytics" component={Analytics} />
-            <Route path="/alerts" component={Alerts} />
+            {user?.isPaid && (
+              <>
+                <Route path="/contacts" component={Contacts} />
+                <Route path="/add-measurement" component={AddMeasurement} />
+                <Route path="/analytics" component={Analytics} />
+                <Route path="/alerts" component={Alerts} />
+                <Route path="/chat" exact component={Chat} />
+              </>
+            )}
             <Route path="/profile" component={Profile} />
-            <Route path="/chat" exact component={Chat} />
-            <Redirect to="/analytics" />
+            <Redirect to={user?.isPaid ? '/analytics' : '/profile'} />
           </Switch>
         </Suspense>
       </NavigationWrapper>

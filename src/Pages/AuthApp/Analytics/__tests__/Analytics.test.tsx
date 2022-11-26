@@ -23,6 +23,8 @@ const mockUser: UserType = {
   email: 'john.doe@gmail.com',
   birthDate: new Date(),
   account: 'patient',
+  isPaid: false,
+  expireSubDate: null,
 };
 
 const mockUserDoctor: UserType = {
@@ -32,6 +34,8 @@ const mockUserDoctor: UserType = {
   email: 'john.doe@gmail.com',
   birthDate: new Date(),
   account: 'medicalProfessional',
+  isPaid: false,
+  expireSubDate: null,
 };
 
 test('Inspecting add measurement page', async () => {

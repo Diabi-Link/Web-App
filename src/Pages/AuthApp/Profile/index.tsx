@@ -92,6 +92,8 @@ const Profile = (): React.ReactElement => {
     resetForm();
   };
 
+  if (!user) return <Loader loaderStyle="white" />;
+
   return (
     <Container data-testid="profile-page">
       <Wrapper>
@@ -136,7 +138,11 @@ const Profile = (): React.ReactElement => {
                     <SecurityInfo props={props} />
                   </SectionWrapper>
                   <SectionWrapper>
-                    <Membership props={props} />
+                    <Membership
+                      role={user.account}
+                      isPaid={user.isPaid}
+                      expire={user?.expireSubDate}
+                    />
                   </SectionWrapper>
                 </FieldWrapper>
                 <ButtonWrapper>

@@ -22,6 +22,8 @@ const mockUser: UserType = {
   email: 'john.doe@gmail.com',
   birthDate: new Date(),
   account: 'patient',
+  isPaid: false,
+  expireSubDate: null,
 };
 
 const discussion: DocumentData[] = [

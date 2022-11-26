@@ -43,6 +43,8 @@ const initialState: InitialStateType = {
     email: '',
     birthDate: null,
     account: 'patient',
+    isPaid: false,
+    expireSubDate: '',
   },
   info: { step: 1 },
 };

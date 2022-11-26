@@ -28,6 +28,8 @@ const mockUser: UserType = {
   email: 'john.doe@gmail.com',
   birthDate: new Date(date.getTime() - 24 * 60 * 60 * 1000 * 365 * 10),
   account: 'referent',
+  isPaid: false,
+  expireSubDate: null,
 };
 
 test('Test register worflow', async () => {

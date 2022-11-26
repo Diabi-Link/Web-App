@@ -34,6 +34,8 @@ const FETCH_USER = gql`
       birthDate
       account
       phone
+      isPaid
+      expireSubDate
     }
   }
 `;

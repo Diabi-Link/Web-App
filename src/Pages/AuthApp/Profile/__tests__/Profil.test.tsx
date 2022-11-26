@@ -25,6 +25,8 @@ const mockUser: UserType = {
   email: 'test5@gmail.com',
   birthDate: new Date(),
   account: 'patient',
+  isPaid: false,
+  expireSubDate: null,
 };
 
 const mockUserUpdate: UserType = {
@@ -35,6 +37,8 @@ const mockUserUpdate: UserType = {
   birthDate: new Date(),
   phone: '0686896745',
   account: 'patient',
+  isPaid: false,
+  expireSubDate: null,
 };
 
 test('Test update profile workflow', async () => {

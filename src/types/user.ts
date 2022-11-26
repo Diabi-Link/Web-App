@@ -8,4 +8,6 @@ export type UserType = {
   birthDate: Date;
   account: AccountType;
   phone?: string;
+  isPaid: boolean;
+  expireSubDate: string | null;
 };

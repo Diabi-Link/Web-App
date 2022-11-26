@@ -1,30 +1,38 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 import { ReactComponent as CheckIconSvg } from '../../../../assets/svgs/Check.svg';
 
+import { ReactComponent as CloseIconSvg } from '../../../../assets/svgs/Close.svg';
+
+import { useAddSubscribe } from '../../../../api';
+
 import Button from '../../../../ui/Button';
 
+type AccountType = 'patient' | 'referent' | 'medicalProfessional';
+
 type Props = {
-  props: FormikProps<{
-    email: string;
-    firstName: string;
-    lastName: string;
-    birthDate: null;
-    newPassword: string;
-    confirmNewPassword: string;
-    acutalPassword: string;
-    phone: string;
-  }>;
+  role: AccountType;
+  isPaid: boolean;
+  expire: string | null;
 };
 
-const Membership = ({ props }: Props) => {
+const Membership = ({ role, isPaid, expire }: Props) => {
   const { t } = useTranslation();
 
-  const [active, setActive] = useState(true);
+  const [addSubscribe] = useAddSubscribe({
+    onCompleted: ({ AddSubscribe: { id, paymentUrl } }) => {
+      if (id) {
+        window.location.replace(paymentUrl);
+      }
+    },
+  });
+
+  const handleSubscribe = async () => {
+    await addSubscribe({ variables: { subsType: role } });
+  };
 
   return (
     <Wrapper>
@@ -37,22 +45,30 @@ const Membership = ({ props }: Props) => {
       <StyledBox>
         <InfoWrapper>
           <InfoLabel>{t('Profile.Status')}</InfoLabel>
-          <InfoText active={active}>
-            {active ? t('Profile.Active') : t('Profile.Inactive')}
-            <CheckIconSvg />
-          </InfoText>
+          {isPaid ? (
+            <InfoText active={isPaid}>
+              {t('Profile.Active')}
+              <CheckIconSvg />
+            </InfoText>
+          ) : (
+            <InfoText active={isPaid}>
+              {t('Profile.Inactive')}
+              <CloseIconSvg />
+            </InfoText>
+          )}
         </InfoWrapper>
         <InfoWrapper>
           <InfoLabel>{t('Profile.ExpirationDate')}</InfoLabel>
-          <InfoText active={active}>04/12/2022</InfoText>
+          <InfoText active={isPaid}>{expire || t('Profile.None')}</InfoText>
         </InfoWrapper>
         <StyledButton
-          // type="submit"
-          label={t('Profile.StopMembership')}
-          btnStyle="red"
+          label={
+            isPaid ? t('Profile.StopMembership') : t('Profile.ActiveMembership')
+          }
+          btnStyle={isPaid ? 'red' : 'green'}
           outlined
-          data-testid="decline-button"
-          // onClick={() => setIsOpen(false)}
+          data-testid="membership-button"
+          onClick={handleSubscribe}
         />
       </StyledBox>
     </Wrapper>
@@ -109,7 +125,7 @@ const InfoText = styled.text<{ active: boolean }>`
   color: ${({ active, theme }) => (active ? theme.main.green : theme.main.red)};
 
   & > svg {
-    margin-left: 1rem;
+    margin-left: 0.5rem;
   }
 `;
 
