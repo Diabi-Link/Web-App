@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { save } from 'react-icons-kit/fa/save';
+import { PictureContext } from '../../../contexts/PictureContext';
 import { ValidatePasswordSchema, ValidateProfileSchema } from './Validation';
 
 import { ReactComponent as ProfilePatient } from '../../../assets/svgs/ProfilePatient.svg';
@@ -11,7 +12,7 @@ import { ReactComponent as ProfileReferent } from '../../../assets/svgs/ProfileR
 
 import { UserActionTypes, UserContext } from '../../../contexts/UserContext';
 import { MainContext, ContextActionTypes } from '../../../contexts/MainContext';
-import { useUpdateUser } from '../../../api';
+import { useUpdatePicture, useUpdateUser } from '../../../api';
 
 import UserInfo from './UserInfo';
 import SecurityInfo from './SecurityInfo';
@@ -28,6 +29,22 @@ const Profile = (): React.ReactElement => {
     dispatch,
   } = useContext(UserContext);
   const { dispatch: altDispatch } = useContext(MainContext);
+  const { picture } = useContext(PictureContext);
+
+  const [updatePicture] = useUpdatePicture({
+    onCompleted: () => {
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: 'Photo modifiée',
+          noticeStyle: 'green',
+          persistent: false,
+          closeable: false,
+          duration: 2000,
+        },
+      });
+    },
+  });
 
   const [updateUser, { loading }] = useUpdateUser({
     onCompleted: (payload) => {
@@ -130,7 +147,12 @@ const Profile = (): React.ReactElement => {
       <Wrapper>
         <PageTitle level={1}>{t('Profile.Title')}</PageTitle>
         <AccountWrapper>
-          <AvatarWrapper>{user && avatars[user.account].svg}</AvatarWrapper>
+          {!picture && (
+            <AvatarWrapper>{user && avatars[user.account].svg}</AvatarWrapper>
+          )}
+          {picture !== null && (
+            <ImgWrapper alt="profil-picture" src={picture} />
+          )}
           <UserDesc>{user && avatars[user.account].description}</UserDesc>
         </AccountWrapper>
         <InfoWrapper>
@@ -261,6 +283,13 @@ const AvatarWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.main.primaryLight};
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 30px 0px;
+`;
+
+const ImgWrapper = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 50%;
