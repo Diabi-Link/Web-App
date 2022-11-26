@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { Formik, Form as FormikForm, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { save } from 'react-icons-kit/fa/save';
+import axios from 'axios';
+import { useAuthToken } from '../../../hooks/useAuthToken';
 import { PictureContext } from '../../../contexts/PictureContext';
 import { ValidatePasswordSchema, ValidateProfileSchema } from './Validation';
 
@@ -12,7 +14,11 @@ import { ReactComponent as ProfileReferent } from '../../../assets/svgs/ProfileR
 
 import { UserActionTypes, UserContext } from '../../../contexts/UserContext';
 import { MainContext, ContextActionTypes } from '../../../contexts/MainContext';
-import { useUpdatePicture, useUpdateUser } from '../../../api';
+import {
+  useRemovePicture,
+  useUpdatePicture,
+  useUpdateUser,
+} from '../../../api';
 
 import UserInfo from './UserInfo';
 import SecurityInfo from './SecurityInfo';
@@ -29,14 +35,36 @@ const Profile = (): React.ReactElement => {
     dispatch,
   } = useContext(UserContext);
   const { dispatch: altDispatch } = useContext(MainContext);
-  const { picture } = useContext(PictureContext);
+  const { picture, pictureLoading, setPicture, setPictureLoading } = useContext(
+    PictureContext,
+  );
+  const inputFile = useRef<HTMLInputElement | null>(null);
+  const { authToken } = useAuthToken();
 
   const [updatePicture] = useUpdatePicture({
     onCompleted: () => {
+      setPictureLoading(true);
+      savePicture();
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
           label: 'Photo modifiée',
+          noticeStyle: 'green',
+          persistent: false,
+          closeable: false,
+          duration: 2000,
+        },
+      });
+    },
+  });
+
+  const [removePicture] = useRemovePicture({
+    onCompleted: () => {
+      setPicture(null);
+      altDispatch({
+        type: ContextActionTypes.SetNotice,
+        payload: {
+          label: 'Photo supprimée',
           noticeStyle: 'green',
           persistent: false,
           closeable: false,
@@ -142,17 +170,92 @@ const Profile = (): React.ReactElement => {
     resetForm();
   };
 
+  const openInputFile = () => {
+    if (inputFile.current) {
+      inputFile.current.click();
+    }
+  };
+
+  const fetchPicture = useCallback(() => {
+    return axios
+      .create({
+        baseURL: 'https://diabilink.herokuapp.com/',
+        headers: {
+          authorization: `Bearer ${authToken}`,
+          'Access-Control-Allow-Origin': '*',
+          Accept: `application/json, image/png;`,
+        },
+      })
+      .get('getPicture', {
+        responseType: 'blob',
+      });
+  }, [authToken]);
+
+  const savePicture = useCallback(async () => {
+    try {
+      const { data } = await fetchPicture();
+      if (!(data instanceof Blob && data.type === 'application/json')) {
+        setPicture(URL.createObjectURL(data));
+      } else {
+        setPictureLoading(false);
+      }
+    } catch {
+      // eslint-disable-next-line no-console
+      console.error('error when fetching picture');
+      setPictureLoading(false);
+    }
+  }, [fetchPicture, setPicture, setPictureLoading]);
+
   return (
     <Container data-testid="profile-page">
       <Wrapper>
         <PageTitle level={1}>{t('Profile.Title')}</PageTitle>
         <AccountWrapper>
-          {!picture && (
-            <AvatarWrapper>{user && avatars[user.account].svg}</AvatarWrapper>
-          )}
-          {picture !== null && (
-            <ImgWrapper alt="profil-picture" src={picture} />
-          )}
+          <PictureWrapper>
+            {pictureLoading && (
+              <LoaderContainer>
+                <Loader />
+              </LoaderContainer>
+            )}
+            {!pictureLoading && !picture && (
+              <AvatarWrapper>{user && avatars[user.account].svg}</AvatarWrapper>
+            )}
+            {!pictureLoading && picture !== null && (
+              <ImgWrapper alt="profil-picture" src={picture} />
+            )}
+            <input
+              type="file"
+              id="file"
+              accept="image/png, image/jpeg"
+              ref={inputFile}
+              style={{ display: 'none' }}
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  updatePicture({
+                    variables: {
+                      picture: e.target.files[0],
+                    },
+                  });
+                }
+              }}
+            />
+            <ModifyText onClick={openInputFile}>
+              Modifier la photo de profil
+            </ModifyText>
+
+            <DeleteText
+              onClick={() => removePicture()}
+              style={
+                picture === null
+                  ? {
+                      visibility: 'hidden',
+                    }
+                  : {}
+              }
+            >
+              Supprimer la photo de profil
+            </DeleteText>
+          </PictureWrapper>
           <UserDesc>{user && avatars[user.account].description}</UserDesc>
         </AccountWrapper>
         <InfoWrapper>
@@ -273,6 +376,12 @@ const Wrapper = styled.div`
   height: 100vh;
 `;
 
+const PictureWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const AccountWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -286,14 +395,22 @@ const AvatarWrapper = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  margin: 30px 0px;
+  margin-bottom: 8px;
+`;
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 8px;
 `;
 
 const ImgWrapper = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  margin: 30px 0px;
+  margin-bottom: 8px;
 `;
 
 const UserDesc = styled.label`
@@ -364,6 +481,23 @@ const Right = styled.div`
 
 const SaveButton = styled(Button)`
   margin: 20px 0;
+`;
+
+const DeleteText = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.main.red};
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+`;
+
+const ModifyText = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.main.primary};
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-bottom: 8px;
 `;
 
 export default Profile;

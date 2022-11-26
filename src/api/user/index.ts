@@ -92,3 +92,13 @@ export function useUpdatePicture(
 ) {
   return useAPIMutation(UPLOAD_PICTURE, options);
 }
+
+const REMOVE_PICTURE = gql`
+  mutation RemoveProfilePicture {
+    RemoveProfilePicture
+  }
+`;
+
+export function useRemovePicture(options?: MutationHookOptions<boolean>) {
+  return useAPIMutation(REMOVE_PICTURE, options);
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
@@ -10,6 +10,8 @@ import { ReactComponent as ProfilePatient } from '../../../assets/svgs/ProfilePa
 
 import { UserType } from '../../../types/user';
 import { PageTitle } from '../../../ui/Heading';
+import { PictureContext } from '../../../contexts/PictureContext';
+import Loader from '../../../ui/Loader';
 
 const UserAnalytics = ({
   user,
@@ -21,6 +23,7 @@ const UserAnalytics = ({
   setUserAnalytics: React.Dispatch<React.SetStateAction<UserType | undefined>>;
 }): JSX.Element => {
   const { t } = useTranslation();
+  const { picture, pictureLoading } = useContext(PictureContext);
 
   return (
     <Container data-testid="auth-analytics-page">
@@ -33,9 +36,28 @@ const UserAnalytics = ({
           </BackWrapper>
         )}
         <AccountWrapper>
-          <AvatarWrapper>
-            <ProfilePatient />
-          </AvatarWrapper>
+          {userAccount !== 'patient' && (
+            <AvatarWrapper>
+              <ProfilePatient />
+            </AvatarWrapper>
+          )}
+          {userAccount === 'patient' && (
+            <>
+              {pictureLoading && (
+                <LoaderContainer>
+                  <Loader />
+                </LoaderContainer>
+              )}
+              {!pictureLoading && !picture && (
+                <AvatarWrapper>
+                  <ProfilePatient />
+                </AvatarWrapper>
+              )}
+              {!pictureLoading && picture !== null && (
+                <ImgWrapper alt="profil-picture" src={picture} />
+              )}
+            </>
+          )}
           <UserDesc>
             {user && user.firstName} {user && user.lastName}
           </UserDesc>
@@ -88,6 +110,21 @@ const AvatarWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.main.primaryLight};
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+`;
+
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+`;
+
+const ImgWrapper = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 50%;

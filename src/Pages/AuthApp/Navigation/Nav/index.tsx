@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 
 const Nav = (): JSX.Element => {
   const { authToken } = useAuthToken();
-  const { setPicture } = useContext(PictureContext);
+  const { setPicture, setPictureLoading } = useContext(PictureContext);
 
   const fetchPicture = useCallback(() => {
     return axios
@@ -50,12 +50,17 @@ const Nav = (): JSX.Element => {
   const savePicture = useCallback(async () => {
     try {
       const { data } = await fetchPicture();
-      setPicture(URL.createObjectURL(data));
+      if (!(data instanceof Blob && data.type === 'application/json')) {
+        setPicture(URL.createObjectURL(data));
+      } else {
+        setPictureLoading(false);
+      }
     } catch {
       // eslint-disable-next-line no-console
       console.error('error when fetching picture');
+      setPictureLoading(false);
     }
-  }, [fetchPicture, setPicture]);
+  }, [fetchPicture, setPicture, setPictureLoading]);
 
   useEffect(() => {
     if (authToken) {
