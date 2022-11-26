@@ -11,14 +11,9 @@ import Input from '../../../../ui/Input';
 
 type Props = {
   props: FormikProps<{
-    email: string;
-    firstName: string;
-    lastName: string;
-    birthDate: null;
     newPassword: string;
     confirmNewPassword: string;
-    acutalPassword: string;
-    phone: string;
+    actualPassword: string;
   }>;
 };
 
@@ -43,10 +38,15 @@ const SecurityInfo = ({ props }: Props) => {
           name="actualPassword"
           type={showActualPassword ? 'text' : 'password'}
           placeholder="•••••••••"
-          value={props.values.acutalPassword}
+          value={props.values.actualPassword}
           onChange={(e) => {
             props.handleChange(e);
           }}
+          errorText={
+            props.errors.actualPassword && props.touched.actualPassword
+              ? props.errors.actualPassword
+              : undefined
+          }
           icon={showActualPassword ? eye : eyeBlocked}
           onClick={() => setShowActualPassword(!showActualPassword)}
           data-testid="actualPassword-input"

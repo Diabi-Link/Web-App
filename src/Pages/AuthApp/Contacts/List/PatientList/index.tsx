@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import { Icon } from 'react-icons-kit';
 import { trash } from 'react-icons-kit/fa/trash';
+import Modal from '../../../../../ui/Modal';
+import Button from '../../../../../ui/Button';
 import { ReactComponent as ProfilePatient } from '../../../../../assets/svgs/ProfilePatient.svg';
 
 import { UserType } from '../../../../../types/user';
@@ -17,6 +19,7 @@ type Props = {
 
 const PatientList = ({ contacts, handleDelete }: Props): JSX.Element => {
   const { t } = useTranslation();
+  const [contactToDelete, setContactToDelete] = useState<UserType | null>(null);
 
   const getYear = (date: Date) => {
     const i = new Date(date);
@@ -29,34 +32,69 @@ const PatientList = ({ contacts, handleDelete }: Props): JSX.Element => {
   };
 
   return (
-    <Container data-testid="auth-contact-list-patient">
-      <PageTitle level={2}>{t('Contacts.Patient')}</PageTitle>
-      <ContactWrapper>
-        {contacts
-          ?.filter((c) => c.account === 'patient')
-          .map((c) => (
-            <StyledBox>
-              <AvatarWrapper>
-                <ProfilePatient />
-              </AvatarWrapper>
-              <InfoWrapper>
-                <Heading level={2}>{`${c.firstName} ${c.lastName}`}</Heading>
-                <OptionalInfo>
-                  <Mail level={3}>Mail : {c.email}</Mail>
-                  <Heading level={3}>Age : {getYear(c.birthDate)}</Heading>
-                </OptionalInfo>
-              </InfoWrapper>
-              <IconWrapper
-                type="submit"
-                data-testid="trash-button"
-                onClick={() => handleDelete(c.id)}
-              >
-                <Icon icon={trash} size={20} />
-              </IconWrapper>
-            </StyledBox>
-          ))}
-      </ContactWrapper>
-    </Container>
+    <>
+      <Modal
+        isOpen={!!contactToDelete}
+        closeModal={() => setContactToDelete(null)}
+      >
+        {contactToDelete && (
+          <ModalWrapper>
+            <Heading level={3}>
+              Êtes-vous sûr de supprimer {contactToDelete.firstName}{' '}
+              {contactToDelete.lastName} de votre liste de contact ?
+            </Heading>
+            <ButtonWrapper>
+              <StyledButton
+                type="button"
+                label="Non"
+                btnStyle="default"
+                onClick={() => {
+                  setContactToDelete(null);
+                }}
+              />
+              <RightStyledButton
+                type="button"
+                label="Oui"
+                btnStyle="primary"
+                onClick={() => {
+                  handleDelete(contactToDelete.id);
+                  setContactToDelete(null);
+                }}
+              />
+            </ButtonWrapper>
+          </ModalWrapper>
+        )}
+      </Modal>
+      <Container data-testid="auth-contact-list-patient">
+        <PageTitle level={2}>{t('Contacts.Patient')}</PageTitle>
+        <ContactWrapper>
+          {contacts
+            ?.filter((c) => c.account === 'patient')
+            .map((c) => (
+              <StyledBox>
+                <AvatarWrapper>
+                  <ProfilePatient />
+                </AvatarWrapper>
+                <InfoWrapper>
+                  <Heading level={2}>{`${c.firstName} ${c.lastName}`}</Heading>
+                  <OptionalInfo>
+                    <Mail level={3}>Mail : {c.email}</Mail>
+                    <Heading level={3}>Age : {getYear(c.birthDate)}</Heading>
+                  </OptionalInfo>
+                </InfoWrapper>
+                <IconWrapper
+                  type="submit"
+                  data-testid="trash-button"
+                  onClick={() => setContactToDelete(c)}
+                  // onClick={() => handleDelete(c.id)}
+                >
+                  <Icon icon={trash} size={20} />
+                </IconWrapper>
+              </StyledBox>
+            ))}
+        </ContactWrapper>
+      </Container>
+    </>
   );
 };
 
@@ -193,6 +231,26 @@ const PageTitle = styled(Heading)`
     left: 0;
     background-color: ${({ theme }) => theme.main.primaryLight};
   }
+`;
+
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const StyledButton = styled(Button)`
+  width: 60px;
+`;
+
+const RightStyledButton = styled(StyledButton)`
+  margin-left: 18px;
 `;
 
 export default PatientList;

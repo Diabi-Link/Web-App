@@ -51,7 +51,10 @@ export const formatDaily = (data: DataType[]) => {
   const dailyData: DailyData[] = [];
 
   data.forEach((d) => {
-    const obj = { time: new Date(d.date).getTime(), val: d.value * 100 };
+    const obj = {
+      time: new Date(d.date).getTime(),
+      val: parseFloat((d.value * 100).toFixed(2)),
+    };
 
     dailyData.push(obj);
   });

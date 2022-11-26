@@ -21,9 +21,6 @@ type Props = {
     firstName: string;
     lastName: string;
     birthDate: null;
-    newPassword: string;
-    confirmNewPassword: string;
-    acutalPassword: string;
     phone: string;
   }>;
 };

@@ -69,7 +69,6 @@ const PhoneInput = ({ value, errorText, onChange, placeholder }: Props) => {
         value={countries[72].code}
         onChange={(e) => onChange(e)}
         svg={countries[72].svg}
-        icon={arrowDown2}
       />
       <Input
         name="phone"

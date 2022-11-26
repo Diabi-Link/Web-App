@@ -39,6 +39,9 @@
     "Title": "Il semblerait que vous vous soyez perdu !",
     "Back": "Revenir à l'écran d'accueil"
   },
+  "Chat": {
+    "SearchContact": "Ajouter des contacts"
+  },
   "Hero": {
     "Title": "Contrôlez votre santé avec plus de sécurité",
     "Subtitle": "Faites vous suivre au mieux pour gérer votre maladie en toute sécurité.",
@@ -192,6 +195,8 @@
     "ActualPassword": "Mot de passe actuel",
     "NewPassword": "Nouveau mot de passe",
     "ConfirmNewPassword": "Confirmez votre nouveau mot de passe",
+    "UpdateProfil": "Modifier le profil",
+    "UpdatePassword": "Modifier le mot de passe",
     "Save": "Sauvegarder",
     "Status": "Statut",
     "ExpirationDate": "Date d'expiration",
