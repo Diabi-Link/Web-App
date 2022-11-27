@@ -55,17 +55,17 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
 
   const patientRoutes = user?.isPaid
     ? [
-        '/profile',
         '/analytics',
         '/contacts',
         '/add-measurement',
         '/alerts',
         '/chat',
+        '/profile',
       ]
     : ['/profile'];
 
   const routes = user?.isPaid
-    ? ['/profile', '/analytics', '/contacts', '/alerts', '/chat']
+    ? ['/analytics', '/contacts', '/alerts', '/chat', '/profile']
     : ['/profile'];
 
   const closeDrawerOnMobile = () => {
