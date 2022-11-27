@@ -24,6 +24,9 @@ const FETCH_USER = gql`
       birthDate
       account
       phone
+      isPaid
+      expire
+      ProductSub
       contact {
         firstName
         lastName
