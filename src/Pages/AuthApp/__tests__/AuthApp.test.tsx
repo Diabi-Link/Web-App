@@ -24,7 +24,8 @@ const mockUser: UserType = {
   birthDate: new Date(),
   account: 'patient',
   isPaid: false,
-  expireSubDate: null,
+  expire: null,
+  ProductSub: null,
 };
 
 test('Auth App rendering/navigating drawer menu', async () => {

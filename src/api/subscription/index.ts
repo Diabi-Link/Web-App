@@ -23,3 +23,23 @@ export function useAddSubscribe(
 ) {
   return useAPIMutation(ADD_SUBSCRIBE, options);
 }
+
+type RemoveSubscribeResponse = {
+  removeSubscribe: {};
+};
+
+type RemoveSubscribeData = {
+  ProductSub: string;
+};
+
+const REMOVE_SUBSCRIBE = gql`
+  mutation removeSubscribe($ProductSub: String!) {
+    removeSubscribe(ProductSub: $ProductSub)
+  }
+`;
+
+export function useRemoveSubscribe(
+  options?: MutationHookOptions<RemoveSubscribeResponse, RemoveSubscribeData>,
+) {
+  return useAPIMutation(REMOVE_SUBSCRIBE, options);
+}

@@ -232,7 +232,8 @@ const Profile = (): React.ReactElement => {
               <Membership
                 role={user.account}
                 isPaid={user.isPaid}
-                expire={user?.expireSubDate}
+                expire={user?.expire}
+                sub={user?.ProductSub}
               />
             </Right>
           </FieldWrapper>

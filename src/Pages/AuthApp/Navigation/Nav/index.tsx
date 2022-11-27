@@ -5,15 +5,6 @@ import Loader from '../../../../ui/Loader';
 import NavigationWrapper from '../NavigationWrapper';
 import { ChatProvider } from '../../../../contexts/ChatContext';
 import { UserContext } from '../../../../contexts/UserContext';
-// import { UserContext } from '../../../../contexts/UserContext';
-// import {
-//   ContextActionTypes,
-//   MainContext,
-// } from '../../../../contexts/MainContext';
-// import { useGetAlertsLazyQuery } from '../../../../api';
-// import { pickDate } from '../../../../utils';
-
-// import { useGetNotif } from '../../../../api';
 
 const Contacts = lazy(() => import('../../Contacts'));
 const Profile = lazy(() => import('../../Profile'));
@@ -45,16 +36,19 @@ const Nav = (): JSX.Element => {
           }
         >
           <Switch>
-            {user?.isPaid && (
+            {user?.isPaid ? (
               <>
                 <Route path="/contacts" component={Contacts} />
                 <Route path="/add-measurement" component={AddMeasurement} />
                 <Route path="/analytics" component={Analytics} />
                 <Route path="/alerts" component={Alerts} />
                 <Route path="/chat" exact component={Chat} />
+                <Route path="/profile" component={Profile} />
               </>
+            ) : (
+              <Route path="/profile" component={Profile} />
             )}
-            <Route path="/profile" component={Profile} />
+
             <Redirect to={user?.isPaid ? '/analytics' : '/profile'} />
           </Switch>
         </Suspense>

@@ -9,5 +9,6 @@ export type UserType = {
   account: AccountType;
   phone?: string;
   isPaid: boolean;
-  expireSubDate: string | null;
+  expire: string | null;
+  ProductSub: string | null;
 };

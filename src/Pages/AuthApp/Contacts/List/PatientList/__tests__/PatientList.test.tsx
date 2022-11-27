@@ -25,7 +25,8 @@ const mockUser: UserType = {
   birthDate: new Date(),
   account: 'referent',
   isPaid: false,
-  expireSubDate: null,
+  expire: null,
+  ProductSub: null,
 };
 
 const contacts: UserType[] = [
@@ -37,7 +38,8 @@ const contacts: UserType[] = [
     birthDate: new Date(),
     account: 'patient',
     isPaid: false,
-    expireSubDate: null,
+    expire: null,
+    ProductSub: null,
   },
 ];
 

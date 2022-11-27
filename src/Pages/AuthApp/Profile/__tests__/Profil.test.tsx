@@ -26,7 +26,8 @@ const mockUser: UserType = {
   birthDate: new Date(),
   account: 'patient',
   isPaid: false,
-  expireSubDate: null,
+  expire: null,
+  ProductSub: null,
 };
 
 const mockUserUpdate: UserType = {
@@ -38,7 +39,8 @@ const mockUserUpdate: UserType = {
   phone: '0686896745',
   account: 'patient',
   isPaid: false,
-  expireSubDate: null,
+  expire: null,
+  ProductSub: null,
 };
 
 test('Test update profile workflow', async () => {

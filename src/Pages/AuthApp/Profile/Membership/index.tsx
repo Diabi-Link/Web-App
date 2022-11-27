@@ -7,7 +7,7 @@ import { ReactComponent as CheckIconSvg } from '../../../../assets/svgs/Check.sv
 
 import { ReactComponent as CloseIconSvg } from '../../../../assets/svgs/Close.svg';
 
-import { useAddSubscribe } from '../../../../api';
+import { useAddSubscribe, useRemoveSubscribe } from '../../../../api';
 
 import Button from '../../../../ui/Button';
 
@@ -17,9 +17,10 @@ type Props = {
   role: AccountType;
   isPaid: boolean;
   expire: string | null;
+  sub: string | null;
 };
 
-const Membership = ({ role, isPaid, expire }: Props) => {
+const Membership = ({ role, isPaid, expire, sub }: Props) => {
   const { t } = useTranslation();
 
   const [addSubscribe] = useAddSubscribe({
@@ -30,8 +31,18 @@ const Membership = ({ role, isPaid, expire }: Props) => {
     },
   });
 
+  const [removeSubscribe] = useRemoveSubscribe({
+    onCompleted: () => {
+      window.location.reload();
+    },
+  });
+
   const handleSubscribe = async () => {
-    await addSubscribe({ variables: { subsType: role } });
+    if (isPaid && sub) {
+      await removeSubscribe({ variables: { ProductSub: sub } });
+    } else {
+      await addSubscribe({ variables: { subsType: role } });
+    }
   };
 
   return (
@@ -59,7 +70,9 @@ const Membership = ({ role, isPaid, expire }: Props) => {
         </InfoWrapper>
         <InfoWrapper>
           <InfoLabel>{t('Profile.ExpirationDate')}</InfoLabel>
-          <InfoText active={isPaid}>{expire || t('Profile.None')}</InfoText>
+          <InfoText active={isPaid}>
+            {expire === 'NaN/NaN/NaN' ? t('Profile.None') : expire}
+          </InfoText>
         </InfoWrapper>
         <StyledButton
           label={

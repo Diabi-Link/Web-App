@@ -27,7 +27,8 @@ const mockUser: UserType = {
   birthDate: new Date(),
   account: 'referent',
   isPaid: false,
-  expireSubDate: null,
+  expire: null,
+  ProductSub: null,
 };
 
 test('Inspecting alerts page', async () => {

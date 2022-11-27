@@ -44,7 +44,8 @@ const initialState: InitialStateType = {
     birthDate: null,
     account: 'patient',
     isPaid: false,
-    expireSubDate: '',
+    expire: '',
+    ProductSub: '',
   },
   info: { step: 1 },
 };

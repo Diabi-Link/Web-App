@@ -13,8 +13,6 @@ const httpLink = new HttpLink({
   uri: 'https://diabilink.herokuapp.com/graphql/',
 });
 
-// http://localhost:4000/graphql/
-
 const authLink = (authToken: string | null) =>
   setContext((_, { headers }) => {
     return {
