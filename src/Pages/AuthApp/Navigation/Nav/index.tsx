@@ -104,8 +104,6 @@ const Nav = (): JSX.Element => {
                 <Redirect to="/profile" />
               </>
             )}
-
-            <Redirect to={user?.isPaid ? '/analytics' : '/profile'} />
           </Switch>
         </Suspense>
       </NavigationWrapper>

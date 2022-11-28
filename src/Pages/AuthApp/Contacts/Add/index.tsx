@@ -15,7 +15,7 @@ import {
   ContextActionTypes,
   MainContext,
 } from '../../../../contexts/MainContext';
-import { useAddContact } from '../../../../api';
+import { useSendContactRequest } from '../../../../api';
 
 import Input from '../../../../ui/Input';
 import { Heading } from '../../../../ui/Heading';
@@ -30,12 +30,12 @@ const Add = (): JSX.Element => {
   const { t } = useTranslation();
   const { push } = useHistory();
 
-  const [addContact, { loading }] = useAddContact({
+  const [sendContactRequest, { loading }] = useSendContactRequest({
     onCompleted: () => {
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
-          label: t('Contacts.AddSuccess'),
+          label: t('Contacts.ContactRequestSend'),
           noticeStyle: 'green',
           persistent: false,
           closeable: true,
@@ -61,7 +61,7 @@ const Add = (): JSX.Element => {
     { email }: { email: string },
     { resetForm }: { resetForm: () => void },
   ) => {
-    addContact({
+    sendContactRequest({
       variables: {
         email,
       },
