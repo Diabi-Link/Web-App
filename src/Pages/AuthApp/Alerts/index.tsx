@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Icon } from 'react-icons-kit';
@@ -71,6 +71,9 @@ const Alerts = (): JSX.Element => {
   const [alerts, setAlerts] = useState<NotificationType[]>();
   const [deleteTab, setDeleteTab] = useState<string[]>([]);
 
+  const typeRef = useRef<string>('');
+  const periodRef = useRef<number | null>(null);
+
   const [getAlerts] = useGetAlertsLazyQuery({
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
@@ -79,9 +82,11 @@ const Alerts = (): JSX.Element => {
       const { getAlertHistory: alertsTab } = payload;
       setAlerts(alertsTab);
       if (!user) return;
+      const type = typeRef.current || 'days';
+      const period = periodRef.current || 365;
       getAlerts({
         variables: {
-          from: new Date(pickDate('days', 365)),
+          from: new Date(pickDate(type, period)),
           to: new Date(),
           userID: parseFloat(user.id.toString()),
         },
@@ -103,6 +108,8 @@ const Alerts = (): JSX.Element => {
 
   const handleClick = (id: number, type: string, period: number): void => {
     if (!user) return;
+    typeRef.current = type;
+    periodRef.current = period;
     setIsActiveButton(isActiveButton.map((active, key) => key === id));
     getAlerts({
       variables: {

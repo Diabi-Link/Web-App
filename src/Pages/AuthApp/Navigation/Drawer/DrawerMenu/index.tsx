@@ -26,6 +26,8 @@ import { ReactComponent as LogoutSvg } from '../../../../../assets/svgs/Logout.s
 import { ReactComponent as ProfileSvg } from '../../../../../assets/svgs/Profile.svg';
 import { ReactComponent as ContactsSvg } from '../../../../../assets/svgs/Contacts.svg';
 import { ReactComponent as AlertsSvg } from '../../../../../assets/svgs/Alerts.svg';
+import { PictureContext } from '../../../../../contexts/PictureContext';
+import Loader from '../../../../../ui/Loader';
 
 type Props = {
   onMobile?: {
@@ -52,6 +54,7 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   const { removeAuthToken } = useAuthToken();
   const { push } = useHistory();
   const [div, setDiv] = useState(0);
+  const { picture, pictureLoading } = useContext(PictureContext);
 
   const patientRoutes = user?.isPaid
     ? [
@@ -91,7 +94,17 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
     <DrawerWrapper>
       <ItemWrapper>
         <LogoWrapper isOnMobile={onMobile !== undefined}>
-          <Photo>{user && avatars[user.account].svg}</Photo>{' '}
+          {pictureLoading && (
+            <LoaderContainer>
+              <Loader loaderStyle="white" />
+            </LoaderContainer>
+          )}
+          {!pictureLoading && !picture && (
+            <Photo>{user && avatars[user.account].svg}</Photo>
+          )}
+          {!pictureLoading && picture !== null && (
+            <Picture alt="profil-picture" src={picture} />
+          )}{' '}
           <NameText>
             {user?.firstName} {user?.lastName}
           </NameText>
@@ -341,6 +354,22 @@ const Photo = styled.div`
   width: 50px;
   height: 40px;
   background-color: ${(props) => props.theme.main.primaryLight};
+  border-radius: 50%;
+  margin-right: 10px;
+`;
+
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 40px;
+  margin-right: 10px;
+`;
+
+const Picture = styled.img`
+  width: 50px;
+  height: 40px;
   border-radius: 50%;
   margin-right: 10px;
 `;

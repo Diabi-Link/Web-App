@@ -34,6 +34,7 @@ const FETCH_USER = gql`
       birthDate
       account
       phone
+      picture
       isPaid
       expire
       ProductSub
