@@ -236,10 +236,13 @@
     "Patient": "My patients",
     "Request": "My requests",
     "AddSuccess": "You have added a user successfully",
+    "RemoveRequest": "You have deleted a contact request",
     "AddText": "Are you sure you want to add this contact to your list?",
     "DeclineText": "Are you sure you want to decline this contact request?",
     "Accept": "Accept",
-    "Decline": "Decline"
+    "Decline": "Decline",
+    "Cancel": "Cancel",
+    "ContactRequestSend": "Contact request send"
   },
   "Alerts": {
     "Title": "My alerts",

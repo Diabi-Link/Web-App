@@ -1,4 +1,5 @@
 import { gql, MutationHookOptions, QueryHookOptions } from '@apollo/client';
+import { ContactRequestType } from '../../types/contactRequest';
 import { UserType } from '../../types/user';
 import { useAPIMutation, useAPIQuery, useAPILazyQuery } from '../handlers';
 
@@ -110,4 +111,58 @@ const CONTACT_US = gql`
 
 export function useContactUs(options?: QueryHookOptions<{}, ContactUsData>) {
   return useAPILazyQuery(CONTACT_US, options);
+}
+
+type SendContactRequestData = {
+  email: String;
+};
+
+const SEND_CONTACT_REQUEST = gql`
+  mutation SendContactRequest($email: String!) {
+    SendContactRequest(email: $email)
+  }
+`;
+
+export function useSendContactRequest(
+  options?: MutationHookOptions<boolean, SendContactRequestData>,
+) {
+  return useAPIMutation(SEND_CONTACT_REQUEST, options);
+}
+
+type GetContactRequestsResponse = {
+  getContactRequests: [ContactRequestType];
+};
+
+const GET_CONTACT_REQUESTS = gql`
+  query getContactRequests {
+    getContactRequests {
+      id
+      email
+      firstName
+      lastName
+    }
+  }
+`;
+
+export function useGetContactRequests(
+  options?: QueryHookOptions<GetContactRequestsResponse>,
+) {
+  return useAPIQuery(GET_CONTACT_REQUESTS, options);
+}
+
+type AnswerContactRequestData = {
+  email: String;
+  answer: Boolean;
+};
+
+const ANSWER_CONTACT_REQUEST = gql`
+  mutation AnswerContactRequest($answer: Boolean!, $email: String!) {
+    AnswerContactRequest(email: $email, answer: $answer)
+  }
+`;
+
+export function useAnswerContactRequest(
+  options?: MutationHookOptions<boolean, AnswerContactRequestData>,
+) {
+  return useAPIMutation(ANSWER_CONTACT_REQUEST, options);
 }
