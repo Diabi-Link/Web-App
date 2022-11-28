@@ -205,6 +205,7 @@ const Profile = (): React.ReactElement => {
       setPictureLoading(false);
     }
   }, [fetchPicture, setPicture, setPictureLoading]);
+  if (!user) return <Loader loaderStyle="white" />;
 
   return (
     <Container data-testid="profile-page">
@@ -329,6 +330,7 @@ const Profile = (): React.ReactElement => {
                 ) => (
                   <FormikForm>
                     <SecurityInfo props={props} />
+
                     <ButtonWrapper>
                       <SaveButton
                         type="submit"
@@ -351,7 +353,12 @@ const Profile = (): React.ReactElement => {
               </Formik>
             </Center>
             <Right>
-              <Membership />
+              <Membership
+                role={user.account}
+                isPaid={user.isPaid}
+                expire={user?.expire}
+                sub={user?.ProductSub}
+              />
             </Right>
           </FieldWrapper>
         </InfoWrapper>

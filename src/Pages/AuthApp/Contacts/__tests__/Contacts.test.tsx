@@ -22,6 +22,9 @@ const mockUser: UserType = {
   email: 'john.doe@gmail.com',
   birthDate: new Date(),
   account: 'patient',
+  isPaid: false,
+  expire: null,
+  ProductSub: null,
 };
 
 const mockUserReferent: UserType = {
@@ -31,6 +34,9 @@ const mockUserReferent: UserType = {
   email: 'john.doe@gmail.com',
   birthDate: new Date(),
   account: 'referent',
+  isPaid: false,
+  expire: null,
+  ProductSub: null,
 };
 
 test('Inspecting contact page patient', async () => {

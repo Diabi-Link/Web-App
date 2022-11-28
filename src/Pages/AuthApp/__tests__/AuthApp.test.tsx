@@ -23,6 +23,9 @@ const mockUser: UserType = {
   email: 'john.doe@gamil.com',
   birthDate: new Date(),
   account: 'patient',
+  isPaid: false,
+  expire: null,
+  ProductSub: null,
 };
 
 test('Auth App rendering/navigating drawer menu', async () => {

@@ -13,6 +13,7 @@ import NavigationWrapper from '../NavigationWrapper';
 import { ChatProvider } from '../../../../contexts/ChatContext';
 import { useAuthToken } from '../../../../hooks/useAuthToken';
 import { PictureContext } from '../../../../contexts/PictureContext';
+import { UserContext } from '../../../../contexts/UserContext';
 
 const Contacts = lazy(() => import('../../Contacts'));
 const Profile = lazy(() => import('../../Profile'));
@@ -72,6 +73,10 @@ const Nav = (): JSX.Element => {
       }
     }
   }, [authToken, savePicture]);
+  const {
+    state: { user },
+  } = useContext(UserContext);
+
   return (
     <ChatProvider>
       <NavigationWrapper>
@@ -83,13 +88,24 @@ const Nav = (): JSX.Element => {
           }
         >
           <Switch>
-            <Route path="/contacts" component={Contacts} />
-            <Route path="/add-measurement" component={AddMeasurement} />
-            <Route path="/analytics" component={Analytics} />
-            <Route path="/alerts" component={Alerts} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/chat" exact component={Chat} />
-            <Redirect to="/analytics" />
+            {user?.isPaid ? (
+              <>
+                <Route path="/contacts" component={Contacts} />
+                <Route path="/add-measurement" component={AddMeasurement} />
+                <Route path="/analytics" component={Analytics} />
+                <Route path="/alerts" component={Alerts} />
+                <Route path="/chat" exact component={Chat} />
+                <Route path="/profile" component={Profile} />
+                <Redirect to="/analytics" />
+              </>
+            ) : (
+              <>
+                <Route path="/profile" component={Profile} />
+                <Redirect to="/profile" />
+              </>
+            )}
+
+            <Redirect to={user?.isPaid ? '/analytics' : '/profile'} />
           </Switch>
         </Suspense>
       </NavigationWrapper>

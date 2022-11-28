@@ -203,7 +203,8 @@
     "ActiveMembership": "Activer mon abonnement",
     "StopMembership": "Résilier l'abonnement",
     "Active": "Actif",
-    "Inactive": "Inactif"
+    "Inactive": "Inactif",
+    "None": "Aucune"
   },
   "AddMeasurement": {
     "AddMeasurement": "Ajouter une mesure",

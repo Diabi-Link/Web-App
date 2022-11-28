@@ -24,6 +24,9 @@ const mockUser: UserType = {
   email: 'john.doe@gmail.com',
   birthDate: new Date(),
   account: 'patient',
+  isPaid: false,
+  expire: null,
+  ProductSub: null,
 };
 
 const contacts: UserType[] = [
@@ -34,6 +37,9 @@ const contacts: UserType[] = [
     email: 'john.doe@gmail.com',
     birthDate: new Date(),
     account: 'referent',
+    isPaid: false,
+    expire: null,
+    ProductSub: null,
   },
   {
     id: 3,
@@ -42,6 +48,9 @@ const contacts: UserType[] = [
     email: 'john.doe@gmail.com',
     birthDate: new Date(),
     account: 'medicalProfessional',
+    isPaid: false,
+    expire: null,
+    ProductSub: null,
   },
 ];
 

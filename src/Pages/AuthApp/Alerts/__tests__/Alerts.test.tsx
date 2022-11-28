@@ -26,6 +26,9 @@ const mockUser: UserType = {
   email: 'john.doe@gmail.com',
   birthDate: new Date(),
   account: 'referent',
+  isPaid: false,
+  expire: null,
+  ProductSub: null,
 };
 
 test('Inspecting alerts page', async () => {

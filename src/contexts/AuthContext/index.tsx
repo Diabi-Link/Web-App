@@ -35,6 +35,9 @@ const FETCH_USER = gql`
       account
       phone
       picture
+      isPaid
+      expire
+      ProductSub
     }
   }
 `;
