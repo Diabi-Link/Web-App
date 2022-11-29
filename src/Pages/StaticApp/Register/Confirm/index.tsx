@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -88,13 +88,20 @@ const Confirm = (): JSX.Element => {
     });
   };
 
+  useEffect(() => {
+    verifEmail({
+      variables: {
+        email: user.email,
+      },
+    });
+  }, []);
+
   return (
     <Container>
       <Heading level={1}>{t('Register.Confirm.Title')}</Heading>
       <Description>{t('Register.Confirm.Desc')}</Description>
       <Formik
         initialValues={{ code: ['', '', '', '', '', ''] }}
-        // validationSchema={ValidatePasswordSchema}
         onSubmit={handleSubmit}
       >
         {(props: FormikProps<{ code: string[] }>) => (

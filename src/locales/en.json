@@ -204,7 +204,13 @@
     "StopMembership": "Cancel subscription",
     "Active": "Active",
     "Inactive": "Inactive",
-    "None": "None"
+    "None": "None",
+    "UpdatePictureSuccess": "Modified photo",
+    "UpdatePictureError": "Photo deleted",
+    "UserModif": "Modified user",
+    "PasswordModif": "Password modified",
+    "UpdatePicture": "Change the profile picture",
+    "DeletePicture": "Delete profile picture"
   },
   "AddMeasurement": {
     "AddMeasurement": "Add a measurement",

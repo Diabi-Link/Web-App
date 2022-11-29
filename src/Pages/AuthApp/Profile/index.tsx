@@ -48,7 +48,7 @@ const Profile = (): React.ReactElement => {
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
-          label: 'Photo modifiée',
+          label: t('Profile.UpdatePictureSuccess'),
           noticeStyle: 'green',
           persistent: false,
           closeable: true,
@@ -64,7 +64,7 @@ const Profile = (): React.ReactElement => {
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
-          label: 'Photo supprimée',
+          label: t('Profile.UpdatePictureError'),
           noticeStyle: 'green',
           persistent: false,
           closeable: true,
@@ -83,7 +83,7 @@ const Profile = (): React.ReactElement => {
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
-          label: 'Utilisateur modifié',
+          label: t('Profile.UserModif'),
           noticeStyle: 'green',
           persistent: false,
           closeable: true,
@@ -102,7 +102,7 @@ const Profile = (): React.ReactElement => {
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
-          label: 'Mot de passe modifié',
+          label: t('Profile.PasswordModif'),
           noticeStyle: 'green',
           persistent: false,
           closeable: false,
@@ -133,7 +133,6 @@ const Profile = (): React.ReactElement => {
     }: {
       newPassword?: string;
       confirmNewPassword?: string;
-      actualPassword?: string;
     },
     { resetForm }: { resetForm: () => void },
   ) => {
@@ -241,7 +240,7 @@ const Profile = (): React.ReactElement => {
               }}
             />
             <ModifyText onClick={openInputFile}>
-              Modifier la photo de profil
+              {t('Profile.UpdatePicture')}
             </ModifyText>
 
             <DeleteText
@@ -254,7 +253,7 @@ const Profile = (): React.ReactElement => {
                   : {}
               }
             >
-              Supprimer la photo de profil
+              {t('Profile.DeletePicture')}
             </DeleteText>
           </PictureWrapper>
           <UserDesc>{user && avatars[user.account].description}</UserDesc>
