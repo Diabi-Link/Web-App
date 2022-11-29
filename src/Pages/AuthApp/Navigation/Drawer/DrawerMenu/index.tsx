@@ -56,20 +56,22 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
   const [div, setDiv] = useState(0);
   const { picture, pictureLoading } = useContext(PictureContext);
 
-  const patientRoutes = user?.isPaid
-    ? [
-        '/analytics',
-        '/contacts',
-        '/add-measurement',
-        '/alerts',
-        '/chat',
-        '/profile',
-      ]
-    : ['/profile'];
+  const patientRoutes =
+    user?.isPaid || user?.account === 'patient'
+      ? [
+          '/analytics',
+          '/contacts',
+          '/add-measurement',
+          '/alerts',
+          '/chat',
+          '/profile',
+        ]
+      : ['/profile'];
 
-  const routes = user?.isPaid
-    ? ['/analytics', '/contacts', '/alerts', '/chat', '/profile']
-    : ['/profile'];
+  const routes =
+    user?.isPaid || user?.account === 'patient'
+      ? ['/analytics', '/contacts', '/alerts', '/chat', '/profile']
+      : ['/profile'];
 
   const closeDrawerOnMobile = () => {
     setChatOn(false);
@@ -128,7 +130,7 @@ const DrawerMenu = ({ onMobile, handleLock, isLocked, setChatOn }: Props) => {
 
       <NavContainer>
         <Divider index={div} />
-        {user?.isPaid === true && (
+        {(user?.isPaid || user?.account === 'patient') && (
           <>
             <ItemContainer
               to="/analytics"

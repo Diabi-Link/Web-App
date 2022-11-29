@@ -88,7 +88,7 @@ const Nav = (): JSX.Element => {
           }
         >
           <Switch>
-            {user?.isPaid ? (
+            {user?.isPaid || user?.account === 'patient' ? (
               <>
                 <Route path="/contacts" component={Contacts} />
                 <Route path="/add-measurement" component={AddMeasurement} />

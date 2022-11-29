@@ -51,7 +51,7 @@ const Profile = (): React.ReactElement => {
           label: 'Photo modifiée',
           noticeStyle: 'green',
           persistent: false,
-          closeable: false,
+          closeable: true,
           duration: 2000,
         },
       });
@@ -67,7 +67,7 @@ const Profile = (): React.ReactElement => {
           label: 'Photo supprimée',
           noticeStyle: 'green',
           persistent: false,
-          closeable: false,
+          closeable: true,
           duration: 2000,
         },
       });
@@ -86,7 +86,7 @@ const Profile = (): React.ReactElement => {
           label: 'Utilisateur modifié',
           noticeStyle: 'green',
           persistent: false,
-          closeable: false,
+          closeable: true,
           duration: 2000,
         },
       });
@@ -261,7 +261,7 @@ const Profile = (): React.ReactElement => {
         </AccountWrapper>
         <InfoWrapper>
           <FieldWrapper>
-            <Left>
+            <Left patient={user?.account === 'patient'}>
               <Formik
                 initialValues={{
                   email: '',
@@ -311,10 +311,9 @@ const Profile = (): React.ReactElement => {
                 )}
               </Formik>
             </Left>
-            <Center>
+            <Center patient={user?.account === 'patient'}>
               <Formik
                 initialValues={{
-                  actualPassword: '',
                   newPassword: '',
                   confirmNewPassword: '',
                 }}
@@ -323,7 +322,6 @@ const Profile = (): React.ReactElement => {
               >
                 {(
                   props: FormikProps<{
-                    actualPassword: string;
                     newPassword: string;
                     confirmNewPassword: string;
                   }>,
@@ -352,14 +350,16 @@ const Profile = (): React.ReactElement => {
                 )}
               </Formik>
             </Center>
-            <Right>
-              <Membership
-                role={user.account}
-                isPaid={user.isPaid}
-                expire={user?.expire}
-                sub={user?.ProductSub}
-              />
-            </Right>
+            {user?.account !== 'patient' && (
+              <Right>
+                <Membership
+                  role={user.account}
+                  isPaid={user.isPaid}
+                  expire={user?.expire}
+                  sub={user?.ProductSub}
+                />
+              </Right>
+            )}
           </FieldWrapper>
         </InfoWrapper>
       </Wrapper>
@@ -452,25 +452,31 @@ const InfoWrapper = styled.div`
   }
 `;
 
-const Left = styled.div`
+const Left = styled.div<{ patient: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
 
   @media (min-width: 1200px) {
-    width: 47%;
+    width: ${({ patient }) => (patient ? '48%' : '47%')};
   }
 `;
 
-const Center = styled.div`
+const Center = styled.div<{ patient: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-top: 5vw;
 
   @media (min-width: 1200px) {
-    width: 22%;
+    width: ${({ patient }) => (patient ? '48%' : '22%')};
     margin: 0;
+  }
+
+  & > form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 `;
 

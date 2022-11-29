@@ -70,6 +70,16 @@ const UPDATE_USER = gql`
       birthDate
       account
       phone
+      picture
+      isPaid
+      expire
+      ProductSub
+      contact {
+        firstName
+        lastName
+        account
+        id
+      }
     }
   }
 `;

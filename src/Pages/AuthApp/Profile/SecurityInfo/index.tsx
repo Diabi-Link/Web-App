@@ -13,14 +13,12 @@ type Props = {
   props: FormikProps<{
     newPassword: string;
     confirmNewPassword: string;
-    actualPassword: string;
   }>;
 };
 
 const SecurityInfo = ({ props }: Props) => {
   const { t } = useTranslation();
 
-  const [showActualPassword, setShowActualPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -32,26 +30,6 @@ const SecurityInfo = ({ props }: Props) => {
         <LineEnd />
       </SectionWrapper>
 
-      <InputWrapper>
-        <InputLabel>{t('Profile.ActualPassword')}</InputLabel>
-        <Input
-          name="actualPassword"
-          type={showActualPassword ? 'text' : 'password'}
-          placeholder="•••••••••"
-          value={props.values.actualPassword}
-          onChange={(e) => {
-            props.handleChange(e);
-          }}
-          errorText={
-            props.errors.actualPassword && props.touched.actualPassword
-              ? props.errors.actualPassword
-              : undefined
-          }
-          icon={showActualPassword ? eye : eyeBlocked}
-          onClick={() => setShowActualPassword(!showActualPassword)}
-          data-testid="actualPassword-input"
-        />
-      </InputWrapper>
       <InputWrapper>
         <InputLabel>{t('Profile.NewPassword')}</InputLabel>
         <Input
@@ -99,7 +77,7 @@ const SecurityInfo = ({ props }: Props) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: start;
   width: 100%;
   flex: 1;
 `;

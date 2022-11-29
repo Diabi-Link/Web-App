@@ -27,7 +27,6 @@ const ValidateProfileSchema = Yup.object().shape({
 });
 
 const ValidatePasswordSchema = Yup.object().shape({
-  actualPassword: Yup.string().required('Champ obligatoire'),
   newPassword: Yup.string()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
