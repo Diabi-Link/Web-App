@@ -76,13 +76,7 @@ const ImgWrapper = styled.div`
   }
 
   & > img {
-    width: 40rem;
-  }
-
-  @media (max-width: 1300px) {
-    & > img {
-      width: 30rem;
-    }
+    width: 100%;
   }
 `;
 

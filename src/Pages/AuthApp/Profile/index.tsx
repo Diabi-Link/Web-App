@@ -339,7 +339,7 @@ const Profile = (): React.ReactElement => {
                           )
                         }
                         btnStyle="primary"
-                        data-testid="save-button"
+                        data-testid="save-button-password"
                         shadow
                         iconEnd={save}
                         disabled={passwordLoading}

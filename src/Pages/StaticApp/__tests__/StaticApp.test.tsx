@@ -4,16 +4,6 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import { MockedProvider } from '@apollo/client/testing';
-import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
-import { I18nextProvider } from 'react-i18next';
-import { AuthContext } from '../../../contexts/AuthContext';
-import { UserProvider } from '../../../contexts/UserContext';
-import { DeviceContext } from '../../../contexts/DeviceContext';
-import i18n from '../../../i18n';
-import AppSelector from '../../AppSelector';
-import theme from '../../../theme';
 import en from '../../../locales/en.json';
 import App from '../../../App';
 
@@ -22,7 +12,7 @@ test('Static App rendering/navigating', async () => {
   await waitFor(() =>
     expect(screen.getByTestId('static-home-page')).toBeInTheDocument(),
   );
-  userEvent.click(screen.getByText(en.StaticNav.Register));
+  userEvent.click(screen.getByTestId('register-button'));
   await waitFor(() =>
     expect(screen.getByText(en.Register.User.Title)).toBeInTheDocument(),
   );
@@ -30,7 +20,7 @@ test('Static App rendering/navigating', async () => {
   await waitFor(() =>
     expect(screen.getByTestId('static-home-page')).toBeInTheDocument(),
   );
-  userEvent.click(screen.getByText(en.StaticNav.Login));
+  userEvent.click(screen.getByTestId('login-button'));
   await waitFor(() =>
     expect(screen.getByText(en.Login.FrameDesc)).toBeInTheDocument(),
   );
