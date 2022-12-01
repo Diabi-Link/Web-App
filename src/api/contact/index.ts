@@ -129,7 +129,7 @@ export function useSendContactRequest(
   return useAPIMutation(SEND_CONTACT_REQUEST, options);
 }
 
-type GetContactRequestsResponse = {
+export type GetContactRequestsResponse = {
   getContactRequests: [ContactRequestType];
 };
 

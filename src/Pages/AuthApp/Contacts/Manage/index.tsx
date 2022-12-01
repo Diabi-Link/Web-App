@@ -12,8 +12,8 @@ import { ContactRequestType } from '../../../../types/contactRequest';
 import Button from '../../../../ui/Button';
 import { Heading } from '../../../../ui/Heading';
 import {
+  GetContactRequestsResponse,
   useAnswerContactRequest,
-  useGetContactRequests,
 } from '../../../../api';
 import Card from './Card';
 import {
@@ -21,7 +21,12 @@ import {
   MainContext,
 } from '../../../../contexts/MainContext';
 
-const Manage = (): JSX.Element => {
+type Props = {
+  contactRequests: GetContactRequestsResponse | undefined;
+  refetch: () => void;
+};
+
+const Manage = ({ contactRequests, refetch }: Props): JSX.Element => {
   const { push } = useHistory();
   const { t } = useTranslation();
   const { dispatch: altDispatch } = useContext(MainContext);
@@ -30,10 +35,6 @@ const Manage = (): JSX.Element => {
     setSelectedContactRequest,
   ] = useState<ContactRequestType | null>(null);
   const [accept, setAccept] = useState<boolean>(false);
-
-  const { data: contactRequests, refetch } = useGetContactRequests({
-    fetchPolicy: 'network-only',
-  });
 
   const [answerContactRequest] = useAnswerContactRequest({
     onError: () => {
@@ -79,7 +80,7 @@ const Manage = (): JSX.Element => {
           </ListWrapper>
         </ListContainer>
         <ButtonWrapper>
-          <BackLink to="/contacts/menu">
+          <BackLink to="/contacts/menu" data-testid="back-arrow">
             <ArrowBack icon={arrowLeft2} size={20} />
             <Text>{t('Link.Back')}</Text>
           </BackLink>

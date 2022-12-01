@@ -26,14 +26,14 @@ const Card = ({ handleChoice, contactRequest }: Props) => {
         <Mail level={3}>Mail : {contactRequest.email}</Mail>
         <ButtonBox>
           <StyledButton
-            data-testid="accept-button"
+            data-testid="accept-button-2"
             label={t('Contacts.Accept')}
             btnStyle="green"
             outlined
             onClick={() => handleChoice(true, contactRequest)}
           />
           <StyledButton
-            data-testid="decline-button"
+            data-testid="decline-button-2"
             label={t('Contacts.Decline')}
             btnStyle="red"
             outlined

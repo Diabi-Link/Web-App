@@ -14,6 +14,7 @@ import { AuthContext } from '../../../../contexts/AuthContext';
 import { UserType } from '../../../../types/user';
 import theme from '../../../../theme';
 import i18n from '../../../../i18n';
+import Manage from '../Manage';
 
 const mockUser: UserType = {
   id: 1,
@@ -71,9 +72,44 @@ test('Inspecting contact page patient', async () => {
     expect(screen.getByTestId('auth-contacts-menu-page')).toBeInTheDocument(),
   );
   userEvent.click(screen.getByTestId('list-box'));
-  // await waitFor(() =>
-  //   expect(screen.getByTestId('auth-contacts-list-page')).toBeInTheDocument(),
-  // );
+});
+
+test('Manage contact test', async () => {
+  render(
+    <MockedProvider>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <AuthContext.Provider value={{ user: mockUser }}>
+            <UserProvider>
+              <I18nextProvider i18n={i18n}>
+                <Manage
+                  contactRequests={{
+                    getContactRequests: [
+                      {
+                        id: 1,
+                        email: 'salt@gmail.com',
+                        lastName: 'Salty',
+                        firstName: 'Pepper',
+                      },
+                    ],
+                  }}
+                  refetch={() => null}
+                />
+              </I18nextProvider>
+            </UserProvider>
+          </AuthContext.Provider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </MockedProvider>,
+  );
+  await waitFor(() =>
+    expect(screen.getByTestId('auth-contacts-list-page')).toBeInTheDocument(),
+  );
+  userEvent.click(screen.getByTestId('accept-button-2'));
+  userEvent.click(screen.getByTestId('decline-button'));
+  userEvent.click(screen.getByTestId('decline-button-2'));
+  userEvent.click(screen.getByTestId('decline-button'));
+  userEvent.click(screen.getByTestId('back-arrow'));
 });
 
 test('Inspecting contact page referent', async () => {
@@ -92,7 +128,4 @@ test('Inspecting contact page referent', async () => {
       </BrowserRouter>
     </MockedProvider>,
   );
-  // await waitFor(() =>
-  //   expect(screen.getByTestId('auth-contacts-list-page')).toBeInTheDocument(),
-  // );
 });
