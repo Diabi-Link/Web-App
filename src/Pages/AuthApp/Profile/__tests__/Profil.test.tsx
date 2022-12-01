@@ -24,8 +24,8 @@ const mockUser: UserType = {
   lastName: 'Doe',
   email: 'test5@gmail.com',
   birthDate: new Date(),
-  account: 'patient',
-  isPaid: false,
+  account: 'referent',
+  isPaid: true,
   expire: null,
   ProductSub: null,
 };
@@ -37,8 +37,8 @@ const mockUserUpdate: UserType = {
   email: 'nico.carra@gmail.com',
   birthDate: new Date(),
   phone: '0686896745',
-  account: 'patient',
-  isPaid: false,
+  account: 'referent',
+  isPaid: true,
   expire: null,
   ProductSub: null,
 };
