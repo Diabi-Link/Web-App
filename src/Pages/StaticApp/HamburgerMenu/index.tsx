@@ -112,13 +112,11 @@ const HamburgerMenu = ({ isOpen, toggle }: Props) => {
           btnStyle="primary"
           outlined
           onClick={() => handleClick('/login')}
-          data-testid="login-button"
         />
         <NavButton
           label={t('StaticNav.Register')}
           btnStyle="white"
           onClick={() => handleClick('/register/user')}
-          data-testid="register-button"
         />
       </ButtonWrapper>
     </Container>

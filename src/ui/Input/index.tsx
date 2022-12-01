@@ -101,8 +101,6 @@ const ErrorElement = styled.span`
   font-weight: 300;
   color: ${(props) => props.theme.main.red};
   margin-top: 3px;
-  position: absolute;
-  top: 47px;
 `;
 
 const Input = forwardRef(

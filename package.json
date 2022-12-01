@@ -73,7 +73,7 @@
     "start": "react-scripts start",
     "build": "CI=false && react-scripts build",
     "lint": "eslint . --ext js,jsx,ts,tsx",
-    "test": "react-scripts test --watchAll=false --coverage",
+    "test": "react-scripts test --watchAll=false --coverage --transformIgnorePatterns 'node_modules/(?!(axios|react-datepicker)/)'",
     "test:update": "react-scripts test --watchAll=false --coverage --updateSnapshot",
     "test:interactive": "react-scripts test",
     "eject": "react-scripts eject",
@@ -133,7 +133,13 @@
       "!src/Pages/StaticApp/ForgotPassword/ResetPassword.tsx",
       "!src/Pages/StaticApp/Navbar/index.tsx",
       "!src/index.tsx",
-      "!src/Pages/StaticApp/Home/ContactUs/index.tsx"
+      "!src/Pages/StaticApp/Home/ContactUs/index.tsx",
+      "!src/Pages/AuthApp/Profile/index.tsx",
+      "!src/Pages/AuthApp/Contacts/List/index.tsx",
+      "!src/Pages/AuthApp/Navigation/Nav/index.tsx",
+      "!src/Pages/AuthApp/Chat/Header/index.tsx",
+      "!src/Pages/StaticApp/Register/Confirm/index.tsx",
+      "!src/Pages/StaticApp/Login/Form/index.tsx"
     ]
   }
 }
