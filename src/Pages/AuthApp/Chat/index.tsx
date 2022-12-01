@@ -94,7 +94,7 @@ const ChatPage = (): React.ReactElement => {
 
   return (
     <Container data-testid="auth-chat-page">
-      {data && data.Me?.contact?.length > 1 ? (
+      {data && data.Me?.contact?.length > 0 ? (
         <>
           <Header {...chatUserType} />
           <Discussion messages={messages} userId={user?.id} />
@@ -102,7 +102,7 @@ const ChatPage = (): React.ReactElement => {
         </>
       ) : (
         <Wrapper>
-          <Heading level={3}>Aucun contact</Heading>
+          <Heading level={3}>{t('Chat.NoContact')}</Heading>
           <Link to="/contacts/add" $linkStyle="primary" $bold>
             {t('Chat.SearchContact')}
           </Link>
