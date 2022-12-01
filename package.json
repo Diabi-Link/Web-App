@@ -73,7 +73,7 @@
     "start": "react-scripts start",
     "build": "CI=false && react-scripts build",
     "lint": "eslint . --ext js,jsx,ts,tsx",
-    "test": "react-scripts test --watchAll=false --coverage",
+    "test": "react-scripts test --watchAll=false --coverage --transformIgnorePatterns 'node_modules/(?!(axios|react-datepicker)/)'",
     "test:update": "react-scripts test --watchAll=false --coverage --updateSnapshot",
     "test:interactive": "react-scripts test",
     "eject": "react-scripts eject",
