@@ -69,13 +69,14 @@ const Confirm = (): JSX.Element => {
       altDispatch({
         type: ContextActionTypes.SetNotice,
         payload: {
-          label: t('StaticNav.Error'),
-          noticeStyle: 'red',
+          label: t('Register.Confirm.VerifSuccess'),
+          noticeStyle: 'green',
           persistent: false,
           closeable: true,
           duration: 5000,
         },
       });
+      push('/login');
     },
   });
 
