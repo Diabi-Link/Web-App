@@ -69,7 +69,7 @@ const Membership = ({ role, isPaid, expire, sub }: Props) => {
           )}
         </InfoWrapper>
         <InfoWrapper>
-          <InfoLabel>{t('Profile.ExpirationDate')}</InfoLabel>
+          <InfoLabel>{t('Profile.RenewalDate')}</InfoLabel>
           <InfoText active={isPaid}>{expire || t('Profile.None')}</InfoText>
         </InfoWrapper>
         <StyledButton

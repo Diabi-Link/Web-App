@@ -11,42 +11,6 @@ export type BrainData = {
   average: number;
 };
 
-// export const getDailyDomain = () => {
-//   const actualDate = new Date();
-//   const domain: number[] = [];
-
-//   domain.push(new Date(actualDate).setHours(0, 0, 0, 0));
-//   const tomorrow = new Date(actualDate);
-//   tomorrow.setDate(actualDate.getDate() + 1);
-//   domain.push(tomorrow.setHours(0, 0, 0, 0));
-
-//   return domain;
-// };
-// export const getDailyTicks = () => {
-//   const actualDate = new Date();
-
-//   const hours = [
-//     [0, 0],
-//     [3, 0],
-//     [6, 0],
-//     [9, 0],
-//     [12, 0],
-//     [15, 0],
-//     [18, 0],
-//     [21, 0],
-//     [23, 59],
-//   ];
-
-//   const dailyTicks: number[] = [];
-
-//   hours.forEach((hour) => {
-//     dailyTicks.push(
-//       new Date(actualDate.setHours(hour[0], hour[1], 0, 0)).getTime(),
-//     );
-//   });
-//   return dailyTicks;
-// };
-
 export const formatDaily = (data: DataType[]) => {
   const dailyData: DailyData[] = [];
 
@@ -96,7 +60,9 @@ export const dailyBrain = (data: DataType[]) => {
 
   return {
     timeInTarget: targetAvg,
-    lastScan: `${lastScan.getHours()}:${lastScan.getMinutes()}`,
+    lastScan: `${`0${lastScan.getHours()}`.slice(
+      -2,
+    )}:${`0${lastScan.getMinutes()}`.slice(-2)}`,
     average: avg,
   };
 };

@@ -200,7 +200,7 @@
     "UpdatePassword": "Modifier le mot de passe",
     "Save": "Sauvegarder",
     "Status": "Statut",
-    "ExpirationDate": "Date d'expiration",
+    "RenewalDate": "Date de renouvellement",
     "ActiveMembership": "Activer mon abonnement",
     "StopMembership": "Résilier l'abonnement",
     "Active": "Actif",
